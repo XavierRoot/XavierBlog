@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on My New Hugo Site</title>
-    <link>http://XavierRoot.github.io/post/</link>
+    <link>https://XavierRoot.github.io/post/</link>
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Feb 2023 10:35:09 +0800</lastBuildDate><atom:link href="http://XavierRoot.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 14 Feb 2023 10:35:09 +0800</lastBuildDate><atom:link href="https://XavierRoot.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>软考-中级信息安全工程师</title>
-      <link>http://XavierRoot.github.io/post/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</link>
+      <link>https://XavierRoot.github.io/post/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</link>
       <pubDate>Tue, 14 Feb 2023 10:35:09 +0800</pubDate>
       
-      <guid>http://XavierRoot.github.io/post/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</guid>
+      <guid>https://XavierRoot.github.io/post/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</guid>
       <description>一、简介 1.1 软考介绍 软考，即计算机技术与软件专业技术资格（水平）考试，以下为官方介绍：
 计算机技术与软件专业技术资格（水平）考试（以下简称计算机软件资格考试）是原中国计算机软件专业技术资格和水平考试（简称软件考试）的完善与发展。计算机软件资格考试是由国家人力资源和社会保障部、工业和信息化部领导下的国家级考试，其目的是科学、公正地对全国计算机与软件专业技术人员进行职业资格、专业技术资格认定和专业技术水平测试。
 更多信息见官网：https://www.ruankao.org.cn/。
@@ -53,10 +53,10 @@
     
     <item>
       <title>About</title>
-      <link>http://XavierRoot.github.io/post/about/</link>
+      <link>https://XavierRoot.github.io/post/about/</link>
       <pubDate>Tue, 14 Feb 2023 10:30:09 +0800</pubDate>
       
-      <guid>http://XavierRoot.github.io/post/about/</guid>
+      <guid>https://XavierRoot.github.io/post/about/</guid>
       <description>test</description>
     </item>
     

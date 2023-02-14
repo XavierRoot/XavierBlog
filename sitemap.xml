@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://XavierRoot.github.io/</loc>
+    <loc>https://XavierRoot.github.io/</loc>
     <lastmod>2023-02-14T10:35:09+08:00</lastmod>
   </url><url>
-    <loc>http://XavierRoot.github.io/post/</loc>
+    <loc>https://XavierRoot.github.io/post/</loc>
     <lastmod>2023-02-14T10:35:09+08:00</lastmod>
   </url><url>
-    <loc>http://XavierRoot.github.io/post/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</loc>
+    <loc>https://XavierRoot.github.io/post/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</loc>
     <lastmod>2023-02-14T10:35:09+08:00</lastmod>
   </url><url>
-    <loc>http://XavierRoot.github.io/post/about/</loc>
+    <loc>https://XavierRoot.github.io/post/about/</loc>
     <lastmod>2023-02-14T10:30:09+08:00</lastmod>
   </url><url>
-    <loc>http://XavierRoot.github.io/categories/</loc>
+    <loc>https://XavierRoot.github.io/categories/</loc>
   </url><url>
-    <loc>http://XavierRoot.github.io/tags/</loc>
+    <loc>https://XavierRoot.github.io/tags/</loc>
   </url>
 </urlset>
