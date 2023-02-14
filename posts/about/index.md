@@ -3,7 +3,7 @@
 
 test
 
-![image-20230214103748168](./resource/about.assets/image-20230214103748168.png)
+![image-20230214103748168](/resource/about.assets/image-20230214103748168.png)
 
 
 
