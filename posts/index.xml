@@ -77,5 +77,13 @@ openssl x509 -inform DER -text -in 证书文件.]]></description>
   <guid>http://example.org/posts/about/</guid>
   <description><![CDATA[test]]></description>
 </item>
+<item>
+  <title>2021年4月13日 学习随笔</title>
+  <link>http://example.org/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</link>
+  <pubDate>Sat, 13 Mar 2021 13:31:00 &#43;0800</pubDate>
+  <author>xavier</author>
+  <guid>http://example.org/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</guid>
+  <description><![CDATA[2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。]]></description>
+</item>
 </channel>
 </rss>
