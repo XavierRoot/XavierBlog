@@ -10,5 +10,5 @@ test
 ---
 
 > 作者: Xavier  
-> URL: https://XavierRoot.github.io/posts/about/  
+> URL: http://example.org/posts/about/  
 

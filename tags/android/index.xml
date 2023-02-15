@@ -1,0 +1,28 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Android - 标签 - Xavier&#39;s Blog</title>
+    <link>http://example.org/tags/android/</link>
+    <description>Android - 标签 - Xavier&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 14 Feb 2023 14:59:29 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/android/" rel="self" type="application/rss+xml" /><item>
+  <title>Mac下Android APP抓包配置</title>
+  <link>http://example.org/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</link>
+  <pubDate>Tue, 14 Feb 2023 14:59:29 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</guid>
+  <description><![CDATA[换了M系列芯片的Mac，过去常用的模拟器都不太支持，之前用谷歌的Android-emulator-m1-preview，后来支持Android Studio了，就用Android Studio配置测试环境。
+一、难点： APP存在root检测； APP不走WiFi设置的代理； HTTPS抓包无法解密； 传统抓包无效 二、思路： 模拟器（Android Studio 的 AVD） 代理转发工具（Clash） 抓包软件（burpsuite，Charles，Fiddler都行），导入系统证书解密https 所需工具即：一个合适的模拟器+支持https的抓包软件+流量转发工具
+本文即AVD+Clash+Burp
+三、行动 3.1 创建Android Virtual Device（AVD） 国内的各种模拟器不太支持m1芯片，于是就上手Android Studio中的 AVD。 配置自己选合适的，我是 Pixel 5 + Tiramisu(API 33)，需要多试几个版本
+可能遇到的问题：
+Android版本太低，APP不支持； Android版本有root，APP存在检测，不允许在root环境下运行； Android架构冲突，APP无法安装； 其他 创建过程如下：
+Open一个空文件夹作为新项目，或者直接选择Profile or Debug APK加载一个APK都可以。 进入项目后，点击右侧Device Manager &ndash; Create device创建AVD模拟器，挑选Android系统镜像时根据需要选择合适的系统。 设置完之后就会在Device Manager列表中出现一个新的模拟器。
+建议先启动一下模拟器，检查纯净状态下网络是否正常、待测试APK能否顺利安装并正常运行。
+一切顺利的话，接下去安装Clash和Burp系统证书。
+3.2 创建burp证书 高版本Android系统，导入证书安装后一般都是用户证书，我们需要花点功夫将其变成系统证书。
+打开burp，电脑浏览器访问&quot;http://burp&ldquo;并下载证书cacert.cer，获得证书文件cacert.cer之后，准备将其转换成可放入系统证书库的文件。
+下列方法一和二本质是一样的，都行。
+方法一： openssl x509 -inform DER -subject_hash_old -in 证书文件.cer 获得红框中的hash值并把它作为后续的放入到系统证书库的证书名字，一般burp的证书名为（9a5ba575.0）
+openssl x509 -inform DER -text -in 证书文件.]]></description>
+</item>
+</channel>
+</rss>

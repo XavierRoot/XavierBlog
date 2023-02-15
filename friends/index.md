@@ -10,5 +10,5 @@
 ---
 
 > 作者: Xavier  
-> URL: https://XavierRoot.github.io/friends/  
+> URL: http://example.org/friends/  
 
