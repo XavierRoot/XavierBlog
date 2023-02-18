@@ -2,6 +2,7 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   ><url>
+      <loc>http://example.org/about/</loc><lastmod>2023-02-18T21:03:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>http://example.org/friends/</loc><lastmod>2023-02-14T15:09:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>http://example.org/tags/android/</loc><lastmod>2023-02-14T14:59:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>http://example.org/categories/</loc><lastmod>2023-02-14T14:59:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
