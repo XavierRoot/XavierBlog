@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>RedTeam - 标签 - Xavier&#39;s Blog</title>
+    <link>http://example.org/tags/redteam/</link>
+    <description>RedTeam - 标签 - Xavier&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 07 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://example.org/tags/redteam/" rel="self" type="application/rss+xml" /><item>
+  <title>内网渗透 内网信息搜集脑图</title>
+  <link>http://example.org/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</link>
+  <pubDate>Thu, 07 Oct 2021 00:00:00 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</guid>
+  <description><![CDATA[国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。]]></description>
+</item>
+</channel>
+</rss>
