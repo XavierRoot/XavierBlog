@@ -70,6 +70,30 @@ openssl x509 -inform DER -text -in 证书文件.]]></description>
 个人领证：凭本人有效身份证原件等资料领取; 他人(单位)代领：凭代领人及持证人有效身份证原件等资料领取(有些地区不支持代领); 证书邮寄：网上申请证书邮寄(部分地区支持)。 证书领取流程：携带相关资料证件，如身份证、准考证、成绩单等;]]></description>
 </item>
 <item>
+  <title>HTB靶机 Blue WriteUp</title>
+  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</link>
+  <pubDate>Mon, 28 Mar 2022 17:55:48 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</guid>
+  <description><![CDATA[]]></description>
+</item>
+<item>
+  <title>HTB靶机 Lame WriteUp</title>
+  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</link>
+  <pubDate>Wed, 23 Mar 2022 17:47:01 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</guid>
+  <description><![CDATA[]]></description>
+</item>
+<item>
+  <title>HTB靶机 Legacy WriteUp</title>
+  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</link>
+  <pubDate>Sun, 20 Mar 2022 17:40:46 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
+  <description><![CDATA[备战OSCP系列，从HackTheBox靶场开始。]]></description>
+</item>
+<item>
   <title>内网文件传输技术 Windows篇</title>
   <link>http://example.org/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</link>
   <pubDate>Sat, 13 Nov 2021 17:25:01 &#43;0800</pubDate>

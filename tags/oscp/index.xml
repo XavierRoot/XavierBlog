@@ -1,0 +1,31 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>OSCP - 标签 - Xavier&#39;s Blog</title>
+    <link>http://example.org/tags/oscp/</link>
+    <description>OSCP - 标签 - Xavier&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 28 Mar 2022 17:55:48 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/oscp/" rel="self" type="application/rss+xml" /><item>
+  <title>HTB靶机 Blue WriteUp</title>
+  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</link>
+  <pubDate>Mon, 28 Mar 2022 17:55:48 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</guid>
+  <description><![CDATA[]]></description>
+</item>
+<item>
+  <title>HTB靶机 Lame WriteUp</title>
+  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</link>
+  <pubDate>Wed, 23 Mar 2022 17:47:01 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</guid>
+  <description><![CDATA[]]></description>
+</item>
+<item>
+  <title>HTB靶机 Legacy WriteUp</title>
+  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</link>
+  <pubDate>Sun, 20 Mar 2022 17:40:46 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
+  <description><![CDATA[备战OSCP系列，从HackTheBox靶场开始。]]></description>
+</item>
+</channel>
+</rss>

