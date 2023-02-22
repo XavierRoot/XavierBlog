@@ -10,5 +10,5 @@
 ---
 
 > 作者: Xavier  
-> URL: http://example.org/friends/  
+> URL: https://www.bthoughts.top/friends/  
 

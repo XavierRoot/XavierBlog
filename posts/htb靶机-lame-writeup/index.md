@@ -626,5 +626,5 @@ expdb搜索：https://www.exploit-db.com/search?cve=2008-0166
 ---
 
 > 作者: Xavier  
-> URL: http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/  
+> URL: https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/  
 

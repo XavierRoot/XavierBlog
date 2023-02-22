@@ -225,5 +225,5 @@ MSF: 略
 ---
 
 > 作者: Xavier  
-> URL: http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/  
+> URL: https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/  
 

@@ -243,5 +243,5 @@ Kali `/usr/share/windows-binaries`目录下自带一些Windows下命令
 ---
 
 > 作者: Xavier  
-> URL: http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/  
+> URL: https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/  
 

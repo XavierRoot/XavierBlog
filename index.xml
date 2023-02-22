@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>Xavier&#39;s Blog</title>
-    <link>http://example.org/</link>
+    <link>https://www.bthoughts.top/</link>
     <description>Xavier&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 14 Feb 2023 14:59:29 &#43;0800</lastBuildDate>
-      <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+      <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>Mac下Android APP抓包配置</title>
-  <link>http://example.org/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</link>
+  <link>https://www.bthoughts.top/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</link>
   <pubDate>Tue, 14 Feb 2023 14:59:29 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</guid>
+  <guid>https://www.bthoughts.top/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</guid>
   <description><![CDATA[换了M系列芯片的Mac，过去常用的模拟器都不太支持，之前用谷歌的Android-emulator-m1-preview，后来支持Android Studio了，就用Android Studio配置测试环境。
 一、难点： APP存在root检测； APP不走WiFi设置的代理； HTTPS抓包无法解密； 传统抓包无效 二、思路： 模拟器（Android Studio 的 AVD） 代理转发工具（Clash） 抓包软件（burpsuite，Charles，Fiddler都行），导入系统证书解密https 所需工具即：一个合适的模拟器+支持https的抓包软件+流量转发工具
 本文即AVD+Clash+Burp
@@ -28,10 +28,10 @@ openssl x509 -inform DER -text -in 证书文件.]]></description>
 </item>
 <item>
   <title>软考-中级信息安全工程师</title>
-  <link>http://example.org/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</link>
+  <link>https://www.bthoughts.top/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</link>
   <pubDate>Tue, 14 Feb 2023 10:35:09 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</guid>
+  <guid>https://www.bthoughts.top/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</guid>
   <description><![CDATA[一、简介 1.1 软考介绍 软考，即计算机技术与软件专业技术资格（水平）考试，以下为官方介绍：
 计算机技术与软件专业技术资格（水平）考试（以下简称计算机软件资格考试）是原中国计算机软件专业技术资格和水平考试（简称软件考试）的完善与发展。计算机软件资格考试是由国家人力资源和社会保障部、工业和信息化部领导下的国家级考试，其目的是科学、公正地对全国计算机与软件专业技术人员进行职业资格、专业技术资格认定和专业技术水平测试。
 更多信息见官网：https://www.ruankao.org.cn/。
@@ -73,66 +73,66 @@ openssl x509 -inform DER -text -in 证书文件.]]></description>
 </item>
 <item>
   <title>HTB靶机 Blue WriteUp</title>
-  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</link>
+  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</link>
   <pubDate>Mon, 28 Mar 2022 17:55:48 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</guid>
+  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</guid>
   <description><![CDATA[]]></description>
 </item>
 <item>
   <title>HTB靶机 Lame WriteUp</title>
-  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</link>
+  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</link>
   <pubDate>Wed, 23 Mar 2022 17:47:01 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</guid>
+  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</guid>
   <description><![CDATA[]]></description>
 </item>
 <item>
   <title>HTB靶机 Legacy WriteUp</title>
-  <link>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</link>
+  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</link>
   <pubDate>Sun, 20 Mar 2022 17:40:46 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
+  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
   <description><![CDATA[备战OSCP系列，从HackTheBox靶场开始。]]></description>
 </item>
 <item>
   <title>内网文件传输技术 Windows篇</title>
-  <link>http://example.org/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</link>
+  <link>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</link>
   <pubDate>Sat, 13 Nov 2021 17:25:01 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</guid>
+  <guid>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</guid>
   <description><![CDATA[本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。]]></description>
 </item>
 <item>
   <title>内网渗透 内网信息搜集脑图</title>
-  <link>http://example.org/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</link>
+  <link>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</link>
   <pubDate>Thu, 07 Oct 2021 00:00:00 &#43;0000</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</guid>
+  <guid>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</guid>
   <description><![CDATA[国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。]]></description>
 </item>
 <item>
   <title>Yapi Mock RCE 漏洞复现分析</title>
-  <link>http://example.org/posts/yapi-mock-rce-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</link>
+  <link>https://www.bthoughts.top/posts/yapi-mock-rce-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</link>
   <pubDate>Mon, 12 Jul 2021 00:00:00 &#43;0000</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/yapi-mock-rce-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</guid>
+  <guid>https://www.bthoughts.top/posts/yapi-mock-rce-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</guid>
   <description><![CDATA[]]></description>
 </item>
 <item>
   <title>Nmap进阶学习心得</title>
-  <link>http://example.org/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</link>
+  <link>https://www.bthoughts.top/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</link>
   <pubDate>Mon, 21 Jun 2021 00:00:00 &#43;0000</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</guid>
+  <guid>https://www.bthoughts.top/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</guid>
   <description><![CDATA[Nmap 进阶学习心得]]></description>
 </item>
 <item>
   <title>2021年4月13日 学习随笔</title>
-  <link>http://example.org/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</link>
+  <link>https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</link>
   <pubDate>Sat, 13 Mar 2021 13:31:00 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</guid>
+  <guid>https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</guid>
   <description><![CDATA[2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。]]></description>
 </item>
 </channel>

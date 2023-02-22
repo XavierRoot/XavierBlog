@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>Android - 标签 - Xavier&#39;s Blog</title>
-    <link>http://example.org/tags/android/</link>
+    <link>https://www.bthoughts.top/tags/android/</link>
     <description>Android - 标签 - Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 14 Feb 2023 14:59:29 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/android/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 14 Feb 2023 14:59:29 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/android/" rel="self" type="application/rss+xml" /><item>
   <title>Mac下Android APP抓包配置</title>
-  <link>http://example.org/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</link>
+  <link>https://www.bthoughts.top/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</link>
   <pubDate>Tue, 14 Feb 2023 14:59:29 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>http://example.org/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</guid>
+  <guid>https://www.bthoughts.top/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</guid>
   <description><![CDATA[换了M系列芯片的Mac，过去常用的模拟器都不太支持，之前用谷歌的Android-emulator-m1-preview，后来支持Android Studio了，就用Android Studio配置测试环境。
 一、难点： APP存在root检测； APP不走WiFi设置的代理； HTTPS抓包无法解密； 传统抓包无效 二、思路： 模拟器（Android Studio 的 AVD） 代理转发工具（Clash） 抓包软件（burpsuite，Charles，Fiddler都行），导入系统证书解密https 所需工具即：一个合适的模拟器+支持https的抓包软件+流量转发工具
 本文即AVD+Clash+Burp
