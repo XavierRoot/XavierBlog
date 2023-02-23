@@ -20,6 +20,14 @@
   <description><![CDATA[一、简介 1.1 软考介绍 软考，即计算机技术与软件专业技术资格（水平）考试，以下为官方介绍： 计算机技术与软件专业技术资格（水平）考试（以下简称计算机]]></description>
 </item>
 <item>
+  <title>S2-001漏洞分析</title>
+  <link>https://www.bthoughts.top/posts/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</link>
+  <pubDate>Mon, 13 Feb 2023 14:02:11 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</guid>
+  <description><![CDATA[S2-001 漏洞是一种影响 Apache Struts 2 框架的远程代码执行 (RCE) 漏洞。 该漏洞是由 Struts 2 框架中不正确的输入验证引起的，它允许攻击者通过向 Struts 2 应用程序发送特制的 HTTP 请求来执行任意代码。]]></description>
+</item>
+<item>
   <title>HTB靶机 Blue WriteUp</title>
   <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</link>
   <pubDate>Mon, 28 Mar 2022 17:55:48 &#43;0800</pubDate>
@@ -74,14 +82,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</guid>
   <description><![CDATA[Nmap 进阶学习心得]]></description>
-</item>
-<item>
-  <title>2021年4月13日 学习随笔</title>
-  <link>https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</link>
-  <pubDate>Sat, 13 Mar 2021 13:31:00 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</guid>
-  <description><![CDATA[2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。]]></description>
 </item>
 </channel>
 </rss>
