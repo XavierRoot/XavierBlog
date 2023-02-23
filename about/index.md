@@ -10,6 +10,7 @@ Long way to go....
 - 一个纠结的网络安全工作者；
 - CISP、信息安全工程师
 - Web、Android、逆向
+-  :books: 资深读者、:bow_and_arrow: 初级弓箭手、:video_game: 老玩家
 
 
 
