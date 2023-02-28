@@ -184,13 +184,6 @@ public class LoginAction extends ActionSupport{
 ##### 2、welcome.jsp
 
 ```jsp
-<%--
-  Created by IntelliJ IDEA.
-  User: lanvnal
-  Date: 2020/12/11
-  Time: 12:32 上午
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>

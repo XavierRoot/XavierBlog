@@ -10,7 +10,7 @@
 <meta name="description" content="S2-001 漏洞是一种影响 Apache Struts 2 框架的远程代码执行 (RCE) 漏洞。 该漏洞是由 Struts 2 框架中不正确的输入验证引起的，它允许攻击者通过向 Struts 2 应用程序发送特制的 HTTP 请求来执行任意代码。" /><meta name="keywords" content='漏洞分析, Java, Struts2' /><meta itemprop="name" content="S2-001漏洞分析">
 <meta itemprop="description" content="S2-001 漏洞是一种影响 Apache Struts 2 框架的远程代码执行 (RCE) 漏洞。 该漏洞是由 Struts 2 框架中不正确的输入验证引起的，它允许攻击者通过向 Struts 2 应用程序发送特制的 HTTP 请求来执行任意代码。"><meta itemprop="datePublished" content="2023-02-13T14:02:11+08:00" />
 <meta itemprop="dateModified" content="2023-02-13T14:02:11+08:00" />
-<meta itemprop="wordCount" content="5678">
+<meta itemprop="wordCount" content="5653">
 <meta itemprop="keywords" content="漏洞分析,Java,Struts2," /><meta property="og:title" content="S2-001漏洞分析" />
 <meta property="og:description" content="S2-001 漏洞是一种影响 Apache Struts 2 框架的远程代码执行 (RCE) 漏洞。 该漏洞是由 Struts 2 框架中不正确的输入验证引起的，它允许攻击者通过向 Struts 2 应用程序发送特制的 HTTP 请求来执行任意代码。" />
 <meta property="og:type" content="article" />
@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="S2-001漏洞分析"/>
 <meta name="twitter:description" content="S2-001 漏洞是一种影响 Apache Struts 2 框架的远程代码执行 (RCE) 漏洞。 该漏洞是由 Struts 2 框架中不正确的输入验证引起的，它允许攻击者通过向 Struts 2 应用程序发送特制的 HTTP 请求来执行任意代码。"/>
 <meta name="application-name" content="Xavier&#39;s Blog">
-<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="https://www.bthoughts.top/posts/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" /><link rel="prev" href="https://www.bthoughts.top/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="https://www.bthoughts.top/posts/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" /><link rel="prev" href="https://www.bthoughts.top/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" /><link rel="next" href="https://www.bthoughts.top/posts/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -30,7 +30,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90\/"
-    },"genre": "posts","keywords": "漏洞分析, Java, Struts2","wordcount":  5678 ,
+    },"genre": "posts","keywords": "漏洞分析, Java, Struts2","wordcount":  5653 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90\/","datePublished": "2023-02-13T14:02:11+08:00","dateModified": "2023-02-13T14:02:11+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -174,7 +174,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div>
-      <div class="post-meta-line"><span title=2023-02-13&#32;14:02:11><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-13">2023-02-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 5678 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 12 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-02-13&#32;14:02:11><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-13">2023-02-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 5653 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 12 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -325,14 +325,7 @@ tomcat 9.0.70
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre><h5 id="2welcomejsp">2、welcome.jsp</h5>
-<pre tabindex="0"><code class="language-jsp" data-lang="jsp">&lt;%--
-  Created by IntelliJ IDEA.
-  User: lanvnal
-  Date: 2020/12/11
-  Time: 12:32 上午
-  To change this template use File | Settings | File Templates.
---%&gt;
-&lt;%@ page language=&#34;java&#34; contentType=&#34;text/html; charset=UTF-8&#34;
+<pre tabindex="0"><code class="language-jsp" data-lang="jsp">&lt;%@ page language=&#34;java&#34; contentType=&#34;text/html; charset=UTF-8&#34;
          pageEncoding=&#34;UTF-8&#34;%&gt;
 &lt;%@ taglib prefix=&#34;s&#34; uri=&#34;/struts-tags&#34; %&gt;
 
@@ -815,7 +808,8 @@ catalina run</p>
     </section>
   </div>
 
-  <div class="post-nav"><a href="/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" class="post-nav-item" rel="prev" title="软考-中级信息安全工程师"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>软考-中级信息安全工程师</a></div>
+  <div class="post-nav"><a href="/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" class="post-nav-item" rel="prev" title="软考-中级信息安全工程师"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>软考-中级信息安全工程师</a>
+      <a href="/posts/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95/" class="post-nav-item" rel="next" title="PTS 谷安预报名测试">PTS 谷安预报名测试<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></main><footer class="footer">
     <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
