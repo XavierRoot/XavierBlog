@@ -3,7 +3,15 @@
     <title>所有文章 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/posts/</link>
     <description>所有文章 | Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 28 Feb 2023 23:24:57 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 17 Mar 2023 20:20:21 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>被评价为暮气后的碎碎念</title>
+  <link>https://www.bthoughts.top/posts/%E8%A2%AB%E8%AF%84%E4%BB%B7%E4%B8%BA%E6%9A%AE%E6%B0%94%E5%90%8E%E7%9A%84%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link>
+  <pubDate>Fri, 17 Mar 2023 20:20:21 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/%E8%A2%AB%E8%AF%84%E4%BB%B7%E4%B8%BA%E6%9A%AE%E6%B0%94%E5%90%8E%E7%9A%84%E7%A2%8E%E7%A2%8E%E5%BF%B5/</guid>
+  <description><![CDATA[引 暮气与佛系，这两个词是今天收到的评价。 佛系，我认为是个中性词，以前也被评价过，感触不大。 暮气，对于一个青年人来说，更多的应该是贬义词。虽然]]></description>
+</item>
+<item>
   <title>PTS 谷安预报名测试</title>
   <link>https://www.bthoughts.top/posts/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95/</link>
   <pubDate>Tue, 28 Feb 2023 23:24:57 &#43;0800</pubDate>
@@ -74,14 +82,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</guid>
   <description><![CDATA[国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。]]></description>
-</item>
-<item>
-  <title>Yapi Mock RCE 漏洞复现分析</title>
-  <link>https://www.bthoughts.top/posts/yapi-mock-rce-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</link>
-  <pubDate>Mon, 12 Jul 2021 00:00:00 &#43;0000</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/yapi-mock-rce-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</guid>
-  <description><![CDATA[]]></description>
 </item>
 </channel>
 </rss>
