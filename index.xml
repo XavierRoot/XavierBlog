@@ -3,9 +3,17 @@
     <title>Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/</link>
     <description>Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 26 Mar 2023 14:54:38 &#43;0800</lastBuildDate>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 30 Mar 2023 21:45:15 &#43;0800</lastBuildDate>
       <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>浏览器XSS编码解析原理</title>
+  <link>https://www.bthoughts.top/posts/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86/</link>
+  <pubDate>Thu, 30 Mar 2023 21:45:15 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86/</guid>
+  <description><![CDATA[一、小测验 本文介绍浏览器加载过程以及常用的XSS编码解析原理。首发于T00ls论坛，在博客中再发一遍留档。 首先做个小测试，下面的XSS pay]]></description>
+</item>
+<item>
   <title>20230324-攻防项目总结</title>
   <link>https://www.bthoughts.top/posts/20230324-%E6%94%BB%E9%98%B2%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/</link>
   <pubDate>Sun, 26 Mar 2023 14:54:38 &#43;0800</pubDate>
@@ -76,14 +84,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
   <description><![CDATA[备战OSCP系列，从HackTheBox靶场开始。]]></description>
-</item>
-<item>
-  <title>内网文件传输技术 Windows篇</title>
-  <link>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</link>
-  <pubDate>Sat, 13 Nov 2021 17:25:01 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</guid>
-  <description><![CDATA[本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。]]></description>
 </item>
 </channel>
 </rss>
