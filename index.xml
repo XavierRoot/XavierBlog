@@ -3,9 +3,17 @@
     <title>Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/</link>
     <description>Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 30 Mar 2023 21:45:15 &#43;0800</lastBuildDate>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 25 Apr 2023 16:55:27 &#43;0800</lastBuildDate>
       <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>Shell Spawning</title>
+  <link>https://www.bthoughts.top/posts/20230425-shellspawn/</link>
+  <pubDate>Tue, 25 Apr 2023 16:55:27 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/20230425-shellspawn/</guid>
+  <description><![CDATA[nc得到的反弹shell是一个功能非常有限的 shell，本文记录从反弹shell到TTY Shell的一些方法]]></description>
+</item>
+<item>
   <title>浏览器XSS编码解析原理</title>
   <link>https://www.bthoughts.top/posts/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86/</link>
   <pubDate>Thu, 30 Mar 2023 21:45:15 &#43;0800</pubDate>
@@ -76,14 +84,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</guid>
   <description><![CDATA[]]></description>
-</item>
-<item>
-  <title>HTB靶机 Legacy WriteUp</title>
-  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</link>
-  <pubDate>Sun, 20 Mar 2022 17:40:46 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
-  <description><![CDATA[备战OSCP系列，从HackTheBox靶场开始。]]></description>
 </item>
 </channel>
 </rss>

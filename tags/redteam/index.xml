@@ -3,7 +3,15 @@
     <title>RedTeam - 标签 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/tags/redteam/</link>
     <description>RedTeam - 标签 - Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 26 Mar 2023 14:54:38 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/redteam/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 25 Apr 2023 16:55:27 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/redteam/" rel="self" type="application/rss+xml" /><item>
+  <title>Shell Spawning</title>
+  <link>https://www.bthoughts.top/posts/20230425-shellspawn/</link>
+  <pubDate>Tue, 25 Apr 2023 16:55:27 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/20230425-shellspawn/</guid>
+  <description><![CDATA[nc得到的反弹shell是一个功能非常有限的 shell，本文记录从反弹shell到TTY Shell的一些方法]]></description>
+</item>
+<item>
   <title>20230324-攻防项目总结</title>
   <link>https://www.bthoughts.top/posts/20230324-%E6%94%BB%E9%98%B2%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/</link>
   <pubDate>Sun, 26 Mar 2023 14:54:38 &#43;0800</pubDate>
