@@ -46,7 +46,8 @@ python3 -c 'import pty;pty.spawn("/bin/bash")';
 
 ```bash
 export SHELL=bash
-export TERM=xterm-256color #允许 clear，并且有颜色
+export TERM="xterm-256color" #允许 clear，并且有颜色
+export TERM="screen-256color" # TERM任选其一
 ```
 
 4. 键入 ctrl-z 以将 shell 发送到后台。
@@ -55,9 +56,11 @@ export TERM=xterm-256color #允许 clear，并且有颜色
 
 ```bash
 stty raw -echo;fg
+回车一次后
+输入 reset 再回车
 ```
 
-回车一次后输入 reset 再回车将再次进入 shell 中。
+将再次进入 shell 中。
 
 到此 TTY shell 升级完成。
 
@@ -108,7 +111,8 @@ vi/vim 是一个可以在非TTY shell中运行的文本编辑器。
 或
 
 ```
-:set shell=/bin/bash:shell
+:set shell=/bin/bash
+:shell
 ```
 
 ## 4、STTY

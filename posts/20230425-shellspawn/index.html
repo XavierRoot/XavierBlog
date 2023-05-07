@@ -10,7 +10,7 @@
 <meta name="description" content="nc得到的反弹shell是一个功能非常有限的 shell，本文记录从反弹shell到TTY Shell的一些方法" /><meta name="keywords" content='Pentest, RedTeam' /><meta itemprop="name" content="Shell Spawning">
 <meta itemprop="description" content="nc得到的反弹shell是一个功能非常有限的 shell，本文记录从反弹shell到TTY Shell的一些方法"><meta itemprop="datePublished" content="2023-04-25T16:55:27+08:00" />
 <meta itemprop="dateModified" content="2023-04-25T16:55:27+08:00" />
-<meta itemprop="wordCount" content="1076">
+<meta itemprop="wordCount" content="1088">
 <meta itemprop="keywords" content="Pentest,RedTeam," /><meta property="og:title" content="Shell Spawning" />
 <meta property="og:description" content="nc得到的反弹shell是一个功能非常有限的 shell，本文记录从反弹shell到TTY Shell的一些方法" />
 <meta property="og:type" content="article" />
@@ -30,7 +30,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/20230425-shellspawn\/"
-    },"genre": "posts","keywords": "Pentest, RedTeam","wordcount":  1076 ,
+    },"genre": "posts","keywords": "Pentest, RedTeam","wordcount":  1088 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/20230425-shellspawn\/","datePublished": "2023-04-25T16:55:27+08:00","dateModified": "2023-04-25T16:55:27+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -174,7 +174,7 @@
       </h1><p class="single-subtitle animate__animated animate__fadeIn">从反弹shell到TTY Shell</p></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/pentest/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div>
-      <div class="post-meta-line"><span title=2023-04-25&#32;16:55:27><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-25">2023-04-25</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1076 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 3 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-04-25&#32;16:55:27><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-25">2023-04-25</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1088 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 3 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -220,7 +220,8 @@
 <li>接下来，在靶机上输入以下命令来设置一些重要的环境变量：</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SHELL</span><span class="o">=</span>bash
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span>xterm-256color <span class="c1">#允许 clear，并且有颜色</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span><span class="s2">&#34;xterm-256color&#34;</span> <span class="c1">#允许 clear，并且有颜色</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span><span class="s2">&#34;screen-256color&#34;</span> <span class="c1"># TERM任选其一</span>
 </span></span></code></pre></div><ol start="4">
 <li>
 <p>键入 ctrl-z 以将 shell 发送到后台。</p>
@@ -230,7 +231,9 @@
 </li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">stty raw -echo<span class="p">;</span><span class="nb">fg</span>
-</span></span></code></pre></div><p>回车一次后输入 reset 再回车将再次进入 shell 中。</p>
+</span></span><span class="line"><span class="cl">回车一次后
+</span></span><span class="line"><span class="cl">输入 reset 再回车
+</span></span></code></pre></div><p>将再次进入 shell 中。</p>
 <p>到此 TTY shell 升级完成。</p>
 <h3 id="其他命令">其他命令：</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> os.system<span class="o">(</span><span class="s1">&#39;/bin/bash&#39;</span><span class="o">)</span>
@@ -258,7 +261,8 @@
 <p>vi/vim 是一个可以在非TTY shell中运行的文本编辑器。</p>
 <pre tabindex="0"><code>:!bash
 </code></pre><p>或</p>
-<pre tabindex="0"><code>:set shell=/bin/bash:shell
+<pre tabindex="0"><code>:set shell=/bin/bash
+:shell
 </code></pre><h2 id="4stty">4、STTY</h2>
 <p>“stty”命令允许您更改终端与系统的连接特性。 例如，使用 -a 选项获取当前配置：</p>
 <pre tabindex="0"><code>stty -a
