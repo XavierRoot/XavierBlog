@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>draft - 分类 - Xavier&#39;s Blog</title>
+    <link>https://www.bthoughts.top/categories/draft/</link>
+    <description>draft - 分类 - Xavier&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 06 Jun 2023 00:41:38 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/categories/draft/" rel="self" type="application/rss+xml" /><item>
+  <title>CyberChef</title>
+  <link>https://www.bthoughts.top/posts/cyberchef/</link>
+  <pubDate>Tue, 06 Jun 2023 00:41:38 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/cyberchef/</guid>
+  <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>
