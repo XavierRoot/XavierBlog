@@ -11,13 +11,5 @@
   <guid>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</guid>
   <description><![CDATA[]]></description>
 </item>
-<item>
-  <title>20-RevShell：一款非常好用的生成反弹Shell命令的工具</title>
-  <link>https://www.bthoughts.top/posts/revshell/</link>
-  <pubDate>Mon, 14 Aug 2023 14:08:08 &#43;0800</pubDate>
-  <author>Gh0stX</author>
-  <guid>https://www.bthoughts.top/posts/revshell/</guid>
-  <description><![CDATA[RevShell 工具简介 RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快]]></description>
-</item>
 </channel>
 </rss>
