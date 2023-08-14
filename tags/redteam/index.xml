@@ -20,7 +20,7 @@
   <description><![CDATA[稀里糊涂的开展了一次为期一天的实战攻防演习，现在对项目进行总结。 0x01 项目前期 1. 前后端沟通问题 之所以说是稀里糊涂开展的实战攻防演习，是因为这项目]]></description>
 </item>
 <item>
-  <title>内网文件传输技术 Windows篇</title>
+  <title>005-内网文件传输技术 Windows篇</title>
   <link>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</link>
   <pubDate>Sat, 13 Nov 2021 17:25:01 &#43;0800</pubDate>
   <author>Xavier</author>
@@ -28,7 +28,7 @@
   <description><![CDATA[本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。]]></description>
 </item>
 <item>
-  <title>内网渗透 内网信息搜集脑图</title>
+  <title>004-内网渗透 内网信息搜集脑图</title>
   <link>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</link>
   <pubDate>Thu, 07 Oct 2021 00:00:00 &#43;0000</pubDate>
   <author>Xavier</author>

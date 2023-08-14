@@ -12,7 +12,7 @@
   <description><![CDATA[S2-001 漏洞是一种影响 Apache Struts 2 框架的远程代码执行 (RCE) 漏洞。 该漏洞是由 Struts 2 框架中不正确的输入验证引起的，它允许攻击者通过向 Struts 2 应用程序发送特制的 HTTP 请求来执行任意代码。]]></description>
 </item>
 <item>
-  <title>Yapi Mock RCE 漏洞复现分析</title>
+  <title>003-Yapi Mock RCE 漏洞复现分析</title>
   <link>https://www.bthoughts.top/posts/yapi-mock-rce-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</link>
   <pubDate>Mon, 12 Jul 2021 00:00:00 &#43;0000</pubDate>
   <author>Xavier</author>
