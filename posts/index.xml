@@ -3,16 +3,8 @@
     <title>所有文章 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/posts/</link>
     <description>所有文章 | Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 14 Aug 2023 15:20:04 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
-  <title>SQL注入之OrderBy位置点注入</title>
-  <link>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</link>
-  <pubDate>Mon, 14 Aug 2023 15:20:04 &#43;0800</pubDate>
-  <author>作者</author>
-  <guid>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</guid>
-  <description><![CDATA[]]></description>
-</item>
-<item>
-  <title>20-RevShell：一款非常好用的生成反弹Shell命令的工具</title>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 14 Aug 2023 14:08:08 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>020-RevShell：一款好用的生成反弹Shell命令的工具</title>
   <link>https://www.bthoughts.top/posts/revshell/</link>
   <pubDate>Mon, 14 Aug 2023 14:08:08 &#43;0800</pubDate>
   <author>Gh0stX</author>
@@ -20,12 +12,20 @@
   <description><![CDATA[RevShell 工具简介 RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快]]></description>
 </item>
 <item>
+  <title>019-SQL注入之OrderBy位置点注入</title>
+  <link>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</link>
+  <pubDate>Fri, 28 Jul 2023 15:20:04 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</guid>
+  <description><![CDATA[本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。 原文地址：https://bbs.ichunqiu.]]></description>
+</item>
+<item>
   <title>018-SQL注入之GroupBy位置点注入</title>
   <link>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</link>
   <pubDate>Thu, 27 Jul 2023 09:30:40 &#43;0800</pubDate>
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</guid>
-  <description><![CDATA[本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。 Group by 简介 GROUP BY 语句将具有相同值的行分组为汇总行，例如&]]></description>
+  <description><![CDATA[本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。 原文地址：https://bbs.ichunqiu.]]></description>
 </item>
 <item>
   <title>HTB靶机 012 Valentine WriteUp</title>

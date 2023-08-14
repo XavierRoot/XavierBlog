@@ -3,6 +3,8 @@
 
 本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
 
+原文地址：https://bbs.ichunqiu.com/thread-63490-1-1.html
+
 ## Group by 简介
 
 `GROUP BY` 语句将具有相同值的行分组为汇总行，例如"查找每个地区的客户数量"。
