@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Leaks - 标签 - Xavier&#39;s Blog</title>
+    <link>https://www.bthoughts.top/tags/leaks/</link>
+    <description>Leaks - 标签 - Xavier&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 15 Aug 2023 18:54:07 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/leaks/" rel="self" type="application/rss+xml" /><item>
+  <title>021-Git泄露文件还原</title>
+  <link>https://www.bthoughts.top/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/</link>
+  <pubDate>Tue, 15 Aug 2023 18:54:07 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/</guid>
+  <description><![CDATA[git源码泄露 自动化 利用脚本： Githack 遇到了一个git泄露，使用工具进行利用，失败。 手动获取 git 目录下文件成功，于是想手动利用下该漏洞，并了解下漏洞]]></description>
+</item>
+</channel>
+</rss>
