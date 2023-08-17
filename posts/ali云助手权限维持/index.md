@@ -1,45 +1,5 @@
-# 
+# 022-Ali云助手权限维持
 
-```
-title: "022-Ali云助手权限维持"
-subtitle: ""
-date: 2023-08-17T03:33:40+08:00
-draft: false
-author: "Xavier"
-authorLink: ""
-authorEmail: ""
-description: ""
-keywords: ""
-license: ""
-comment: false
-weight: 0
-
-tags:
-- Pentest
-- 权限维持
-- 攻防技术
-categories:
-- Pentest
-
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
-summary: ""
-resources:
-- name: featured-image
-  src: featured-image.jpg
-- name: featured-image-preview
-  src: featured-image-preview.jpg
-
-toc:
-  enable: true
-math:
-  enable: false
-lightgallery: false
-seo:
-  images: []
-
-```
 
 ## Ali云助手权限维持
 

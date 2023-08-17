@@ -5,35 +5,35 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
-    <title> - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+    <title>022-Ali云助手权限维持 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
 <meta name="author-link" content="">
-<meta name="description" content="title: &#34;022-Ali云助手权限维持&#34; subtitle: &#34;&#34; date: 2023-08-17T03:33:40&#43;08:00 draft: false author: &#34;Xavier&#34; authorLink: &#34;&#34; authorEmail: &#34;&#34; description: &#34;&#34; keywords: &#34;&#34; license: &#34;&#34; comment: false weight: 0 tags: - Pentest - 权限维持 - 攻防技术 categories: - Pentest hiddenFromHomePage: false hiddenFromSearch: false summary: &#34;&#34; resources:" /><meta name="keywords" content='Hugo, FixIt' /><meta itemprop="name" content="">
-<meta itemprop="description" content="title: &#34;022-Ali云助手权限维持&#34; subtitle: &#34;&#34; date: 2023-08-17T03:33:40&#43;08:00 draft: false author: &#34;Xavier&#34; authorLink: &#34;&#34; authorEmail: &#34;&#34; description: &#34;&#34; keywords: &#34;&#34; license: &#34;&#34; comment: false weight: 0 tags: - Pentest - 权限维持 - 攻防技术 categories: - Pentest hiddenFromHomePage: false hiddenFromSearch: false summary: &#34;&#34; resources:">
-
-<meta itemprop="wordCount" content="2161">
-<meta itemprop="keywords" content="" /><meta property="og:title" content="" />
-<meta property="og:description" content="title: &#34;022-Ali云助手权限维持&#34; subtitle: &#34;&#34; date: 2023-08-17T03:33:40&#43;08:00 draft: false author: &#34;Xavier&#34; authorLink: &#34;&#34; authorEmail: &#34;&#34; description: &#34;&#34; keywords: &#34;&#34; license: &#34;&#34; comment: false weight: 0 tags: - Pentest - 权限维持 - 攻防技术 categories: - Pentest hiddenFromHomePage: false hiddenFromSearch: false summary: &#34;&#34; resources:" />
+<meta name="description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执" /><meta name="keywords" content='Pentest, 权限维持, 攻防技术' /><meta itemprop="name" content="022-Ali云助手权限维持">
+<meta itemprop="description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执"><meta itemprop="datePublished" content="2023-08-17T03:33:40+08:00" />
+<meta itemprop="dateModified" content="2023-08-17T03:33:40+08:00" />
+<meta itemprop="wordCount" content="2070">
+<meta itemprop="keywords" content="Pentest,权限维持,攻防技术," /><meta property="og:title" content="022-Ali云助手权限维持" />
+<meta property="og:description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" /><meta property="article:section" content="posts" />
-
-
+<meta property="article:published_time" content="2023-08-17T03:33:40+08:00" />
+<meta property="article:modified_time" content="2023-08-17T03:33:40+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="title: &#34;022-Ali云助手权限维持&#34; subtitle: &#34;&#34; date: 2023-08-17T03:33:40&#43;08:00 draft: false author: &#34;Xavier&#34; authorLink: &#34;&#34; authorEmail: &#34;&#34; description: &#34;&#34; keywords: &#34;&#34; license: &#34;&#34; comment: false weight: 0 tags: - Pentest - 权限维持 - 攻防技术 categories: - Pentest hiddenFromHomePage: false hiddenFromSearch: false summary: &#34;&#34; resources:"/>
+<meta name="twitter:title" content="022-Ali云助手权限维持"/>
+<meta name="twitter:description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执"/>
 <meta name="application-name" content="Xavier&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" /><link rel="next" href="https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" /><link rel="prev" href="https://www.bthoughts.top/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
-    "headline": "",
+    "headline": "022-Ali云助手权限维持",
     "inLanguage": "en",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/"
-    },"genre": "posts","wordcount":  2161 ,
-    "url": "https:\/\/www.bthoughts.top\/posts\/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/","publisher": {
+    },"genre": "posts","keywords": "Pentest, 权限维持, 攻防技术","wordcount":  2070 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/","datePublished": "2023-08-17T03:33:40+08:00","dateModified": "2023-08-17T03:33:40+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
         "@type": "Person",
@@ -185,10 +185,11 @@
 
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span></span>
+        <span>022-Ali云助手权限维持</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span></div>
-      <div class="post-meta-line"><span title=0001-01-01&#32;00:00:00><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2161 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 5 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
+          <span class="post-category">收录于 <a href="/categories/pentest/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div>
+      <div class="post-meta-line"><span title=2023-08-17&#32;03:33:40><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-17">2023-08-17</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2070 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 5 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -205,44 +206,7 @@
     <li><a href="#参考文章">参考文章：</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="It&#39;s end."><pre tabindex="0"><code>title: &#34;022-Ali云助手权限维持&#34;
-subtitle: &#34;&#34;
-date: 2023-08-17T03:33:40+08:00
-draft: false
-author: &#34;Xavier&#34;
-authorLink: &#34;&#34;
-authorEmail: &#34;&#34;
-description: &#34;&#34;
-keywords: &#34;&#34;
-license: &#34;&#34;
-comment: false
-weight: 0
-
-tags:
-- Pentest
-- 权限维持
-- 攻防技术
-categories:
-- Pentest
-
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
-summary: &#34;&#34;
-resources:
-- name: featured-image
-  src: featured-image.jpg
-- name: featured-image-preview
-  src: featured-image-preview.jpg
-
-toc:
-  enable: true
-math:
-  enable: false
-lightgallery: false
-seo:
-  images: []
-</code></pre><h2 id="ali云助手权限维持">Ali云助手权限维持</h2>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="ali云助手权限维持">Ali云助手权限维持</h2>
 <h2 id="简介">简介</h2>
 <p><strong>云助手</strong>是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执行命令（Shell、PowerShell、Bat等）和发送文件等操作。</p>
 <p>典型的使用场景包括：安装卸载软件、启动或停止服务、分发配置文件和执行一般的命令（或脚本）等。</p>
@@ -371,7 +335,7 @@ seo:
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">
-        <span title=0001-01-01&#32;00:00:00>更新于 0001-01-01&nbsp;</span>
+        <span title=2023-08-17&#32;03:33:40>更新于 2023-08-17&nbsp;</span>
       </div></div>
     <div class="post-info-line">
       <div class="post-info-md"></div>
@@ -382,14 +346,13 @@ seo:
   </div>
 
   <div class="post-info-more">
-    <section class="post-tags"></section>
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/pentest/' class="post-tag">Pentest</a><a href='/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/' class="post-tag">权限维持</a><a href='/tags/%E6%94%BB%E9%98%B2%E6%8A%80%E6%9C%AF/' class="post-tag">攻防技术</a></section>
     <section>
       <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
     </section>
   </div>
 
-  <div class="post-nav">
-      <a href="/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/" class="post-nav-item" rel="next" title="001-2021年4月13日 学习随笔">001-2021年4月13日 学习随笔<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+  <div class="post-nav"><a href="/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/" class="post-nav-item" rel="prev" title="021-Git泄露文件还原"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>021-Git泄露文件还原</a></div>
 </div>
 </article></main><footer class="footer">
     <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
@@ -399,5 +362,5 @@ seo:
         </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
     <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
 </html>
