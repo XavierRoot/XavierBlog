@@ -9,7 +9,7 @@
 
 ## 利用
 
-![image-20230817023716768](resource/Ali云助手权限维持.assets/image-20230817023716768.png)
+![image-20230817023716768](/resource/Ali云助手权限维持.assets/image-20230817023716768.png)
 
 当生成注册码后，注册码内容只显示一次，因此需要保存此注册码唯一ID与内容。
 
@@ -54,13 +54,13 @@ Invoke-WebRequest -Uri `
 
 在目标机器上运行相应脚本，执行完之后需要刷新或者重新打开一个标签页，即可展示结果：
 
-![image-20230817024035403](resource/Ali云助手权限维持.assets/image-20230817024035403.png)
+![image-20230817024035403](/resource/Ali云助手权限维持.assets/image-20230817024035403.png)
 
 执行命令相当于创建一个脚本，依次去执行；
 
 远程登录即类似ECS，开启一个Web形式的终端
 
-![image-20230817024508568](resource/Ali云助手权限维持.assets/image-20230817024508568.png)
+![image-20230817024508568](/resource/Ali云助手权限维持.assets/image-20230817024508568.png)
 
 可以看到登录后即为system权限。
 
@@ -79,19 +79,19 @@ Invoke-WebRequest -Uri `
 
 运行云助手后，Windows系统上会有一个 aliyun_agent的进程
 
-![image-20230817024805213](resource/Ali云助手权限维持.assets/image-20230817024805213.png)
+![image-20230817024805213](/resource/Ali云助手权限维持.assets/image-20230817024805213.png)
 
 本地结束该进程后，远程连接即可终端。未发现进程保护等动作。
 
-![image-20230817030214110](resource/Ali云助手权限维持.assets/image-20230817030214110.png)
+![image-20230817030214110](/resource/Ali云助手权限维持.assets/image-20230817030214110.png)
 
-![image-20230817030414029](resource/Ali云助手权限维持.assets/image-20230817030414029.png)
+![image-20230817030414029](/resource/Ali云助手权限维持.assets/image-20230817030414029.png)
 
 
 
 本地试了2台看到的通信IP都为：218.244.138.221的TLS加密流量，因为我开的两台都是华东1（杭州）节点，不太确定这个IP是否固定，大概率不确定。
 
-![image-20230817025508652](resource/Ali云助手权限维持.assets/image-20230817025508652.png)
+![image-20230817025508652](/resource/Ali云助手权限维持.assets/image-20230817025508652.png)
 
 
 
