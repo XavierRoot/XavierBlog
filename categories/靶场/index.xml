@@ -3,7 +3,15 @@
     <title>靶场 - 分类 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/</link>
     <description>靶场 - 分类 - Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 01 May 2023 19:55:27 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/" rel="self" type="application/rss+xml" /><item>
+  <title>Offsec PG Surf WriteUp</title>
+  <link>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</link>
+  <pubDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</guid>
+  <description><![CDATA[]]></description>
+</item>
+<item>
   <title>HTB靶机 012 Valentine WriteUp</title>
   <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup/</link>
   <pubDate>Mon, 01 May 2023 19:55:27 &#43;0800</pubDate>

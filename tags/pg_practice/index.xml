@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>PG_Practice - 标签 - Xavier&#39;s Blog</title>
+    <link>https://www.bthoughts.top/tags/pg_practice/</link>
+    <description>PG_Practice - 标签 - Xavier&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/pg_practice/" rel="self" type="application/rss+xml" /><item>
+  <title>Offsec PG Surf WriteUp</title>
+  <link>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</link>
+  <pubDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</guid>
+  <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>

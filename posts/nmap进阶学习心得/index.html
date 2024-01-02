@@ -10,7 +10,7 @@
 <meta name="description" content="Nmap 进阶学习心得" /><meta name="keywords" content='Tools, Pentest' /><meta itemprop="name" content="002-Nmap进阶学习心得">
 <meta itemprop="description" content="Nmap 进阶学习心得"><meta itemprop="datePublished" content="2021-06-21T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-06-21T00:00:00+00:00" />
-<meta itemprop="wordCount" content="13722">
+<meta itemprop="wordCount" content="13751">
 <meta itemprop="keywords" content="Tools,Pentest," /><meta property="og:title" content="002-Nmap进阶学习心得" />
 <meta property="og:description" content="Nmap 进阶学习心得" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97\/"
-    },"genre": "posts","keywords": "Tools, Pentest","wordcount":  13722 ,
+    },"genre": "posts","keywords": "Tools, Pentest","wordcount":  13751 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97\/","datePublished": "2021-06-21T00:00:00+00:00","dateModified": "2021-06-21T00:00:00+00:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -188,8 +188,8 @@
         <span>002-Nmap进阶学习心得</span>
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
-          <span class="post-category">收录于 <a href="/categories/tools/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> tools</a></span></div>
-      <div class="post-meta-line"><span title=2021-06-21&#32;00:00:00><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-06-21">2021-06-21</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 13722 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 28 分钟</span>&nbsp;</div>
+          <span class="post-category">收录于 <a href="/categories/tools/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Tools</a></span></div>
+      <div class="post-meta-line"><span title=2021-06-21&#32;00:00:00><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-06-21">2021-06-21</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 13751 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 28 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -344,7 +344,7 @@
 <p>​		<code>--exclude-ports</code> 选项，排除特定端口，不进行扫描；</p>
 <p>​		<code>-F</code>选项，fast模式，扫描最常见的100个端口；</p>
 <p>​		<code>-r</code> 选项，控制端口从小到大依次进行扫描，而不是随机选择。</p>
-<p>​		<code>--top-ports &lt;number&gt;</code> 选项，扫描最常见的指定数量个端口。不知道大家平时会不会进行全端口1-65535扫描，为了全面的目标主机的端口状态，以免遗漏攻击面。NNS一书第六章，优化Nmap性能：端口选择数据和策略中，给出了一张关于端口扫描数量和有效性的表格，TCP仅需扫描3328个端口就能达到99%的效率，UDP仅需15094个，而达到100%则需要65536全端口扫描。因此是为了保证准确率仅需全端口扫描，还是牺牲1点准确率换取更短的扫描时长，取决于个人选择。</p>
+<p>​		<code>--top-ports &lt;number&gt;</code> 选项，扫描最常见的指定数量个端口。前 n 个端口是由 <strong>/usr/share/nmap/nmap-services</strong>文件确定的。有时候为了全面的目标主机的端口状态，会进行全端口扫描，以免遗漏攻击面。NNS一书第六章，优化Nmap性能：端口选择数据和策略中，给出了一张关于端口扫描数量和有效性的表格，TCP仅需扫描3328个端口就能达到99%的效率，UDP仅需15094个，而达到100%则需要65536全端口扫描。因此是为了保证准确率仅需全端口扫描，还是牺牲1点准确率换取更短的扫描时长，取决于个人选择。</p>
 <p>​		<code>--port-ratio &lt;ratio&gt;</code> 选项，控制只扫描可能性大于指定ratio的端口，同样根据 nmap-services 文件统计数据。</p>
 <h3 id="35-结果输出">3.5 结果输出</h3>
 <p>​		默认结果是输出到命令行界面。其他对输出的控制选项有：</p>
@@ -754,7 +754,7 @@
   </div>
 
   <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/tools/' class="post-tag">tools</a><a href='/tags/pentest/' class="post-tag">Pentest</a></section>
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/tools/' class="post-tag">Tools</a><a href='/tags/pentest/' class="post-tag">Pentest</a></section>
     <section>
       <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
     </section>

@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>tools - 分类 - Xavier&#39;s Blog</title>
+    <title>Tools - 分类 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/categories/tools/</link>
-    <description>tools - 分类 - Xavier&#39;s Blog</description>
+    <description>Tools - 分类 - Xavier&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 14 Aug 2023 14:08:08 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/categories/tools/" rel="self" type="application/rss+xml" /><item>
   <title>020-RevShell：一款好用的生成反弹Shell命令的工具</title>
   <link>https://www.bthoughts.top/posts/revshell/</link>
@@ -10,14 +10,6 @@
   <author>Gh0stX</author>
   <guid>https://www.bthoughts.top/posts/revshell/</guid>
   <description><![CDATA[RevShell 工具简介 RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快]]></description>
-</item>
-<item>
-  <title>Tools</title>
-  <link>https://www.bthoughts.top/tools/</link>
-  <pubDate>Tue, 06 Jun 2023 01:03:05 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/tools/</guid>
-  <description><![CDATA[常用工具列表： 待补充 CyberChef Rever-Shell-Generator DNSLog Windows进程/杀软识别 论坛 T00ls论坛 SRC todo]]></description>
 </item>
 <item>
   <title>002-Nmap进阶学习心得</title>
