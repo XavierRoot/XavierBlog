@@ -12,6 +12,14 @@
   <description><![CDATA[]]></description>
 </item>
 <item>
+  <title>Proving Grounds Codo WriteUp</title>
+  <link>https://www.bthoughts.top/posts/proving-grounds-codo/</link>
+  <pubDate>Mon, 04 Dec 2023 14:14:18 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/proving-grounds-codo/</guid>
+  <description><![CDATA[Codo Easy 10p 端口扫描 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.23]]></description>
+</item>
+<item>
   <title>HTB靶机 012 Valentine WriteUp</title>
   <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup/</link>
   <pubDate>Mon, 01 May 2023 19:55:27 &#43;0800</pubDate>

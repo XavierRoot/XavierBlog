@@ -11,5 +11,13 @@
   <guid>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</guid>
   <description><![CDATA[]]></description>
 </item>
+<item>
+  <title>Proving Grounds Codo WriteUp</title>
+  <link>https://www.bthoughts.top/posts/proving-grounds-codo/</link>
+  <pubDate>Mon, 04 Dec 2023 14:14:18 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/proving-grounds-codo/</guid>
+  <description><![CDATA[Codo Easy 10p 端口扫描 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.23]]></description>
+</item>
 </channel>
 </rss>
