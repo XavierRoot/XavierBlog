@@ -3,7 +3,15 @@
     <title>靶场 - 分类 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/</link>
     <description>靶场 - 分类 - Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 27 Feb 2024 10:08:29 &#43;0000</lastBuildDate><atom:link href="https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/" rel="self" type="application/rss+xml" /><item>
+  <title>Proving Grounds Plum WriteUp</title>
+  <link>https://www.bthoughts.top/posts/proving-grounds-plum/</link>
+  <pubDate>Tue, 27 Feb 2024 10:08:29 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/proving-grounds-plum/</guid>
+  <description><![CDATA[plum intermediate 10 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.28 [sudo] xavier 的]]></description>
+</item>
+<item>
   <title>Offsec PG Surf WriteUp</title>
   <link>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</link>
   <pubDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</pubDate>

@@ -2,14 +2,15 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   ><url>
-      <loc>https://www.bthoughts.top/categories/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+      <loc>https://www.bthoughts.top/categories/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/oscp/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/pg_practice/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/proving-grounds-plum/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/</loc><lastmod>2024-02-27T10:08:29&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/oscp/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/pg_practice/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/posts/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/categories/%E9%9D%B6%E5%9C%BA/</loc><lastmod>2024-01-02T20:48:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/proving-grounds-codo/</loc><lastmod>2023-12-04T14:14:18&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</loc><lastmod>2023-08-17T03:33:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/pentest/</loc><lastmod>2023-08-17T03:33:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

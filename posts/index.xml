@@ -3,7 +3,15 @@
     <title>所有文章 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/posts/</link>
     <description>所有文章 | Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 27 Feb 2024 10:08:29 &#43;0000</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>Proving Grounds Plum WriteUp</title>
+  <link>https://www.bthoughts.top/posts/proving-grounds-plum/</link>
+  <pubDate>Tue, 27 Feb 2024 10:08:29 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/proving-grounds-plum/</guid>
+  <description><![CDATA[plum intermediate 10 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.28 [sudo] xavier 的]]></description>
+</item>
+<item>
   <title>Offsec PG Surf WriteUp</title>
   <link>https://www.bthoughts.top/posts/%E9%9D%B6%E6%9C%BA-pg_surf_writeup/</link>
   <pubDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</pubDate>
@@ -74,14 +82,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/20230425-shellspawn/</guid>
   <description><![CDATA[nc得到的反弹shell是一个功能非常有限的 shell，本文记录从反弹shell到TTY Shell的一些方法]]></description>
-</item>
-<item>
-  <title>浏览器XSS编码解析原理</title>
-  <link>https://www.bthoughts.top/posts/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86/</link>
-  <pubDate>Thu, 30 Mar 2023 21:45:15 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86/</guid>
-  <description><![CDATA[一、小测验 本文介绍浏览器加载过程以及常用的XSS编码解析原理。首发于T00ls论坛，在博客中再发一遍留档。 首先做个小测试，下面的XSS pay]]></description>
 </item>
 </channel>
 </rss>
