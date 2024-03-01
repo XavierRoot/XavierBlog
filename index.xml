@@ -14,12 +14,36 @@
   <description><![CDATA[plum intermediate 10 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.28 [sudo] xavier 的]]></description>
 </item>
 <item>
+  <title>ProvingGrounds Heist Writeup</title>
+  <link>https://www.bthoughts.top/posts/provinggrounds-heist/</link>
+  <pubDate>Tue, 06 Feb 2024 09:10:03 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/provinggrounds-heist/</guid>
+  <description><![CDATA[Heist 这是第21台，Windows系统，难度Hard，名称 Heist 192.168.201.165 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r]]></description>
+</item>
+<item>
+  <title>ProvingGrounds Access Writeup</title>
+  <link>https://www.bthoughts.top/posts/provinggrounds-access/</link>
+  <pubDate>Fri, 12 Jan 2024 06:17:36 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/provinggrounds-access/</guid>
+  <description><![CDATA[Access 第14台，Windows系统，难度中等Intermediate，名称 Access IP：192.168.xx.187 Port ┌──(xavier㉿kali)]]></description>
+</item>
+<item>
   <title>ProvingGrouds Surf WriteUp</title>
   <link>https://www.bthoughts.top/posts/provinggrouds_surf_writeup/</link>
   <pubDate>Tue, 02 Jan 2024 20:48:15 &#43;0800</pubDate>
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/provinggrouds_surf_writeup/</guid>
   <description><![CDATA[]]></description>
+</item>
+<item>
+  <title>ProvingGrounds Exghost Writeup</title>
+  <link>https://www.bthoughts.top/posts/provinggrounds-exghost/</link>
+  <pubDate>Sun, 31 Dec 2023 07:44:55 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/provinggrounds-exghost/</guid>
+  <description><![CDATA[Exghost 第12台，Linux系统，难度Easy，名称 Exghost PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice]]]></description>
 </item>
 <item>
   <title>ProvingGrounds HelpDesk Writeup</title>
@@ -60,30 +84,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/proving-grounds-codo/</guid>
   <description><![CDATA[Codo Easy 10p 端口扫描 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.23]]></description>
-</item>
-<item>
-  <title>022-Ali云助手权限维持</title>
-  <link>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</link>
-  <pubDate>Thu, 17 Aug 2023 03:33:40 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</guid>
-  <description><![CDATA[Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执]]></description>
-</item>
-<item>
-  <title>021-Git泄露文件还原</title>
-  <link>https://www.bthoughts.top/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/</link>
-  <pubDate>Tue, 15 Aug 2023 18:54:07 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/</guid>
-  <description><![CDATA[git源码泄露 自动化 利用脚本： Githack 遇到了一个git泄露，使用工具进行利用，失败。 手动获取 git 目录下文件成功，于是想手动利用下该漏洞，并了解下漏洞]]></description>
-</item>
-<item>
-  <title>020-RevShell：一款好用的生成反弹Shell命令的工具</title>
-  <link>https://www.bthoughts.top/posts/revshell/</link>
-  <pubDate>Mon, 14 Aug 2023 14:08:08 &#43;0800</pubDate>
-  <author>Gh0stX</author>
-  <guid>https://www.bthoughts.top/posts/revshell/</guid>
-  <description><![CDATA[RevShell 工具简介 RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快]]></description>
 </item>
 </channel>
 </rss>
