@@ -12,6 +12,22 @@
   <description><![CDATA[plum intermediate 10 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.28 [sudo] xavier 的]]></description>
 </item>
 <item>
+  <title>ProvingGrounds Nagoya Writeup</title>
+  <link>https://www.bthoughts.top/posts/provinggrounds-nagoya/</link>
+  <pubDate>Mon, 19 Feb 2024 15:09:17 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/provinggrounds-nagoya/</guid>
+  <description><![CDATA[Nagoya 这是第22台，Windows系统，难度Hard，名称 Nagoya 192.168.166.21 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r]]></description>
+</item>
+<item>
+  <title>ProvingGrounds Vault Writeup</title>
+  <link>https://www.bthoughts.top/posts/provinggrounds-vault/</link>
+  <pubDate>Fri, 09 Feb 2024 15:31:05 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/provinggrounds-vault/</guid>
+  <description><![CDATA[Vault 这是第23台，Windows系统，难度Hard，名称 Vault 192.168.202.172 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r]]></description>
+</item>
+<item>
   <title>ProvingGrounds Heist Writeup</title>
   <link>https://www.bthoughts.top/posts/provinggrounds-heist/</link>
   <pubDate>Tue, 06 Feb 2024 09:10:03 &#43;0000</pubDate>
@@ -66,22 +82,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/provinggrounds-clamav/</guid>
   <description><![CDATA[ClamAV 第8台，Linux系统，难度Easy，名称 ClamAV 端口扫描 ┌──(xavier㉿kali)-[~] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.193.42 -T4 [sudo] xavier 的密码： Starting Nmap 7.94 ( https://nmap.org )]]></description>
-</item>
-<item>
-  <title>ProvingGrouds Hub WriteUp</title>
-  <link>https://www.bthoughts.top/posts/provinggrounds-hub/</link>
-  <pubDate>Tue, 12 Dec 2023 08:02:29 &#43;0000</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/provinggrounds-hub/</guid>
-  <description><![CDATA[第6台，Linux系统，难度Easy，名称 Hub ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r --min-rate=3500 -p- -sSV --script default,vuln 192.168.240.25 -T4 ┌]]></description>
-</item>
-<item>
-  <title>Proving Grounds Codo WriteUp</title>
-  <link>https://www.bthoughts.top/posts/proving-grounds-codo/</link>
-  <pubDate>Mon, 04 Dec 2023 14:14:18 &#43;0000</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/proving-grounds-codo/</guid>
-  <description><![CDATA[Codo Easy 10p 端口扫描 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/2-codo] └─$ sudo nmap -n -r --min-rate=3500 -F -sSV 192.168.196.23]]></description>
 </item>
 </channel>
 </rss>
