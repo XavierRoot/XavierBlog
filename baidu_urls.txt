@@ -11,6 +11,8 @@ https://www.bthoughts.top/posts/provinggrounds-clamav/
 https://www.bthoughts.top/posts/provinggrounds-hub/
 https://www.bthoughts.top/posts/proving-grounds-plum/
 https://www.bthoughts.top/posts/proving-grounds-codo/
+https://www.bthoughts.top/posts/pen200-oscp-b/
+https://www.bthoughts.top/posts/pen200-oscp-a/
 https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/
 https://www.bthoughts.top/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/
 https://www.bthoughts.top/posts/revshell/
