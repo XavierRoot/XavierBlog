@@ -1,15 +1,1 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-  <channel>
-    <title>权限维持 - 标签 - Xavier&#39;s Blog</title>
-    <link>https://www.bthoughts.top/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</link>
-    <description>权限维持 - 标签 - Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 17 Aug 2023 03:33:40 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" rel="self" type="application/rss+xml" /><item>
-  <title>022-Ali云助手权限维持</title>
-  <link>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</link>
-  <pubDate>Thu, 17 Aug 2023 03:33:40 &#43;0800</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</guid>
-  <description><![CDATA[Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执]]></description>
-</item>
-</channel>
-</rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>权限维持 - 标签 - Xavier's Blog</title><link>https://www.bthoughts.top/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</link><description>权限维持 - 标签 - Xavier's Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 17 Aug 2023 03:33:40 +0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" rel="self" type="application/rss+xml"/><item><title>022-Ali云助手权限维持</title><link>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</link><pubDate>Thu, 17 Aug 2023 03:33:40 +0800</pubDate><author>Xavier</author><guid>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</guid><description>Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执</description></item></channel></rss>
