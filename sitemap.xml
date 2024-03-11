@@ -38,7 +38,7 @@
       <loc>https://www.bthoughts.top/tags/sqli/</loc><lastmod>2023-07-28T15:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</loc><lastmod>2023-07-27T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/htb/</loc><lastmod>2023-05-01T19:55:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup/</loc><lastmod>2023-05-01T19:55:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/hackthebox-valentine/</loc><lastmod>2023-05-01T19:55:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/redteam/</loc><lastmod>2023-04-25T16:55:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/20230425-shellspawn/</loc><lastmod>2023-04-25T16:55:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/xss/</loc><lastmod>2023-03-30T21:45:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -63,9 +63,9 @@
       <loc>https://www.bthoughts.top/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/</loc><lastmod>2023-02-06T10:35:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/android/</loc><lastmod>2023-01-14T14:59:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</loc><lastmod>2023-01-14T14:59:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</loc><lastmod>2022-03-28T17:55:48&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</loc><lastmod>2022-03-23T17:47:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</loc><lastmod>2022-03-20T17:40:46&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/hackthebox-blue/</loc><lastmod>2022-03-28T17:55:48&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/hackthebox-lame/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</loc><lastmod>2022-03-23T17:47:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/hackthebox-legacy/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</loc><lastmod>2022-03-20T17:40:46&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</loc><lastmod>2021-11-13T17:25:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/</loc><lastmod>2021-11-13T17:25:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</loc><lastmod>2021-10-07T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

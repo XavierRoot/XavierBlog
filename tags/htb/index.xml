@@ -5,34 +5,34 @@
     <description>HTB - 标签 - Xavier&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 01 May 2023 19:55:27 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/htb/" rel="self" type="application/rss+xml" /><item>
   <title>HTB靶机 012 Valentine WriteUp</title>
-  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup/</link>
+  <link>https://www.bthoughts.top/posts/hackthebox-valentine/</link>
   <pubDate>Mon, 01 May 2023 19:55:27 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup/</guid>
+  <guid>https://www.bthoughts.top/posts/hackthebox-valentine/</guid>
   <description><![CDATA[]]></description>
 </item>
 <item>
   <title>HTB靶机 Blue WriteUp</title>
-  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</link>
+  <link>https://www.bthoughts.top/posts/hackthebox-blue/</link>
   <pubDate>Mon, 28 Mar 2022 17:55:48 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/</guid>
+  <guid>https://www.bthoughts.top/posts/hackthebox-blue/</guid>
   <description><![CDATA[]]></description>
 </item>
 <item>
   <title>HTB靶机 Lame WriteUp</title>
-  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</link>
+  <link>https://www.bthoughts.top/posts/hackthebox-lame/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</link>
   <pubDate>Wed, 23 Mar 2022 17:47:01 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</guid>
+  <guid>https://www.bthoughts.top/posts/hackthebox-lame/htb%E9%9D%B6%E6%9C%BA-lame-writeup/</guid>
   <description><![CDATA[]]></description>
 </item>
 <item>
   <title>HTB靶机 Legacy WriteUp</title>
-  <link>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</link>
+  <link>https://www.bthoughts.top/posts/hackthebox-legacy/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</link>
   <pubDate>Sun, 20 Mar 2022 17:40:46 &#43;0800</pubDate>
   <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
+  <guid>https://www.bthoughts.top/posts/hackthebox-legacy/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/</guid>
   <description><![CDATA[备战OSCP系列，从HackTheBox靶场开始。]]></description>
 </item>
 </channel>
