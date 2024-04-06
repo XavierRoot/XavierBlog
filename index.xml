@@ -3,9 +3,17 @@
     <title>Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/</link>
     <description>Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 12 Feb 2024 13:30:14 &#43;0000</lastBuildDate>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 06 Apr 2024 17:05:44 &#43;0000</lastBuildDate>
       <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>XZ Utils Backdoor 事件分析汇总</title>
+  <link>https://www.bthoughts.top/posts/xz-backdoor-analysis/</link>
+  <pubDate>Sat, 06 Apr 2024 17:05:44 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/xz-backdoor-analysis/</guid>
+  <description><![CDATA[]]></description>
+</item>
+<item>
   <title>ProvingGrounds Butch Writeup</title>
   <link>https://www.bthoughts.top/posts/provinggrounds-butch/</link>
   <pubDate>Mon, 12 Feb 2024 13:30:14 &#43;0000</pubDate>
@@ -76,14 +84,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/provinggrounds-planetexpress/</guid>
   <description><![CDATA[PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.176.205 -T4]]></description>
-</item>
-<item>
-  <title>ProvingGrouds ClamAV WriteUp</title>
-  <link>https://www.bthoughts.top/posts/provinggrounds-clamav/</link>
-  <pubDate>Sun, 17 Dec 2023 07:14:01 &#43;0000</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/provinggrounds-clamav/</guid>
-  <description><![CDATA[ClamAV 第8台，Linux系统，难度Easy，名称 ClamAV 端口扫描 ┌──(xavier㉿kali)-[~] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.193.42 -T4 [sudo] xavier 的密码： Starting Nmap 7.94 ( https://nmap.org )]]></description>
 </item>
 </channel>
 </rss>
