@@ -3,9 +3,17 @@
     <title>Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/</link>
     <description>Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 06 Apr 2024 17:05:44 &#43;0000</lastBuildDate>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 07 Apr 2024 09:32:49 &#43;0000</lastBuildDate>
       <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>2024 HackingClub北京站沙龙分享</title>
+  <link>https://www.bthoughts.top/posts/2024-hackingclub-beijing/</link>
+  <pubDate>Sun, 07 Apr 2024 09:32:49 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/2024-hackingclub-beijing/</guid>
+  <description><![CDATA[2024 HackingClub 北京站沙龙，AI+网络安全方向]]></description>
+</item>
+<item>
   <title>XZ Utils Backdoor 事件分析汇总</title>
   <link>https://www.bthoughts.top/posts/xz-backdoor-analysis/</link>
   <pubDate>Sat, 06 Apr 2024 17:05:44 &#43;0000</pubDate>
@@ -76,14 +84,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/provinggrounds-helpdesk/</guid>
   <description><![CDATA[Helpdesk 第11台，Windows系统，难度Easy，名称 Helpdesk 192.168.244.43 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practi]]></description>
-</item>
-<item>
-  <title>ProvingGrounds PlanetExpress Writeup</title>
-  <link>https://www.bthoughts.top/posts/provinggrounds-planetexpress/</link>
-  <pubDate>Wed, 20 Dec 2023 01:44:11 &#43;0000</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/provinggrounds-planetexpress/</guid>
-  <description><![CDATA[PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.176.205 -T4]]></description>
 </item>
 </channel>
 </rss>
