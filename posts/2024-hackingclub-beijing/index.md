@@ -1,9 +1,11 @@
 # 2024 HackingClub北京站沙龙分享
 
 
-
 <!--more-->
-![image-20240401004431553](resource/2024-HackingClub北京站.assets/image-20240401004431553.png)
+
+
+
+<img src="resource/2024-HackingClub北京站.assets/image-20240401004431553.png" alt="image-20240401004431553" style="margin: 0 auto;"/>
 
 2024 HackingClub 北京站 于2024年3月30日 在朝阳酒仙桥789艺术区拽马艺术空间举办。
 
@@ -20,13 +22,15 @@
 - 议题五：AI双刃剑：实践角度谈AI模型弱点与网络安全应用
 - 议题六：浅谈AI时代企业数据合规视角下的网络安全
 
-![image-20240407171710505](resource/2024-HackingClub北京站.assets/image-20240407171710505.png)
+<img src="resource/2024-HackingClub北京站.assets/image-20240407171710505.png" alt="image-20240407171710505" />
+
+
 
 ## 1、实践挖掘国内AI场景漏洞
 
 ### 议题简介
 
-> 议题劲爆拉开序幕，首先带来议题的是**地图大师returnwrong**（DAY1安全团队成员，多家src年榜前十**）**的**实践挖掘国内AI场景漏洞：科技前沿与安全探索**
+> 议题劲爆拉开序幕，首先带来议题的是**地图大师returnwrong**（DAY1安全团队成员，多家src年榜前十）的**实践挖掘国内AI场景漏洞：科技前沿与安全探索**
 >
 > 随着AI功能逐步融入网站、App和小程序等应用，白帽黑客如何利用这一技术变革的机遇，更好地挖掘SRC和漏洞众测成为关键。当前国内市场上涌现了众多只需注册即可免费试用的AI产品。这些产品多基于模板程序，支持中文操作。然而，这些AI产品背后的运作机制是怎样的呢？实际上，厂商会预先购买一些国外的AI接口，如ChatGPT4、MidJourney等，然后自行开发前端用户界面。用户输入中文指令后，指令被翻译成英文并传送至AI接口处理，最终结果显示在前端页面上反馈给用户。这背后实则是一场技术“倒卖”游戏。本议题通过三个漏洞挖掘实例，真正以漏洞挖掘者的视角分析了这一过程中存在的问题。
 
@@ -40,7 +44,7 @@ Day1安全团队成员，热爱漏洞挖掘、技术分享：
 - 2022年猎聘SRC第8
 - 2022年BOSS直聘SRC第7
 
-<img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/0HUPFawNZ7xv7azVTI3CWjrsP5myoQvSISrawdzCjAAjpAIpeZvxZnDxkAFE1aSRtavtAtnRPTjVxhqdHzQcdQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+![image-20240408002937257](resource/index.assets/image-20240408002937257.png)
 
 
 
@@ -131,7 +135,7 @@ texturefeatures = calculateTextureFeatures（binaryData） // 计算纹理特征
 print（textureFeatures） // 打印纹理特征
 ```
 
-​    
+  
 
 重新编码二进制数据以形成多通道彩色图像，每3个字节对应于红、绿、蓝三色通道的像素值。重复此过程直到所有数据被使用，不足3字节的末尾数据用0补足。例如，52D586=（R: 82, G: 213, B: 134），AA3033=（R: 170, G: 48, B: 51）。将代码文件转换为一维像素序列后，进行正方化处理，生成彩色图像。图3展示了将可执行文件转换为RGB图像的过程：
 

@@ -10,7 +10,7 @@
 <meta name="description" content="一、小测验 本文介绍浏览器加载过程以及常用的XSS编码解析原理。首发于T00ls论坛，在博客中再发一遍留档。 首先做个小测试，下面的XSS pay" /><meta name="keywords" content='Pentest, XSS' /><meta itemprop="name" content="浏览器XSS编码解析原理">
 <meta itemprop="description" content="一、小测验 本文介绍浏览器加载过程以及常用的XSS编码解析原理。首发于T00ls论坛，在博客中再发一遍留档。 首先做个小测试，下面的XSS pay"><meta itemprop="datePublished" content="2023-03-30T21:45:15+08:00" />
 <meta itemprop="dateModified" content="2023-03-30T21:45:15+08:00" />
-<meta itemprop="wordCount" content="9537">
+<meta itemprop="wordCount" content="9628">
 <meta itemprop="keywords" content="Pentest,XSS," /><meta property="og:title" content="浏览器XSS编码解析原理" />
 <meta property="og:description" content="一、小测验 本文介绍浏览器加载过程以及常用的XSS编码解析原理。首发于T00ls论坛，在博客中再发一遍留档。 首先做个小测试，下面的XSS pay" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86\/"
-    },"genre": "posts","keywords": "Pentest, XSS","wordcount":  9537 ,
+    },"genre": "posts","keywords": "Pentest, XSS","wordcount":  9628 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86\/","datePublished": "2023-03-30T21:45:15+08:00","dateModified": "2023-03-30T21:45:15+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/pentest/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div>
-      <div class="post-meta-line"><span title=2023-03-30&#32;21:45:15><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-30">2023-03-30</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 9537 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 20 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-03-30&#32;21:45:15><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-30">2023-03-30</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 9628 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 20 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -207,9 +207,32 @@
     <li><a href="#三网页加载过程">三、网页加载过程</a></li>
     <li><a href="#四浏览器解析">四、浏览器解析</a>
       <ul>
-        <li><a href="#41-html解析">4.1 HTML解析</a></li>
+        <li><a href="#41-html解析">4.1 HTML解析</a>
+          <ul>
+            <li><a href="#1数据状态">1.数据状态</a></li>
+            <li><a href="#13251-data-state">13.2.5.1 Data state</a></li>
+            <li><a href="#2rcdata状态">2.RCDATA状态</a>
+              <ul>
+                <li><a href="#13252-rcdata-state">13.2.5.2 RCDATA state</a></li>
+                <li><a href="#foreign-元素">Foreign 元素</a></li>
+              </ul>
+            </li>
+            <li><a href="#3属性值状态">3.属性值状态</a>
+              <ul>
+                <li><a href="#132536-attribute-value-double-quoted-state">13.2.5.36 Attribute value (double-quoted) state</a></li>
+                <li><a href="#132537-attribute-value-single-quoted-state">13.2.5.37 Attribute value (single-quoted) state</a></li>
+                <li><a href="#132538-attribute-value-unquoted-state">13.2.5.38 Attribute value (unquoted) state</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
         <li><a href="#42-url解析">4.2 URL解析</a></li>
-        <li><a href="#43-javascript解析">4.3 JavaScript解析</a></li>
+        <li><a href="#43-javascript解析">4.3 JavaScript解析</a>
+          <ul>
+            <li><a href="#1-执行上下文">1. 执行上下文</a></li>
+            <li><a href="#2字符解码">2.字符解码</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#五浏览器解码顺序">五、浏览器解码顺序</a></li>
@@ -222,7 +245,27 @@
 <p>首先做个小测试，下面的XSS payload能否触发，题目选自<a href="https://www.attacker-domain.com/2013/04/deep-dive-into-browser-parsing-and-xss.html"target="_blank" rel="external nofollow noopener noreferrer">大佬博客</a>。</p>
 <h3 id="问题">问题</h3>
 <p>基础题：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">1.URL编码&#34;javascript:alert(1)&#34;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">1.URL编码&#34;javascript:alert(1)&#34;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;%6a%61%76%61%73%63%72%69%70%74:%61%6c%65%72%74%28%31%29&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">2.实体编码&#34;javascript&#34;，URL编码&#34;alert(2)&#34;
@@ -238,8 +281,37 @@
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">&gt;</span><span class="ni">&amp;#60;</span>script<span class="ni">&amp;#62;</span>alert(5)<span class="ni">&amp;#60;</span>/script<span class="ni">&amp;#62;</span><span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">6. <span class="p">&lt;</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">6</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>高级题：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">7.实体编码&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>高级题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">7.实体编码&#39;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;confirm(&#39;7&amp;#39;);&#34;</span><span class="p">&gt;</span>Button<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">8.Unicode编码&#39;
@@ -262,10 +334,20 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">14.Unicode编码换行符
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;14\u000a&#39;</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>附加题：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>附加题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span>
 </span></span><span class="line"><span class="cl">	  <span class="na">href</span><span class="o">=</span><span class="s">&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&amp;#x3a;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x36;&amp;#x25;&amp;#x33;&amp;#x31;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x36;&amp;#x25;&amp;#x36;&amp;#x33;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x36;&amp;#x25;&amp;#x33;&amp;#x35;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x37;&amp;#x25;&amp;#x33;&amp;#x32;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x37;&amp;#x25;&amp;#x33;&amp;#x34;&amp;#x28;&amp;#x31;&amp;#x35;&amp;#x29;&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h3 id="答案">答案</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="答案">答案</h3>
 <blockquote>
 <p>The answers to these questions are <a href="http://test.attacker-domain.com/browserparsing/answers.txt"target="_blank" rel="external nofollow noopener noreferrer">here</a> and the testing page is <a href="http://test.attacker-domain.com/browserparsing/tests.html"target="_blank" rel="external nofollow noopener noreferrer">here</a>.</p>
 </blockquote>
@@ -387,16 +469,33 @@
 </blockquote>
 <p>当在数据状态，即标签外部，或者标签内的text段中，匹配到&amp;符号时，会切换到字符引用状态（character reference state）。</p>
 <p>例如问题4，“&lt;”和“&gt;”字符在输入流中被编码为“<code>&amp;#60;</code>”和“<code>&amp;#62;</code>”，当解析器处于“数据状态”时，它们将被解析。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">4.实体编码<span class="err">&lt;</span> &gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">4.实体编码<span class="err">&lt;</span> &gt;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="ni">&amp;#60;</span>img src=x onerror=alert(4)<span class="ni">&amp;#62;</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>那么当HTML实体被解析为<code>&lt; &gt;</code>时，它们中的脚本能否被执行呢？</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么当HTML实体被解析为<code>&lt; &gt;</code>时，它们中的脚本能否被执行呢？</p>
 <p>答案是不能，因为当解析器在解析实体编码后，不会转换成“标签打开状态”，因此不会创建新的标签。</p>
 <p>这就是我们为什么建议用字符实体编码来处理不受信任的用户输入，以确保它们作为数据进行解析。</p>
 <p>再看，我们对h1的h进行HTML实体编码，它能被解析形成标签吗？</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="err">&lt;</span><span class="ni">&amp;#104;</span>1&gt;123<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>答案是不能，HTML解析器首先匹配到div标签，进入数据状态，接着搜索到&lt;，进入标签名称状态，但并没有匹配到正确的标签，所以回到了数据状态，对<code>&amp;#104;</code>进行解码，最后返回的结果就是文本状态下的<code>&lt;h1&gt;123</code>。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>答案是不能，HTML解析器首先匹配到div标签，进入数据状态，接着搜索到&lt;，进入标签名称状态，但并没有匹配到正确的标签，所以回到了数据状态，对<code>&amp;#104;</code>进行解码，最后返回的结果就是文本状态下的<code>&lt;h1&gt;123</code>。</p>
 <h4 id="2rcdata状态">2.RCDATA状态</h4>
 <p>什么是RCDATA？我们需要知道HTML中共有5种元素：空元素、原始文本元素、RCDATA元素、外来元素以及常规元素。RCDATA状态就是RCDATA元素标签内的状态。</p>
 <p><strong>Void 元素</strong>：area, base, br, col, embed, hr, img, input, keygen, link, menuitem, meta, param, source, track, wbr。Void元素没有结束标签，因此不能在开始标签和结束标签直接放任何内容。</p>
@@ -432,35 +531,77 @@
 </blockquote>
 <p>之前我们说“RCDATA 状态”下可以对HTML字符引用进行解码。这意味着“textarea”和“title”中的字符引用将被 HTML 解析器解码。</p>
 <p>同样，在解码这些字符引用时没有进入“标签打开状态”，这就是问题 5 中没有脚本执行的原因。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">5.实体编码<span class="err">&lt;</span> &gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">5.实体编码<span class="err">&lt;</span> &gt;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">&gt;</span><span class="ni">&amp;#60;</span>script<span class="ni">&amp;#62;</span>alert(5)<span class="ni">&amp;#60;</span>/script<span class="ni">&amp;#62;</span><span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>此外，RCDATA还有一个特别之处。当浏览器解析到 RCDATA 元素时，它会进入“RCDATA 状态”。在这种状态下，如果遇到&rsquo;&lt;&lsquo;字符，就会切换到“RCDATA小于号状态”（<a href="https://html.spec.whatwg.org/multipage/parsing.html#rcdata-less-than-sign-state"target="_blank" rel="external nofollow noopener noreferrer">RCDATA less-than sign state</a>），如果后面紧跟的不是相应的RCDATA元素闭合标签，则会回到“RCDATA状态”。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此外，RCDATA还有一个特别之处。当浏览器解析到 RCDATA 元素时，它会进入“RCDATA 状态”。在这种状态下，如果遇到&rsquo;&lt;&lsquo;字符，就会切换到“RCDATA小于号状态”（<a href="https://html.spec.whatwg.org/multipage/parsing.html#rcdata-less-than-sign-state"target="_blank" rel="external nofollow noopener noreferrer">RCDATA less-than sign state</a>），如果后面紧跟的不是相应的RCDATA元素闭合标签，则会回到“RCDATA状态”。</p>
 <p>这意味着在 RCDATA 元素（例如<code> &lt;textarea&gt;</code>、<code>&lt;title&gt;</code>）的标签内部，唯一能够被识别为标签的字符是 ”<code>&lt;/textarea&gt;</code>”闭合标签或“<code>&lt;/title&gt;</code>”闭合标签，具体取决于前面打开的标签。</p>
 <p>因此，即便在“textarea”或“title”中创建额外的标签，也无法在其中执行脚本。这就解释了为什么问题6中脚本不执行。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">6</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
-</span></span></code></pre></div><blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">6</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>关于“CDATA”元素的简单说明。CDATA 中包含的任何内容都不会导致解析器创建新的开放标记，并且它以“]]&gt;”序列结束。</p>
 <p>因此，如果用户输入想要跳出 CDATA 上下文，必须使用没有任何编码的精确“]]&gt;”序列，否则它不会跳出上下文。</p>
 </blockquote>
 <p>所以当我们遇到<code>&lt;textarea&gt;</code>或<code>&lt;title&gt;</code>标签下的XSS插入点时，首先要做的就是闭合前面的标签，这样后续的payload才可能被执行，如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">2</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h5 id="foreign-元素">Foreign 元素</h5>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="foreign-元素">Foreign 元素</h5>
 <p>细心的同学会发现上文我们提到Foreign元素也可以有字符引用。</p>
 <blockquote>
 <p><strong>Foreign 元素</strong>：MathML 命名空间和 SVG 命名空间的元素。外部元素可以有文本、字符引用、CDATA 部分、其他元素和注释。</p>
 </blockquote>
 <p>这类情况，也是属于数据状态解析HTML字符引用，看示例：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">编码<span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span> <span class="na">onerror</span><span class="o">=</span><span class="s">alert(1)</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">编码<span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span> <span class="na">onerror</span><span class="o">=</span><span class="s">alert(1)</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">math</span><span class="p">&gt;</span><span class="ni">&amp;lt;&amp;#105;&amp;#109;&amp;#103;&amp;#32;&amp;#115;&amp;#114;&amp;#99;&amp;#32;&amp;#111;&amp;#110;&amp;#101;&amp;#114;&amp;#114;&amp;#111;&amp;#114;&amp;equals;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;lpar;&amp;#49;&amp;rpar;&amp;gt;</span><span class="p">&lt;/</span><span class="nt">math</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">svg</span><span class="p">&gt;</span><span class="ni">&amp;lt;&amp;#105;&amp;#109;&amp;#103;&amp;#32;&amp;#115;&amp;#114;&amp;#99;&amp;#32;&amp;#111;&amp;#110;&amp;#101;&amp;#114;&amp;#114;&amp;#111;&amp;#114;&amp;equals;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;lpar;&amp;#49;&amp;rpar;&amp;gt;</span><span class="p">&lt;/</span><span class="nt">svg</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>上述示例可以被解码，但与之前提过的一样，无法建立img标签，因此无法执行XSS。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上述示例可以被解码，但与之前提过的一样，无法建立img标签，因此无法执行XSS。</p>
 <p>我们可以看几个可以执行的SVG和MathML命名空间的XSS：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">svg</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">40</span><span class="p">;</span><span class="mi">1</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">41</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">svg</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">40</span><span class="p">;</span><span class="mi">1</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">41</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">svg</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">97</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">108</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">101</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">114</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">116</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">40</span><span class="p">;</span><span class="mi">1</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">41</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">math</span><span class="p">&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span> <span class="na">onerror</span><span class="o">=</span><span class="s">alert&amp;#40;2&amp;#41;</span><span class="p">&gt;&lt;/</span><span class="nt">math</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>可以看到，还是在<code>script</code>标签内的数据状态和<code>img</code>标签的属性值状态处解析后进入了JavaScript解析器，从而触发XSS。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，还是在<code>script</code>标签内的数据状态和<code>img</code>标签的属性值状态处解析后进入了JavaScript解析器，从而触发XSS。</p>
 <h4 id="3属性值状态">3.属性值状态</h4>
 <p>“属性值状态下的字符引用”（&ldquo;Character reference in attribute value state&rdquo;），它可以细分为无引号、单引号、双引号3种状态下的HTML实体引用。</p>
 <p>看原文：</p>
@@ -568,32 +709,78 @@
 </ul>
 </blockquote>
 <p>例如下面字符实体编码，都将被解码还原：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">实体编码&#34;javascript&#34;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">实体编码&#34;javascript&#34;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">id</span><span class="o">=</span><span class="s">&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;</span><span class="p">&gt;</span>123<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&#39;</span><span class="p">&gt;</span>456<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&#34;</span><span class="p">&gt;</span>789<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>在属性值下的HTML实体编码，是平时XSS编码的一种常用方式，如下述payload：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">编码alert(/xss/)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在属性值下的HTML实体编码，是平时XSS编码的一种常用方式，如下述payload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">编码alert(/xss/)
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">svg</span><span class="err">/</span><span class="na">onload</span><span class="o">=</span><span class="s">&amp;#x0061;&amp;#x006c;&amp;#x0065;&amp;#x0072;&amp;#x0074;&amp;#x0028;&amp;#x002f;&amp;#x0078;&amp;#x0073;&amp;#x0073;&amp;#x002f;&amp;#x0029;</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span><span class="err">/</span><span class="na">href</span><span class="o">=</span><span class="s">javascript&amp;colon;alert&amp;grave;1&amp;grave;</span><span class="p">&gt;</span>123<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;javascri&amp;#x0070;t:alert(1)&#34;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span> <span class="na">onerror</span><span class="o">=</span><span class="s">alert&amp;#40;2&amp;#41;</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h3 id="42-url解析">4.2 URL解析</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="42-url解析">4.2 URL解析</h3>
 <p>URL 解析器也可以视为状态机，输入流中的字符可以将其定向到不同的状态。<a href="https://url.spec.whatwg.org/"target="_blank" rel="external nofollow noopener noreferrer">URL解析器规范在这里</a>。</p>
 <p>从安全或 XSS 转义的角度来看，有几件事很有趣。</p>
 <p>首先，URL 格式必须是 ASCII 字母字符。 (U+0041-U+005A || U+0061-U+007A)，否则状态会转变为“无格式”状态。</p>
 <p>例如，如果对协议格式进行任何形式的编码，URL 解析器都将无法识别为协议。问题 1 中的脚本不执行就是因为URL 解析器没有将url 编码的“javascript”识别为协议。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">1.URL编码&#34;javascript:alert(1)&#34;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">1.URL编码&#34;javascript:alert(1)&#34;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;%6a%61%76%61%73%63%72%69%70%74:%61%6c%65%72%74%28%31%29&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">3.URL编码&#34;:&#34;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;javascript%3aalert(3)&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>同样的理论也适用于 &lsquo;:&rsquo; 字符，如果对其进行编码将无法识别。这就是问题 3 中的脚本不会执行的原因。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样的理论也适用于 &lsquo;:&rsquo; 字符，如果对其进行编码将无法识别。这就是问题 3 中的脚本不会执行的原因。</p>
 <p>那么，当使用字符实体对方案 (javascript) 进行编码时，为什么问题 2 中的脚本会执行？</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;:%61   %6c%65%72%74%28%32%29&#34;</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>这里就要用到刚在HTML 解析部分讨论过的内容，有一种状态称为“属性值状态”，在这种状态下，字符引用将被解码并替换为解码后的版本。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;javascript:%61   %6c%65%72%74%28%32%29&#34;</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>这里实际发生的是HTML解析器解析文档、创建标签tokens并解码 href 属性中的HTML字符实体。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;:%61   %6c%65%72%74%28%32%29&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里就要用到刚在HTML 解析部分讨论过的内容，有一种状态称为“属性值状态”，在这种状态下，字符引用将被解码并替换为解码后的版本。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;javascript:%61   %6c%65%72%74%28%32%29&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里实际发生的是HTML解析器解析文档、创建标签tokens并解码 href 属性中的HTML字符实体。</p>
 <p>当 HTML 解析器完成后，URL 解析器开始解析 href 值中的链接，此时“javascript”已经解码，并被 URL 解析器识别为JavaScript协议。</p>
 <p>然后 URL 解析器继续对链接的后续部分进行 URL 解码。因为是“javascript”协议，所以后续使用JavaScript 解析器来解析执行，这就是问题 2 中的脚本被执行的原因。</p>
 <p>⚠️<em>注意：URL编码是使用UTF-8编码方案对每个字符进行编码。如果使用另一种方案对URL进行编码，则 URL 解析器可能无法识别，这可能会变得失效。</em></p>
@@ -615,9 +802,17 @@
 <p>我们主要关注关于安全性、字符解码方式以及在某些上下文中转义是否有效这些问题。</p>
 <p>首先，让我们稍微回到 HTML 解析中的&quot;Raw text&quot;元素，因为它与 JavaScript 解析有关。</p>
 <p>所有“script”块都属于原始文本元素，“script”块有一个有趣的属性：字符引用实体在其中不被解析和解码。这意味着问题 9 中的脚本将不会执行。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">9.实体编码alert(9);
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">9.实体编码alert(9);
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">97</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">108</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">101</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">114</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">116</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">40</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">57</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">41</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">59</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>那么像 \uXXXX（例如 \u0000、\u000A）这样的Unicode 转义序列字符编码的 JavaScript 会被解析和执行吗？答案是需要看情况，这取决于编码序列所处的位置。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么像 \uXXXX（例如 \u0000、\u000A）这样的Unicode 转义序列字符编码的 JavaScript 会被解析和执行吗？答案是需要看情况，这取决于编码序列所处的位置。</p>
 <p>根据上下文，有三种情况可以使用转义序列：字符串、标识符名称或控制字符。</p>
 <p><strong>字符串</strong>：当字符串中存在 Unicode 转义序列时，它们只会被解释为常规字符，而不是单双引号（&rsquo; &ldquo;）或可以结束字符串的行终止符。这在 ECMAScript 规范中有明确说明。因此，Unicode 转义序列永远不会脱离 JavaScript 中的字符串上下文，因为它们总是被解释为字符串文字。</p>
 <blockquote>
@@ -633,8 +828,15 @@
 </blockquote>
 <p><strong>标识符名称</strong>：当标识符名称中存在 Unicode 转义序列时，它们将被解码并解释为标识符的名称，例如函数名称、属性名称等。</p>
 <p>这就是为什么问题 10 中的脚本是可执行的。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">\u0061\u006c\u0065\u0072\u0074</span><span class="p">(</span><span class="mi">10</span><span class="p">);&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>如果我们深入研究规范，它也清楚地说明如下。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">\u0061\u006c\u0065\u0072\u0074</span><span class="p">(</span><span class="mi">10</span><span class="p">);&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果我们深入研究规范，它也清楚地说明如下。</p>
 <blockquote>
 <p>ECMA-262 edition13.0, Rev 12, Clause 6.1</p>
 <p><em>&ldquo;Unicode escape sequences are permitted in an IdentifierName, where they contribute a single Unicode code point to the IdentifierName. The code point is expressed by the CodePoint of the UnicodeEscapeSequence (see 12.8.4). The \ preceding the UnicodeEscapeSequence and the u and { } code units, if they appear, do not contribute code points to the IdentifierName. A UnicodeEscapeSequence cannot be used to put a code point into an IdentifierName that would otherwise be illegal. &ldquo;</em></p>
@@ -647,22 +849,63 @@
 <p><strong>控制字符</strong>：当 Unicode 转义序列表示控制字符时，如单引号、双引号、括号等，它们不会被解释为控制字符，只会被解码和解析为标识符名称或字符串文字。查看 ECMAScript 语法，就会发现没有任何可以充当控制字符的 Unicode 转义序列。例如，如果解析器正在解析函数调用语句，则括号必须是“(”和“)”，而不是像 \u0028 和 \u0029 这样的字符。</p>
 <p>也就是说，Unicode 转义序列只有在标识符名称的上下文中才会被解释为字符串，这是唯一可以注入并利用的地方。</p>
 <p>回顾问题 11不起作用，因为 &lsquo;(11)&rsquo; 没有被正确解释而且 &lsquo;alert(11)&rsquo; 不是有效的标识符名称。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">11.unicode编码alert(11)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">11.unicode编码alert(11)
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>问题 12 ， &lsquo;\u0031\u0032&rsquo; 不会被解释为字符串，因为它们必须以单引号或双引号开头，或者是 ASCII 数字。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">12.Unicode编码alert和12
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题 12 ， &lsquo;\u0031\u0032&rsquo; 不会被解释为字符串，因为它们必须以单引号或双引号开头，或者是 ASCII 数字。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">12.Unicode编码alert和12
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">\u0061\u006c\u0065\u0072\u0074</span><span class="p">(</span><span class="nx">\u0031\u0032</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>问题 13 ，因为 &lsquo;\u0027&rsquo; 仅被解释为单引号文字，并没有起到控制字符的效果，导致字符串不完整。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">13.Unicode编码&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题 13 ，因为 &lsquo;\u0027&rsquo; 仅被解释为单引号文字，并没有起到控制字符的效果，导致字符串不完整。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">13.Unicode编码&#39;
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">13</span><span class="nx">\u0027</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>问题 14 有效，因为 &lsquo;\u000a&rsquo; 被解释为换行符，不会被当做行终止符，没有破坏 JavaScript 语法。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">14.Unicode编码换行符
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题 14 有效，因为 &lsquo;\u000a&rsquo; 被解释为换行符，不会被当做行终止符，没有破坏 JavaScript 语法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">14.Unicode编码换行符
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;14\u000a&#39;</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>根据上述描述，以下编码都可以执行：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span> <span class="nx">\u0061lert</span><span class="p">(</span><span class="s2">&#34;Hello&#34;</span><span class="p">);</span> <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据上述描述，以下编码都可以执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span> <span class="nx">\u0061lert</span><span class="p">(</span><span class="s2">&#34;Hello&#34;</span><span class="p">);</span> <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span> <span class="nx">alert</span><span class="p">(</span><span class="s2">&#34;\u0048ello&#34;</span><span class="p">);</span> <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Hello\u000a&#39;</span><span class="p">);&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h2 id="五浏览器解码顺序">五、浏览器解码顺序</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="五浏览器解码顺序">五、浏览器解码顺序</h2>
 <p>在讨论了浏览器 HTML、URL 和 JavaScript 解析之后，所有这些如何一起发挥作用？接下来将非常简要地回顾浏览器如何解析文档。</p>
 <ul>
 <li>
@@ -676,13 +919,28 @@
 </li>
 </ul>
 <p>考虑以下两个示例。</p>
-<pre tabindex="0"><code>Example A: &lt;a href=&#34;UserInput&#34;&gt;&lt;/a&gt;
-Example B: &lt;a href=# onclick=&#34;window.open(&#39;UserInput&#39;)&#34;&gt;&lt;/a&gt;
-</code></pre><p>在示例 A 中，HTML 解析器将首先启动并对用户输入执行字符引用解码。然后 URL 解析器开始对 href 中的值进行 URL 解码。最后，如果 URL scheme 是 javascript，则 JavaScript 解析器来执行 Unicode 转义序列和 Hex 转义序列解码。之后，脚本被执行。所以一共有三轮解码，依次是HTML、URL、JavaScript。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Example A: &lt;a href=&#34;UserInput&#34;&gt;&lt;/a&gt;
+</span></span><span class="line"><span class="cl">Example B: &lt;a href=# onclick=&#34;window.open(&#39;UserInput&#39;)&#34;&gt;&lt;/a&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在示例 A 中，HTML 解析器将首先启动并对用户输入执行字符引用解码。然后 URL 解析器开始对 href 中的值进行 URL 解码。最后，如果 URL scheme 是 javascript，则 JavaScript 解析器来执行 Unicode 转义序列和 Hex 转义序列解码。之后，脚本被执行。所以一共有三轮解码，依次是HTML、URL、JavaScript。</p>
 <p>在示例 B 中，HTML 解析器也首先启动。但是之后，JavaScript 解析器开始解析 onclick 处理程序中的值，因为 onclick 处理程序中需要脚本。当 JavaScript 被解析和执行时，它看到它正在执行“window.open()”，其中参数应该是一个 URL。此时，URL 解析器开始对用户输入进行 URL 解码，并将结果传回 JavaScript 引擎。所以一共有三轮解码，依次是HTML、JavaScript、URL。</p>
 <p>有没有可能超过三轮解码？考虑下面的例子</p>
-<pre tabindex="0"><code>Example C: &lt;a href=&#34;javascript:window.open(&#39;UserInput&#39;)&#34;&gt;
-</code></pre><p>示例 C 与 A 类似，但在 JavaScript 中存在“window.open”调用的意义上也有所不同。因此，将对 UserInput 进行额外的 URL 解码。一般情况下会进行四次解码，依次为HTML、URL、JavaScript、URL。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Example C: &lt;a href=&#34;javascript:window.open(&#39;UserInput&#39;)&#34;&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>示例 C 与 A 类似，但在 JavaScript 中存在“window.open”调用的意义上也有所不同。因此，将对 UserInput 进行额外的 URL 解码。一般情况下会进行四次解码，依次为HTML、URL、JavaScript、URL。</p>
 <p>此时，您应该具备解决文章开头所有问题的必要知识。</p>
 <h2 id="六总结">六、总结</h2>
 <p>总而言之，为了了解如何使 XSS payload脱离攻击者的上下文，或者如何使应用程序服务器正确编码用户输入，就必须真正了解浏览器解析器的工作原理以及组件（HTML、URL 和 JavaScript 解析器）如何协同工作。</p>

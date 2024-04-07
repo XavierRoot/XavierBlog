@@ -10,7 +10,7 @@
 <meta name="description" content="git源码泄露 自动化 利用脚本： Githack 遇到了一个git泄露，使用工具进行利用，失败。 手动获取 git 目录下文件成功，于是想手动利用下该漏洞，并了解下漏洞" /><meta name="keywords" content='Pentest, Leaks' /><meta itemprop="name" content="021-Git泄露文件还原">
 <meta itemprop="description" content="git源码泄露 自动化 利用脚本： Githack 遇到了一个git泄露，使用工具进行利用，失败。 手动获取 git 目录下文件成功，于是想手动利用下该漏洞，并了解下漏洞"><meta itemprop="datePublished" content="2023-08-15T18:54:07+08:00" />
 <meta itemprop="dateModified" content="2023-08-15T18:54:07+08:00" />
-<meta itemprop="wordCount" content="2121">
+<meta itemprop="wordCount" content="2209">
 <meta itemprop="keywords" content="Pentest,Leaks," /><meta property="og:title" content="021-Git泄露文件还原" />
 <meta property="og:description" content="git源码泄露 自动化 利用脚本： Githack 遇到了一个git泄露，使用工具进行利用，失败。 手动获取 git 目录下文件成功，于是想手动利用下该漏洞，并了解下漏洞" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F\/"
-    },"genre": "posts","keywords": "Pentest, Leaks","wordcount":  2121 ,
+    },"genre": "posts","keywords": "Pentest, Leaks","wordcount":  2209 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F\/","datePublished": "2023-08-15T18:54:07+08:00","dateModified": "2023-08-15T18:54:07+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/pentest/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div>
-      <div class="post-meta-line"><span title=2023-08-15&#32;18:54:07><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-15">2023-08-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2121 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 5 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-08-15&#32;18:54:07><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-15">2023-08-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2209 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 5 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -221,7 +221,22 @@
 <p>手动获取 git 目录下文件成功，于是想手动利用下该漏洞，并了解下漏洞利用原理。</p>
 <h2 id="目录结构">目录结构</h2>
 <p>首先 git 目录文件结构，通常包含以下内容：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">COMMIT_EDITMSG
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">COMMIT_EDITMSG
 </span></span><span class="line"><span class="cl">branches
 </span></span><span class="line"><span class="cl">config							<span class="c1"># 项目的 Git 配置文件</span>
 </span></span><span class="line"><span class="cl">description
@@ -232,7 +247,9 @@
 </span></span><span class="line"><span class="cl">logs/
 </span></span><span class="line"><span class="cl">objects/						<span class="c1"># 目录，存储 Git 对象</span>
 </span></span><span class="line"><span class="cl">refs/
-</span></span></code></pre></div><p>.git 文件夹存储项目的元数据和对象。这里的“对象”包括“blob”、“tree”、“commit”和“tag”。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>.git 文件夹存储项目的元数据和对象。这里的“对象”包括“blob”、“tree”、“commit”和“tag”。</p>
 <ul>
 <li><code>blob</code> — 用来存储文件数据的一个文件</li>
 <li><code>tree</code> — 引用了一堆其他tree 或 blob</li>
@@ -245,18 +262,57 @@
 <p>该目录包含其他文件夹，每个文件夹都有两个角色名称。这些子目录以存储在其中的 git 对象的 SHA1 哈希值的前两个字符命名。</p>
 <p>在这些子目录中，有一些以存储在其中的 git 对象的 SHA1 哈希值命名的文件。</p>
 <p>例如，下面的命令将返回文件夹列表：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ls .git/objects
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ls .git/objects
 </span></span><span class="line"><span class="cl"><span class="m">00</span> 0a <span class="m">14</span> 5a <span class="m">64</span> 6e <span class="m">82</span> 8c <span class="m">96</span> a0 aa b4 be c8 d2 dc e6 f0 fa info pack
-</span></span></code></pre></div><p>此命令将显示存储在该特定文件夹中的 git 对象：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ls .git/objects/0a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此命令将显示存储在该特定文件夹中的 git 对象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ls .git/objects/0a
 </span></span><span class="line"><span class="cl">082f2656a655c8b0a87956c7bcdc93dfda23f8 4a1ee2f3a3d406411a72e1bea63507560092bd 66452433322af3d319a377415a890c70bbd263 8c20ea4482c6d2b0c9cdaf73d4b05c2c8c44e9 ee44c60c73c5a622bb1733338d3fa964b333f0
 </span></span><span class="line"><span class="cl">0ec99d617a7b78c5466daa1e6317cbd8ee07cc 52113e4f248648117bc4511da04dd4634e6753 72e6850ef963c6aeee4121d38cf9de773865d8 
-</span></span></code></pre></div><p>Git 对象根据其 SHA1 哈希值的前两个字符存储在 /objects 中。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Git 对象根据其 SHA1 哈希值的前两个字符存储在 /objects 中。</p>
 <p>例如，哈希值为<code>0a082f2656a655c8b0a87956c7bcdc93dfda23f8</code> 的 Git 对象将以文件名 <code>082f2656a655c8b0a87956c7bcdc93dfda23f8</code> 存储在目录 <code>.git/objects/0a</code> 中。</p>
 <p>Git 在 .git/objects 中存储不同类型的对象。这里存储的对象可以是commit,、tree、blob 和带注释的tag。您可以使用以下命令确定对象的类型：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; git cat-file -t &lt;OBJECT-HASH&gt;
-</span></span></code></pre></div><p>这个hash需要写完整的哈希而不是单纯的文件名</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀Desktop-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/gitlab/git/objects/0a<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; git cat-file -t &lt;OBJECT-HASH&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个hash需要写完整的哈希而不是单纯的文件名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀Desktop-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/gitlab/git/objects/0a<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ ls
 </span></span><span class="line"><span class="cl">66007207cbbbf3fc8e506ca4bc9e7317770060	a78bbdd307fd4839b26d61166b5c0532064bec
 </span></span><span class="line"><span class="cl">
@@ -267,11 +323,38 @@
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀Desktop-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/gitlab/git/objects/0a<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ git cat-file -t 0a66007207cbbbf3fc8e506ca4bc9e7317770060
 </span></span><span class="line"><span class="cl">blob
-</span></span></code></pre></div><p>提交对象存储有关提交的目录树对象哈希、父提交、作者、提交者、日期和提交消息的信息。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>提交对象存储有关提交的目录树对象哈希、父提交、作者、提交者、日期和提交消息的信息。</p>
 <p>Tree对象包含提交的目录列表。 Blob 对象包含已提交的文件的副本（请阅读：实际源代码！）。而tag对象包含有关标记对象及其关联标记名称的信息。</p>
 <p>您可以使用以下命令显示与 Git 对象关联的文件：</p>
-<pre tabindex="0"><code>&gt; git cat-file -p &lt;OBJECT-HASH&gt;
-</code></pre><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀Desktop-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/git/gitlab/git/objects<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt; git cat-file -p &lt;OBJECT-HASH&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀Desktop-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/git/gitlab/git/objects<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ git cat-file -t 06a67bade0fd6621314daadc38300c908e989dd0
 </span></span><span class="line"><span class="cl">blob
 </span></span><span class="line"><span class="cl">
@@ -285,31 +368,65 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">urllib3.disable_warnings<span class="o">()</span>
 </span></span><span class="line"><span class="cl">...
-</span></span></code></pre></div><h3 id="config文件">/config文件</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="config文件">/config文件</h3>
 <p>/config 文件是项目的 Git 配置文件。如果该文件可访问，也许能够下载 .git 目录的全部内容。</p>
-<pre tabindex="0"><code>┌──(xavier💀Desktop-AQ550M)-[~/…/0727/git/gitlab/git]
-└─$ cat config 
-[core]
-	repositoryformatversion = 0
-	filemode = false
-	bare = false
-	logallrefupdates = true
-	symlinks = false
-	ignorecase = true
-[remote &#34;origin&#34;]
-	url = git@github.com:Username/Projectname.git
-	fetch = +refs/heads/*:refs/remotes/origin/*
-[branch &#34;master&#34;]
-	remote = origin
-	merge = refs/heads/master
-[pull]
-	rebase = false
-</code></pre><h3 id="head文件">/head文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">┌──(xavier💀Desktop-AQ550M)-[~/…/0727/git/gitlab/git]
+</span></span><span class="line"><span class="cl">└─$ cat config 
+</span></span><span class="line"><span class="cl">[core]
+</span></span><span class="line"><span class="cl">	repositoryformatversion = 0
+</span></span><span class="line"><span class="cl">	filemode = false
+</span></span><span class="line"><span class="cl">	bare = false
+</span></span><span class="line"><span class="cl">	logallrefupdates = true
+</span></span><span class="line"><span class="cl">	symlinks = false
+</span></span><span class="line"><span class="cl">	ignorecase = true
+</span></span><span class="line"><span class="cl">[remote &#34;origin&#34;]
+</span></span><span class="line"><span class="cl">	url = git@github.com:Username/Projectname.git
+</span></span><span class="line"><span class="cl">	fetch = +refs/heads/*:refs/remotes/origin/*
+</span></span><span class="line"><span class="cl">[branch &#34;master&#34;]
+</span></span><span class="line"><span class="cl">	remote = origin
+</span></span><span class="line"><span class="cl">	merge = refs/heads/master
+</span></span><span class="line"><span class="cl">[pull]
+</span></span><span class="line"><span class="cl">	rebase = false
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="head文件">/head文件</h3>
 <p>/head文件是一个包含对当前分支的引用的文件</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀Desktop-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/0727/git/gitlab/git<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀Desktop-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/0727/git/gitlab/git<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ cat HEAD 
 </span></span><span class="line"><span class="cl">ref: refs/heads/master
-</span></span></code></pre></div><h2 id="git泄露">.git泄露</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="git泄露">.git泄露</h2>
 <p>尝试探测.git文件，可能有以下几种情况：</p>
 <ul>
 <li>响应404，意味着应用程序的 .git 目录不向公众开放，无法通过这种方式泄露信息。</li>
@@ -319,7 +436,19 @@
 <p>如果无法访问 /.git 文件夹的目录列表，即未开启目录遍历功能，则必须下载所需的每个文件，而不是从目录根目录递归下载。</p>
 <p>但是，当目标文件具有复杂路径（例如“.git/objects/0a/72e6850ef963c6aeee4121d38cf9de773865d8”）时，如何找出服务器上的哪些文件可用？</p>
 <p>这就需要从已知存在的文件路径开始，例如“.git/HEAD”！阅读此文件将为您提供当前分支的引用（例如，.git/refs/heads/master），您可以使用它来查找系统上的更多文件。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; cat .git/HEAD
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; cat .git/HEAD
 </span></span><span class="line"><span class="cl">ref: refs/heads/master
 </span></span><span class="line"><span class="cl">&gt; cat .git/refs/heads/master
 </span></span><span class="line"><span class="cl">0a66452433322af3d319a377415a890c70bbd263
@@ -327,30 +456,73 @@
 </span></span><span class="line"><span class="cl">commit
 </span></span><span class="line"><span class="cl">&gt; git cat-file -p 0a66452433322af3d319a377415a890c70bbd263
 </span></span><span class="line"><span class="cl">tree 0a72e6850ef963c6aeee4121d38cf9de773865d8
-</span></span></code></pre></div><p>从Web上就是：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; curl http://xxx.com/.git/HEAD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从Web上就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; curl http://xxx.com/.git/HEAD
 </span></span><span class="line"><span class="cl">&gt; curl http://xxx.com/.git/refs/heads/master
 </span></span><span class="line"><span class="cl">&gt; wget http://xxx.com/.git/objects/0a/66452433322af3d319a377415a890c70bbd263
 </span></span><span class="line"><span class="cl">&gt; git cat-file -t 0a66452433322af3d319a377415a890c70bbd263
 </span></span><span class="line"><span class="cl">commit
 </span></span><span class="line"><span class="cl">&gt; git cat-file -p 0a66452433322af3d319a377415a890c70bbd263
 </span></span><span class="line"><span class="cl">tree 0a72e6850ef963c6aeee4121d38cf9de773865d8
-</span></span></code></pre></div><p>.git/refs/heads/master 文件将指向您存储提交目录树的相应对象哈希。可以看到该对象是一个提交，并且与树对象 0a72e6850ef963c6aeee4121d38cf9de773865d8 关联。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>.git/refs/heads/master 文件将指向您存储提交目录树的相应对象哈希。可以看到该对象是一个提交，并且与树对象 0a72e6850ef963c6aeee4121d38cf9de773865d8 关联。</p>
 <p>继续检查存储在 0a72e6850ef963c6aeee4121d38cf9de773865d8 的树对象时：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; git cat-file -p 0a72e6850ef963c6aeee4121d38cf9de773865d8
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; git cat-file -p 0a72e6850ef963c6aeee4121d38cf9de773865d8
 </span></span><span class="line"><span class="cl"><span class="m">100644</span> blob 6ad5fb6b9a351a77c396b5f1163cc3b0abcde895 .gitignore
 </span></span><span class="line"><span class="cl"><span class="m">040000</span> blob 4b66088945aab8b967da07ddd8d3cf8c47a3f53c source.py
 </span></span><span class="line"><span class="cl"><span class="m">040000</span> blob 9a3227dca45b3977423bb1296bbc312316c2aa0d README
 </span></span><span class="line"><span class="cl"><span class="m">040000</span> tree 3b1127d12ee43977423bb1296b8900a316c2ee32 resources
-</span></span></code></pre></div><p>您会发现一些源代码文件和其他对象树来探索。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>您会发现一些源代码文件和其他对象树来探索。</p>
 <p>在远程服务器上，您发现不同文件的请求看起来更像是这样：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">https://project.com/.git/HEAD 					<span class="c1"># 判断 HEAD</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">https://project.com/.git/HEAD 					<span class="c1"># 判断 HEAD</span>
 </span></span><span class="line"><span class="cl">https://project.com/.git/refs/heads/master 		<span class="c1"># 找到 HEAD 中存储的对象</span>
 </span></span><span class="line"><span class="cl">https://project.com/.git/objects/0a/72e6850ef963c6aeee4121d38cf9de773865d8  <span class="c1"># 访问与commit相关联的tree</span>
 </span></span><span class="line"><span class="cl">https://project.com/.git/objects/9a/3227dca45b3977423bb1296bbc312316c2aa0d <span class="c1"># 下载 README 文件中存储的源代码</span>
-</span></span></code></pre></div><p>在这样的远程服务器上，您需要在读取下载的目标文件之前对其进行解压缩。这可以使用 Ruby 来完成：</p>
-<pre tabindex="0"><code>ruby -rzlib -e &#39;print Zlib::Inflate.new.inflate(STDIN.read)&#39; &lt; OBJECT_FILE
-</code></pre><h2 id="敏感信息">敏感信息</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这样的远程服务器上，您需要在读取下载的目标文件之前对其进行解压缩。这可以使用 Ruby 来完成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ruby -rzlib -e &#39;print Zlib::Inflate.new.inflate(STDIN.read)&#39; &lt; OBJECT_FILE
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="敏感信息">敏感信息</h2>
 <p>之后就是从git泄露中去寻找有用的敏感信息，包括硬编码凭证、加密密钥和开发人员评论可快速了解系统。</p>
 <h2 id="参考文件">参考文件</h2>
 <ul>

