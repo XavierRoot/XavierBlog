@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Docker低版本升级 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="author-link" content="">
+<meta name="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间" /><meta name="keywords" content='问题解决, Docker, Cloud' /><meta itemprop="name" content="Docker低版本升级">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2024-04-16T17:30:47+00:00" />
+<meta itemprop="dateModified" content="2024-04-16T17:30:47+00:00" />
+<meta itemprop="wordCount" content="761">
+<meta itemprop="keywords" content="问题解决,Docker,Cloud," /><meta property="og:title" content="Docker低版本升级" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.bthoughts.top/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-16T17:30:47+00:00" />
+<meta property="article:modified_time" content="2024-04-16T17:30:47+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker低版本升级"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" /><link rel="prev" href="https://www.bthoughts.top/posts/macos-%E5%88%9D%E8%AF%86sip/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Docker低版本升级",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.bthoughts.top\/posts\/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7\/"
+    },"genre": "posts","keywords": "问题解决, Docker, Cloud","wordcount":  761 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7\/","datePublished": "2024-04-16T17:30:47+00:00","dateModified": "2024-04-16T17:30:47+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/friends/"
+                
+                
+              ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tools/"
+                
+                
+              ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/friends/"
+                  
+                  
+                ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tools/"
+                  
+                  
+                ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>Docker低版本升级</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 问题解决</a>&ensp;<a href="/categories/cloud/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Cloud</a></span></div>
+      <div class="post-meta-line"><span title=2024-04-16&#32;17:30:47><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-16">2024-04-16</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 761 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#yum安装">yum安装</a></li>
+    <li><a href="#安装最新版本">安装最新版本</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="前言">前言</h2>
+<p>因为需要安装minikube，其中有Docker版本要求，当前版本太低了，需要升级。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># minikube start --driver=docker</span>
+</span></span><span class="line"><span class="cl">😄  minikube v1.32.0 on Centos 7.9.2009
+</span></span><span class="line"><span class="cl">✨  Using the docker driver based on user configuration
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">💣  Exiting due to PROVIDER_DOCKER_VERSION_EXIT_1: <span class="s2">&#34;docker version --format &lt;no value&gt;-&lt;no value&gt;:&lt;no value&gt;&#34;</span> <span class="nb">exit</span> status 1: template: :1:44: executing <span class="s2">&#34;&#34;</span> at &lt;.Server.Platform.Nam...&gt;: can<span class="err">&#39;</span>t evaluate field Platform in <span class="nb">type</span> *types.Version
+</span></span><span class="line"><span class="cl">📘  Documentation: https://minikube.sigs.k8s.io/docs/drivers/docker/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/index.assets/image-20240419112920440.png" srcset="/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419112920440.png, resource/index.assets/image-20240419112920440.png 1.5x, /posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419112920440.png 2x" sizes="auto" data-title="image-20240419112920440" data-alt="image-20240419112920440" width="2384" height="292" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>确认当前版本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">docker -v 
+</span></span><span class="line"><span class="cl">docker --version
+</span></span><span class="line"><span class="cl">docker version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># docker --version</span>
+</span></span><span class="line"><span class="cl">Docker version 1.13.1, build 7d71120/1.13.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="resource/index.assets/image-20240419113041109.png" alt="image-20240419113041109" style="zoom:50%;" />
+<img src="resource/index.assets/image-20240419113133962.png" alt="image-20240419113133962" style="zoom:50%;" />
+<p>检查当前安装的软件包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">rpm -qa <span class="p">|</span> grep docker
+</span></span><span class="line"><span class="cl">yum list installed <span class="p">|</span> grep docker
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># yum list installed | grep docker</span>
+</span></span><span class="line"><span class="cl">docker.x86_64                       2:1.13.1-210.git7d71120.el7.centos @extras  
+</span></span><span class="line"><span class="cl">docker-client.x86_64                2:1.13.1-210.git7d71120.el7.centos @extras  
+</span></span><span class="line"><span class="cl">docker-common.x86_64                2:1.13.1-210.git7d71120.el7.centos @extras
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/index.assets/image-20240419123932065.png" srcset="/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419123932065.png, resource/index.assets/image-20240419123932065.png 1.5x, /posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419123932065.png 2x" sizes="auto" data-title="image-20240419123932065" data-alt="image-20240419123932065" width="1554" height="186" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h2 id="yum安装">yum安装</h2>
+<p>配置yum镜像源，更新yum，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 安装yum管理工具</span>
+</span></span><span class="line"><span class="cl">yum install -y yum-utils
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加国内镜像源</span>
+</span></span><span class="line"><span class="cl">yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo yum update -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>检索想要安装的版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">yum list docker-ce --showduplicates<span class="p">|</span>sort -r
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># yum list docker-ce --showduplicates|sort -r</span>
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">docker-ce.x86_64            3:18.09.6-3.el7                     docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64            3:18.09.5-3.el7                     docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64            18.03.1.ce-1.el7.centos             docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64            18.03.0.ce-1.el7.centos             docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64            17.12.1.ce-1.el7.centos             docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64            17.03.3.ce-1.el7                    docker-ce-stable
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/index.assets/image-20240419124106178.png" srcset="/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419124106178.png, resource/index.assets/image-20240419124106178.png 1.5x, /posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419124106178.png 2x" sizes="auto" data-title="image-20240419124106178" data-alt="image-20240419124106178" width="1988" height="920" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>安装指定版本的docker</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">yum -y install docker-ce-18.03.1.ce-1.el7.centos 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># systemctl start docker </span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker --version</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>yum安装有可能无法安装最新版本，因为yum库相对官网会滞后一些。</p>
+<h2 id="安装最新版本">安装最新版本</h2>
+<p>这种情况下，需要对原有docker进行卸载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo yum remove docker.xxxx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># yum remove docker.x86_64 docker-client.x86_64 docker-common.x86_64</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>curl 从官网获取最新版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">curl -fsSL https://get.docker.com/ <span class="p">|</span> sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># curl -fsSL https://get.docker.com/ | sh</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Executing docker install script, commit: e5543d473431b782227f8908005543bb4389b8de</span>
+</span></span><span class="line"><span class="cl">+ sh -c <span class="s1">&#39;yum install -y -q yum-utils&#39;</span>
+</span></span><span class="line"><span class="cl">Package yum-utils-1.1.31-54.el7_8.noarch already installed and latest version
+</span></span><span class="line"><span class="cl">+ sh -c <span class="s1">&#39;yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo&#39;</span>
+</span></span><span class="line"><span class="cl">Loaded plugins: fastestmirror, product-id, subscription-manager
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">This system is not registered with an entitlement server. You can use subscription-manager to register.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
+</span></span><span class="line"><span class="cl">grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo
+</span></span><span class="line"><span class="cl">repo saved to /etc/yum.repos.d/docker-ce.repo
+</span></span><span class="line"><span class="cl">+ <span class="s1">&#39;[&#39;</span> stable <span class="s1">&#39;!=&#39;</span> stable <span class="s1">&#39;]&#39;</span>
+</span></span><span class="line"><span class="cl">+ sh -c <span class="s1">&#39;yum makecache&#39;</span>
+</span></span><span class="line"><span class="cl">Loaded plugins: fastestmirror, product-id, search-disabled-repos, subscription-manager
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">This system is not registered with an entitlement server. You can use subscription-manager to register.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Loading mirror speeds from cached hostfile
+</span></span><span class="line"><span class="cl"> * base: mirrors.bupt.edu.cn
+</span></span><span class="line"><span class="cl"> * extras: mirrors.bupt.edu.cn
+</span></span><span class="line"><span class="cl"> * updates: mirrors.bupt.edu.cn
+</span></span><span class="line"><span class="cl">base                                           <span class="p">|</span> 3.6 kB  00:00:00     
+</span></span><span class="line"><span class="cl">docker-ce-stable                               <span class="p">|</span> 3.5 kB  00:00:00     
+</span></span><span class="line"><span class="cl">extras                                         <span class="p">|</span> 2.9 kB  00:00:00     
+</span></span><span class="line"><span class="cl">updates                                        <span class="p">|</span> 2.9 kB  00:00:00     
+</span></span><span class="line"><span class="cl">Metadata Cache Created
+</span></span><span class="line"><span class="cl">+ sh -c <span class="s1">&#39;yum install -y -q docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-ce-rootless-extras docker-buildx-plugin&#39;</span>
+</span></span><span class="line"><span class="cl">warning: /var/cache/yum/x86_64/7/docker-ce-stable/packages/docker-buildx-plugin-0.13.1-1.el7.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY
+</span></span><span class="line"><span class="cl">Public key <span class="k">for</span> docker-buildx-plugin-0.13.1-1.el7.x86_64.rpm is not installed
+</span></span><span class="line"><span class="cl">Importing GPG key 0x621E9F35:
+</span></span><span class="line"><span class="cl"> Userid     : <span class="s2">&#34;Docker Release (CE rpm) &lt;docker@docker.com&gt;&#34;</span>
+</span></span><span class="line"><span class="cl"> Fingerprint: 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35
+</span></span><span class="line"><span class="cl"> From       : https://download.docker.com/linux/centos/gpg
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">================================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To run Docker as a non-privileged user, consider setting up the
+</span></span><span class="line"><span class="cl">Docker daemon in rootless mode <span class="k">for</span> your user:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    dockerd-rootless-setuptool.sh install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To run the Docker daemon as a fully privileged service, but granting non-root
+</span></span><span class="line"><span class="cl">users access, refer to https://docs.docker.com/go/daemon-access/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+</span></span><span class="line"><span class="cl">         to root access on the host. Refer to the <span class="s1">&#39;Docker daemon attack surface&#39;</span>
+</span></span><span class="line"><span class="cl">         documentation <span class="k">for</span> details: https://docs.docker.com/go/attack-surface/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">================================================================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="resource/index.assets/image-20240419125442718.png" srcset="/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419125442718.png, resource/index.assets/image-20240419125442718.png 1.5x, /posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/resource/index.assets/image-20240419125442718.png 2x" sizes="auto" data-title="image-20240419125442718" data-alt="image-20240419125442718" width="2292" height="1092" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>重启doker</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">service docker restart 
+</span></span><span class="line"><span class="cl">docker -v
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># service docker restart</span>
+</span></span><span class="line"><span class="cl">Redirecting to /bin/systemctl restart docker.service
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost xavier<span class="o">]</span><span class="c1"># docker -v</span>
+</span></span><span class="line"><span class="cl">Docker version 26.0.1, build d260a54
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="resource/index.assets/image-20240419125726158.png" alt="image-20240419125726158" style="zoom:50%;" /></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2024-04-16&#32;17:30:47>更新于 2024-04-16&nbsp;</span>
+      </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/' class="post-tag">问题解决</a><a href='/tags/docker/' class="post-tag">Docker</a><a href='/tags/cloud/' class="post-tag">Cloud</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/macos-%E5%88%9D%E8%AF%86sip/" class="post-nav-item" rel="prev" title="MacOS初识SIP"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>MacOS初识SIP</a></div>
+</div>
+<div id="comments"><div id="giscus">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="XavierRoot/XavierBlog"
+            data-repo-id="R_kgDOHswyxg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOHswyxs4Cd2zm"
+            data-mapping="title"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
+</html>
