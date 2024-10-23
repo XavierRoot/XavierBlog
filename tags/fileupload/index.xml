@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>FileUpload - 标签 - Xavier&#39;s Blog</title>
+    <link>https://www.bthoughts.top/tags/fileupload/</link>
+    <description>FileUpload - 标签 - Xavier&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 21 Oct 2024 02:49:14 &#43;0000</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/fileupload/" rel="self" type="application/rss+xml" /><item>
+  <title>文件上传攻击面&amp;案例</title>
+  <link>https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/</link>
+  <pubDate>Mon, 21 Oct 2024 02:49:14 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/</guid>
+  <description><![CDATA[简述一些文件上传场景下的攻击面，并提供一些漏洞案例。]]></description>
+</item>
+</channel>
+</rss>
