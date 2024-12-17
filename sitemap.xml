@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://www.bthoughts.top/</loc>
+    <lastmod>2024-12-18T05:18:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/search/</loc>
+    <lastmod>2024-12-18T05:18:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.bthoughts.top/categories/</loc>
     <lastmod>2024-12-17T09:30:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -26,12 +38,6 @@
   </url>
   <url>
     <loc>https://www.bthoughts.top/tags/</loc>
-    <lastmod>2024-12-17T09:30:40+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.bthoughts.top/</loc>
     <lastmod>2024-12-17T09:30:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
