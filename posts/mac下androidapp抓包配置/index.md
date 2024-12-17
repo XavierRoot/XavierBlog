@@ -14,14 +14,14 @@
 - 代理转发工具（Clash）
 - 抓包软件（burpsuite，Charles，Fiddler都行），导入系统证书解密https
 
-所需工具即：一个合适的模拟器+支持https的抓包软件+流量转发工具
+所需工具即：一个合适的模拟器&#43;支持https的抓包软件&#43;流量转发工具
 
-本文即AVD+Clash+Burp
+本文即AVD&#43;Clash&#43;Burp
 
 ## 三、行动
 ### 3.1 创建Android Virtual Device（AVD）
 国内的各种模拟器不太支持m1芯片，于是就上手Android Studio中的 AVD。
-配置自己选合适的，我是 Pixel 5 + Tiramisu(API 33)，需要多试几个版本
+配置自己选合适的，我是 Pixel 5 &#43; Tiramisu(API 33)，需要多试几个版本
 
 ![image-20230106154844912](resource/Android抓包.assets/image-20230106154844912.png)
 
@@ -52,7 +52,7 @@
 
 高版本Android系统，导入证书安装后一般都是用户证书，我们需要花点功夫将其变成系统证书。
 
-打开burp，电脑浏览器访问"`http://burp`"并下载证书cacert.cer，获得证书文件cacert.cer之后，准备将其转换成可放入系统证书库的文件。
+打开burp，电脑浏览器访问&#34;`http://burp`&#34;并下载证书cacert.cer，获得证书文件cacert.cer之后，准备将其转换成可放入系统证书库的文件。
 
 下列方法一和二本质是一样的，都行。
 
@@ -67,7 +67,7 @@ openssl x509 -inform DER -subject_hash_old -in 证书文件.cer
 ![image-20230106162313924](resource/Android抓包.assets/image-20230106162313924.png)
 
 ```shell
-openssl x509 -inform DER -text -in 证书文件.cer > hash值.0
+openssl x509 -inform DER -text -in 证书文件.cer &gt; hash值.0
 ```
 
 
@@ -105,7 +105,7 @@ xavier@Mac Desktop % adb remount
 
 xavier@Mac Desktop % adb push 9a5ba575.0 /system/etc/security/cacerts/
 9a5ba575.0: 1 file pushed, 0 skipped. 7.2 MB/s (1330 bytes in 0.000s)
-adb: error: failed to copy '9a5ba575.0' to '/system/etc/security/cacerts/9a5ba575.0': remote couldn't create file: Read-only file system
+adb: error: failed to copy &#39;9a5ba575.0&#39; to &#39;/system/etc/security/cacerts/9a5ba575.0&#39;: remote couldn&#39;t create file: Read-only file system
 
 xavier@Mac Desktop % adb root
 adbd is already running as root
@@ -120,7 +120,7 @@ adbd is already running as root
 ```bash
 # Android SDK
 export ANDROID_HOME=~/Library/Android/sdk
-export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/cmdline-tools/latest:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+export PATH=&#34;$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/cmdline-tools/latest:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH&#34;
 ```
 
 保存并退出，`source ~/.bash_profile`并使其生效。
@@ -133,7 +133,7 @@ export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:
 
 通过命令行配置启动参数的方式运行AVD（参考：解决Android Studio ADV模拟器无法使用remount命令记录），就可以以写的方式启动AVD并向系统目录写入证书文件。
 
-进入到AVD目录并以 "`-writable-system`" 的方式启动AVD
+进入到AVD目录并以 &#34;`-writable-system`&#34; 的方式启动AVD
 
 **注意**：如果你想使用你的证书，你必须使用 `-writable-system` 选项启动模拟器。否则 Android 将加载“干净”的系统镜像。
 
@@ -143,14 +143,14 @@ cd /Users/xxx/Library/Android/sdk/emulator/
 #查看模拟器名字
 ./emulator -list-avds
  
-./emulator -avd '@模拟器名字' -writable-system
+./emulator -avd &#39;@模拟器名字&#39; -writable-system
 ```
 
 ![image-20230106165016372](resource/Android抓包.assets/image-20230106165016372.png)
 
 然后就可以看到AVD运行了起来，
 
-如果能选用的Android镜像API Level >28（Android 9.0以上），则可能需要禁用安全启动验证，API Level<=28（Android 9.0及以下）可以跳过这步。
+如果能选用的Android镜像API Level &gt;28（Android 9.0以上），则可能需要禁用安全启动验证，API Level&lt;=28（Android 9.0及以下）可以跳过这步。
 
 ```shell
 $ adb root
@@ -188,7 +188,7 @@ xavier@Mac emulator % adb shell ls -al /system/etc/security/cacerts/ | grep 9a
 
 ![image-20230106170059289](resource/Android抓包.assets/image-20230106170059289.png)
 
-不同版本的Android系统路径也不一样，可以进设置后直接搜索“凭据” 或“cerdentials"。AVD启动后默认语言是英语，可以自行修改。
+不同版本的Android系统路径也不一样，可以进设置后直接搜索“凭据” 或“cerdentials&#34;。AVD启动后默认语言是英语，可以自行修改。
 
 ![image-20230106170301901](resource/Android抓包.assets/image-20230106170301901.png)
 
@@ -198,40 +198,40 @@ xavier@Mac emulator % adb shell ls -al /system/etc/security/cacerts/ | grep 9a
 
 通过命令行启动AVD 根据API差异，可能存在不同。
 
-**API LEVEL > 28** 的说明：
+**API LEVEL &gt; 28** 的说明：
 
 Tested on emulators running API LEVEL 29 and 30
 
 ```shell
 $ emulator -list-avds
-$ emulator -avd <avd_name_here> -writable-system  # (如果要看内核日志，可以加上 -show-kernel)
+$ emulator -avd &lt;avd_name_here&gt; -writable-system  # (如果要看内核日志，可以加上 -show-kernel)
 $ adb root
 $ adb shell avbctl disable-verification # 禁用安全启动验证
 $ adb reboot
 $ adb root
 $ adb remount # 将分区重新挂载为读写
-$ adb push <path_to_certificate> /system/etc/security/cacerts
-$ adb shell chmod 664 /system/etc/security/cacerts/<name_of_pushed_certificate>
+$ adb push &lt;path_to_certificate&gt; /system/etc/security/cacerts
+$ adb shell chmod 664 /system/etc/security/cacerts/&lt;name_of_pushed_certificate&gt;
 $ adb reboot
 ```
 
-**API LEVEL <= 28** 的说明：
+**API LEVEL &lt;= 28** 的说明：
 
 Tested on emulators running API LEVEL 26, 27 and 28
 
 ```shell
 $ emulator -list-avds
-$ emulator -avd <avd_name_here> -writable-system  # (如果要看内核日志，可以加上 -show-kernel)
+$ emulator -avd &lt;avd_name_here&gt; -writable-system  # (如果要看内核日志，可以加上 -show-kernel)
 $ adb root
 $ adb remount # 将分区重新挂载为读写
-$ adb push <path_to_certificate> /system/etc/security/cacerts
-$ adb shell chmod 664 /system/etc/security/cacerts/<name_of_pushed_certificate>
+$ adb push &lt;path_to_certificate&gt; /system/etc/security/cacerts
+$ adb shell chmod 664 /system/etc/security/cacerts/&lt;name_of_pushed_certificate&gt;
 $ adb reboot
 ```
 
 
 
-### 3.4 抓包（clash+burp）
+### 3.4 抓包（clash&#43;burp）
 
 #### 3.4.1.安装配置Clash
 
@@ -258,7 +258,7 @@ mode: global
 log-level: info
 external-controller: 127.0.0.1:9090
 proxies:
-  - name: "burp"
+  - name: &#34;burp&#34;
     type: http
     server: 192.168.70.72
     port: 8080
@@ -276,8 +276,8 @@ proxy-groups:
 /Users/xavier/Desktop/clash-config.yml...kipped. 1.9 MB/s (252 bytes in 0.000s)
 ```
 
-然后打开clash，"配置-->+-->文件:从文件导入-->浏览文件-->更多:导入"从文件导入配置就可以了。
-使用时在"配置"中勾选刚导入的配置文件
+然后打开clash，&#34;配置--&gt;&#43;--&gt;文件:从文件导入--&gt;浏览文件--&gt;更多:导入&#34;从文件导入配置就可以了。
+使用时在&#34;配置&#34;中勾选刚导入的配置文件
 
 ![image-20230106171103740](resource/Android抓包.assets/image-20230106171103740.png)
 
@@ -317,7 +317,7 @@ burp那一块换成charles和fiddler抓包，也是可以的
 
 ## 参考文章：
 
-- [整合一个Android抓包新姿势（AVD+https+remount+clash代{过}{滤}理转发+burp 版）——52破解-Fythem](https://www.52pojie.cn/forum.php?mod=viewthread&tid=1701215&highlight=Android%2B%D7%A5%B0%FC)
+- [整合一个Android抓包新姿势（AVD&#43;https&#43;remount&#43;clash代{过}{滤}理转发&#43;burp 版）——52破解-Fythem](https://www.52pojie.cn/forum.php?mod=viewthread&amp;tid=1701215&amp;highlight=Android%2B%D7%A5%B0%FC)
 - [clash各平台使用教程](https://docs.reiz.link/)：除了下载文件，其他没怎么用上
 - [adb 导入 burp 证书](https://blog.csdn.net/song_lee/article/details/118058168)：Android系统证书的制作
 - [Android Studio 自带模拟器获取root权限](https://www.jianshu.com/p/31fd1d8fa8a6)：用了第一部分，实现导入系统证书

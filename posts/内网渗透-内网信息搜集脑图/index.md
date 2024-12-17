@@ -1,7 +1,7 @@
 # 004-内网渗透 内网信息搜集脑图
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 ​    国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。
 
@@ -26,7 +26,7 @@
 
   最近学习的有点迷茫，感觉前前后后学的东西也不少，但是总觉得缺少了灵活，不够融会贯通，想着多整理多写写东西是不是能得到新的收获。
 
-  纸上得来终觉浅，渗透是门实战的艺术，希望早日走出自己的一步。今天刚好看到了余弦师傅的文章《[闲聊黑客成长路径](http://mp.weixin.qq.com/s?__biz=MzA3NTEzMTUwNA==&mid=2651081604&idx=1&sn=029d592b5d084425767e732ea1c5d33f&chksm=8485d49bb3f25d8deb4a23f468cf9d1cb9789ecae667b7878d7fbf1395778da49d502ca89a2a&scene=21#wechat_redirect)》，希望能早日实现三大能力：
+  纸上得来终觉浅，渗透是门实战的艺术，希望早日走出自己的一步。今天刚好看到了余弦师傅的文章《[闲聊黑客成长路径](http://mp.weixin.qq.com/s?__biz=MzA3NTEzMTUwNA==&amp;mid=2651081604&amp;idx=1&amp;sn=029d592b5d084425767e732ea1c5d33f&amp;chksm=8485d49bb3f25d8deb4a23f468cf9d1cb9789ecae667b7878d7fbf1395778da49d502ca89a2a&amp;scene=21#wechat_redirect)》，希望能早日实现三大能力：
 
 1. 能挖好漏洞，手握好 0day；
 

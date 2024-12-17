@@ -31,7 +31,7 @@ Long way to go....
 
 - 公众号：
 
-![image-20230218205610888](/resource/QRcode/wx.png)
+![image-20230218205610888](./resource/wx.png)
 
 
 
@@ -56,6 +56,6 @@ Long way to go....
 
 ---
 
-> 作者: Xavier  
+> 作者:   
 > URL: https://www.bthoughts.top/about/  
 

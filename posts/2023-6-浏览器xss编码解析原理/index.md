@@ -12,64 +12,64 @@
 基础题：
 
 ```html
-1.URL编码"javascript:alert(1)"
-<a href="%6a%61%76%61%73%63%72%69%70%74:%61%6c%65%72%74%28%31%29"></a>
+1.URL编码&#34;javascript:alert(1)&#34;
+&lt;a href=&#34;%6a%61%76%61%73%63%72%69%70%74:%61%6c%65%72%74%28%31%29&#34;&gt;&lt;/a&gt;
 
-2.实体编码"javascript"，URL编码"alert(2)"
-<a href="&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;:%61   %6c%65%72%74%28%32%29">
+2.实体编码&#34;javascript&#34;，URL编码&#34;alert(2)&#34;
+&lt;a href=&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;:%61   %6c%65%72%74%28%32%29&#34;&gt;
 
-3.URL编码":"
-<a href="javascript%3aalert(3)"></a>
+3.URL编码&#34;:&#34;
+&lt;a href=&#34;javascript%3aalert(3)&#34;&gt;&lt;/a&gt;
 
-4.实体编码< >
-<div>&#60;img src=x onerror=alert(4)&#62;</div>
+4.实体编码&lt; &gt;
+&lt;div&gt;&amp;#60;img src=x onerror=alert(4)&amp;#62;&lt;/div&gt;
 
-5.实体编码< >
-<textarea>&#60;script&#62;alert(5)&#60;/script&#62;</textarea>
+5.实体编码&lt; &gt;
+&lt;textarea&gt;&amp;#60;script&amp;#62;alert(5)&amp;#60;/script&amp;#62;&lt;/textarea&gt;
 
-6. <textarea><script>alert(6)</script></textarea>
+6. &lt;textarea&gt;&lt;script&gt;alert(6)&lt;/script&gt;&lt;/textarea&gt;
 ```
 
 高级题：
 
 ```html
-7.实体编码'
-<button onclick="confirm('7&#39;);">Button</button>
+7.实体编码&#39;
+&lt;button onclick=&#34;confirm(&#39;7&amp;#39;);&#34;&gt;Button&lt;/button&gt;
 
-8.Unicode编码'
-<button onclick="confirm('8\u0027);">Button</button>
+8.Unicode编码&#39;
+&lt;button onclick=&#34;confirm(&#39;8\u0027);&#34;&gt;Button&lt;/button&gt;
 
 9.实体编码alert(9);
-<script>&#97;&#108;&#101;&#114;&#116&#40;&#57;&#41;&#59</script>
+&lt;script&gt;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116&amp;#40;&amp;#57;&amp;#41;&amp;#59&lt;/script&gt;
 
 10.Unicode编码alert
-<script>\u0061\u006c\u0065\u0072\u0074(10);</script>
+&lt;script&gt;\u0061\u006c\u0065\u0072\u0074(10);&lt;/script&gt;
 
 11.unicode编码alert(11)
-<script>\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029</script>
+&lt;script&gt;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029&lt;/script&gt;
 
 12.Unicode编码alert和12
-<script>\u0061\u006c\u0065\u0072\u0074(\u0031\u0032)</script>
+&lt;script&gt;\u0061\u006c\u0065\u0072\u0074(\u0031\u0032)&lt;/script&gt;
 
-13.Unicode编码'
-<script>alert('13\u0027)</script>
+13.Unicode编码&#39;
+&lt;script&gt;alert(&#39;13\u0027)&lt;/script&gt;
 
 14.Unicode编码换行符
-<script>alert('14\u000a')</script>
+&lt;script&gt;alert(&#39;14\u000a&#39;)&lt;/script&gt;
 ```
 
 附加题：
 
 ```html
-<a
-	  href="&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3a;&#x25;&#x35;&#x63;&#x25;&#x37;&#x35;&#x25;&#x33;&#x30;&#x25;&#x33;&#x30;&#x25;&#x33;&#x36;&#x25;&#x33;&#x31;&#x25;&#x35;&#x63;&#x25;&#x37;&#x35;&#x25;&#x33;&#x30;&#x25;&#x33;&#x30;&#x25;&#x33;&#x36;&#x25;&#x36;&#x33;&#x25;&#x35;&#x63;&#x25;&#x37;&#x35;&#x25;&#x33;&#x30;&#x25;&#x33;&#x30;&#x25;&#x33;&#x36;&#x25;&#x33;&#x35;&#x25;&#x35;&#x63;&#x25;&#x37;&#x35;&#x25;&#x33;&#x30;&#x25;&#x33;&#x30;&#x25;&#x33;&#x37;&#x25;&#x33;&#x32;&#x25;&#x35;&#x63;&#x25;&#x37;&#x35;&#x25;&#x33;&#x30;&#x25;&#x33;&#x30;&#x25;&#x33;&#x37;&#x25;&#x33;&#x34;&#x28;&#x31;&#x35;&#x29;"></a>
+&lt;a
+	  href=&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&amp;#x3a;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x36;&amp;#x25;&amp;#x33;&amp;#x31;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x36;&amp;#x25;&amp;#x36;&amp;#x33;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x36;&amp;#x25;&amp;#x33;&amp;#x35;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x37;&amp;#x25;&amp;#x33;&amp;#x32;&amp;#x25;&amp;#x35;&amp;#x63;&amp;#x25;&amp;#x37;&amp;#x35;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x30;&amp;#x25;&amp;#x33;&amp;#x37;&amp;#x25;&amp;#x33;&amp;#x34;&amp;#x28;&amp;#x31;&amp;#x35;&amp;#x29;&#34;&gt;&lt;/a&gt;
 ```
 
 
 
 ### 答案
 
-> The answers to these questions are [here](http://test.attacker-domain.com/browserparsing/answers.txt) and the testing page is [here](http://test.attacker-domain.com/browserparsing/tests.html). 
+&gt; The answers to these questions are [here](http://test.attacker-domain.com/browserparsing/answers.txt) and the testing page is [here](http://test.attacker-domain.com/browserparsing/tests.html). 
 
 具体内容可以去大佬博客看，我这就写个结果，Y表示触发，N表示不触发
 
@@ -137,7 +137,7 @@
 
 4、加载过程中，遇到图片资源，也是另发起一个请求获取图片资源，也不会影响HTML文档的加载。
 
-5、**JavaScript**：在加载过程中，当遇到外链的JS脚本文件或`<script>`等标签内的JS代码时，会**暂停**HTML标签的解析，挂起HTML文档加载解析渲染的线程，加载JS脚本文件，使用JavaScript引擎对JS进行解析，通过DOM API 和CSSOM API来操作 DOM Tree和 CSS Rule Tree。等到JS文件加载、解析完毕，才会继续解析HTML，恢复HTML文档的渲染线程。
+5、**JavaScript**：在加载过程中，当遇到外链的JS脚本文件或`&lt;script&gt;`等标签内的JS代码时，会**暂停**HTML标签的解析，挂起HTML文档加载解析渲染的线程，加载JS脚本文件，使用JavaScript引擎对JS进行解析，通过DOM API 和CSSOM API来操作 DOM Tree和 CSS Rule Tree。等到JS文件加载、解析完毕，才会继续解析HTML，恢复HTML文档的渲染线程。
 
 	**解析JS代码过程**：
 
@@ -159,9 +159,9 @@
 
 当用户在浏览网页时进行交互或通过 js 脚本改变页面结构时，以上的部分操作有可能重复运行，此过程称为 Repaint 或 Reflow。
 
-> **Repaint**：当元素改变时，不会影响元素在页面当中的位置（比如 background-color, border-color, visibility），浏览器仅仅会应用新的样式重绘此元素，此过程称为 Repaint。
->
-> Reflow：当元素改变时，将会影响文档内容、结构或元素位置，此过程称为 Reflow。（ HTML 使用的是 flow based layout ，即流式布局，所以，如果某元件的几何尺寸发生了变化，需要重新布局，也就叫 Reflow。）
+&gt; **Repaint**：当元素改变时，不会影响元素在页面当中的位置（比如 background-color, border-color, visibility），浏览器仅仅会应用新的样式重绘此元素，此过程称为 Repaint。
+&gt;
+&gt; Reflow：当元素改变时，将会影响文档内容、结构或元素位置，此过程称为 Reflow。（ HTML 使用的是 flow based layout ，即流式布局，所以，如果某元件的几何尺寸发生了变化，需要重新布局，也就叫 Reflow。）
 
 
 
@@ -177,10 +177,10 @@
 
 首先了解一下HTML解析器的工作原理：
 
-- HTML解析器是一个状态机，它自上而下对HTML资源从进行解析，当遇到一个`<`符号（后面没有`/`）时，就会进入标签开始状态（Tag Open State）；
+- HTML解析器是一个状态机，它自上而下对HTML资源从进行解析，当遇到一个`&lt;`符号（后面没有`/`）时，就会进入标签开始状态（Tag Open State）；
 - 然后进入标签名称状态（Tag name state）搜寻标签，img可以被识别为正确的标签，img1则不会识别。
-- *后面可能还有其他很多种状态，如："[Before attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#before-attribute-name-state)"、“[Attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-name-state)”等，我们先不提，有兴趣可以去看HTML标记规范。*
-- 当最后在读到最近的一个`>`时，结束标签状态进入数据状态（Data State），发出当前标签token。
+- *后面可能还有其他很多种状态，如：&#34;[Before attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#before-attribute-name-state)&#34;、“[Attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-name-state)”等，我们先不提，有兴趣可以去看HTML标记规范。*
+- 当最后在读到最近的一个`&gt;`时，结束标签状态进入数据状态（Data State），发出当前标签token。
 
 当解析器处于“数据状态”时，它会继续进行HTML解析处理并在发现完整标记时发出token。
 
@@ -188,50 +188,50 @@
 
 在解析过程中遇到HTML字符实体编码，HTML解析器处于以下三种状态时，能够对HTML字符实体进行解码：
 
-- “数据状态”（"Character reference in data state"；
-- “RCDATA状态”（"Character reference in RCDATA state"）
-- “属性值状态”（"Character reference in attribute value state"）。
+- “数据状态”（&#34;Character reference in data state&#34;；
+- “RCDATA状态”（&#34;Character reference in RCDATA state&#34;）
+- “属性值状态”（&#34;Character reference in attribute value state&#34;）。
 
-这些状态下，HTML 实体将从其“`&#..;`”形式中解码出来，变成相应的字符插入到数据缓冲区。
+这些状态下，HTML 实体将从其“`&amp;#..;`”形式中解码出来，变成相应的字符插入到数据缓冲区。
 
 也就是说，HTML字符实体编码只能在数据状态（标签外部和标签的text段），RCDATA状态（RCDATA元素内）、属性值状态（标签内的属性值位置）才能被解析。
 
 #### 1.数据状态
 
-> #### 13.2.5.1 Data state
->
-> Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
->
-> - U+0026 AMPERSAND (&)
->
->   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [data state](https://html.spec.whatwg.org/multipage/parsing.html#data-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
->
-> - U+003C LESS-THAN SIGN (<)
->
->   Switch to the [tag open state](https://html.spec.whatwg.org/multipage/parsing.html#tag-open-state).
->
-> - U+0000 NULL
->
->   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) as a character token.
->
-> - EOF
->
->   Emit an end-of-file token.
->
-> - Anything else
->
->   Emit the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) as a character token.
+&gt; #### 13.2.5.1 Data state
+&gt;
+&gt; Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
+&gt;
+&gt; - U&#43;0026 AMPERSAND (&amp;)
+&gt;
+&gt;   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [data state](https://html.spec.whatwg.org/multipage/parsing.html#data-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
+&gt;
+&gt; - U&#43;003C LESS-THAN SIGN (&lt;)
+&gt;
+&gt;   Switch to the [tag open state](https://html.spec.whatwg.org/multipage/parsing.html#tag-open-state).
+&gt;
+&gt; - U&#43;0000 NULL
+&gt;
+&gt;   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) as a character token.
+&gt;
+&gt; - EOF
+&gt;
+&gt;   Emit an end-of-file token.
+&gt;
+&gt; - Anything else
+&gt;
+&gt;   Emit the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) as a character token.
 
-当在数据状态，即标签外部，或者标签内的text段中，匹配到&符号时，会切换到字符引用状态（character reference state）。
+当在数据状态，即标签外部，或者标签内的text段中，匹配到&amp;符号时，会切换到字符引用状态（character reference state）。
 
-例如问题4，“<”和“>”字符在输入流中被编码为“`&#60;`”和“`&#62;`”，当解析器处于“数据状态”时，它们将被解析。
+例如问题4，“&lt;”和“&gt;”字符在输入流中被编码为“`&amp;#60;`”和“`&amp;#62;`”，当解析器处于“数据状态”时，它们将被解析。
 
 ```html
-4.实体编码< >
-<div>&#60;img src=x onerror=alert(4)&#62;</div>
+4.实体编码&lt; &gt;
+&lt;div&gt;&amp;#60;img src=x onerror=alert(4)&amp;#62;&lt;/div&gt;
 ```
 
-那么当HTML实体被解析为`< >`时，它们中的脚本能否被执行呢？
+那么当HTML实体被解析为`&lt; &gt;`时，它们中的脚本能否被执行呢？
 
 答案是不能，因为当解析器在解析实体编码后，不会转换成“标签打开状态”，因此不会创建新的标签。
 
@@ -240,12 +240,12 @@
 再看，我们对h1的h进行HTML实体编码，它能被解析形成标签吗？
 
 ```html
-<div>
-  <&#104;1>123</h1>
-</div>
+&lt;div&gt;
+  &lt;&amp;#104;1&gt;123&lt;/h1&gt;
+&lt;/div&gt;
 ```
 
-答案是不能，HTML解析器首先匹配到div标签，进入数据状态，接着搜索到<，进入标签名称状态，但并没有匹配到正确的标签，所以回到了数据状态，对`&#104;`进行解码，最后返回的结果就是文本状态下的`<h1>123`。
+答案是不能，HTML解析器首先匹配到div标签，进入数据状态，接着搜索到&lt;，进入标签名称状态，但并没有匹配到正确的标签，所以回到了数据状态，对`&amp;#104;`进行解码，最后返回的结果就是文本状态下的`&lt;h1&gt;123`。
 
 
 
@@ -263,58 +263,58 @@
 
 **Normal 元素**：除了以上4种元素以外的其他所有允许的 HTML 元素都是普通元素。普通元素可以有文本、字符引用、其他元素和注释。
 
-> ##### 13.2.5.2 RCDATA state
->
-> Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
->
-> - U+0026 AMPERSAND (&)
->
->   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [RCDATA state](https://html.spec.whatwg.org/multipage/parsing.html#rcdata-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
->
-> - U+003C LESS-THAN SIGN (<)
->
->   Switch to the [RCDATA less-than sign state](https://html.spec.whatwg.org/multipage/parsing.html#rcdata-less-than-sign-state).
->
-> - U+0000 NULL
->
->   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit a U+FFFD REPLACEMENT CHARACTER character token.
->
-> - EOF
->
->   Emit an end-of-file token.
->
-> - Anything else
->
->   Emit the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) as a character token.
+&gt; ##### 13.2.5.2 RCDATA state
+&gt;
+&gt; Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
+&gt;
+&gt; - U&#43;0026 AMPERSAND (&amp;)
+&gt;
+&gt;   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [RCDATA state](https://html.spec.whatwg.org/multipage/parsing.html#rcdata-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
+&gt;
+&gt; - U&#43;003C LESS-THAN SIGN (&lt;)
+&gt;
+&gt;   Switch to the [RCDATA less-than sign state](https://html.spec.whatwg.org/multipage/parsing.html#rcdata-less-than-sign-state).
+&gt;
+&gt; - U&#43;0000 NULL
+&gt;
+&gt;   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit a U&#43;FFFD REPLACEMENT CHARACTER character token.
+&gt;
+&gt; - EOF
+&gt;
+&gt;   Emit an end-of-file token.
+&gt;
+&gt; - Anything else
+&gt;
+&gt;   Emit the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) as a character token.
 
 之前我们说“RCDATA 状态”下可以对HTML字符引用进行解码。这意味着“textarea”和“title”中的字符引用将被 HTML 解析器解码。
 
 同样，在解码这些字符引用时没有进入“标签打开状态”，这就是问题 5 中没有脚本执行的原因。
 
 ```html
-5.实体编码< >
-<textarea>&#60;script&#62;alert(5)&#60;/script&#62;</textarea>
+5.实体编码&lt; &gt;
+&lt;textarea&gt;&amp;#60;script&amp;#62;alert(5)&amp;#60;/script&amp;#62;&lt;/textarea&gt;
 ```
 
-此外，RCDATA还有一个特别之处。当浏览器解析到 RCDATA 元素时，它会进入“RCDATA 状态”。在这种状态下，如果遇到'<'字符，就会切换到“RCDATA小于号状态”（[RCDATA less-than sign state](https://html.spec.whatwg.org/multipage/parsing.html#rcdata-less-than-sign-state)），如果后面紧跟的不是相应的RCDATA元素闭合标签，则会回到“RCDATA状态”。
+此外，RCDATA还有一个特别之处。当浏览器解析到 RCDATA 元素时，它会进入“RCDATA 状态”。在这种状态下，如果遇到&#39;&lt;&#39;字符，就会切换到“RCDATA小于号状态”（[RCDATA less-than sign state](https://html.spec.whatwg.org/multipage/parsing.html#rcdata-less-than-sign-state)），如果后面紧跟的不是相应的RCDATA元素闭合标签，则会回到“RCDATA状态”。
 
-这意味着在 RCDATA 元素（例如` <textarea>`、`<title>`）的标签内部，唯一能够被识别为标签的字符是 ”`</textarea>`”闭合标签或“`</title>`”闭合标签，具体取决于前面打开的标签。
+这意味着在 RCDATA 元素（例如` &lt;textarea&gt;`、`&lt;title&gt;`）的标签内部，唯一能够被识别为标签的字符是 ”`&lt;/textarea&gt;`”闭合标签或“`&lt;/title&gt;`”闭合标签，具体取决于前面打开的标签。
 
 因此，即便在“textarea”或“title”中创建额外的标签，也无法在其中执行脚本。这就解释了为什么问题6中脚本不执行。
 
 ```html
-<textarea><script>alert(6)</script></textarea>
+&lt;textarea&gt;&lt;script&gt;alert(6)&lt;/script&gt;&lt;/textarea&gt;
 ```
 
-> 关于“CDATA”元素的简单说明。CDATA 中包含的任何内容都不会导致解析器创建新的开放标记，并且它以“]]>”序列结束。
->
-> 因此，如果用户输入想要跳出 CDATA 上下文，必须使用没有任何编码的精确“]]>”序列，否则它不会跳出上下文。
+&gt; 关于“CDATA”元素的简单说明。CDATA 中包含的任何内容都不会导致解析器创建新的开放标记，并且它以“]]&gt;”序列结束。
+&gt;
+&gt; 因此，如果用户输入想要跳出 CDATA 上下文，必须使用没有任何编码的精确“]]&gt;”序列，否则它不会跳出上下文。
 
-所以当我们遇到`<textarea>`或`<title>`标签下的XSS插入点时，首先要做的就是闭合前面的标签，这样后续的payload才可能被执行，如：
+所以当我们遇到`&lt;textarea&gt;`或`&lt;title&gt;`标签下的XSS插入点时，首先要做的就是闭合前面的标签，这样后续的payload才可能被执行，如：
 
 ```html
-</title><script>alert(1)</script>
-</textarea><script>alert(2)</script>
+&lt;/title&gt;&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;/textarea&gt;&lt;script&gt;alert(2)&lt;/script&gt;
 ```
 
 
@@ -323,14 +323,14 @@
 
 细心的同学会发现上文我们提到Foreign元素也可以有字符引用。
 
-> **Foreign 元素**：MathML 命名空间和 SVG 命名空间的元素。外部元素可以有文本、字符引用、CDATA 部分、其他元素和注释。
+&gt; **Foreign 元素**：MathML 命名空间和 SVG 命名空间的元素。外部元素可以有文本、字符引用、CDATA 部分、其他元素和注释。
 
 这类情况，也是属于数据状态解析HTML字符引用，看示例：
 
 ```html
-编码<img src onerror=alert(1)>
-<math>&lt;&#105;&#109;&#103;&#32;&#115;&#114;&#99;&#32;&#111;&#110;&#101;&#114;&#114;&#111;&#114;&equals;&#97;&#108;&#101;&#114;&#116;&lpar;&#49;&rpar;&gt;</math>
-<svg>&lt;&#105;&#109;&#103;&#32;&#115;&#114;&#99;&#32;&#111;&#110;&#101;&#114;&#114;&#111;&#114;&equals;&#97;&#108;&#101;&#114;&#116;&lpar;&#49;&rpar;&gt;</svg>
+编码&lt;img src onerror=alert(1)&gt;
+&lt;math&gt;&amp;lt;&amp;#105;&amp;#109;&amp;#103;&amp;#32;&amp;#115;&amp;#114;&amp;#99;&amp;#32;&amp;#111;&amp;#110;&amp;#101;&amp;#114;&amp;#114;&amp;#111;&amp;#114;&amp;equals;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;lpar;&amp;#49;&amp;rpar;&amp;gt;&lt;/math&gt;
+&lt;svg&gt;&amp;lt;&amp;#105;&amp;#109;&amp;#103;&amp;#32;&amp;#115;&amp;#114;&amp;#99;&amp;#32;&amp;#111;&amp;#110;&amp;#101;&amp;#114;&amp;#114;&amp;#111;&amp;#114;&amp;equals;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;lpar;&amp;#49;&amp;rpar;&amp;gt;&lt;/svg&gt;
 ```
 
 上述示例可以被解码，但与之前提过的一样，无法建立img标签，因此无法执行XSS。
@@ -338,132 +338,132 @@
 我们可以看几个可以执行的SVG和MathML命名空间的XSS：
 
 ```html
-<svg><script>alert&#40;1&#41;</script>
-<svg><script>&#97;&#108;&#101;&#114;&#116;&#40;1&#41;</script>
+&lt;svg&gt;&lt;script&gt;alert&amp;#40;1&amp;#41;&lt;/script&gt;
+&lt;svg&gt;&lt;script&gt;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;1&amp;#41;&lt;/script&gt;
 
-<math><img src onerror=alert&#40;2&#41;></math>
+&lt;math&gt;&lt;img src onerror=alert&amp;#40;2&amp;#41;&gt;&lt;/math&gt;
 ```
 
 可以看到，还是在`script`标签内的数据状态和`img`标签的属性值状态处解析后进入了JavaScript解析器，从而触发XSS。
 
 #### 3.属性值状态
 
-“属性值状态下的字符引用”（"Character reference in attribute value state"），它可以细分为无引号、单引号、双引号3种状态下的HTML实体引用。
+“属性值状态下的字符引用”（&#34;Character reference in attribute value state&#34;），它可以细分为无引号、单引号、双引号3种状态下的HTML实体引用。
 
 看原文：
 
-> ##### 13.2.5.36 Attribute value (double-quoted) state
->
-> Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
->
-> - U+0022 QUOTATION MARK (")
->
->   Switch to the [after attribute value (quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#after-attribute-value-(quoted)-state).
->
-> - U+0026 AMPERSAND (&)
->
->   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [attribute value (double-quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
->
-> - U+0000 NULL
->
->   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
->
-> - EOF
->
->   This is an [eof-in-tag](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-tag) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit an end-of-file token.
->
-> - Anything else
->
->   Append the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) to the current attribute's value.
->
-> ##### 13.2.5.37 Attribute value (single-quoted) state
->
-> Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
->
-> - U+0027 APOSTROPHE (')
->
->   Switch to the [after attribute value (quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#after-attribute-value-(quoted)-state).
->
-> - U+0026 AMPERSAND (&)
->
->   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [attribute value (single-quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(single-quoted)-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
->
-> - U+0000 NULL
->
->   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
->
-> - EOF
->
->   This is an [eof-in-tag](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-tag) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit an end-of-file token.
->
-> - Anything else
->
->   Append the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) to the current attribute's value.
->
-> ##### 13.2.5.38 Attribute value (unquoted) state
->
-> Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
->
-> - U+0009 CHARACTER TABULATION (tab)
->
-> - U+000A LINE FEED (LF)
->
-> - U+000C FORM FEED (FF)
->
-> - U+0020 SPACE
->
->   Switch to the [before attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#before-attribute-name-state).
->
-> - U+0026 AMPERSAND (&)
->
->   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [attribute value (unquoted) state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(unquoted)-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
->
-> - U+003E GREATER-THAN SIGN (>)
->
->   Switch to the [data state](https://html.spec.whatwg.org/multipage/parsing.html#data-state). Emit the current tag token.
->
-> - U+0000 NULL
->
->   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
->
-> - U+0022 QUOTATION MARK (")
->
-> - U+0027 APOSTROPHE (')
->
-> - U+003C LESS-THAN SIGN (<)
->
-> - U+003D EQUALS SIGN (=)
->
-> - U+0060 GRAVE ACCENT (`)
->
->   This is an [unexpected-character-in-unquoted-attribute-value](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-character-in-unquoted-attribute-value) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Treat it as per the "anything else" entry below.
->
-> - EOF
->
->   This is an [eof-in-tag](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-tag) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit an end-of-file token.
->
-> - Anything else
->
->   Append the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) to the current attribute's value.
+&gt; ##### 13.2.5.36 Attribute value (double-quoted) state
+&gt;
+&gt; Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
+&gt;
+&gt; - U&#43;0022 QUOTATION MARK (&#34;)
+&gt;
+&gt;   Switch to the [after attribute value (quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#after-attribute-value-(quoted)-state).
+&gt;
+&gt; - U&#43;0026 AMPERSAND (&amp;)
+&gt;
+&gt;   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [attribute value (double-quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
+&gt;
+&gt; - U&#43;0000 NULL
+&gt;
+&gt;   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Append a U&#43;FFFD REPLACEMENT CHARACTER character to the current attribute&#39;s value.
+&gt;
+&gt; - EOF
+&gt;
+&gt;   This is an [eof-in-tag](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-tag) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit an end-of-file token.
+&gt;
+&gt; - Anything else
+&gt;
+&gt;   Append the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) to the current attribute&#39;s value.
+&gt;
+&gt; ##### 13.2.5.37 Attribute value (single-quoted) state
+&gt;
+&gt; Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
+&gt;
+&gt; - U&#43;0027 APOSTROPHE (&#39;)
+&gt;
+&gt;   Switch to the [after attribute value (quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#after-attribute-value-(quoted)-state).
+&gt;
+&gt; - U&#43;0026 AMPERSAND (&amp;)
+&gt;
+&gt;   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [attribute value (single-quoted) state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(single-quoted)-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
+&gt;
+&gt; - U&#43;0000 NULL
+&gt;
+&gt;   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Append a U&#43;FFFD REPLACEMENT CHARACTER character to the current attribute&#39;s value.
+&gt;
+&gt; - EOF
+&gt;
+&gt;   This is an [eof-in-tag](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-tag) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit an end-of-file token.
+&gt;
+&gt; - Anything else
+&gt;
+&gt;   Append the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) to the current attribute&#39;s value.
+&gt;
+&gt; ##### 13.2.5.38 Attribute value (unquoted) state
+&gt;
+&gt; Consume the [next input character](https://html.spec.whatwg.org/multipage/parsing.html#next-input-character):
+&gt;
+&gt; - U&#43;0009 CHARACTER TABULATION (tab)
+&gt;
+&gt; - U&#43;000A LINE FEED (LF)
+&gt;
+&gt; - U&#43;000C FORM FEED (FF)
+&gt;
+&gt; - U&#43;0020 SPACE
+&gt;
+&gt;   Switch to the [before attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#before-attribute-name-state).
+&gt;
+&gt; - U&#43;0026 AMPERSAND (&amp;)
+&gt;
+&gt;   Set the [return state](https://html.spec.whatwg.org/multipage/parsing.html#return-state) to the [attribute value (unquoted) state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(unquoted)-state). Switch to the [character reference state](https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state).
+&gt;
+&gt; - U&#43;003E GREATER-THAN SIGN (&gt;)
+&gt;
+&gt;   Switch to the [data state](https://html.spec.whatwg.org/multipage/parsing.html#data-state). Emit the current tag token.
+&gt;
+&gt; - U&#43;0000 NULL
+&gt;
+&gt;   This is an [unexpected-null-character](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Append a U&#43;FFFD REPLACEMENT CHARACTER character to the current attribute&#39;s value.
+&gt;
+&gt; - U&#43;0022 QUOTATION MARK (&#34;)
+&gt;
+&gt; - U&#43;0027 APOSTROPHE (&#39;)
+&gt;
+&gt; - U&#43;003C LESS-THAN SIGN (&lt;)
+&gt;
+&gt; - U&#43;003D EQUALS SIGN (=)
+&gt;
+&gt; - U&#43;0060 GRAVE ACCENT (`)
+&gt;
+&gt;   This is an [unexpected-character-in-unquoted-attribute-value](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-character-in-unquoted-attribute-value) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Treat it as per the &#34;anything else&#34; entry below.
+&gt;
+&gt; - EOF
+&gt;
+&gt;   This is an [eof-in-tag](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-tag) [parse error](https://html.spec.whatwg.org/multipage/parsing.html#parse-errors). Emit an end-of-file token.
+&gt;
+&gt; - Anything else
+&gt;
+&gt;   Append the [current input character](https://html.spec.whatwg.org/multipage/parsing.html#current-input-character) to the current attribute&#39;s value.
 
 例如下面字符实体编码，都将被解码还原：
 
 ```html
-实体编码"javascript"
-<h1 id=&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;>123</h1>
-<h1 id='&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;'>456</h1>
-<h1 id="&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;">789</h1>
+实体编码&#34;javascript&#34;
+&lt;h1 id=&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&gt;123&lt;/h1&gt;
+&lt;h1 id=&#39;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&#39;&gt;456&lt;/h1&gt;
+&lt;h1 id=&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&#34;&gt;789&lt;/h1&gt;
 ```
 
 在属性值下的HTML实体编码，是平时XSS编码的一种常用方式，如下述payload：
 
 ```html
 编码alert(/xss/)
-<svg/onload=&#x0061;&#x006c;&#x0065;&#x0072;&#x0074;&#x0028;&#x002f;&#x0078;&#x0073;&#x0073;&#x002f;&#x0029;>
+&lt;svg/onload=&amp;#x0061;&amp;#x006c;&amp;#x0065;&amp;#x0072;&amp;#x0074;&amp;#x0028;&amp;#x002f;&amp;#x0078;&amp;#x0073;&amp;#x0073;&amp;#x002f;&amp;#x0029;&gt;
   
-<a/href=javascript&colon;alert&grave;1&grave;>123</a>
-<a href="javascri&#x0070;t:alert(1)">link</a>
-<img src onerror=alert&#40;2&#41;>
+&lt;a/href=javascript&amp;colon;alert&amp;grave;1&amp;grave;&gt;123&lt;/a&gt;
+&lt;a href=&#34;javascri&amp;#x0070;t:alert(1)&#34;&gt;link&lt;/a&gt;
+&lt;img src onerror=alert&amp;#40;2&amp;#41;&gt;
 ```
 
 
@@ -474,29 +474,29 @@ URL 解析器也可以视为状态机，输入流中的字符可以将其定向�
 
 从安全或 XSS 转义的角度来看，有几件事很有趣。
 
-首先，URL 格式必须是 ASCII 字母字符。 (U+0041-U+005A || U+0061-U+007A)，否则状态会转变为“无格式”状态。
+首先，URL 格式必须是 ASCII 字母字符。 (U&#43;0041-U&#43;005A || U&#43;0061-U&#43;007A)，否则状态会转变为“无格式”状态。
 
 例如，如果对协议格式进行任何形式的编码，URL 解析器都将无法识别为协议。问题 1 中的脚本不执行就是因为URL 解析器没有将url 编码的“javascript”识别为协议。
 
 ```html
-1.URL编码"javascript:alert(1)"
-<a href="%6a%61%76%61%73%63%72%69%70%74:%61%6c%65%72%74%28%31%29"></a>
-3.URL编码":"
-<a href="javascript%3aalert(3)"></a>
+1.URL编码&#34;javascript:alert(1)&#34;
+&lt;a href=&#34;%6a%61%76%61%73%63%72%69%70%74:%61%6c%65%72%74%28%31%29&#34;&gt;&lt;/a&gt;
+3.URL编码&#34;:&#34;
+&lt;a href=&#34;javascript%3aalert(3)&#34;&gt;&lt;/a&gt;
 ```
 
-同样的理论也适用于 ':' 字符，如果对其进行编码将无法识别。这就是问题 3 中的脚本不会执行的原因。
+同样的理论也适用于 &#39;:&#39; 字符，如果对其进行编码将无法识别。这就是问题 3 中的脚本不会执行的原因。
 
 那么，当使用字符实体对方案 (javascript) 进行编码时，为什么问题 2 中的脚本会执行？
 
 ```html
-<a href="&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;:%61   %6c%65%72%74%28%32%29">
+&lt;a href=&#34;&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;:%61   %6c%65%72%74%28%32%29&#34;&gt;
 ```
 
 这里就要用到刚在HTML 解析部分讨论过的内容，有一种状态称为“属性值状态”，在这种状态下，字符引用将被解码并替换为解码后的版本。
 
 ```html
-<a href="javascript:%61   %6c%65%72%74%28%32%29">
+&lt;a href=&#34;javascript:%61   %6c%65%72%74%28%32%29&#34;&gt;
 ```
 
 这里实际发生的是HTML解析器解析文档、创建标签tokens并解码 href 属性中的HTML字符实体。
@@ -517,7 +517,7 @@ JavaScript 解析不同于 HTML 解析，因为JS语言本身是上下文无关�
 
 ECMAScript-262 的规范在[这里](http://www.ecma-international.org/publications/standards/Ecma-262.htm)，一个单独的HTML解析语法文件在[这里](https://html.spec.whatwg.org/multipage/parsing.html#parsing)。
 
-JS的脚本处理模型是按照源码处理-函数解析-代码执行这个顺序进行，不管是外部JS还是`<script>` 标签内，或者 HTML标签属性中的，对JS编码的解码都是相同的。
+JS的脚本处理模型是按照源码处理-函数解析-代码执行这个顺序进行，不管是外部JS还是`&lt;script&gt;` 标签内，或者 HTML标签属性中的，对JS编码的解码都是相同的。
 
 #### 1. 执行上下文
 
@@ -533,92 +533,92 @@ JS的脚本处理模型是按照源码处理-函数解析-代码执行这个顺�
 
 我们主要关注关于安全性、字符解码方式以及在某些上下文中转义是否有效这些问题。
 
-首先，让我们稍微回到 HTML 解析中的"Raw text"元素，因为它与 JavaScript 解析有关。
+首先，让我们稍微回到 HTML 解析中的&#34;Raw text&#34;元素，因为它与 JavaScript 解析有关。
 
 所有“script”块都属于原始文本元素，“script”块有一个有趣的属性：字符引用实体在其中不被解析和解码。这意味着问题 9 中的脚本将不会执行。
 
 ```html
 9.实体编码alert(9);
-<script>&#97;&#108;&#101;&#114;&#116&#40;&#57;&#41;&#59</script>
+&lt;script&gt;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116&amp;#40;&amp;#57;&amp;#41;&amp;#59&lt;/script&gt;
 ```
 
 那么像 \uXXXX（例如 \u0000、\u000A）这样的Unicode 转义序列字符编码的 JavaScript 会被解析和执行吗？答案是需要看情况，这取决于编码序列所处的位置。
 
 根据上下文，有三种情况可以使用转义序列：字符串、标识符名称或控制字符。
 
-**字符串**：当字符串中存在 Unicode 转义序列时，它们只会被解释为常规字符，而不是单双引号（' "）或可以结束字符串的行终止符。这在 ECMAScript 规范中有明确说明。因此，Unicode 转义序列永远不会脱离 JavaScript 中的字符串上下文，因为它们总是被解释为字符串文字。
+**字符串**：当字符串中存在 Unicode 转义序列时，它们只会被解释为常规字符，而不是单双引号（&#39; &#34;）或可以结束字符串的行终止符。这在 ECMAScript 规范中有明确说明。因此，Unicode 转义序列永远不会脱离 JavaScript 中的字符串上下文，因为它们总是被解释为字符串文字。
 
-> *ECMA-262 edition13.0, Rev 11, Clause 1
-> "ECMAScript differs from the Java programming language in the behaviour of Unicode escape sequences. In a Java program, if the Unicode escape sequence \u000A, for example, occurs within a single-line comment, it is interpreted as a line terminator (Unicode character 000A is line feed) and therefore the next Unicode character is not part of the comment. Similarly, if the Unicode escape sequence \u000A occurs within a string literal in a Java program, it is likewise interpreted as a line terminator, which is not allowed within a string literal—one must write \n instead of\u000A to cause a line feed to be part of the string value of a string literal. In an ECMAScript program, a Unicode escape sequence occurring within a comment is never interpreted and therefore cannot contribute to termination of the comment. Similarly, a Unicode escape sequence occurring within a string literal in an ECMAScript program always contributes a Unicode character to the literal and is never interpreted as a line terminator or as a quote mark that might terminate the string literal.*"
+&gt; *ECMA-262 edition13.0, Rev 11, Clause 1
+&gt; &#34;ECMAScript differs from the Java programming language in the behaviour of Unicode escape sequences. In a Java program, if the Unicode escape sequence \u000A, for example, occurs within a single-line comment, it is interpreted as a line terminator (Unicode character 000A is line feed) and therefore the next Unicode character is not part of the comment. Similarly, if the Unicode escape sequence \u000A occurs within a string literal in a Java program, it is likewise interpreted as a line terminator, which is not allowed within a string literal—one must write \n instead of\u000A to cause a line feed to be part of the string value of a string literal. In an ECMAScript program, a Unicode escape sequence occurring within a comment is never interpreted and therefore cannot contribute to termination of the comment. Similarly, a Unicode escape sequence occurring within a string literal in an ECMAScript program always contributes a Unicode character to the literal and is never interpreted as a line terminator or as a quote mark that might terminate the string literal.*&#34;
 
 翻译：
 
-> ECMA-262 版本13.0，第11章，第1条款
->
-> ECMAScript 与 Java 编程语言的区别在于 Unicode 转义序列的行为。
->
-> 在Java中，如果Unicode转义序列\u000A，出现在单行注释中，它被解释为行终止符（Unicode 字符 000A 是换行符），因此下一个 Unicode 字符将不是注释的一部分。同样，如果\u000A 出现在 Java 程序的字符串文字中，它同样被解释为行终止符，这在字符串文字中是不允许的——必须写 \n 而不是 \u000A 以使换行符成为字符串文字的一部分。
->
-> 在 ECMAScript 程序中，注释中出现的 Unicode 转义序列永远不会被解释，因此不会导致注释的终止。类似地，在 ECMAScript 程序的字符串文字中出现的 Unicode 转义序列总是为文字提供一个 Unicode 字符，并且永远不会被解释为行终止符或可能字符串终止的引号。
+&gt; ECMA-262 版本13.0，第11章，第1条款
+&gt;
+&gt; ECMAScript 与 Java 编程语言的区别在于 Unicode 转义序列的行为。
+&gt;
+&gt; 在Java中，如果Unicode转义序列\u000A，出现在单行注释中，它被解释为行终止符（Unicode 字符 000A 是换行符），因此下一个 Unicode 字符将不是注释的一部分。同样，如果\u000A 出现在 Java 程序的字符串文字中，它同样被解释为行终止符，这在字符串文字中是不允许的——必须写 \n 而不是 \u000A 以使换行符成为字符串文字的一部分。
+&gt;
+&gt; 在 ECMAScript 程序中，注释中出现的 Unicode 转义序列永远不会被解释，因此不会导致注释的终止。类似地，在 ECMAScript 程序的字符串文字中出现的 Unicode 转义序列总是为文字提供一个 Unicode 字符，并且永远不会被解释为行终止符或可能字符串终止的引号。
 
 **标识符名称**：当标识符名称中存在 Unicode 转义序列时，它们将被解码并解释为标识符的名称，例如函数名称、属性名称等。
 
 这就是为什么问题 10 中的脚本是可执行的。
 
 ```html
-<script>\u0061\u006c\u0065\u0072\u0074(10);</script>
+&lt;script&gt;\u0061\u006c\u0065\u0072\u0074(10);&lt;/script&gt;
 ```
 
 如果我们深入研究规范，它也清楚地说明如下。
 
-> ECMA-262 edition13.0, Rev 12, Clause 6.1
->
-> *"Unicode escape sequences are permitted in an IdentifierName, where they contribute a single Unicode code point to the IdentifierName. The code point is expressed by the CodePoint of the UnicodeEscapeSequence (see 12.8.4). The \ preceding the UnicodeEscapeSequence and the u and { } code units, if they appear, do not contribute code points to the IdentifierName. A UnicodeEscapeSequence cannot be used to put a code point into an IdentifierName that would otherwise be illegal. "*
+&gt; ECMA-262 edition13.0, Rev 12, Clause 6.1
+&gt;
+&gt; *&#34;Unicode escape sequences are permitted in an IdentifierName, where they contribute a single Unicode code point to the IdentifierName. The code point is expressed by the CodePoint of the UnicodeEscapeSequence (see 12.8.4). The \ preceding the UnicodeEscapeSequence and the u and { } code units, if they appear, do not contribute code points to the IdentifierName. A UnicodeEscapeSequence cannot be used to put a code point into an IdentifierName that would otherwise be illegal. &#34;*
 
 翻译：
 
-> 标识符名称中也允许使用 Unicode 转义序列，它们将作为标识符中的一个字符，由Unicode 转义序列的 CV 计算转换（见 7.8.4）。Unicode 转义序列前的 \ 不会转换为标识符名称中的一个字符。 Unicode 转义序列不能用于将字符放入标识符名称中，否则将是非法的。
->
-> 标识符名称中允许使用 Unicode 转义序列，它们将作为标识符中的Unicode代码点。代码点由 Unicode 转义序列的 CodePoint 表示（见 12.8.4）。Unicode 转义序列之前的 \ 以及 u 和 { } 代码单元（如果有）不会作为标识符名称中的代码点。 Unicode 转义序列不能用于将代码点放入标识符名称，否则将是非法的。
+&gt; 标识符名称中也允许使用 Unicode 转义序列，它们将作为标识符中的一个字符，由Unicode 转义序列的 CV 计算转换（见 7.8.4）。Unicode 转义序列前的 \ 不会转换为标识符名称中的一个字符。 Unicode 转义序列不能用于将字符放入标识符名称中，否则将是非法的。
+&gt;
+&gt; 标识符名称中允许使用 Unicode 转义序列，它们将作为标识符中的Unicode代码点。代码点由 Unicode 转义序列的 CodePoint 表示（见 12.8.4）。Unicode 转义序列之前的 \ 以及 u 和 { } 代码单元（如果有）不会作为标识符名称中的代码点。 Unicode 转义序列不能用于将代码点放入标识符名称，否则将是非法的。
 
 **控制字符**：当 Unicode 转义序列表示控制字符时，如单引号、双引号、括号等，它们不会被解释为控制字符，只会被解码和解析为标识符名称或字符串文字。查看 ECMAScript 语法，就会发现没有任何可以充当控制字符的 Unicode 转义序列。例如，如果解析器正在解析函数调用语句，则括号必须是“(”和“)”，而不是像 \u0028 和 \u0029 这样的字符。
 
 也就是说，Unicode 转义序列只有在标识符名称的上下文中才会被解释为字符串，这是唯一可以注入并利用的地方。
 
-回顾问题 11不起作用，因为 '(11)' 没有被正确解释而且 'alert(11)' 不是有效的标识符名称。
+回顾问题 11不起作用，因为 &#39;(11)&#39; 没有被正确解释而且 &#39;alert(11)&#39; 不是有效的标识符名称。
 
 ```html
 11.unicode编码alert(11)
-<script>\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029</script>
+&lt;script&gt;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029&lt;/script&gt;
 ```
 
-问题 12 ， '\u0031\u0032' 不会被解释为字符串，因为它们必须以单引号或双引号开头，或者是 ASCII 数字。
+问题 12 ， &#39;\u0031\u0032&#39; 不会被解释为字符串，因为它们必须以单引号或双引号开头，或者是 ASCII 数字。
 
 ```html
 12.Unicode编码alert和12
-<script>\u0061\u006c\u0065\u0072\u0074(\u0031\u0032)</script>
+&lt;script&gt;\u0061\u006c\u0065\u0072\u0074(\u0031\u0032)&lt;/script&gt;
 ```
 
-问题 13 ，因为 '\u0027' 仅被解释为单引号文字，并没有起到控制字符的效果，导致字符串不完整。
+问题 13 ，因为 &#39;\u0027&#39; 仅被解释为单引号文字，并没有起到控制字符的效果，导致字符串不完整。
 
 ```html
-13.Unicode编码'
-<script>alert('13\u0027)</script>
+13.Unicode编码&#39;
+&lt;script&gt;alert(&#39;13\u0027)&lt;/script&gt;
 ```
 
-问题 14 有效，因为 '\u000a' 被解释为换行符，不会被当做行终止符，没有破坏 JavaScript 语法。
+问题 14 有效，因为 &#39;\u000a&#39; 被解释为换行符，不会被当做行终止符，没有破坏 JavaScript 语法。
 
 ```html
 14.Unicode编码换行符
-<script>alert('14\u000a')</script>
+&lt;script&gt;alert(&#39;14\u000a&#39;)&lt;/script&gt;
 ```
 
 根据上述描述，以下编码都可以执行：
 
 ```html
-<script> \u0061lert("Hello"); </script>
-<script> alert("\u0048ello"); </script>
-<script> alert('Hello\u000a');</script>
+&lt;script&gt; \u0061lert(&#34;Hello&#34;); &lt;/script&gt;
+&lt;script&gt; alert(&#34;\u0048ello&#34;); &lt;/script&gt;
+&lt;script&gt; alert(&#39;Hello\u000a&#39;);&lt;/script&gt;
 ```
 
 
@@ -636,8 +636,8 @@ JS的脚本处理模型是按照源码处理-函数解析-代码执行这个顺�
 考虑以下两个示例。
 
 ```
-Example A: <a href="UserInput"></a>
-Example B: <a href=# onclick="window.open('UserInput')"></a>
+Example A: &lt;a href=&#34;UserInput&#34;&gt;&lt;/a&gt;
+Example B: &lt;a href=# onclick=&#34;window.open(&#39;UserInput&#39;)&#34;&gt;&lt;/a&gt;
 ```
 
 在示例 A 中，HTML 解析器将首先启动并对用户输入执行字符引用解码。然后 URL 解析器开始对 href 中的值进行 URL 解码。最后，如果 URL scheme 是 javascript，则 JavaScript 解析器来执行 Unicode 转义序列和 Hex 转义序列解码。之后，脚本被执行。所以一共有三轮解码，依次是HTML、URL、JavaScript。
@@ -647,7 +647,7 @@ Example B: <a href=# onclick="window.open('UserInput')"></a>
 有没有可能超过三轮解码？考虑下面的例子
 
 ```
-Example C: <a href="javascript:window.open('UserInput')">
+Example C: &lt;a href=&#34;javascript:window.open(&#39;UserInput&#39;)&#34;&gt;
 ```
 
 示例 C 与 A 类似，但在 JavaScript 中存在“window.open”调用的意义上也有所不同。因此，将对 UserInput 进行额外的 URL 解码。一般情况下会进行四次解码，依次为HTML、URL、JavaScript、URL。

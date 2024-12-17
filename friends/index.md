@@ -1,14 +1,16 @@
 # 友情链接
 
 
-<!-- When you set data `friends.yml` in `yourProject/data/` directory, it will be automatically loaded here. -->
----
-<!-- You can define additional content below for this page. -->
-
-
+&lt;!-- The `friends.yml` file placed in the `yourProject/data/` directory will be loaded automatically here. --&gt;
 
 ---
 
-> 作者: Xavier  
+&lt;!-- You can define additional content below for this page. --&gt;
+
+
+
+---
+
+> 作者:   
 > URL: https://www.bthoughts.top/friends/  
 

