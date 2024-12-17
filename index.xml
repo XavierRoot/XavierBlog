@@ -3,9 +3,17 @@
     <title>Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 13 Nov 2024 05:47:42 &#43;0000</lastBuildDate>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 17 Dec 2024 09:30:40 &#43;0800</lastBuildDate>
       <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>达梦数据库DMSQL-SQL注入小记</title>
+  <link>https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/</link>
+  <pubDate>Tue, 17 Dec 2024 09:30:40 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/</guid>
+  <description><![CDATA[DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。 原文首发在：先知社区 https://xz.aliyun.com/t/16721 达梦数据库DMSQL-SQL]]></description>
+</item>
+<item>
   <title>Burp-CPH插件心得</title>
   <link>https://www.bthoughts.top/posts/burp-cph-usage/</link>
   <pubDate>Wed, 13 Nov 2024 05:47:42 &#43;0000</pubDate>
@@ -76,14 +84,6 @@
   <author>Xavier</author>
   <guid>https://www.bthoughts.top/posts/provinggrounds-nagoya/</guid>
   <description><![CDATA[Nagoya 这是第22台，Windows系统，难度Hard，名称 Nagoya 192.168.166.21 PortScan 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 ┌──(xavier㉿kali)]]></description>
-</item>
-<item>
-  <title>ProvingGrounds Heist Writeup</title>
-  <link>https://www.bthoughts.top/posts/provinggrounds-heist/</link>
-  <pubDate>Tue, 06 Feb 2024 09:10:03 &#43;0000</pubDate>
-  <author>Xavier</author>
-  <guid>https://www.bthoughts.top/posts/provinggrounds-heist/</guid>
-  <description><![CDATA[Heist 这是第21台，Windows系统，难度Hard，名称 Heist 192.168.201.165 PortScan 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 ┌──(xavier㉿ka]]></description>
 </item>
 </channel>
 </rss>

@@ -3,7 +3,15 @@
     <title>SQLi - 标签 - Xavier&#39;s Blog</title>
     <link>https://www.bthoughts.top/tags/sqli/</link>
     <description>SQLi - 标签 - Xavier&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 28 Jul 2023 15:20:04 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/sqli/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 17 Dec 2024 09:30:40 &#43;0800</lastBuildDate><atom:link href="https://www.bthoughts.top/tags/sqli/" rel="self" type="application/rss+xml" /><item>
+  <title>达梦数据库DMSQL-SQL注入小记</title>
+  <link>https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/</link>
+  <pubDate>Tue, 17 Dec 2024 09:30:40 &#43;0800</pubDate>
+  <author>Xavier</author>
+  <guid>https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/</guid>
+  <description><![CDATA[DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。 原文首发在：先知社区 https://xz.aliyun.com/t/16721 达梦数据库DMSQL-SQL]]></description>
+</item>
+<item>
   <title>019-SQL注入之OrderBy位置点注入</title>
   <link>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</link>
   <pubDate>Fri, 28 Jul 2023 15:20:04 &#43;0800</pubDate>

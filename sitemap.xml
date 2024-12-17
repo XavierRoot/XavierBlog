@@ -2,17 +2,19 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   ><url>
-      <loc>https://www.bthoughts.top/posts/burp-cph-usage/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://www.bthoughts.top/categories/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://www.bthoughts.top/posts/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/tools/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://www.bthoughts.top/categories/tools/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://www.bthoughts.top/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/fileupload/</loc><lastmod>2024-10-21T02:49:14&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/pentest/</loc><lastmod>2024-10-21T02:49:14&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-      <loc>https://www.bthoughts.top/categories/pentest/</loc><lastmod>2024-10-21T02:49:14&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-      <loc>https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/</loc><lastmod>2024-10-21T02:49:14&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+      <loc>https://www.bthoughts.top/categories/</loc><lastmod>2024-12-17T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/categories/pentest/</loc><lastmod>2024-12-17T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/</loc><lastmod>2024-12-17T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/sqli/</loc><lastmod>2024-12-17T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/</loc><lastmod>2024-12-17T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/</loc><lastmod>2024-12-17T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/</loc><lastmod>2024-12-17T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/burp-cph-usage/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/tools/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+      <loc>https://www.bthoughts.top/categories/tools/</loc><lastmod>2024-11-13T05:47:42&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/fileupload/</loc><lastmod>2024-10-21T02:49:14&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+      <loc>https://www.bthoughts.top/tags/pentest/</loc><lastmod>2024-10-21T02:49:14&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+      <loc>https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/</loc><lastmod>2024-10-21T02:49:14&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/cloud/</loc><lastmod>2024-04-16T17:30:47&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/categories/cloud/</loc><lastmod>2024-04-16T17:30:47&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/docker/</loc><lastmod>2024-04-16T17:30:47&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -56,7 +58,6 @@
       <loc>https://www.bthoughts.top/tags/leaks/</loc><lastmod>2023-08-15T18:54:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/revshell/</loc><lastmod>2023-08-14T14:08:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</loc><lastmod>2023-07-28T15:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://www.bthoughts.top/tags/sqli/</loc><lastmod>2023-07-28T15:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/</loc><lastmod>2023-07-27T09:30:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/tags/htb/</loc><lastmod>2023-05-01T19:55:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://www.bthoughts.top/posts/hackthebox-valentine/</loc><lastmod>2023-05-01T19:55:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
