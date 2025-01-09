@@ -6,8 +6,15 @@
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 17 Dec 2024 09:30:40 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 16:36:22 +0000</lastBuildDate>
     <atom:link href="https://www.bthoughts.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pentest</title>
+      <link>https://www.bthoughts.top/tags/pentest/</link>
+      <pubDate>Thu, 09 Jan 2025 16:36:22 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/pentest/</guid>
+      <description>Pentest</description>
+    </item>
     <item>
       <title>SQLi</title>
       <link>https://www.bthoughts.top/tags/sqli/</link>
@@ -28,13 +35,6 @@
       <pubDate>Mon, 21 Oct 2024 02:49:14 +0000</pubDate>
       <guid>https://www.bthoughts.top/tags/fileupload/</guid>
       <description>FileUpload</description>
-    </item>
-    <item>
-      <title>Pentest</title>
-      <link>https://www.bthoughts.top/tags/pentest/</link>
-      <pubDate>Mon, 21 Oct 2024 02:49:14 +0000</pubDate>
-      <guid>https://www.bthoughts.top/tags/pentest/</guid>
-      <description>Pentest</description>
     </item>
     <item>
       <title>Cloud</title>
