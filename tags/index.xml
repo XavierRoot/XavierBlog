@@ -6,12 +6,19 @@
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 09 Jan 2025 16:36:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Mar 2025 15:33:41 +0000</lastBuildDate>
     <atom:link href="https://www.bthoughts.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Crypto</title>
+      <link>https://www.bthoughts.top/tags/crypto/</link>
+      <pubDate>Mon, 10 Mar 2025 15:33:41 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/crypto/</guid>
+      <description>Crypto</description>
+    </item>
     <item>
       <title>Pentest</title>
       <link>https://www.bthoughts.top/tags/pentest/</link>
-      <pubDate>Thu, 09 Jan 2025 16:36:22 +0000</pubDate>
+      <pubDate>Mon, 10 Mar 2025 15:33:41 +0000</pubDate>
       <guid>https://www.bthoughts.top/tags/pentest/</guid>
       <description>Pentest</description>
     </item>
@@ -70,13 +77,6 @@
       <pubDate>Mon, 08 Apr 2024 15:21:30 +0000</pubDate>
       <guid>https://www.bthoughts.top/tags/%E9%9A%8F%E7%AC%94/</guid>
       <description>随笔</description>
-    </item>
-    <item>
-      <title>AI安全</title>
-      <link>https://www.bthoughts.top/tags/ai%E5%AE%89%E5%85%A8/</link>
-      <pubDate>Sun, 07 Apr 2024 09:32:49 +0000</pubDate>
-      <guid>https://www.bthoughts.top/tags/ai%E5%AE%89%E5%85%A8/</guid>
-      <description>AI安全</description>
     </item>
   </channel>
 </rss>
