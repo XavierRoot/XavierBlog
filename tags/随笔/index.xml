@@ -2,36 +2,36 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>随笔 - 标签 - Xavier&#39;s Blog</title>
-    <link>https://www.bthoughts.top/tags/%E9%9A%8F%E7%AC%94/</link>
+    <link>http://localhost:1313/tags/%E9%9A%8F%E7%AC%94/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate>Mon, 08 Apr 2024 15:21:30 +0000</lastBuildDate>
-    <atom:link href="https://www.bthoughts.top/tags/%E9%9A%8F%E7%AC%94/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/%E9%9A%8F%E7%AC%94/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MacOS初识SIP</title>
-      <link>https://www.bthoughts.top/posts/macos-%E5%88%9D%E8%AF%86sip/</link>
+      <link>http://localhost:1313/posts/macos-%E5%88%9D%E8%AF%86sip/</link>
       <pubDate>Mon, 08 Apr 2024 15:21:30 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/macos-%E5%88%9D%E8%AF%86sip/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</category>
+      <guid>http://localhost:1313/posts/macos-%E5%88%9D%E8%AF%86sip/</guid>
+      <category domain="http://localhost:1313/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</category>
       <description>MacOS 初识SIP——解决快捷指令sh脚本报错：&#39;Operation not permitted&#39;</description>
     </item>
     <item>
       <title>2024 HackingClub北京站沙龙分享</title>
-      <link>https://www.bthoughts.top/posts/2024-hackingclub-beijing/</link>
+      <link>http://localhost:1313/posts/2024-hackingclub-beijing/</link>
       <pubDate>Sun, 07 Apr 2024 09:32:49 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/2024-hackingclub-beijing/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E8%81%8C%E4%B8%9A%E7%94%9F%E6%B6%AF/">职业生涯</category>
-      <category domain="https://www.bthoughts.top/categories/%E8%AE%AE%E9%A2%98%E5%88%86%E4%BA%AB/">议题分享</category>
-      <category domain="https://www.bthoughts.top/categories/%E9%9A%8F%E7%AC%94/">随笔</category>
+      <guid>http://localhost:1313/posts/2024-hackingclub-beijing/</guid>
+      <category domain="http://localhost:1313/categories/%E8%81%8C%E4%B8%9A%E7%94%9F%E6%B6%AF/">职业生涯</category>
+      <category domain="http://localhost:1313/categories/%E8%AE%AE%E9%A2%98%E5%88%86%E4%BA%AB/">议题分享</category>
+      <category domain="http://localhost:1313/categories/%E9%9A%8F%E7%AC%94/">随笔</category>
       <description>2024 HackingClub 北京站沙龙，AI+网络安全方向</description>
     </item>
     <item>
       <title>001-2021年4月13日 学习随笔</title>
-      <link>https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</link>
+      <link>http://localhost:1313/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</link>
       <pubDate>Sat, 13 Mar 2021 13:31:00 +0800</pubDate>
-      <guid>https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E9%9A%8F%E7%AC%94/">随笔</category>
+      <guid>http://localhost:1313/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</guid>
+      <category domain="http://localhost:1313/categories/%E9%9A%8F%E7%AC%94/">随笔</category>
       <description>2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。</description>
     </item>
   </channel>

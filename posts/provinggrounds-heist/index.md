@@ -355,5 +355,5 @@ type C:\users\administrator\desktop\proof.txt
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/provinggrounds-heist/  
+> URL: http://localhost:1313/posts/provinggrounds-heist/  
 

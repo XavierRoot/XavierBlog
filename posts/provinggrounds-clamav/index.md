@@ -235,5 +235,5 @@ cat /root/proof.txt
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/provinggrounds-clamav/  
+> URL: http://localhost:1313/posts/provinggrounds-clamav/  
 

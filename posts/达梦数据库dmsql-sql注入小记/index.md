@@ -381,5 +381,5 @@ SELECT * FROM xxxx WHERE is_delete != &#39;1&#39; ORDER BY (select 1 from dual w
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/  
+> URL: http://localhost:1313/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/  
 

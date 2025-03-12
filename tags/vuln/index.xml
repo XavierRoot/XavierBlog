@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Vuln - 标签 - Xavier&#39;s Blog</title>
-    <link>https://www.bthoughts.top/tags/vuln/</link>
+    <link>http://localhost:1313/tags/vuln/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate>Mon, 12 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://www.bthoughts.top/tags/vuln/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/vuln/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>003-Yapi Mock RCE 漏洞复现分析</title>
-      <link>https://www.bthoughts.top/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</link>
+      <link>http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</link>
       <pubDate>Mon, 12 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</category>
+      <guid>http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/</guid>
+      <category domain="http://localhost:1313/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</category>
       <description>003-Yapi Mock RCE 漏洞复现分析</description>
     </item>
   </channel>

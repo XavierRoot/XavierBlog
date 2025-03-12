@@ -194,5 +194,5 @@ wget -q https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x8
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/20230425-shellspawn/  
+> URL: http://localhost:1313/posts/20230425-shellspawn/  
 

@@ -299,5 +299,5 @@ AI的一些在攻击领域的应用：
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/2024-hackingclub-beijing/  
+> URL: http://localhost:1313/posts/2024-hackingclub-beijing/  
 

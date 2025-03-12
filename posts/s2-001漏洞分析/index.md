@@ -807,5 +807,5 @@ doEndTag会接着调用components.UIBean的end 方法，end会调用自身evalua
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/  
+> URL: http://localhost:1313/posts/s2-001%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/  
 

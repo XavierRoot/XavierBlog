@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Draft - 分类 - Xavier&#39;s Blog</title>
+    <link>http://localhost:1313/categories/draft/</link>
+    <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
+    <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 12 Mar 2025 14:46:18 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/draft/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hibernate框架HQL注入笔记</title>
+      <link>http://localhost:1313/posts/hibernate_hql_injection/</link>
+      <pubDate>Wed, 12 Mar 2025 14:46:18 +0000</pubDate>
+      <guid>http://localhost:1313/posts/hibernate_hql_injection/</guid>
+      <category domain="http://localhost:1313/categories/draft/">Draft</category>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
+      <description>Hibernate框架HQL注入笔记</description>
+    </item>
+  </channel>
+</rss>
