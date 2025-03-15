@@ -545,5 +545,5 @@ Nmap的端口探测技术知道多少种，对应的原理是什么？有什么�
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/  
+> URL: https://www.bthoughts.top/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/  
 

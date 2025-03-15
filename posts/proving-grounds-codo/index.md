@@ -247,5 +247,5 @@ cat /root/proof.txt
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/proving-grounds-codo/  
+> URL: https://www.bthoughts.top/posts/proving-grounds-codo/  
 

@@ -345,5 +345,5 @@ if __name__ == &#39;__main__&#39;:
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/002-case_simpleencryptioncase/  
+> URL: https://www.bthoughts.top/posts/002-case_simpleencryptioncase/  
 

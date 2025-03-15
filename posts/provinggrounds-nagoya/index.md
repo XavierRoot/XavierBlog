@@ -752,5 +752,5 @@ fa2dba2c7bdff500c6f6ce31dfa6037e
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/provinggrounds-nagoya/  
+> URL: https://www.bthoughts.top/posts/provinggrounds-nagoya/  
 

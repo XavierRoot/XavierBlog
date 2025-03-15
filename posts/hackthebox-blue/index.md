@@ -225,5 +225,5 @@ MSF: 略
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/hackthebox-blue/  
+> URL: https://www.bthoughts.top/posts/hackthebox-blue/  
 

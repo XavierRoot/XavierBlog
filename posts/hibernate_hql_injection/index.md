@@ -1031,5 +1031,5 @@ orderBy=name INTERSECT SELECT t FROM Test t WHERE (SELECT cast(pg_sleep(10) AS t
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/hibernate_hql_injection/  
+> URL: https://www.bthoughts.top/posts/hibernate_hql_injection/  
 

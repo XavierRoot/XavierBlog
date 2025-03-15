@@ -143,5 +143,5 @@ aebbd4df648371dc7572e5ed5589a98b
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/provinggrounds-hub/  
+> URL: https://www.bthoughts.top/posts/provinggrounds-hub/  
 

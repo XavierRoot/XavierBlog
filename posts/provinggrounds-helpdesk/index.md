@@ -172,5 +172,5 @@ type administrator\desktop\proof.txt
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/provinggrounds-helpdesk/  
+> URL: https://www.bthoughts.top/posts/provinggrounds-helpdesk/  
 

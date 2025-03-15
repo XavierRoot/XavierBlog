@@ -450,5 +450,5 @@ Parameter handling:
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/burp-cph-usage/  
+> URL: https://www.bthoughts.top/posts/burp-cph-usage/  
 
