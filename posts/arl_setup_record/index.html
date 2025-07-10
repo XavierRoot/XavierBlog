@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ARL灯塔Docker版搭建记录 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="ARL灯塔Docker版搭建记录"><meta name="keywords" content='Tools, Docker'>
+  <meta itemprop="name" content="ARL灯塔Docker版搭建记录">
+  <meta itemprop="description" content="ARL灯塔Docker版搭建记录">
+  <meta itemprop="datePublished" content="2025-03-15T17:14:42+00:00">
+  <meta itemprop="dateModified" content="2025-03-15T17:14:42+00:00">
+  <meta itemprop="wordCount" content="1281">
+  <meta itemprop="keywords" content="Tools,Docker"><meta property="og:url" content="http://localhost:1313/posts/arl_setup_record/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ARL灯塔Docker版搭建记录">
+  <meta property="og:description" content="ARL灯塔Docker版搭建记录">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-03-15T17:14:42+00:00">
+    <meta property="article:modified_time" content="2025-03-15T17:14:42+00:00">
+    <meta property="article:tag" content="Tools">
+    <meta property="article:tag" content="Docker">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ARL灯塔Docker版搭建记录">
+  <meta name="twitter:description" content="ARL灯塔Docker版搭建记录">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/arl_setup_record/" title="ARL灯塔Docker版搭建记录 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/hibernate_hql_injection/" title="Hibernate框架HQL注入笔记" /><link rel="next" type="text/html" href="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/" title="内存马查杀笔记-入门版" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/arl_setup_record/index.md" title="ARL灯塔Docker版搭建记录 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ARL灯塔Docker版搭建记录",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/arl_setup_record\/"
+    },"genre": "posts","keywords": "Tools, Docker","wordcount":  1281 ,
+    "url": "http:\/\/localhost:1313\/posts\/arl_setup_record\/","datePublished": "2025-03-15T17:14:42+00:00","dateModified": "2025-03-15T17:14:42+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "ARL灯塔Docker版搭建记录"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ARL灯塔Docker版搭建记录</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/tools/" class="post-category" title="分类 - Tools"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Tools</a></span></div><div class="post-meta-line"><span title="发布于 2025-03-15 17:14:42"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-03-15">2025-03-15</time></span>&nbsp;<span title="1281 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#arl-docker-搭建">ARL-docker 搭建</a></li>
+    <li><a href="#q1服务无法启动">Q1：服务无法启动</a>
+      <ul>
+        <li><a href="#问题描述">问题描述</a></li>
+        <li><a href="#解决办法">解决办法</a></li>
+      </ul>
+    </li>
+    <li><a href="#q2web密码错误">Q2：Web密码错误</a>
+      <ul>
+        <li><a href="#问题描述-1">问题描述</a></li>
+        <li><a href="#解决办法-1">解决办法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>之前的云服务器不用了，换了个新的，因此ARL也要重新搭建了，之前搭建的时候没有做笔记，所以这次就记一下。</p>
+<p>ARL主仓库已经关闭很久了，用的ARL docker镜像仓库： <a href="https://github.com/honmashironeko/ARL-docker"target="_blank" rel="external nofollow noopener noreferrer">ARL-docker</a></p>
+<p>中间需要解决几个问题，前三个我就不说了，本文主讲第4步。</p>
+<ol>
+<li>docker 的安装</li>
+<li>docker 镜像仓库，代理访问</li>
+<li>Linux 搭建 代理，我用的clash</li>
+<li>ARL-docker 搭建</li>
+</ol>
+<h2 id="arl-docker-搭建" class="heading-element"><span>ARL-docker 搭建</span>
+  <a href="#arl-docker-%e6%90%ad%e5%bb%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在线下载安装法</p>
+<p>下载部署脚本项目：<code>git clone https://github.com/honmashironeko/ARL-docker.git</code></p>
+<p>进入项目文件夹：<code>cd ARL-docker/</code></p>
+<p>添加运行权限：<code>chmod +x setup-arl.sh</code></p>
+<p>执行部署脚本：<code>bash setup-arl.sh</code></p>
+<p>可能会在运行的时候报错一次，不需要管他，重新运行一遍 bash setup-arl.sh 即可。</p>
+<p>启动 ARL 命令：<code>docker-compose up -d</code></p>
+<p>接下来就是记录一些问题、排查过程及解决办法了。</p>
+<h2 id="q1服务无法启动" class="heading-element"><span>Q1：服务无法启动</span>
+  <a href="#q1%e6%9c%8d%e5%8a%a1%e6%97%a0%e6%b3%95%e5%90%af%e5%8a%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="问题描述" class="heading-element"><span>问题描述</span>
+  <a href="#%e9%97%ae%e9%a2%98%e6%8f%8f%e8%bf%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>启动 ARL 命令：<code>docker-compose up -d</code>
+<code>docker ps</code> 发现服务无法启动
+有三个容器无法正常启动 arl_web、arl_worker、arl_scheduler，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># docker ps -a</span>
+</span></span><span class="line"><span class="cl">CONTAINER ID     IMAGE                           COMMAND               CREATED        STATUS          PORTS          NAMES
+</span></span><span class="line"><span class="cl">7045ec724fa5      honmashironeko/arl-docker-all       <span class="s2">&#34;sh -c &#39;gen_crt.sh...&#34;</span>   <span class="m">5</span> hours ago    Restarting <span class="o">(</span>1<span class="o">)</span> <span class="m">3</span> minutes ago                                            arl_web
+</span></span><span class="line"><span class="cl">94a3497339c0      honmashironeko/arl-docker-all       <span class="s2">&#34;sh -c &#39;wait-for-i...&#34;</span>   <span class="m">5</span> hours ago    Restarting <span class="o">(</span>255<span class="o">)</span> <span class="m">3</span> minutes ago                                          arl_worker
+</span></span><span class="line"><span class="cl">3bdd87b9a0f3      honmashironeko/arl-docker-all       <span class="s2">&#34;sh -c &#39;wait-for-i...&#34;</span>   <span class="m">5</span> hours ago    Restarting <span class="o">(</span>255<span class="o">)</span> <span class="m">3</span> minutes ago                                          arl_scheduler
+</span></span><span class="line"><span class="cl">58f66a52f583      rabbitmq:3.8.19-management-alpine   <span class="s2">&#34;docker-entrypoint...&#34;</span>   <span class="m">5</span> hours ago    Up <span class="m">7</span> minutes      4369/tcp, 5671-5672/tcp, 15671-15672/tcp, 15691-15692/tcp, 25672/tcp   arl_rabbitmq
+</span></span><span class="line"><span class="cl">457a964ab6dc      mongo:4.0.27                        <span class="s2">&#34;docker-entrypoint...&#34;</span>   <span class="m">5</span> hours ago    Up <span class="m">7</span> minutes      27017/tcp                                                 arl_mongodb</span></span></code></pre></td></tr></table>
+</div>
+</div><p>排查日志：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">docker logs --tail <span class="m">20</span> &lt;CONTAINER ID&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有几个权限报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Error: Error: &#39;arl_web.log&#39; isn&#39;t writable [PermissionError(13, &#39;Permission denied&#39;)]</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还有个<code>/code/app/config.yaml</code> 的权限报错，日志刷没了，不记得具体报错命令了。</p>
+<p>看配置文件是本地文件和容器文件的映射</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># cat docker-compose.yml</span>
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">    web:
+</span></span><span class="line"><span class="cl">    ……
+</span></span><span class="line"><span class="cl">        volumes:
+</span></span><span class="line"><span class="cl">          - ./arl_web.log:/code/arl_web.log
+</span></span><span class="line"><span class="cl">          - ./config-docker.yaml:/code/app/config.yaml</span></span></code></pre></td></tr></table>
+</div>
+</div><p>检查文件、目录权限，容器内用户身份，检查 SELinux</p>
+<h3 id="解决办法" class="heading-element"><span>解决办法</span>
+  <a href="#%e8%a7%a3%e5%86%b3%e5%8a%9e%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>最后我找到的解决办法是关闭SELinux</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo sestatus        <span class="c1"># 查看 SELinux 状态</span>
+</span></span><span class="line"><span class="cl">sudo setenforce <span class="m">0</span> <span class="c1"># 临时关闭 SELinux</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># sestatus</span>
+</span></span><span class="line"><span class="cl">SELinux status:                 enabled
+</span></span><span class="line"><span class="cl">SELinuxfs mount:                /sys/fs/selinux
+</span></span><span class="line"><span class="cl">SELinux root directory:         /etc/selinux
+</span></span><span class="line"><span class="cl">Loaded policy name:             targeted
+</span></span><span class="line"><span class="cl">Current mode:                   enforcing
+</span></span><span class="line"><span class="cl">Mode from config file:          enforcing
+</span></span><span class="line"><span class="cl">Policy MLS status:              enabled
+</span></span><span class="line"><span class="cl">Policy deny_unknown status:     allowed
+</span></span><span class="line"><span class="cl">Max kernel policy version:      <span class="m">31</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># sudo setenforce 0</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># sestatus</span>
+</span></span><span class="line"><span class="cl">SELinux status:                 enabled
+</span></span><span class="line"><span class="cl">SELinuxfs mount:                /sys/fs/selinux
+</span></span><span class="line"><span class="cl">SELinux root directory:         /etc/selinux
+</span></span><span class="line"><span class="cl">Loaded policy name:             targeted
+</span></span><span class="line"><span class="cl">Current mode:                   permissive
+</span></span><span class="line"><span class="cl">Mode from config file:          enforcing
+</span></span><span class="line"><span class="cl">Policy MLS status:              enabled
+</span></span><span class="line"><span class="cl">Policy deny_unknown status:     allowed
+</span></span><span class="line"><span class="cl">Max kernel policy version:      <span class="m">31</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>清除一下，之后再重启下就解决了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># docker-compose down</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Running 6/6
+</span></span><span class="line"><span class="cl"> ✔ Container arl_web           Removed                          0.3s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_scheduler     Removed                          0.3s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_worker        Removed                          0.3s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_rabbitmq      Removed                          0.0s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_mongodb       Removed                          0.0s 
+</span></span><span class="line"><span class="cl"> ✔ Network arl-docker_default  Removed                          0.2s 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># docker-compose up -d</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Building 0.0s <span class="o">(</span>0/0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Running 6/6
+</span></span><span class="line"><span class="cl"> ✔ Network arl-docker_default  Created                          0.2s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_mongodb       Started                          0.9s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_rabbitmq      Started                          0.9s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_worker        Started                          1.6s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_scheduler     Started                          1.6s 
+</span></span><span class="line"><span class="cl"> ✔ Container arl_web           Started                          1.7s 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1">#</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="q2web密码错误" class="heading-element"><span>Q2：Web密码错误</span>
+  <a href="#q2web%e5%af%86%e7%a0%81%e9%94%99%e8%af%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="问题描述-1" class="heading-element"><span>问题描述</span>
+  <a href="#%e9%97%ae%e9%a2%98%e6%8f%8f%e8%bf%b0-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>前往ARLweb页面：<code>https://IP:5003/</code>，账号：<code>admin</code>，密码：<code>honmashironeko</code>，提示密码错误</p>
+<p>进 arl_web 服务容器看了下代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ARL-docker<span class="o">]</span><span class="c1"># docker exec -it arl_web /bin/bash</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@6a3109921ab8 code<span class="o">]</span><span class="c1"># ls</span>
+</span></span><span class="line"><span class="cl">app  arl_web.log  frontend  requirements.txt  test</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">6</span><span class="n">a3109921ab8</span> <span class="n">app</span><span class="p">]</span><span class="c1"># cat utils/user.py </span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span>  <span class="n">request</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">modules</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">app.config</span> <span class="kn">import</span> <span class="n">Config</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">gen_md5</span><span class="p">,</span> <span class="n">random_choices</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">.conn</span> <span class="kn">import</span> <span class="n">conn_db</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">salt</span> <span class="o">=</span> <span class="s1">&#39;arlsalt!@#&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">user_login</span><span class="p">(</span><span class="n">username</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">password</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">query</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;username&#34;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s2">&#34;password&#34;</span><span class="p">:</span> <span class="n">gen_md5</span><span class="p">(</span><span class="n">salt</span> <span class="o">+</span> <span class="n">password</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">conn_db</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">item</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;username&#34;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;token&#34;</span><span class="p">:</span> <span class="n">gen_md5</span><span class="p">(</span><span class="n">random_choices</span><span class="p">(</span><span class="mi">50</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;login&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">conn_db</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update_one</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;$set&#34;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;token&#34;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s2">&#34;token&#34;</span><span class="p">]}})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">item</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/arl_setup_record/resource/index.assets/image-20250316014902691.png" alt="image-20250316014902691" srcset="/posts/arl_setup_record/resource/index.assets/image-20250316014902691.png?size=small, /posts/arl_setup_record/resource/index.assets/image-20250316014902691.png?size=medium 1.5x, /posts/arl_setup_record/resource/index.assets/image-20250316014902691.png?size=large 2x" data-title="image-20250316014902691" style="--width: 1132px;--aspect-ratio: 1132 / 524;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>又看了MongoDB数据库，没发现有账号记录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="n">localhost</span><span class="w"> </span><span class="n">xavier</span><span class="p">]</span><span class="o">#</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">ti</span><span class="w"> </span><span class="n">arl_mongodb</span><span class="w"> </span><span class="n">mongo</span><span class="w"> </span><span class="o">-</span><span class="n">u</span><span class="w"> </span><span class="k">admin</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="k">admin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">MongoDB</span><span class="w"> </span><span class="n">shell</span><span class="w"> </span><span class="k">version</span><span class="w"> </span><span class="n">v4</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">27</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">connecting</span><span class="w"> </span><span class="k">to</span><span class="p">:</span><span class="w"> </span><span class="n">mongodb</span><span class="p">:</span><span class="o">//</span><span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">27017</span><span class="o">/?</span><span class="n">gssapiServiceName</span><span class="o">=</span><span class="n">mongodb</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">Implicit</span><span class="w"> </span><span class="k">session</span><span class="p">:</span><span class="w"> </span><span class="k">session</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="s2">&#34;id&#34;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">UUID</span><span class="p">(</span><span class="s2">&#34;dd7329eb-ea82-4041-a454-d43aedb1328b&#34;</span><span class="p">)</span><span class="w"> </span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">MongoDB</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">27</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Welcome</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">MongoDB</span><span class="w"> </span><span class="n">shell</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">…………</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&gt;</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">arl</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">switched</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">arl</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&gt;</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="k">user</span><span class="p">.</span><span class="n">find</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&gt;</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="n">getCollectionNames</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;asset_domain&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;asset_ip&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;asset_site&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;cert&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;domain&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;fileleak&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;github_monitor_result&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;github_result&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;ip&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;npoc_service&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;poc&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;service&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;site&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;url&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;vuln&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;wih&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>没看到有user表</p>
+<p><img loading="lazy" src="/posts/arl_setup_record/resource/index.assets/image-20250316014630278.png" alt="image-20250316014630278" srcset="/posts/arl_setup_record/resource/index.assets/image-20250316014630278.png?size=small, /posts/arl_setup_record/resource/index.assets/image-20250316014630278.png?size=medium 1.5x, /posts/arl_setup_record/resource/index.assets/image-20250316014630278.png?size=large 2x" data-title="image-20250316014630278" style="--width: 538px;--aspect-ratio: 538 / 408;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="解决办法-1" class="heading-element"><span>解决办法</span>
+  <a href="#%e8%a7%a3%e5%86%b3%e5%8a%9e%e6%b3%95-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>添加账户记录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">&gt;</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="k">user</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="w"> </span><span class="n">username</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="w">  </span><span class="n">password</span><span class="p">:</span><span class="w"> </span><span class="n">hex_md5</span><span class="p">(</span><span class="s1">&#39;arlsalt!@#&#39;</span><span class="o">+</span><span class="s1">&#39;admin123&#39;</span><span class="p">)</span><span class="w"> </span><span class="err">}</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">WriteResult</span><span class="p">(</span><span class="err">{</span><span class="w"> </span><span class="s2">&#34;nInserted&#34;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">}</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&gt;</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="k">user</span><span class="p">.</span><span class="n">find</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">{</span><span class="w"> </span><span class="s2">&#34;_id&#34;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ObjectId</span><span class="p">(</span><span class="s2">&#34;67d5ab76da9827cdcf275ce3&#34;</span><span class="p">),</span><span class="w"> </span><span class="s2">&#34;username&#34;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;password&#34;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;fd9fb75bf102e785e6874af0025a331e&#34;</span><span class="w"> </span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&gt;</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="n">getCollectionNames</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;asset_domain&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;asset_ip&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;asset_site&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;cert&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;domain&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;fileleak&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;github_monitor_result&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;github_result&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;ip&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;npoc_service&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;poc&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;service&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;site&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;url&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;user&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;vuln&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;wih&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/arl_setup_record/resource/index.assets/image-20250316014731951.png" alt="image-20250316014731951" srcset="/posts/arl_setup_record/resource/index.assets/image-20250316014731951.png?size=small, /posts/arl_setup_record/resource/index.assets/image-20250316014731951.png?size=medium 1.5x, /posts/arl_setup_record/resource/index.assets/image-20250316014731951.png?size=large 2x" data-title="image-20250316014731951" style="--width: 1129px;--aspect-ratio: 1129 / 825;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>最后用了admin、admin123 成功登录。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2025-03-15 17:14:42">更新于 2025-03-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/tools/" class="post-tag" title="标签 - Tools">Tools</a><a href="/tags/docker/" class="post-tag" title="标签 - Docker">Docker</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/hibernate_hql_injection/" class="post-nav-item" rel="prev" title="Hibernate框架HQL注入笔记"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Hibernate框架HQL注入笔记</a><a href="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/" class="post-nav-item" rel="next" title="内存马查杀笔记-入门版">内存马查杀笔记-入门版<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

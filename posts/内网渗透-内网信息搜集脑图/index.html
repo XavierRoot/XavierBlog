@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>004-内网渗透 内网信息搜集脑图 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。"><meta name="keywords" content='内网渗透, Pentest, RedTeam'>
+  <meta itemprop="name" content="004-内网渗透 内网信息搜集脑图">
+  <meta itemprop="description" content="国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。">
+  <meta itemprop="datePublished" content="2021-10-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2021-10-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="407">
+  <meta itemprop="keywords" content="内网渗透,Pentest,RedTeam"><meta property="og:url" content="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="004-内网渗透 内网信息搜集脑图">
+  <meta property="og:description" content="国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-10-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-10-07T00:00:00+00:00">
+    <meta property="article:tag" content="内网渗透">
+    <meta property="article:tag" content="Pentest">
+    <meta property="article:tag" content="RedTeam">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="004-内网渗透 内网信息搜集脑图">
+  <meta name="twitter:description" content="国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" title="004-内网渗透 内网信息搜集脑图 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/" title="003-Yapi Mock RCE 漏洞复现分析" /><link rel="next" type="text/html" href="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/" title="005-内网文件传输技术 Windows篇" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/index.md" title="004-内网渗透 内网信息搜集脑图 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "004-内网渗透 内网信息搜集脑图",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE\/"
+    },"genre": "posts","keywords": "内网渗透, Pentest, RedTeam","wordcount":  407 ,
+    "url": "http:\/\/localhost:1313\/posts\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE\/","datePublished": "2021-10-07T00:00:00+00:00","dateModified": "2021-10-07T00:00:00+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>004-内网渗透 内网信息搜集脑图</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2021-10-07 00:00:00"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-10-07">2021-10-07</time></span>&nbsp;<span title="407 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 1 分钟</span>&nbsp;</div>
+    </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>​    国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。</p>
+<p>进入内网后所关注的信息主要包括如下：</p>
+<ol>
+<li>操作系统版本、主机信息、补丁信息</li>
+<li>用户习惯、密码收集、社交软件收集、用户下载目录</li>
+<li>用户列表，用户权限</li>
+<li>端口列表</li>
+<li>进程列表：关注杀毒软件、远程管理软件等</li>
+<li>服务列表</li>
+<li>网络连接：网络共享、会话信息、内网IP地址段信息等</li>
+<li>域环境：域内主机，操作系统、应用软件、补丁、服务、杀毒软件一般都是批量安装的</li>
+</ol>
+<p>整理如图：</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/resource/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE.assets/640-20230218201940748.png" alt="图片" srcset="/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/resource/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE.assets/640-20230218201940748.png?size=small, /posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/resource/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE.assets/640-20230218201940748.png?size=medium 1.5x, /posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/resource/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE.assets/640-20230218201940748.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 2629;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>字数不够，聊聊其他：</p>
+<p>最近学习的有点迷茫，感觉前前后后学的东西也不少，但是总觉得缺少了灵活，不够融会贯通，想着多整理多写写东西是不是能得到新的收获。</p>
+<p>纸上得来终觉浅，渗透是门实战的艺术，希望早日走出自己的一步。今天刚好看到了余弦师傅的文章《<a href="http://mp.weixin.qq.com/s?__biz=MzA3NTEzMTUwNA==&amp;mid=2651081604&amp;idx=1&amp;sn=029d592b5d084425767e732ea1c5d33f&amp;chksm=8485d49bb3f25d8deb4a23f468cf9d1cb9789ecae667b7878d7fbf1395778da49d502ca89a2a&amp;scene=21#wechat_redirect"target="_blank" rel="external nofollow noopener noreferrer">闲聊黑客成长路径</a>》，希望能早日实现三大能力：</p>
+<ol>
+<li>
+<p>能挖好漏洞，手握好 0day；</p>
+</li>
+<li>
+<p>能黑客工程化，手握好武器；</p>
+</li>
+<li>
+<p>能玩好渗透，拿下目标为导向；</p>
+</li>
+</ol>
+<p>师傅们，一起加油吧！</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-10-07 00:00:00">更新于 2021-10-07&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" class="post-tag" title="标签 - 内网渗透">内网渗透</a><a href="/tags/pentest/" class="post-tag" title="标签 - Pentest">Pentest</a><a href="/tags/redteam/" class="post-tag" title="标签 - RedTeam">RedTeam</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/" class="post-nav-item" rel="prev" title="003-Yapi Mock RCE 漏洞复现分析"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>003-Yapi Mock RCE 漏洞复现分析</a><a href="/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/" class="post-nav-item" rel="next" title="005-内网文件传输技术 Windows篇">005-内网文件传输技术 Windows篇<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

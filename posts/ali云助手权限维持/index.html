@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>022-Ali云助手权限维持 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执行命令（Shell、PowerShell、Bat等）和发送文件等操作。
+"><meta name="keywords" content='Pentest, 权限维持, 攻防技术'>
+  <meta itemprop="name" content="022-Ali云助手权限维持">
+  <meta itemprop="description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执行命令（Shell、PowerShell、Bat等）和发送文件等操作。">
+  <meta itemprop="datePublished" content="2023-08-17T03:33:40+08:00">
+  <meta itemprop="dateModified" content="2023-08-17T03:33:40+08:00">
+  <meta itemprop="wordCount" content="2094">
+  <meta itemprop="keywords" content="Pentest,权限维持,攻防技术"><meta property="og:url" content="http://localhost:1313/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="022-Ali云助手权限维持">
+  <meta property="og:description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执行命令（Shell、PowerShell、Bat等）和发送文件等操作。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-17T03:33:40+08:00">
+    <meta property="article:modified_time" content="2023-08-17T03:33:40+08:00">
+    <meta property="article:tag" content="Pentest">
+    <meta property="article:tag" content="权限维持">
+    <meta property="article:tag" content="攻防技术">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="022-Ali云助手权限维持">
+  <meta name="twitter:description" content="Ali云助手权限维持 简介 云助手是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执行命令（Shell、PowerShell、Bat等）和发送文件等操作。">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" title="022-Ali云助手权限维持 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/" title="021-Git泄露文件还原" /><link rel="next" type="text/html" href="http://localhost:1313/posts/pen200-oscp-a/" title="Pen200 OSCP-A Writeup" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/index.md" title="022-Ali云助手权限维持 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "022-Ali云助手权限维持",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/"
+    },"genre": "posts","keywords": "Pentest, 权限维持, 攻防技术","wordcount":  2094 ,
+    "url": "http:\/\/localhost:1313\/posts\/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/","datePublished": "2023-08-17T03:33:40+08:00","dateModified": "2023-08-17T03:33:40+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>022-Ali云助手权限维持</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2023-08-17 03:33:40"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-08-17">2023-08-17</time></span>&nbsp;<span title="2094 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2100 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#ali云助手权限维持">Ali云助手权限维持</a></li>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#利用">利用</a></li>
+    <li><a href="#排查">排查</a></li>
+    <li><a href="#特征">特征：</a></li>
+    <li><a href="#处置">处置</a></li>
+    <li><a href="#参考文章">参考文章：</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="ali云助手权限维持" class="heading-element"><span>Ali云助手权限维持</span>
+  <a href="#ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h2 id="简介" class="heading-element"><span>简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><strong>云助手</strong>是专为云服务器 ECS 打造的原生自动化运维工具，通过免密码、免登录、无需使用跳板机的形式，在 ECS 实例上实现批量运维、执行命令（Shell、PowerShell、Bat等）和发送文件等操作。</p>
+<p>典型的使用场景包括：安装卸载软件、启动或停止服务、分发配置文件和执行一般的命令（或脚本）等。</p>
+<p>但实际上也可以针对终端主机进行远程运维，因此可以用于实现权限维持。</p>
+<blockquote>
+<p>官方文档：</p>
+<p><a href="https://help.aliyun.com/zh/ecs/user-guide/overview-10"target="_blank" rel="external nofollow noopener noreferrer">https://help.aliyun.com/zh/ecs/user-guide/overview-10</a></p>
+</blockquote>
+<h2 id="利用" class="heading-element"><span>利用</span>
+  <a href="#%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>1、打开阿里云控制台，依次找到 产品与服务 -&gt; 云服务器 ECS -&gt; 运维与监控 -&gt; 发送命令/文件（云助手） -&gt; 托管实例 -&gt; 创建注册码：</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817023716768.png" alt="image-20230817023716768" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817023716768.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817023716768.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817023716768.png?size=large 2x" data-title="image-20230817023716768" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>2、输入配置信息，包括如下内容：</p>
+<ul>
+<li>
+<p>实例名称前缀</p>
+<p>默认的实例名称。默认使用 hostname 作为实例名称。 若设置，则使用该注册码所注册的实例，将使用该名称作为前辍生成有序的实例名； 也可以在注册时指定新的实例名称以覆盖此默认值。</p>
+<p>只可包含特殊字符中的点号（.）、下划线（_）、连字符（-）和半角冒号（:）</p>
+</li>
+<li>
+<p>来源IP限制：</p>
+<p>待注册的主机的访问互联网时的公网IP或IP范围，支持 IPv4、IPv6和CIDR地址段。</p>
+<p>仅在主机注册阶段进行校验。</p>
+</li>
+<li>
+<p>激活数额度：</p>
+<p>注册码可激活的实例数，即此注册码最多可用于注册的次数。默认值10，最多可支持1000台。</p>
+</li>
+<li>
+<p>有效期：</p>
+<p>注册码的有效期，默认4小时，可选范围 1～876576小时（约100年，半永久&#x1f606;  ）。</p>
+<p>超出有效期后，该注册码不可用于注册新的主机。</p>
+</li>
+</ul>
+<p>3、点击生成注册码</p>
+<p>当生成注册码后，会在下方显示实例注册的命令脚本内容。该注册码内容只显示一次，因此需要保存此注册码唯一ID与内容。</p>
+<p>支持Linux 和Windows :</p>
+<p><strong>Linux(.rpm)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo wget https://aliyun-client-assist.oss-accelerate.aliyuncs.com/linux/aliyun_assist_latest.rpm
+</span></span><span class="line"><span class="cl">sudo rpm -ivh aliyun_assist_latest.rpm --force 
+</span></span><span class="line"><span class="cl">sudo aliyun-service --register --RegionId <span class="s2">&#34;cn-hangzhou&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>   --ActivationCode <span class="s2">&#34;a-hz012xxxxxL47fD/f&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>   --ActivationId <span class="s2">&#34;1DA9xxxxxxD244E7&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Linux(.deb)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo wget https://aliyun-client-assist.oss-accelerate.aliyuncs.com/linux/aliyun_assist_latest.deb
+</span></span><span class="line"><span class="cl">sudo dpkg -i aliyun_assist_latest.deb
+</span></span><span class="line"><span class="cl">sudo aliyun-service --register --RegionId <span class="s2">&#34;cn-hangzhou&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>   --ActivationCode <span class="s2">&#34;a-hz012xxxxxx47fD/f&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>   --ActivationId <span class="s2">&#34;1DA9xxxxxx3D244E7&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Windows</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Invoke-WebRequest</span> <span class="n">-Uri</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;https://aliyun-client-assist.oss-accelerate.aliyuncs.com/windows/aliyun_agent_latest_setup.exe&#39;</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl"><span class="n">-OutFile</span> <span class="s1">&#39;C:\\aliyun_agent_latest_setup.exe&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&amp;</span><span class="s2">&#34;C:\\aliyun_agent_latest_setup.exe&#34;</span> <span class="s1">&#39;/S&#39;</span> <span class="s1">&#39;--register&#39;</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;--RegionId=&#34;cn-hangzhou&#34;&#39;</span> <span class="s1">&#39;--ActivationCode=&#34;a-hz012xxxxvttL47fD/f&#34;&#39;</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;--ActivationId=&#34;1DA9xxxxx244E7&#34;&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>生成的注册码中的关键参数就是 ActivationId值 和 ActivationCode值，Id和Code互相相互对应，可点击 “注册新实例” 处，查看过去建立生成的 ActivationId 值，但 ActivationCode值不可查。</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154351004.png" alt="image-20230817154351004" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154351004.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154351004.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154351004.png?size=large 2x" data-title="image-20230817154351004" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154514371.png" alt="image-20230817154514371" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154514371.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154514371.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817154514371.png?size=large 2x" data-title="image-20230817154514371" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>使用阿里云给出的命令下载云助手agent，可能会出现权限不足的情况，需要将文件输出在当前用户可写的路径下。</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817171338213.png" alt="image-20230817171338213" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817171338213.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817171338213.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817171338213.png?size=large 2x" data-title="image-20230817171338213" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>第一段命令为下载云助手Agent，需要等待一段时间，也可以通过其他方式投递。</p>
+<p>第二段命令为云助手Agent注册上线ECS云助手控制端。</p>
+<p>在目标机器上运行相应脚本，执行完之后需要刷新或者重新打开一个标签页，即可展示结果：</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024035403.png" alt="image-20230817024035403" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024035403.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024035403.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024035403.png?size=large 2x" data-title="image-20230817024035403" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>执行命令相当于创建一个脚本，依次去执行；</p>
+<p>远程登录即类似ECS，开启一个Web形式的终端</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024508568.png" alt="image-20230817024508568" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024508568.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024508568.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024508568.png?size=large 2x" data-title="image-20230817024508568" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可以看到登录后即为system权限。</p>
+<p>目前发现一些问题：</p>
+<ol>
+<li>云助手Agent执行时有 UAC认证；</li>
+<li>Powershell执行命令下载文件时，需要等待。</li>
+<li>在Windows Arm上会被识别为Ubuntu</li>
+<li>只适合命令控制，传输文件大小有限制，上传的文件原始大小不大于24KB，且经过Base64编码后的文件不能大于32KB。因此更适合与命令控制和权限维持。</li>
+<li>一条命令中，自定义参数的个数不能超过20个</li>
+</ol>
+<h2 id="排查" class="heading-element"><span>排查</span>
+  <a href="#%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><strong>云助手Agent</strong>：</p>
+<p>运行云助手后，Windows系统上会有一个 aliyun_agent的进程和一个AliyunService服务，该进程服务会开机自启。</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024805213.png" alt="image-20230817024805213" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024805213.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024805213.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817024805213.png?size=large 2x" data-title="image-20230817024805213" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817144637237.png" alt="image-20230817144637237" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817144637237.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817144637237.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817144637237.png?size=large 2x" data-title="image-20230817144637237" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><strong>云助手守护进程：</strong></p>
+<p>本地结束该进程后，远程连接即可终端。未发现进程保护等动作。</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030214110.png" alt="image-20230817030214110" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030214110.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030214110.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030214110.png?size=large 2x" data-title="image-20230817030214110" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030414029.png" alt="image-20230817030414029" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030414029.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030414029.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817030414029.png?size=large 2x" data-title="image-20230817030414029" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>查了文档发现其实有守护进程，只是目前仅支持Linux操作系统。</p>
+<p>云助手守护进程，用于监控云助手Agent的资源消耗情况，上报云助手Agent的运行状态，以及当云助手Agent崩溃时重启云助手Agent。</p>
+<ul>
+<li>服务名称：<code>AssistDaemon</code></li>
+<li>路径：<code>/usr/local/share/assist-daemon/assist_daemon</code></li>
+</ul>
+<p><strong>任务执行路径：</strong></p>
+<p>云助手会将用户的命令内容以文件形式先保存到实例上，然后再执行文件，具体保存路径如下：</p>
+<ul>
+<li>
+<p>Linux：/tmp</p>
+</li>
+<li>
+<p>Windows：云助手安装路径/work/script</p>
+</li>
+</ul>
+<p><strong>通信流量：</strong></p>
+<p>本地Agent上线后会先对域名进行解析，根据命令行中<code>--RegionId=&quot;cn-hangzhou&quot;</code>的键值，会寻找相应的节点，这里就是<code>cn-hangzhou.axt.aliyuncs.com</code>。</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817175441073.png" alt="image-20230817175441073" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817175441073.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817175441073.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817175441073.png?size=large 2x" data-title="image-20230817175441073" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>从TLS协议握手过程可以看到Server Name为<code>cn-hangzhou.axt.aliyuncs.com</code>，接下去所走的流量都是TLS加密流量。</p>
+<p><img loading="lazy" src="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817174220890.png" alt="image-20230817174220890" srcset="resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817174220890.png?size=small, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817174220890.png?size=medium 1.5x, resource/Ali%e4%ba%91%e5%8a%a9%e6%89%8b%e6%9d%83%e9%99%90%e7%bb%b4%e6%8c%81.assets/image-20230817174220890.png?size=large 2x" data-title="image-20230817174220890" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="特征" class="heading-element"><span>特征：</span>
+  <a href="#%e7%89%b9%e5%be%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ol>
+<li>检测阿里云助手官方程序，确认是否本人安装</li>
+<li>域名：aliyun-client-assist.oss-accelerate.aliyuncs.com，用于下载云助手Agent程序，可被绕过通过其他方式投递。</li>
+<li>通信流量，DNS解析记录有<code>*.axt.aliyuncs.com</code>，TLS Client Hello 证书握手时Server Name是<code>*.axt.aliyuncs.com</code></li>
+<li>进程名：aliyun_agent，服务名：Aliyun Assist Service</li>
+<li>Linux系统守护进程：AssistDaemon</li>
+</ol>
+<p>天眼分析中心日志检测，SSL加密协商：<code>server_name: (*.axt.aliyuncs.com)</code></p>
+<h2 id="处置" class="heading-element"><span>处置</span>
+  <a href="#%e5%a4%84%e7%bd%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ol>
+<li>杀进程，关闭服务</li>
+<li>删除被非法安装的Ali云助手</li>
+<li>排查其他权限维持动作并清除。</li>
+<li>增加流量侧和终端侧检测，标记md5和域名。</li>
+</ol>
+<h2 id="参考文章" class="heading-element"><span>参考文章：</span>
+  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><a href="https://mp.weixin.qq.com/s/-JqzD_F_5CqdwZAyhEBU8g"target="_blank" rel="external nofollow noopener noreferrer">https://mp.weixin.qq.com/s/-JqzD_F_5CqdwZAyhEBU8g</a></p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-08-17 03:33:40">更新于 2023-08-17&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/pentest/" class="post-tag" title="标签 - Pentest">Pentest</a><a href="/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" class="post-tag" title="标签 - 权限维持">权限维持</a><a href="/tags/%E6%94%BB%E9%98%B2%E6%8A%80%E6%9C%AF/" class="post-tag" title="标签 - 攻防技术">攻防技术</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/" class="post-nav-item" rel="prev" title="021-Git泄露文件还原"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>021-Git泄露文件还原</a><a href="/posts/pen200-oscp-a/" class="post-nav-item" rel="next" title="Pen200 OSCP-a Writeup">Pen200 OSCP-a Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

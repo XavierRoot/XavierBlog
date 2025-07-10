@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>001-2021年4月13日 学习随笔 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。"><meta name="keywords" content='随笔'>
+  <meta itemprop="name" content="001-2021年4月13日 学习随笔">
+  <meta itemprop="description" content="2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。">
+  <meta itemprop="datePublished" content="2021-03-13T13:31:00+08:00">
+  <meta itemprop="dateModified" content="2021-03-13T13:31:00+08:00">
+  <meta itemprop="wordCount" content="801">
+  <meta itemprop="keywords" content="随笔"><meta property="og:url" content="http://localhost:1313/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="001-2021年4月13日 学习随笔">
+  <meta property="og:description" content="2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-03-13T13:31:00+08:00">
+    <meta property="article:modified_time" content="2021-03-13T13:31:00+08:00">
+    <meta property="article:tag" content="随笔">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="001-2021年4月13日 学习随笔">
+  <meta name="twitter:description" content="2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/" title="001-2021年4月13日 学习随笔 - Xavier&#39;s Blog" /><link rel="next" type="text/html" href="http://localhost:1313/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/" title="002-Nmap进阶学习心得" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/index.md" title="001-2021年4月13日 学习随笔 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "001-2021年4月13日 学习随笔",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94\/"
+    },"genre": "posts","keywords": "随笔","wordcount":  801 ,
+    "url": "http:\/\/localhost:1313\/posts\/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94\/","datePublished": "2021-03-13T13:31:00+08:00","dateModified": "2021-03-13T13:31:00+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "2021年4月13日 学习随笔：本文从一篇文章出发，总结一些安全学习研究的想法。"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>001-2021年4月13日 学习随笔</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category" title="分类 - 随笔"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 随笔</a></span></div><div class="post-meta-line"><span title="发布于 2021-03-13 13:31:00"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-03-13">2021-03-13</time></span>&nbsp;<span title="801 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>本文从一篇文章出发，总结一些安全学习研究的想法。</p>
+<h2 id="0x00-背景" class="heading-element"><span>0x00 背景</span>
+  <a href="#0x00-%e8%83%8c%e6%99%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>最近演习期间，精神紧张，忙里偷闲看看大佬们的历史博客，学习一些东西。</p>
+<p>今天就看了P牛的《宝塔面板phpMyAdmin未授权访问漏洞是个低级错误吗？》，也不是为了漏洞复现分析什么的，就是从这篇文章中学到的学习方法。</p>
+<h2 id="0x01-一些想法" class="heading-element"><span>0x01 一些想法</span>
+  <a href="#0x01-%e4%b8%80%e4%ba%9b%e6%83%b3%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>当我们收到一个漏洞情报时，该怎么做呢？我觉得可以这么几个角度来做：</p>
+<ol>
+<li>
+<p>收集整理漏洞情报基本信息，包括漏洞影响范围、漏洞类型、漏洞等级、漏洞利用条件、缓解措施和修复建议；基本上收集整理完这些信息，可以下发给各单位进行自查和防护，算是一条比较详细的威胁情报了</p>
+</li>
+<li>
+<p>漏洞点位置，有无poc/exp公开</p>
+<p>如果无poc/exp公布，但是有补丁文件公布，可以对比打补丁前和补丁后的代码，找到漏洞点位置</p>
+</li>
+<li>
+<p>漏洞分析，漏洞形成的原因。</p>
+<p>对于第三点漏洞分析来说，通常只会看下漏洞点位置的代码上下文，漏洞是怎么形成的，如何构造poc/exp，做一个漏洞复现就结束了。</p>
+<blockquote>
+<p>这是很多漏洞分析文章的通病，这些文章在出现漏洞后跟一遍漏洞代码，找到漏洞发生点和利用方法就结束了，并没有深入研究开发为什么会这么写，那么下次你还是挖不出漏洞。</p>
+</blockquote>
+<p>但是看了P牛的文章，又有了新的认知。我们不光要知道这个漏洞代码存在之后的事情，我们还要考虑这个<strong>代码为什么要这么写</strong>。这就要考虑该漏洞的影响版本，从最早的版本和再前一个版本之间的区别，思考这背后是什么让开发者改变了代码，官方做这些动作的原因。</p>
+</li>
+<li>
+<p>漏洞复现</p>
+<p>利用公开的poc/exp，或自己分析后得出的poc进行漏洞复现，并构思分析可能的利用链。对poc的功能进行完善，往exp发展。</p>
+</li>
+<li>
+<p>检测分析</p>
+<p>对使用poc/exp进行漏洞复现过程中所产生的流量进行分析，尝试提取流量特征，思考什么样的规则可以检测到该攻击。</p>
+<p>使用该poc/exp对系统产生的影响，是否有日志产生，是否有文件落地等。</p>
+</li>
+<li>
+<p>exp修改，隐蔽痕迹</p>
+<p>修改exp特征，写自己的exp工具，竟可能做到隐蔽式攻击。</p>
+</li>
+</ol></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-03-13 13:31:00">更新于 2021-03-13&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E9%9A%8F%E7%AC%94/" class="post-tag" title="标签 - 随笔">随笔</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/" class="post-nav-item" rel="next" title="002-Nmap进阶学习心得">002-Nmap进阶学习心得<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

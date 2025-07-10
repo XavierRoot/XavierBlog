@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>2024 HackingClub北京站沙龙分享 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="2024 HackingClub 北京站沙龙，AI&#43;网络安全方向"><meta name="keywords" content='随笔, career, AI安全'>
+  <meta itemprop="name" content="2024 HackingClub北京站沙龙分享">
+  <meta itemprop="description" content="2024 HackingClub 北京站沙龙，AI&#43;网络安全方向">
+  <meta itemprop="datePublished" content="2024-04-07T09:32:49+00:00">
+  <meta itemprop="dateModified" content="2024-04-07T09:32:49+00:00">
+  <meta itemprop="wordCount" content="5073">
+  <meta itemprop="keywords" content="随笔,Career,AI安全"><meta property="og:url" content="http://localhost:1313/posts/2024-hackingclub-beijing/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="2024 HackingClub北京站沙龙分享">
+  <meta property="og:description" content="2024 HackingClub 北京站沙龙，AI&#43;网络安全方向">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-07T09:32:49+00:00">
+    <meta property="article:modified_time" content="2024-04-07T09:32:49+00:00">
+    <meta property="article:tag" content="随笔">
+    <meta property="article:tag" content="Career">
+    <meta property="article:tag" content="AI安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2024 HackingClub北京站沙龙分享">
+  <meta name="twitter:description" content="2024 HackingClub 北京站沙龙，AI&#43;网络安全方向">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/2024-hackingclub-beijing/" title="2024 HackingClub北京站沙龙分享 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/xz-backdoor-analysis/" title="XZ Utils Backdoor 事件分析汇总" /><link rel="next" type="text/html" href="http://localhost:1313/posts/macos-%E5%88%9D%E8%AF%86sip/" title="MacOS初识SIP" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/2024-hackingclub-beijing/index.md" title="2024 HackingClub北京站沙龙分享 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "2024 HackingClub北京站沙龙分享",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/2024-hackingclub-beijing\/"
+    },"genre": "posts","keywords": "随笔, career, AI安全","wordcount":  5073 ,
+    "url": "http:\/\/localhost:1313\/posts\/2024-hackingclub-beijing\/","datePublished": "2024-04-07T09:32:49+00:00","dateModified": "2024-04-07T09:32:49+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "2024 HackingClub 北京站沙龙，AI+网络安全方向"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>2024 HackingClub北京站沙龙分享</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">AI+网络安全方向</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%81%8C%E4%B8%9A%E7%94%9F%E6%B6%AF/" class="post-category" title="分类 - 职业生涯"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 职业生涯</a>&ensp;<a href="/categories/%E8%AE%AE%E9%A2%98%E5%88%86%E4%BA%AB/" class="post-category" title="分类 - 议题分享"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 议题分享</a>&ensp;<a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category" title="分类 - 随笔"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 随笔</a></span></div><div class="post-meta-line"><span title="发布于 2024-04-07 09:32:49"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-04-07">2024-04-07</time></span>&nbsp;<span title="5073 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 5100 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 11 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1实践挖掘国内ai场景漏洞">1、实践挖掘国内AI场景漏洞</a>
+      <ul>
+        <li><a href="#议题简介">议题简介</a></li>
+        <li><a href="#国内ai产品现状简单讲解">国内AI产品现状简单讲解</a></li>
+        <li><a href="#案例">案例</a></li>
+      </ul>
+    </li>
+    <li><a href="#2基于yolov8的恶意软件分类方法研究">2、基于YOLOV8的恶意软件分类方法研究</a>
+      <ul>
+        <li><a href="#议题简介-1">议题简介</a></li>
+        <li><a href="#恶意软件图像化技术">恶意软件图像化技术：</a></li>
+      </ul>
+    </li>
+    <li><a href="#3大模型引领网络安全智能化前沿探索">3、大模型引领网络安全智能化前沿探索</a>
+      <ul>
+        <li><a href="#议题简介-2">议题简介</a></li>
+        <li><a href="#安全体系智能体构建及应用">安全体系智能体构建及应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#4大模型安全防御与ai网络安全革新研究">4、大模型安全防御与AI网络安全革新研究</a>
+      <ul>
+        <li><a href="#议题简介-3">议题简介</a></li>
+        <li><a href="#llm常见的攻击模式">LLM常见的攻击模式</a></li>
+      </ul>
+    </li>
+    <li><a href="#5ai双刃剑实践角度谈ai模型弱点与网络安全应用">5、AI双刃剑：实践角度谈AI模型弱点与网络安全应用</a>
+      <ul>
+        <li><a href="#议题简介-4">议题简介</a></li>
+        <li><a href="#背景">背景</a></li>
+        <li><a href="#展望">展望</a></li>
+      </ul>
+    </li>
+    <li><a href="#6浅谈ai时代企业数据合规视角下的网络安全">6、浅谈AI时代企业数据合规视角下的网络安全</a></li>
+    <li><a href="#其他">其他</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><img src="resource/2024-HackingClub北京站.assets/image-20240401004431553.png" alt="image-20240401004431553" style="margin: 0 auto;"/>
+<p>2024 HackingClub 北京站 于2024年3月30日 在朝阳酒仙桥789艺术区拽马艺术空间举办。</p>
+<p>本次城市沙龙近<strong>1000名</strong>相关从业者及爱好者报名，到场参与人数<strong>400+</strong>，现场座无虚席。我去晚了，差点没座。</p>
+<p>本期城市沙龙议题方向为AI+网络安全，由HackingClub联合发起人、红客社区负责人TNT主持，特邀致辞嘉宾<strong>卜思南</strong>，总共有6大议题，演讲嘉宾<strong>地图大师 returnwrong、刘泽霖、陈平、刘光明、nEINEI、路建明</strong>带来精彩议题分享，助力AI+网络安全发展。</p>
+<p>我在本文总结下这次聚会的心得。</p>
+<ul>
+<li>议题一：实践挖掘国内AI场景漏洞：科技前沿与安全探索</li>
+<li>议题二：基于YOLOV8的恶意软件分类方法研究</li>
+<li>议题三：大模型引领网络安全智能化前沿探索</li>
+<li>议题四：大模型安全防御与AI网络安全革新研究</li>
+<li>议题五：AI双刃剑：实践角度谈AI模型弱点与网络安全应用</li>
+<li>议题六：浅谈AI时代企业数据合规视角下的网络安全</li>
+</ul>
+<img src="resource/2024-HackingClub北京站.assets/image-20240407171710505.png" alt="image-20240407171710505" />
+<h2 id="1实践挖掘国内ai场景漏洞" class="heading-element"><span>1、实践挖掘国内AI场景漏洞</span>
+  <a href="#1%e5%ae%9e%e8%b7%b5%e6%8c%96%e6%8e%98%e5%9b%bd%e5%86%85ai%e5%9c%ba%e6%99%af%e6%bc%8f%e6%b4%9e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="议题简介" class="heading-element"><span>议题简介</span>
+  <a href="#%e8%ae%ae%e9%a2%98%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p>议题劲爆拉开序幕，首先带来议题的是<strong>地图大师returnwrong</strong>（DAY1安全团队成员，多家src年榜前十）的<strong>实践挖掘国内AI场景漏洞：科技前沿与安全探索</strong></p>
+<p>随着AI功能逐步融入网站、App和小程序等应用，白帽黑客如何利用这一技术变革的机遇，更好地挖掘SRC和漏洞众测成为关键。当前国内市场上涌现了众多只需注册即可免费试用的AI产品。这些产品多基于模板程序，支持中文操作。然而，这些AI产品背后的运作机制是怎样的呢？实际上，厂商会预先购买一些国外的AI接口，如ChatGPT4、MidJourney等，然后自行开发前端用户界面。用户输入中文指令后，指令被翻译成英文并传送至AI接口处理，最终结果显示在前端页面上反馈给用户。这背后实则是一场技术“倒卖”游戏。本议题通过三个漏洞挖掘实例，真正以漏洞挖掘者的视角分析了这一过程中存在的问题。</p>
+</blockquote>
+<p>ID：地图大师returnwrong</p>
+<p>Day1安全团队成员，热爱漏洞挖掘、技术分享：</p>
+<ul>
+<li>2023年智联SRC第5</li>
+<li>2023年银联SRC第10</li>
+<li>2023年知识星球SRC第4</li>
+<li>2022年猎聘SRC第8</li>
+<li>2022年BOSS直聘SRC第7</li>
+</ul>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/index.assets/image-20240408002937257.png" alt="image-20240408002937257" srcset="/posts/2024-hackingclub-beijing/resource/index.assets/image-20240408002937257.png?size=small, /posts/2024-hackingclub-beijing/resource/index.assets/image-20240408002937257.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/index.assets/image-20240408002937257.png?size=large 2x" data-title="image-20240408002937257" style="--width: 1065px;--aspect-ratio: 1065 / 587;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>随着AI功能逐步融入网站、App和小程序等应用，白帽黑客如何利用这一技术变革的机遇，更好地挖掘SRC和漏洞众测成为关键。</p>
+<h3 id="国内ai产品现状简单讲解" class="heading-element"><span>国内AI产品现状简单讲解</span>
+  <a href="#%e5%9b%bd%e5%86%85ai%e4%ba%a7%e5%93%81%e7%8e%b0%e7%8a%b6%e7%ae%80%e5%8d%95%e8%ae%b2%e8%a7%a3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p>目前国内有众多只需注册即可免费试用的AI产品，这些产品大多为基于模板的程序，且完全支持中文操作，但背后的运作机制如何呢？其实厂商会预先购买一些如ChatGPT、MidJourney等国外的AI接口，然后自行开发一套前端用户界面，当用户输入中文指令后，这些指令将被翻译成英文并传送到购买的AI接口进行处理，最后将处理结果呈现在前端页面上反馈给用户。这背后实则是一场技术“倒卖”游戏。</p>
+</blockquote>
+<p>整体流程：用户输入 &ndash;&gt; 前台页面 &ndash;&gt; 后台翻译 &ndash;&gt; 国外接口 &ndash;&gt; 文字、视频图像等 &ndash;&gt; 前台页面呈现</p>
+<h3 id="案例" class="heading-element"><span>案例</span>
+  <a href="#%e6%a1%88%e4%be%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>本议题通过三个漏洞挖掘实例，真正以漏洞挖掘者的视角分析了这一过程中存在的问题。</p>
+<p><strong>1 - 生成式图片AI漏洞案例</strong></p>
+<p>该案例是绕过了AI的黑名单限制，导致可生成不符合核心价值观的图片。危害在于影响产品口碑，且会被监管单位处罚。</p>
+<p><strong>2 - 大语言模型“插件”漏洞案例</strong></p>
+<p>记不清了，大概是有个插件功能是检索Github信息并返回，在分享过程中会有超链接，而这个超链接是可以篡改的。</p>
+<p><strong>3 - AI投毒案例讲解</strong></p>
+<p>该案例是发生在某款边使用边训练的AI上，导致用户输入可被用于训练AI，其他用户在触发攻击者预设的恶意关键词后，会返回攻击者预期的输出。</p>
+<p>这里讲的案例场景是，攻击者告诉AI，当别人询问推荐什么股票时，让AI 推荐 14433股票。当受害者在询问AI时触发。</p>
+<h2 id="2基于yolov8的恶意软件分类方法研究" class="heading-element"><span>2、基于YOLOV8的恶意软件分类方法研究</span>
+  <a href="#2%e5%9f%ba%e4%ba%8eyolov8%e7%9a%84%e6%81%b6%e6%84%8f%e8%bd%af%e4%bb%b6%e5%88%86%e7%b1%bb%e6%96%b9%e6%b3%95%e7%a0%94%e7%a9%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="议题简介-1" class="heading-element"><span>议题简介</span>
+  <a href="#%e8%ae%ae%e9%a2%98%e7%ae%80%e4%bb%8b-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>随后是衡水中学高二文科生——<strong>刘泽霖</strong>（<strong>河北衡水中学在读，Hacking Group 0318发起人</strong>）带来的<strong>基于YOLOv8的恶意软件分类方法研究</strong>。</p>
+<blockquote>
+<p>本研究聚焦前沿的YOLOv8深度学习模型，创新性地通过图像化技术将恶意代码转化为RGB图像，构建高效的分类检测系统。通过丰富恶意软件图像特征数据集并优化模型，大幅提升检测准确性和效率。</p>
+<p>实验验证与数据分析证实，该方法能有效区分不同恶意软件，并探索了进一步优化可能性。</p>
+<p>本研究不仅拓展了YOLOv8在网络安全的应用，也为恶意软件检测与防御提供新思路。</p>
+</blockquote>
+<p>整个议题偏向学术性，有一种看论文的感觉。这个议题让我印象深刻的原因是，<strong>恶意软件的图像化</strong>，之前没有接触过相关内容。</p>
+<h3 id="恶意软件图像化技术" class="heading-element"><span>恶意软件图像化技术：</span>
+  <a href="#%e6%81%b6%e6%84%8f%e8%bd%af%e4%bb%b6%e5%9b%be%e5%83%8f%e5%8c%96%e6%8a%80%e6%9c%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p>虽然恶意软件持续进化，但将其转换为图像后，视觉方法比传统方法在检测和分类上更有效。这些图形包含关键信息，同家族的恶意软件图像相似，不同家族则有显著差异。由于恶意代码变体通常由自动化技术或重用模块生成，它们在二进制代码中存在共性。研究者们主要采用两种方法研究恶意软件可视化：一是提取图像纹理或结构特征，结合机器学习进行检测和分类；二是使用深度学习自动提取特征，以对抗混淆技术。为获取更多特征，有研究将恶意软件转为彩色图像。还有基于可视化的方法，即使不使用机器学习或深度学习，也能有效地检测恶意软件</p>
+</blockquote>
+<p>大量恶意代码都使用了代码复用技术，因此同类代码通常含有相同的模块，代码存在相似性。而不同类代码存在相异性。图像纹理特征能有效反映这种相似性和差异性。在灰度图中，任何颜色都是由红、绿、蓝三原色以相同的强度组合而成的，这样就形成了从全黑（0灰度等级）到全白（255灰度等级）的256个灰度等级。可执行文件都以二进制形式存储，每8bit数据正好覆盖灰度图每个灰度值，转成方形以后就是灰度图。</p>
+<p>​</p>
+<p><strong>处理流程：</strong></p>
+<ol>
+<li>数据转换：将恶意软件二进制数据转换为图像进行提取，有助于识别恶意软件的特征</li>
+<li>特征提取：从生成的图像中提取纹理、颜色分布、形状、结构等特征。</li>
+<li>分类和检测：使用机器学习或深度学习算法对提取的特征进行分析，识别和分类恶意软件</li>
+<li>可视化展示：将分类和检测的结果以可视化的形式展示出来，帮助分析师直观地理解恶意软件的行为和特征。</li>
+</ol>
+<p>​</p>
+<p>二进制文件转为灰度图伪代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">function</span> <span class="n">calculate</span> <span class="nf">TextureFeatures</span><span class="p">(</span><span class="n">binaryData</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">grayScalelmage</span> <span class="o">=</span> <span class="n">convertToGrayScale</span><span class="err">（</span><span class="n">binaryData</span><span class="err">）</span> <span class="c1">// 将二进制数据转换为灰度图像
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">textureFeatures</span> <span class="o">=</span>   <span class="n">extractTextureFeatures</span><span class="err">（</span><span class="n">grayScalelmage</span><span class="err">）</span> <span class="c1">// 提取纹理特征
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="n">textureFeatures</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="nf">convertToGrayScale</span><span class="p">(</span><span class="n">binaryData</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 实现将二进制数据转换为灰度图像的算法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 每8位数据对应一个灰度值，可以根据灰度等级转换成灰度图像
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 返回灰度图像数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="nf">extractTextureFeatures</span><span class="p">(</span><span class="n">grayScalelmage</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 实现提取纹理特征的算法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 可以使用各种图像处理技术，如纹理分析、统计特征提取等
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 返回纹理特征向量或描述子
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//主程序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">binaryData</span> <span class="o">=</span> <span class="n">readBinaryFile</span><span class="err">（</span><span class="s">&#34;executable_file.exe&#34;</span><span class="err">）</span><span class="c1">// 读取二进制文件数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">texturefeatures</span> <span class="o">=</span> <span class="n">calculateTextureFeatures</span><span class="err">（</span><span class="n">binaryData</span><span class="err">）</span> <span class="c1">// 计算纹理特征
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">print</span><span class="err">（</span><span class="n">textureFeatures</span><span class="err">）</span> <span class="c1">// 打印纹理特征
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>重新编码二进制数据以形成多通道彩色图像，每3个字节对应于红、绿、蓝三色通道的像素值。重复此过程直到所有数据被使用，不足3字节的末尾数据用0补足。例如，52D586=（R: 82, G: 213, B: 134），AA3033=（R: 170, G: 48, B: 51）。将代码文件转换为一维像素序列后，进行正方化处理，生成彩色图像。图3展示了将可执行文件转换为RGB图像的过程：</p>
+<p>图3（a）显示了某恶意代码的可执行文件数据；图3（b）展示了将可执行文件按字节重新编码后的像素序列；图3（c）展示了将像素序列进行正方化后生成的彩色图片。</p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002136298.png" alt="image-20240401002136298" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002136298.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002136298.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002136298.png?size=large 2x" data-title="image-20240401002136298" style="--width: 1348px;--aspect-ratio: 1348 / 369;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="3大模型引领网络安全智能化前沿探索" class="heading-element"><span>3、大模型引领网络安全智能化前沿探索</span>
+  <a href="#3%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%95%e9%a2%86%e7%bd%91%e7%bb%9c%e5%ae%89%e5%85%a8%e6%99%ba%e8%83%bd%e5%8c%96%e5%89%8d%e6%b2%bf%e6%8e%a2%e7%b4%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="议题简介-2" class="heading-element"><span>议题简介</span>
+  <a href="#%e8%ae%ae%e9%a2%98%e7%ae%80%e4%bb%8b-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p>接下来是<strong>陈平</strong>（万径安全安全研发工程师）带来的<strong>大模型引领网络安全智能化前沿探索</strong></p>
+<p>议题围绕实际场景研究大模型在网络安全领域的智能化应用方法及收益，涵盖架构设计、数据治理、知识问答和多智能体联动等方面。</p>
+<p>详细介绍知识图谱、提示词压缩等知识注入技术对大模型的赋能和价值，并分享在红蓝对抗、代码生成、安全运营和威胁溯源等场景中，大模型的具体构建过程和应用实践效果。</p>
+</blockquote>
+<p>落地应用工具构建及优化经验分享</p>
+<p>主要研究方向：红队工具研发、固件安全、知识图谱构建及应用、人工智能在网络安全领域应用 （POMDP、DRL、LLMs）</p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005452077.png" alt="image-20240401005452077" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005452077.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005452077.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005452077.png?size=large 2x" data-title="image-20240401005452077" style="--width: 1599px;--aspect-ratio: 1599 / 696;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="安全体系智能体构建及应用" class="heading-element"><span>安全体系智能体构建及应用</span>
+  <a href="#%e5%ae%89%e5%85%a8%e4%bd%93%e7%b3%bb%e6%99%ba%e8%83%bd%e4%bd%93%e6%9e%84%e5%bb%ba%e5%8f%8a%e5%ba%94%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这种智能体增加了可解释性，其可解释性是基于知识库检索的。而知识库需要人为构建和维护。</p>
+<p>知识图谱构建流程：</p>
+<ul>
+<li>设计实体模式</li>
+<li>现有安全领域本体归一化处理</li>
+<li>隐形知识挖掘、值守优化</li>
+<li>构建知识质量评估体系</li>
+</ul>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002245477.png" alt="image-20240401002245477" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002245477.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002245477.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002245477.png?size=large 2x" data-title="image-20240401002245477" style="--width: 1846px;--aspect-ratio: 1846 / 889;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401001953108.png" alt="image-20240401001953108" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401001953108.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401001953108.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401001953108.png?size=large 2x" data-title="image-20240401001953108" style="--width: 1785px;--aspect-ratio: 1785 / 676;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005804288.png" alt="image-20240401005804288" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005804288.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005804288.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401005804288.png?size=large 2x" data-title="image-20240401005804288" style="--width: 1327px;--aspect-ratio: 1327 / 580;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="4大模型安全防御与ai网络安全革新研究" class="heading-element"><span>4、大模型安全防御与AI网络安全革新研究</span>
+  <a href="#4%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%ae%89%e5%85%a8%e9%98%b2%e5%be%a1%e4%b8%8eai%e7%bd%91%e7%bb%9c%e5%ae%89%e5%85%a8%e9%9d%a9%e6%96%b0%e7%a0%94%e7%a9%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="议题简介-3" class="heading-element"><span>议题简介</span>
+  <a href="#%e8%ae%ae%e9%a2%98%e7%ae%80%e4%bb%8b-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p>之后由<strong>刘光明</strong>（<strong>vivo大模型安全专家</strong>）带来<strong>大模型安全防御与AI网络安全革新研究</strong></p>
+<p>本议题围绕大模型的安全全周期防护展开讨论，分享攻防实践，探讨领先的研究方法和系统化评估方案，以及AI技术在网络安全领域的革新应用。</p>
+</blockquote>
+<h3 id="llm常见的攻击模式" class="heading-element"><span>LLM常见的攻击模式</span>
+  <a href="#llm%e5%b8%b8%e8%a7%81%e7%9a%84%e6%94%bb%e5%87%bb%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>生命周期中对LLM（Large Language Model，大语言模型）的安全威胁：</p>
+<ul>
+<li>设计阶段：
+<ul>
+<li>模型部署的攻击、训练框架的攻击、训练环境的攻击、供应链的攻击</li>
+</ul>
+</li>
+<li>训练阶段：
+<ul>
+<li>训练数据安全、伦理与道德、训练投毒、算力消耗攻击</li>
+</ul>
+</li>
+<li>运行阶段：
+<ul>
+<li>提示越狱、指令攻击、角色扮演、模型幻觉</li>
+</ul>
+</li>
+<li>数据收集阶段：
+<ul>
+<li>数据投毒、数据后门、伦理与道德、版权侵犯</li>
+</ul>
+</li>
+</ul>
+<p>如图：</p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010338136.png" alt="image-20240401010338136" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010338136.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010338136.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010338136.png?size=large 2x" data-title="image-20240401010338136" style="--width: 1223px;--aspect-ratio: 1223 / 627;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>LLM的两类攻击模式：提示词模式（Prompt-Level）、会话模式（Token-Level）</p>
+<p>左边是提示词模式，分别采用了角色扮演（Role Play）攻击，让模型扮演一个邪恶且不守规矩的疯子；恶意诱导（Maliciously Inducing）攻击，诱导模型处于虚拟世界需要完成任务。</p>
+<p>右边是会话模式，对抗性后缀（Adversarial suffixes）攻击，添加一些对抗性前后缀，绕过模型规则检测。</p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002328417.png" alt="image-20240401002328417" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002328417.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002328417.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002328417.png?size=large 2x" data-title="image-20240401002328417" style="--width: 1719px;--aspect-ratio: 1719 / 666;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>DAN（Do anything now）攻击</p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002358203.png" alt="image-20240401002358203" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002358203.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002358203.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002358203.png?size=large 2x" data-title="image-20240401002358203" style="--width: 1918px;--aspect-ratio: 1918 / 932;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="5ai双刃剑实践角度谈ai模型弱点与网络安全应用" class="heading-element"><span>5、AI双刃剑：实践角度谈AI模型弱点与网络安全应用</span>
+  <a href="#5ai%e5%8f%8c%e5%88%83%e5%89%91%e5%ae%9e%e8%b7%b5%e8%a7%92%e5%ba%a6%e8%b0%88ai%e6%a8%a1%e5%9e%8b%e5%bc%b1%e7%82%b9%e4%b8%8e%e7%bd%91%e7%bb%9c%e5%ae%89%e5%85%a8%e5%ba%94%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="议题简介-4" class="heading-element"><span>议题简介</span>
+  <a href="#%e8%ae%ae%e9%a2%98%e7%ae%80%e4%bb%8b-4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p><strong>nEINEI</strong>（某大厂AI安全专家、资深安全研究员）带来 <strong>AI双刃剑:实践角度谈AI模型弱点与网络安全应用</strong></p>
+<p>随着新技术的涌现，必然伴随着新的安全挑战，这是技术发展中不可避免的效应。其中之一便是内在的安全隐患，即新技术本身的脆弱性可能导致系统的不稳定性和安全问题。</p>
+<p>本议题深入探讨AI在部署和使用过程中存在的安全弱点问题，同时介绍AI技术在安全检测和防护方面的实践应用思路。</p>
+</blockquote>
+<p>该议题让我印象深刻的一点是，利用AI对抗AI，其中构想了一种反调试思路：</p>
+<p>在恶意软件中增加一个模型，当监测到调试环境时，不生成和执行恶意代码；当检测到是预期的受害者目标环境，则生产并执行恶意代码。</p>
+<p>这就是利用了AI 运行逻辑的不可预测性，很难找到像之前的普通恶意软件的条件判断语句</p>
+<h3 id="背景" class="heading-element"><span>背景</span>
+  <a href="#%e8%83%8c%e6%99%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>AI赋能网络安全具有迫切的现实意义，我们可以探索特定安全常见引入高算力或特定算法，产生前后质变的业务场景。</p>
+<p>抉择：占尽先机，在尚未形成AI对抗AI的时代具有主动优势。</p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002443582.png" alt="image-20240401002443582" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002443582.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002443582.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002443582.png?size=large 2x" data-title="image-20240401002443582" style="--width: 1837px;--aspect-ratio: 1837 / 822;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010600389.png" alt="image-20240401010600389" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010600389.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010600389.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010600389.png?size=large 2x" data-title="image-20240401010600389" style="--width: 1259px;--aspect-ratio: 1259 / 541;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010636566.png" alt="image-20240401010636566" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010636566.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010636566.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010636566.png?size=large 2x" data-title="image-20240401010636566" style="--width: 1241px;--aspect-ratio: 1241 / 130;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>在人工智能的全生命周期，各个阶段都有相应的风险。</p>
+<p>对于模型文件，安全攻防的落点在于（冒号后面为笔者自行补充，可能有误）：</p>
+<ul>
+<li>模型文件的加密强度：<em>加密强度不足可能导致模型文件泄露，从而可能导致被篡改、劫持、二次打包等问题</em>；</li>
+<li>模型文件包含的参数信息</li>
+<li>针对模型文件的攻击方式：<em>可篡改模型文件，预留后门等</em>；</li>
+<li>模型信息的逆向还原：<em>模型在训练过程中会“记忆”训练数据、数据属性、特征等，对模型进行逆向推导训练可导致训练数据泄露</em>；</li>
+<li>&hellip;</li>
+</ul>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010650695.png" alt="image-20240401010650695" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010650695.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010650695.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401010650695.png?size=large 2x" data-title="image-20240401010650695" style="--width: 1100px;--aspect-ratio: 1100 / 547;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="展望" class="heading-element"><span>展望</span>
+  <a href="#%e5%b1%95%e6%9c%9b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>AI的一些在攻击领域的应用：</p>
+<ul>
+<li>社会工程学：OSINT搜集、AI生成鱼叉邮件、攻击目标选择、聊天机器人&hellip;</li>
+<li>自动化：AI自适应木马（firstorder）、攻击路径模拟（caldera AI-fuzzing）&hellip;</li>
+<li>信息窃取：Yahoo NSFW神经网络检测敏感数据、数据传输-AI伪装加密、ML侧信道获取敲键密码&hellip;</li>
+<li>隐匿：Bypass NIDS、Bypass EDR、Bypass Email Filter&hellip;</li>
+</ul>
+<p><img loading="lazy" src="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002058787.png" alt="image-20240401002058787" srcset="/posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002058787.png?size=small, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002058787.png?size=medium 1.5x, /posts/2024-hackingclub-beijing/resource/2024-HackingClub%E5%8C%97%E4%BA%AC%E7%AB%99.assets/image-20240401002058787.png?size=large 2x" data-title="image-20240401002058787" style="--width: 1742px;--aspect-ratio: 1742 / 807;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="6浅谈ai时代企业数据合规视角下的网络安全" class="heading-element"><span>6、浅谈AI时代企业数据合规视角下的网络安全</span>
+  <a href="#6%e6%b5%85%e8%b0%88ai%e6%97%b6%e4%bb%a3%e4%bc%81%e4%b8%9a%e6%95%b0%e6%8d%ae%e5%90%88%e8%a7%84%e8%a7%86%e8%a7%92%e4%b8%8b%e7%9a%84%e7%bd%91%e7%bb%9c%e5%ae%89%e5%85%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><blockquote>
+<p>最后是<strong>路建明</strong>（某法院原法官，北京恒都律师事务所高级顾问），<strong>浅谈AI时代企业数据合规视角下的网络安全</strong></p>
+<p>随着AI时代的全面到来，网络安全对国家、企业、个人的重要性愈发显现，在国家立法的日益完善的情况下，每一个从事IT行业的人都需要问自己，网络安全立法到底知多少。同时，现实的警示案例又能给我们哪些启发。</p>
+</blockquote>
+<p>分享了一些违背数据合规的法律案例。</p>
+<h2 id="其他" class="heading-element"><span>其他</span>
+  <a href="#%e5%85%b6%e4%bb%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这里我想推荐一本书，腾讯安全朱雀实验室的<a href="https://book.douban.com/subject/36085053/"target="_blank" rel="external nofollow noopener noreferrer">《AI安全：技术与实战》</a>。</p>
+<p>这本书介绍了现阶段常见的AI安全知识，比如：对抗样本攻击、数据投毒攻击、模型后门攻击、预训练模型安全、AI数据隐私窃取、AI应用失控风险。</p>
+<p>上述知识点，在本次北京站AI议题分享过程中，都有提及，值得一读。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-04-07 09:32:49">更新于 2024-04-07&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E9%9A%8F%E7%AC%94/" class="post-tag" title="标签 - 随笔">随笔</a><a href="/tags/career/" class="post-tag" title="标签 - Career">Career</a><a href="/tags/ai%E5%AE%89%E5%85%A8/" class="post-tag" title="标签 - AI安全">AI安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/xz-backdoor-analysis/" class="post-nav-item" rel="prev" title="XZ Utils Backdoor 事件分析汇总"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>XZ Utils Backdoor 事件分析汇总</a><a href="/posts/macos-%E5%88%9D%E8%AF%86sip/" class="post-nav-item" rel="next" title="MacOS初识SIP">MacOS初识SIP<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

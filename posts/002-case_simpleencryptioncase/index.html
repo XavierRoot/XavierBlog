@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>002-渗透案例：记一次简单前端加密案例 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="记一次渗透测试中简单的前端加密案例"><meta name="keywords" content='Pentest, Crypto'>
+  <meta itemprop="name" content="002-渗透案例：记一次简单前端加密案例">
+  <meta itemprop="description" content="记一次渗透测试中简单的前端加密案例">
+  <meta itemprop="datePublished" content="2025-03-10T15:33:41+00:00">
+  <meta itemprop="dateModified" content="2025-03-10T15:33:41+00:00">
+  <meta itemprop="wordCount" content="2508">
+  <meta itemprop="keywords" content="Pentest,Crypto"><meta property="og:url" content="http://localhost:1313/posts/002-case_simpleencryptioncase/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="002-渗透案例：记一次简单前端加密案例">
+  <meta property="og:description" content="记一次渗透测试中简单的前端加密案例">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-03-10T15:33:41+00:00">
+    <meta property="article:modified_time" content="2025-03-10T15:33:41+00:00">
+    <meta property="article:tag" content="Pentest">
+    <meta property="article:tag" content="Crypto">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="002-渗透案例：记一次简单前端加密案例">
+  <meta name="twitter:description" content="记一次渗透测试中简单的前端加密案例">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/002-case_simpleencryptioncase/" title="002-渗透案例：记一次简单前端加密案例 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/" title="001-渗透案例：巧用JS挖掘“宝藏”" /><link rel="next" type="text/html" href="http://localhost:1313/posts/hibernate_hql_injection/" title="Hibernate框架HQL注入笔记" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/002-case_simpleencryptioncase/index.md" title="002-渗透案例：记一次简单前端加密案例 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "002-渗透案例：记一次简单前端加密案例",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/002-case_simpleencryptioncase\/"
+    },"genre": "posts","keywords": "Pentest, Crypto","wordcount":  2508 ,
+    "url": "http:\/\/localhost:1313\/posts\/002-case_simpleencryptioncase\/","datePublished": "2025-03-10T15:33:41+00:00","dateModified": "2025-03-10T15:33:41+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "记一次渗透测试中简单的前端加密案例"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>002-渗透案例：记一次简单前端加密案例</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/" class="post-category" title="分类 - 案例分享"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 案例分享</a>&ensp;<a href="/categories/crypto/" class="post-category" title="分类 - Crypto"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Crypto</a></span></div><div class="post-meta-line"><span title="发布于 2025-03-10 15:33:41"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-03-10">2025-03-10</time></span>&nbsp;<span title="2508 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2600 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前端js分析">前端JS分析</a></li>
+    <li><a href="#python脚本">Python脚本</a></li>
+    <li><a href="#autodecode脚本">AutoDecode脚本</a></li>
+    <li><a href="#最终效果">最终效果</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="前端js分析" class="heading-element"><span>前端JS分析</span>
+  <a href="#%e5%89%8d%e7%ab%afjs%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在一个项目上遇到的数据包加密，发现键值对都进行了加密使其不可读，数据包示例如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/xxxxx/xxxxx</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">xxxxxxxx</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="g">%3DmQWUVmw6XZNckRdd5%3DWeEc=%3DlwrRUGR0T1PR1hNVR%3DTeEc&amp;%3D0wKWmltrGtbWFJdZh%3DYeEc=%3Dj3a3lWG9kTUQh0UTNIZMBMVeEc&amp;3Vl95TkPVEoWeEc=%3D1Qsm0mywTTa6FUxJk0rwkFEPmGO61EpK0dTaJ5Vbl1WR9UMTRdWek5RRB1TN4dacR%3DTeEc&amp;%3DEQsG1VRST1PYpNdQh%3DZeEc=UVT9CVRPTEFVeEc</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过前端js分析后，发现使用的是 <code>picList.encode(picList.encode2(param))</code></p>
+<p>仔细研究后发现，它跟 picList 其实关系不大，是开发者自己编写的一段js</p>
+<p>对该前端代码进行分析，核心代码 jquery.picList.js 如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">picList</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">base64EncodeChars</span><span class="o">:</span> <span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">base64DecodeChars</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">base64encode</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">o</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">c</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span> <span class="nx">h</span> <span class="o">&lt;</span> <span class="nx">o</span><span class="p">;)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">&amp;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">h</span><span class="o">++</span><span class="p">),</span> <span class="nx">h</span> <span class="o">==</span> <span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">c</span> <span class="o">+=</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">((</span><span class="mi">3</span> <span class="o">&amp;</span> <span class="nx">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;==&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">h</span><span class="o">++</span><span class="p">),</span> <span class="nx">h</span> <span class="o">==</span> <span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">c</span> <span class="o">+=</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">((</span><span class="mi">3</span> <span class="o">&amp;</span> <span class="nx">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="p">(</span><span class="mi">240</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">))</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">((</span><span class="mi">15</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">h</span><span class="o">++</span><span class="p">),</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">c</span> <span class="o">+=</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">((</span><span class="mi">3</span> <span class="o">&amp;</span> <span class="nx">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="p">(</span><span class="mi">240</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">))</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">((</span><span class="mi">15</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="p">(</span><span class="mi">192</span> <span class="o">&amp;</span> <span class="nx">t</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">))</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64EncodeChars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">63</span> <span class="o">&amp;</span> <span class="nx">t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">base64decode</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">o</span><span class="p">,</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span> <span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">h</span><span class="p">;)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">for</span> <span class="p">(;</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64DecodeChars</span><span class="p">[</span><span class="mi">255</span> <span class="o">&amp;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">)],</span> <span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">h</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">e</span><span class="p">;);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">for</span> <span class="p">(;</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64DecodeChars</span><span class="p">[</span><span class="mi">255</span> <span class="o">&amp;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">)],</span> <span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">h</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">a</span><span class="p">;);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(</span><span class="nx">e</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="p">(</span><span class="mi">48</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">(</span><span class="mi">61</span> <span class="o">==</span> <span class="p">(</span><span class="nx">t</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">&amp;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">					<span class="k">return</span> <span class="nx">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nx">t</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64DecodeChars</span><span class="p">[</span><span class="nx">t</span><span class="p">],</span> <span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">h</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">((</span><span class="mi">15</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="p">(</span><span class="mi">60</span> <span class="o">&amp;</span> <span class="nx">t</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">(</span><span class="mi">61</span> <span class="o">==</span> <span class="p">(</span><span class="nx">o</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">&amp;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">					<span class="k">return</span> <span class="nx">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nx">o</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">base64DecodeChars</span><span class="p">[</span><span class="nx">o</span><span class="p">],</span> <span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">h</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">o</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">o</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">((</span><span class="mi">3</span> <span class="o">&amp;</span> <span class="nx">t</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span> <span class="o">|</span> <span class="nx">o</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">utf16to8</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">o</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">o</span> <span class="o">&lt;</span> <span class="nx">t</span><span class="p">;</span> <span class="nx">o</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="mi">1</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="nx">e</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">o</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span> <span class="o">&lt;=</span> <span class="mi">127</span> <span class="o">?</span> <span class="nx">a</span> <span class="o">+=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="o">:</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2047</span> <span class="o">&lt;</span> <span class="nx">e</span> <span class="o">?</span> <span class="p">(</span><span class="nx">a</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(</span><span class="mi">224</span> <span class="o">|</span> <span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span> <span class="o">&amp;</span> <span class="mi">15</span><span class="p">))</span> <span class="o">+</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(</span><span class="mi">128</span> <span class="o">|</span> <span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span> <span class="o">&amp;</span> <span class="mi">63</span><span class="p">))</span> <span class="o">+</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(</span><span class="mi">128</span> <span class="o">|</span> <span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="mi">63</span><span class="p">)</span> <span class="o">:</span> <span class="p">(</span><span class="nx">a</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(</span><span class="mi">192</span> <span class="o">|</span> <span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span> <span class="o">&amp;</span> <span class="mi">31</span><span class="p">))</span> <span class="o">+</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(</span><span class="mi">128</span> <span class="o">|</span> <span class="nx">e</span> <span class="o">&gt;&gt;</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="mi">63</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">utf8to16</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">o</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">h</span><span class="p">;)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">switch</span> <span class="p">((</span><span class="nx">e</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">5</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">6</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">7</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">o</span> <span class="o">+=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">12</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">13</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">a</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">),</span> <span class="nx">o</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">((</span><span class="mi">31</span> <span class="o">&amp;</span> <span class="nx">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span> <span class="o">|</span> <span class="mi">63</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">14</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">a</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">),</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">c</span><span class="o">++</span><span class="p">),</span> <span class="nx">o</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">((</span><span class="mi">15</span> <span class="o">&amp;</span> <span class="nx">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span> <span class="o">|</span> <span class="p">(</span><span class="mi">63</span> <span class="o">&amp;</span> <span class="nx">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span> <span class="o">|</span> <span class="p">(</span><span class="mi">63</span> <span class="o">&amp;</span> <span class="nx">t</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">o</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">randomStr</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="s1">&#39;poiuytrewqasdfghjklmnbvcxzQWERTYUIOPLKJHGFDSAZXCVBNM123456789&#39;</span><span class="p">,</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">t</span> <span class="o">&lt;</span> <span class="nx">r</span><span class="p">;</span> <span class="nx">t</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">a</span> <span class="o">+=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span><span class="p">(</span><span class="mi">100000000</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">())</span> <span class="o">%</span> <span class="nx">e</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">encode</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span><span class="p">,</span> <span class="nx">r</span> <span class="o">+=</span> <span class="k">this</span><span class="p">.</span><span class="nx">randomStr</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">(</span><span class="nx">str</span> <span class="o">=</span> <span class="nx">picList</span><span class="p">.</span><span class="nx">base64encode</span><span class="p">(</span><span class="nx">picList</span><span class="p">.</span><span class="nx">utf16to8</span><span class="p">(</span><span class="nx">r</span><span class="p">))).</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="nx">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">t</span> <span class="o">&lt;</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span> <span class="nx">t</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">e</span> <span class="o">=</span> <span class="nx">a</span><span class="p">[</span><span class="nx">t</span><span class="p">],</span> <span class="nx">a</span><span class="p">[</span><span class="nx">t</span><span class="p">]</span> <span class="o">=</span> <span class="nx">a</span><span class="p">[</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="nx">t</span><span class="p">],</span> <span class="nx">a</span><span class="p">[</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="nx">t</span><span class="p">]</span> <span class="o">=</span> <span class="nx">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span> <span class="o">&amp;&amp;</span> <span class="s1">&#39;&#39;</span> <span class="o">!=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span> <span class="o">?</span> <span class="nx">a</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;cEe&#39;</span> <span class="o">:</span> <span class="nx">a</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;eEc&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">encode2</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">picList</span><span class="p">.</span><span class="nx">base64encode</span><span class="p">(</span><span class="nx">picList</span><span class="p">.</span><span class="nx">utf16to8</span><span class="p">(</span><span class="nx">r</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>前端 加密方式类似于： <code>picList.encode(picList.encode2(param))</code></p>
+<p>对这段JS进行分析，encode2 其实就相当于 base64 编码，就不分析了。</p>
+<p>对 encode 函数进行分析</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JS" data-lang="JS"><span class="line"><span class="cl">	<span class="nx">encode</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// $.ECOND.picture是一个全局配置，暂时忽略；randomStr(5)生成随机5位字符串并附加到r后面
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span><span class="p">,</span> <span class="nx">r</span> <span class="o">+=</span> <span class="k">this</span><span class="p">.</span><span class="nx">randomStr</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// picList.base64encode 就是 base64编码，picList.utf16to8(r)进行utf-8编码转化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// 将base64编码后的str分割成字符数组a。然后进行一个循环，交换某些位置的字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">(</span><span class="nx">str</span> <span class="o">=</span> <span class="nx">picList</span><span class="p">.</span><span class="nx">base64encode</span><span class="p">(</span><span class="nx">picList</span><span class="p">.</span><span class="nx">utf16to8</span><span class="p">(</span><span class="nx">r</span><span class="p">))).</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="nx">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">t</span> <span class="o">&lt;</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span> <span class="nx">t</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 当t是偶数时，进行a[t] 与 a[len-1-t] 交换，类似首位交换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">e</span> <span class="o">=</span> <span class="nx">a</span><span class="p">[</span><span class="nx">t</span><span class="p">],</span> <span class="nx">a</span><span class="p">[</span><span class="nx">t</span><span class="p">]</span> <span class="o">=</span> <span class="nx">a</span><span class="p">[</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="nx">t</span><span class="p">],</span> <span class="nx">a</span><span class="p">[</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="nx">t</span><span class="p">]</span> <span class="o">=</span> <span class="nx">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 最后根据$.ECOND.picture的情况，在结果后添加不同的后缀
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span> <span class="o">&amp;&amp;</span> <span class="s1">&#39;&#39;</span> <span class="o">!=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ECOND</span><span class="p">.</span><span class="nx">picture</span> <span class="o">?</span> <span class="nx">a</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;cEe&#39;</span> <span class="o">:</span> <span class="nx">a</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;eEc&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="python脚本" class="heading-element"><span>Python脚本</span>
+  <a href="#python%e8%84%9a%e6%9c%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>分析完这个JS后，基于AI生成编写Python加解密脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">quote</span><span class="p">,</span> <span class="n">unquote</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">randomStr</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">utf16to8</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">utf8to16</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">base64encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">base64decode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ECOND</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;picture&#39;</span><span class="p">:</span> <span class="kc">None</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 给字符串 r 后面拼接随机5位字符串</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">randomStr</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 先将 r 转换为 UTF - 8 编码，再进行 Base64 编码</span>
+</span></span><span class="line"><span class="cl">    <span class="n">encoded_str</span> <span class="o">=</span> <span class="n">base64encode</span><span class="p">(</span><span class="n">utf16to8</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encoded_str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 对编码后的字符串按字符拆分成数组，然后对数组的前半部分元素进行交换操作</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如果当前索引 t 是偶数，交换数组中索引为 t 和 len(a) - 1 - t 的元素</span>
+</span></span><span class="line"><span class="cl">            <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 根据 ECOND[&#39;picture&#39;] 的值进行判断，若存在且不为空，则拼接上 &#34;cEe&#34;，否则拼接上 &#34;eEc&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">ECOND</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;picture&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span> <span class="o">+</span> <span class="s2">&#34;cEe&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span> <span class="o">+</span> <span class="s2">&#34;eEc&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 移除拼接的后缀 &#34;cEe&#34; 或 &#34;eEc&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;cEe&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;eEc&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 逆向交换数组前半部分中索引为偶数的元素</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 将数组元素拼接成字符串并进行 Base64 解码</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_str</span> <span class="o">=</span> <span class="n">base64decode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 将 UTF - 8 编码的字符串转换为 UTF - 16 编码</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_str</span> <span class="o">=</span> <span class="n">utf8to16</span><span class="p">(</span><span class="n">decoded_str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 移除拼接的长度为 5 的随机字符串</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_str</span> <span class="o">=</span> <span class="n">decoded_str</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">decoded_str</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 定义一个输入字符串    </span>
+</span></span><span class="line"><span class="cl">    <span class="n">encoded_input</span> <span class="o">=</span> <span class="s2">&#34;hUWWL2VH9Tkiz0pMWNEOPJlcZdtYeEc&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">encoded_input</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">encoded_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">plain_input</span> <span class="o">=</span> <span class="s1">&#39;helloworld&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 调用 encode 函数进行编码</span>
+</span></span><span class="line"><span class="cl">    <span class="n">encoded_output</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">base64encode</span><span class="p">(</span><span class="n">plain_input</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 调用 decode 函数进行解码</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_output</span> <span class="o">=</span> <span class="n">base64decode</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">encoded_input</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 打印结果</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输入明文字符串: </span><span class="se">\n</span><span class="si">{</span><span class="n">plain_input</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;编码后的结果: </span><span class="se">\n</span><span class="si">{</span><span class="n">encoded_output</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输入编码字符串: </span><span class="se">\n</span><span class="si">{</span><span class="n">encoded_input</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;解码后的结果: </span><span class="se">\n</span><span class="si">{</span><span class="n">decoded_output</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="autodecode脚本" class="heading-element"><span>AutoDecode脚本</span>
+  <a href="#autodecode%e8%84%9a%e6%9c%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在该项目上我使用Burpsuite 配合插件AutoDecode进行测试，因此需要编写AutoDecode相应的加密秘脚本。</p>
+<p>注意该脚本未实现 encode 加密模块，decode模块可用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- coding:utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: Xavier</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span><span class="n">Response</span><span class="p">,</span><span class="n">request</span><span class="p">,</span><span class="n">jsonify</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pyDes</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">parse_qs</span><span class="p">,</span> <span class="n">quote</span><span class="p">,</span> <span class="n">unquote</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">chardet</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">randomStr</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">utf16to8</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">utf8to16</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">base64encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">base64decode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 模拟 $.ECOND.picture</span>
+</span></span><span class="line"><span class="cl"><span class="n">ECOND</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;picture&#39;</span><span class="p">:</span> <span class="kc">None</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">randomStr</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">encoded_str</span> <span class="o">=</span> <span class="n">base64encode</span><span class="p">(</span><span class="n">utf16to8</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encoded_str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 如果当前索引 t 是偶数，交换数组中索引为 t 和 len(a) - 1 - t 的元素</span>
+</span></span><span class="line"><span class="cl">            <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">ECOND</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;picture&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span> <span class="o">+</span> <span class="s2">&#34;cEe&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span> <span class="o">+</span> <span class="s2">&#34;eEc&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 移除拼接的后缀 &#34;cEe&#34; 或 &#34;eEc&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;cEe&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&#34;eEc&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 逆向交换数组前半部分中索引为偶数的元素</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_str</span> <span class="o">=</span> <span class="n">base64decode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_str</span> <span class="o">=</span> <span class="n">utf8to16</span><span class="p">(</span><span class="n">decoded_str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_str</span> <span class="o">=</span> <span class="n">decoded_str</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># 移除随机字符串</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">decoded_str</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/encode&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;POST&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encrypt</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="err">……</span>
+</span></span><span class="line"><span class="cl">	<span class="n">encry_param</span> <span class="o">+=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">encry_param</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/decode&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;POST&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decrypt</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">form_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dataBody&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 使用 parse_qs 函数解析表单数据</span>
+</span></span><span class="line"><span class="cl">    <span class="n">params_dict</span> <span class="o">=</span> <span class="n">parse_qs</span><span class="p">(</span><span class="n">form_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decrypt_param</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 打印提取的键值对</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">params_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">, Value: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 解密参数</span>
+</span></span><span class="line"><span class="cl">            <span class="n">key</span> <span class="o">=</span> <span class="n">base64decode</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">value</span> <span class="o">=</span> <span class="n">base64decode</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">value</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Decoded Key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">, Decoded Value: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">decrypt_param</span> <span class="o">+=</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;&amp;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">decrypt_param</span> <span class="o">+=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">decrypt_param</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># 设置调试模式，生产模式的时候要关掉debug</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="s2">&#34;8888&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="最终效果" class="heading-element"><span>最终效果</span>
+  <a href="#%e6%9c%80%e7%bb%88%e6%95%88%e6%9e%9c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>配置完AutoDecode，启动Python脚本后，最后实现了对数据包的自动加解密，效果如下所示：</p>
+<p>解密前：</p>
+<p><img loading="lazy" src="/posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233227676.png" alt="image-20250310233227676" srcset="/posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233227676.png?size=small, /posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233227676.png?size=medium 1.5x, /posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233227676.png?size=large 2x" data-title="image-20250310233227676" style="--width: 1194px;--aspect-ratio: 1194 / 1064;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>解密后：</p>
+<p><img loading="lazy" src="/posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233328808.png" alt="image-20250310233328808" srcset="/posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233328808.png?size=small, /posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233328808.png?size=medium 1.5x, /posts/002-case_simpleencryptioncase/resource/PicList-%E5%8A%A0%E8%A7%A3%E5%AF%86.assets/image-20250310233328808.png?size=large 2x" data-title="image-20250310233328808" style="--width: 1178px;--aspect-ratio: 1178 / 1142;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2025-03-10 15:33:41">更新于 2025-03-10&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/pentest/" class="post-tag" title="标签 - Pentest">Pentest</a><a href="/tags/crypto/" class="post-tag" title="标签 - Crypto">Crypto</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/" class="post-nav-item" rel="prev" title="001-渗透案例：巧用JS挖掘“宝藏”"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>001-渗透案例：巧用JS挖掘“宝藏”</a><a href="/posts/hibernate_hql_injection/" class="post-nav-item" rel="next" title="Hibernate框架HQL注入笔记">Hibernate框架HQL注入笔记<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

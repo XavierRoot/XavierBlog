@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CTF - 标签 - Xavier&#39;s Blog</title>
+    <link>http://localhost:1313/tags/ctf/</link>
+    <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
+    <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 28 Feb 2023 23:24:57 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PTS 谷安预报名测试</title>
+      <link>http://localhost:1313/posts/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Tue, 28 Feb 2023 23:24:57 +0800</pubDate>
+      <guid>http://localhost:1313/posts/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95/</guid>
+      <category domain="http://localhost:1313/categories/%E9%9D%B6%E5%9C%BA/">靶场</category>
+      <description>PTS 谷安预报名测试</description>
+    </item>
+  </channel>
+</rss>

