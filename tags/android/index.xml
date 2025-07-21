@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Android - 标签 - Xavier&#39;s Blog</title>
-    <link>http://localhost:1313/tags/android/</link>
+    <link>https://www.bthoughts.top/tags/android/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate>Sat, 14 Jan 2023 14:59:29 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.bthoughts.top/tags/android/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mac下Android APP抓包配置</title>
-      <link>http://localhost:1313/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</link>
+      <link>https://www.bthoughts.top/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Sat, 14 Jan 2023 14:59:29 +0800</pubDate>
-      <guid>http://localhost:1313/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</guid>
-      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
+      <guid>https://www.bthoughts.top/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/</guid>
+      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
       <description>&lt;p&gt;换了M系列芯片的Mac，过去常用的模拟器都不太支持，之前用谷歌的Android-emulator-m1-preview，后来支持Android Studio了，就用Android Studio配置测试环境。&lt;/p&gt;</description>
     </item>
   </channel>

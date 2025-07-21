@@ -235,5 +235,5 @@ ruby -rzlib -e &#39;print Zlib::Inflate.new.inflate(STDIN.read)&#39; &lt; OBJECT
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/  
+> URL: https://www.bthoughts.top/posts/git%E6%B3%84%E9%9C%B2%E6%96%87%E4%BB%B6%E8%BF%98%E5%8E%9F/  
 

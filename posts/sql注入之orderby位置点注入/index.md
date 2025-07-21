@@ -414,5 +414,5 @@ mysql&gt; select * from users order by id,if((substr(version(),1,1)=8),sleep(1),
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/  
+> URL: https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Borderby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/  
 

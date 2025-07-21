@@ -821,5 +821,5 @@ github已有公开的[demo exp](https://github.com/amlweems/xzbot)，这个exp�
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/xz-backdoor-analysis/  
+> URL: https://www.bthoughts.top/posts/xz-backdoor-analysis/  
 

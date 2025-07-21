@@ -5,7 +5,7 @@
 
 全文共计2314字，预计时长6分钟。
 
-![图片](/resource/Yapi_Mock_RCE.assets/640.jpeg)
+![图片](resource/Yapi_Mock_RCE.assets/640.jpeg)
 
 ## 0x01 基本信息
 
@@ -51,7 +51,7 @@ fofa 搜索语句：
 
 ​	Docker搭建测试环境，参考文档：[《Yapi&#43;Docker的安装与配置》](https://blog.csdn.net/qq_32447301/article/details/81394024)
 
-![图片](/resource/Yapi_Mock_RCE.assets/640-20230217124803801.png)
+![图片](resource/Yapi_Mock_RCE.assets/640-20230217124803801.png)
 
 ​	创建完容器之后就可以使用了。
 
@@ -61,7 +61,7 @@ fofa 搜索语句：
 4. 添加完之后，打开接口，进入“高级Mock”功能，点击脚本，输入Poc，点击保存即可。
 5. 点击“预览”，访问Mock地址，即可触发漏洞POC。
 
-![图片](/resource/Yapi_Mock_RCE.assets/640-20230217124803366.png)
+![图片](resource/Yapi_Mock_RCE.assets/640-20230217124803366.png)
 
 POC如下：
 
@@ -71,7 +71,7 @@ const process = this.constructor.constructor(&#39;return process&#39;)()mockJson
 
 点击“预览”，访问Mock地址，即可触发漏洞POC：
 
-![图片](/resource/Yapi_Mock_RCE.assets/640-20230217124803369.png)
+![图片](resource/Yapi_Mock_RCE.assets/640-20230217124803369.png)
 
 ## 0x03 漏洞分析 
 
@@ -133,7 +133,7 @@ Poc：
 
 1、使用管理员账号登录YAPI，在用户管理中排查并删除异常用户。
 
-![图片](/resource/Yapi_Mock_RCE.assets/640-20230217124803425.png)
+![图片](resource/Yapi_Mock_RCE.assets/640-20230217124803425.png)
 
 2、通过关键字（process、exec、require等），在adv_mock集合的mock_script域中搜索是否存在恶意的javascript脚本。
 
@@ -141,7 +141,7 @@ Poc：
 db.adv_mock.find({mock_script: /exec/});
 ```
 
-![图片](/resource/Yapi_Mock_RCE.assets/640-20230217124803418.png)
+![图片](resource/Yapi_Mock_RCE.assets/640-20230217124803418.png)
 
 出自：[《【处置手册】YAPI远程代码执行0day漏洞》](https://mp.weixin.qq.com/s?__biz=Mzk0MjE3ODkxNg==&amp;mid=2247485888&amp;idx=1&amp;sn=3db5bf89f7f214859c0c37bf4340fa3a&amp;scene=21#wechat_redirect)
 
@@ -201,5 +201,5 @@ db.adv_mock.find({mock_script: /exec/});
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/  
+> URL: https://www.bthoughts.top/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/  
 

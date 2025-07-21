@@ -250,5 +250,5 @@ WriteResult({ &#34;nInserted&#34; : 1 })
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/arl_setup_record/  
+> URL: https://www.bthoughts.top/posts/arl_setup_record/  
 

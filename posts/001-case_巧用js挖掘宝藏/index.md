@@ -164,5 +164,5 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE2NzU5MTAwNjcsInVzZXJpZCI6ImZhMTI
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/  
+> URL: https://www.bthoughts.top/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/  
 

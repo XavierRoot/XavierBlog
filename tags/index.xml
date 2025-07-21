@@ -2,80 +2,80 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags - 标签 - Xavier&#39;s Blog</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>https://www.bthoughts.top/tags/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate>Wed, 25 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.bthoughts.top/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Draft</title>
-      <link>http://localhost:1313/tags/draft/</link>
+      <title>BlueTeam</title>
+      <link>https://www.bthoughts.top/tags/blueteam/</link>
       <pubDate>Wed, 25 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/draft/</guid>
-      <description>Draft</description>
+      <guid>https://www.bthoughts.top/tags/blueteam/</guid>
+      <description>BlueTeam</description>
     </item>
     <item>
       <title>Docker</title>
-      <link>http://localhost:1313/tags/docker/</link>
+      <link>https://www.bthoughts.top/tags/docker/</link>
       <pubDate>Sat, 15 Mar 2025 17:14:42 +0000</pubDate>
-      <guid>http://localhost:1313/tags/docker/</guid>
+      <guid>https://www.bthoughts.top/tags/docker/</guid>
       <description>Docker</description>
     </item>
     <item>
       <title>Tools</title>
-      <link>http://localhost:1313/tags/tools/</link>
+      <link>https://www.bthoughts.top/tags/tools/</link>
       <pubDate>Sat, 15 Mar 2025 17:14:42 +0000</pubDate>
-      <guid>http://localhost:1313/tags/tools/</guid>
+      <guid>https://www.bthoughts.top/tags/tools/</guid>
       <description>Tools</description>
     </item>
     <item>
       <title>Java</title>
-      <link>http://localhost:1313/tags/java/</link>
+      <link>https://www.bthoughts.top/tags/java/</link>
       <pubDate>Wed, 12 Mar 2025 14:46:18 +0000</pubDate>
-      <guid>http://localhost:1313/tags/java/</guid>
+      <guid>https://www.bthoughts.top/tags/java/</guid>
       <description>Java</description>
     </item>
     <item>
       <title>SQLi</title>
-      <link>http://localhost:1313/tags/sqli/</link>
+      <link>https://www.bthoughts.top/tags/sqli/</link>
       <pubDate>Wed, 12 Mar 2025 14:46:18 +0000</pubDate>
-      <guid>http://localhost:1313/tags/sqli/</guid>
+      <guid>https://www.bthoughts.top/tags/sqli/</guid>
       <description>SQLi</description>
     </item>
     <item>
       <title>Crypto</title>
-      <link>http://localhost:1313/tags/crypto/</link>
+      <link>https://www.bthoughts.top/tags/crypto/</link>
       <pubDate>Mon, 10 Mar 2025 15:33:41 +0000</pubDate>
-      <guid>http://localhost:1313/tags/crypto/</guid>
+      <guid>https://www.bthoughts.top/tags/crypto/</guid>
       <description>Crypto</description>
     </item>
     <item>
       <title>Pentest</title>
-      <link>http://localhost:1313/tags/pentest/</link>
+      <link>https://www.bthoughts.top/tags/pentest/</link>
       <pubDate>Mon, 10 Mar 2025 15:33:41 +0000</pubDate>
-      <guid>http://localhost:1313/tags/pentest/</guid>
+      <guid>https://www.bthoughts.top/tags/pentest/</guid>
       <description>Pentest</description>
     </item>
     <item>
       <title>FileUpload</title>
-      <link>http://localhost:1313/tags/fileupload/</link>
+      <link>https://www.bthoughts.top/tags/fileupload/</link>
       <pubDate>Mon, 21 Oct 2024 02:49:14 +0000</pubDate>
-      <guid>http://localhost:1313/tags/fileupload/</guid>
+      <guid>https://www.bthoughts.top/tags/fileupload/</guid>
       <description>FileUpload</description>
     </item>
     <item>
       <title>Cloud</title>
-      <link>http://localhost:1313/tags/cloud/</link>
+      <link>https://www.bthoughts.top/tags/cloud/</link>
       <pubDate>Tue, 16 Apr 2024 17:30:47 +0000</pubDate>
-      <guid>http://localhost:1313/tags/cloud/</guid>
+      <guid>https://www.bthoughts.top/tags/cloud/</guid>
       <description>Cloud</description>
     </item>
     <item>
       <title>问题解决</title>
-      <link>http://localhost:1313/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</link>
+      <link>https://www.bthoughts.top/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</link>
       <pubDate>Tue, 16 Apr 2024 17:30:47 +0000</pubDate>
-      <guid>http://localhost:1313/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</guid>
+      <guid>https://www.bthoughts.top/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</guid>
       <description>问题解决</description>
     </item>
   </channel>
