@@ -483,5 +483,5 @@ mysql&gt; select * from users group by 1 order by sleep(1);
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/  
+> URL: http://localhost:1313/posts/sql%E6%B3%A8%E5%85%A5%E4%B9%8Bgroupby%E4%BD%8D%E7%BD%AE%E7%82%B9%E6%B3%A8%E5%85%A5/  
 

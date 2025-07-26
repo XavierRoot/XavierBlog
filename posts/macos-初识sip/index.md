@@ -124,5 +124,5 @@ mv /users/xavier/Downloads/tmp/test.sh /users/xavier/MyScripts/test.sh
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/macos-%E5%88%9D%E8%AF%86sip/  
+> URL: http://localhost:1313/posts/macos-%E5%88%9D%E8%AF%86sip/  
 

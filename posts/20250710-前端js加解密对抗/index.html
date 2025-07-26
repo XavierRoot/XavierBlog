@@ -5,21 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
-    <title>前端JS加解密对抗 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+    <title>前端JS加解密对抗方法简述 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
 <meta name="description" content="本文主要介绍常见的应对前端JS加解密的方法
-零、简述场景 常见需要前端JS调试完成加解密对抗的情况有：
+零、简述 常见需要前端JS调试完成加解密对抗的情况有：
 "><meta name="keywords" content=''>
-  <meta itemprop="name" content="前端JS加解密对抗">
+  <meta itemprop="name" content="前端JS加解密对抗方法简述">
   <meta itemprop="description" content="本文主要介绍常见的应对前端JS加解密的方法
-零、简述场景 常见需要前端JS调试完成加解密对抗的情况有：">
+零、简述 常见需要前端JS调试完成加解密对抗的情况有：">
   <meta itemprop="datePublished" content="2025-07-10T22:40:21+08:00">
   <meta itemprop="dateModified" content="2025-07-10T22:40:21+08:00">
-  <meta itemprop="wordCount" content="1787">
+  <meta itemprop="wordCount" content="9454">
   <meta itemprop="keywords" content=""><meta property="og:url" content="http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/">
   <meta property="og:site_name" content="Xavier&#39;s Blog">
-  <meta property="og:title" content="前端JS加解密对抗">
+  <meta property="og:title" content="前端JS加解密对抗方法简述">
   <meta property="og:description" content="本文主要介绍常见的应对前端JS加解密的方法
-零、简述场景 常见需要前端JS调试完成加解密对抗的情况有：">
+零、简述 常见需要前端JS调试完成加解密对抗的情况有：">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -28,24 +28,24 @@
     <meta property="article:tag" content="Draft">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="前端JS加解密对抗">
+  <meta name="twitter:title" content="前端JS加解密对抗方法简述">
   <meta name="twitter:description" content="本文主要介绍常见的应对前端JS加解密的方法
-零、简述场景 常见需要前端JS调试完成加解密对抗的情况有：">
+零、简述 常见需要前端JS调试完成加解密对抗的情况有：">
 <meta name="application-name" content="Xavier&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/" title="前端JS加解密对抗 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/test/" title="Test" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/index.md" title="前端JS加解密对抗 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/" title="前端JS加解密对抗方法简述 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/test/" title="Test" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/index.md" title="前端JS加解密对抗方法简述 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
-    "headline": "前端JS加解密对抗",
+    "headline": "前端JS加解密对抗方法简述",
     "inLanguage": "en",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "http:\/\/localhost:1313\/posts\/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97\/"
-    },"genre": "posts","keywords": "draft","wordcount":  1787 ,
+    },"genre": "posts","keywords": "draft","wordcount":  9454 ,
     "url": "http:\/\/localhost:1313\/posts\/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97\/","datePublished": "2025-07-10T22:40:21+08:00","dateModified": "2025-07-10T22:40:21+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -120,9 +120,9 @@
   </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
   <article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>前端JS加解密对抗</span>
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>前端JS加解密对抗方法简述</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/draft/" class="post-category" title="分类 - Draft"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Draft</a></span></div><div class="post-meta-line"><span title="发布于 2025-07-10 22:40:21"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-07-10">2025-07-10</time></span>&nbsp;<span title="1787 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1800 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/draft/" class="post-category" title="分类 - Draft"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Draft</a></span></div><div class="post-meta-line"><span title="发布于 2025-07-10 22:40:21"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-07-10">2025-07-10</time></span>&nbsp;<span title="9454 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 9500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 19 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -130,8 +130,8 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#零简述场景">零、简述场景</a></li>
-    <li><a href="#一手动加解密">一、手动加解密</a>
+    <li><a href="#零简述">零、简述</a></li>
+    <li><a href="#一常见加解密定位">一、常见加解密定位</a>
       <ul>
         <li><a href="#web端">web端</a></li>
         <li><a href="#app端">APP端</a></li>
@@ -139,15 +139,46 @@
         <li><a href="#公众号">公众号</a></li>
       </ul>
     </li>
-    <li><a href="#二控制台">二、控制台</a></li>
-    <li><a href="#三python服务中转">三、Python服务中转</a></li>
-    <li><a href="#四jsrpc">四、JSRPC</a></li>
-    <li><a href="#五cdp">五、CDP</a></li>
+    <li><a href="#二自动加解密思路">二、自动加解密思路</a></li>
+    <li><a href="#三控制台模拟操作">三、控制台模拟操作</a></li>
+    <li><a href="#四代理服务中转">四、代理服务中转</a>
+      <ul>
+        <li><a href="#mitmproxy">MITMProxy</a></li>
+        <li><a href="#autodecoder">autoDecoder</a></li>
+        <li><a href="#yakkit-热加载">Yakkit 热加载</a>
+          <ul>
+            <li><a href="#热加载">热加载</a></li>
+            <li><a href="#codec模块">Codec模块</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#五jsrpc">五、JSRPC</a>
+      <ul>
+        <li><a href="#jsrpc原理">JSRPC原理</a></li>
+        <li><a href="#整体流程">整体流程</a></li>
+        <li><a href="#使用方法">使用方法</a>
+          <ul>
+            <li><a href="#jsrpc项目">JsRPC项目</a></li>
+            <li><a href="#sekiro框架">Sekiro框架</a></li>
+            <li><a href="#frida-rpc">frida-rpc</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#六cdp">六、CDP</a>
+      <ul>
+        <li><a href="#cdp协议原理">CDP协议原理</a></li>
+        <li><a href="#整体流程-1">整体流程</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文献">参考文献</a></li>
+    <li><a href="#文件属性">文件属性</a></li>
   </ul>
 </nav></div>
       </div><div class="content" id="content" data-end-flag="It&#39;s end."><p>本文主要介绍常见的应对前端JS加解密的方法</p>
-<h2 id="零简述场景" class="heading-element"><span>零、简述场景</span>
-  <a href="#%e9%9b%b6%e7%ae%80%e8%bf%b0%e5%9c%ba%e6%99%af" class="heading-mark">
+<h2 id="零简述" class="heading-element"><span>零、简述</span>
+  <a href="#%e9%9b%b6%e7%ae%80%e8%bf%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
 </h2><p>常见需要前端JS调试完成加解密对抗的情况有：</p>
@@ -187,11 +218,11 @@
 <p>若无法还原加解密流程：通常是存在魔改算法或混淆场景，通过定位明文将其转发，篡改明文后再转发回去走加密流程</p>
 </li>
 </ol>
-<h2 id="一手动加解密" class="heading-element"><span>一、手动加解密</span>
-  <a href="#%e4%b8%80%e6%89%8b%e5%8a%a8%e5%8a%a0%e8%a7%a3%e5%af%86" class="heading-mark">
+<h2 id="一常见加解密定位" class="heading-element"><span>一、常见加解密定位</span>
+  <a href="#%e4%b8%80%e5%b8%b8%e8%a7%81%e5%8a%a0%e8%a7%a3%e5%af%86%e5%ae%9a%e4%bd%8d" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h2><p>常见的渗透测试场景包括web/小程序/公众号/app，在不同场景下的分析方法不同。</p>
+</h2><p>常见的渗透测试场景包括web/小程序/公众号/app，在不同场景下的分析方法有所区别。</p>
 <p>本文主要以Web端为例，其他场景不过多讨论。</p>
 <h3 id="web端" class="heading-element"><span>web端</span>
   <a href="#web%e7%ab%af" class="heading-mark">
@@ -226,8 +257,8 @@
 <li>DOM断点：可以在子元素改变时、属性改变时和元素被移除时触发断点，如滑块验证码</li>
 </ul>
 <p><strong>3、hook</strong></p>
-<p>在找不到关键字时（如混淆），可以通过hook某些通用方法寻找突破口，如 JSON.stringify、JSON.parse</p>
-<p>还可以hook，如 cookie、header、URL、eval、Function、绕debugger等</p>
+<p>在找不到关键字时，如混淆场景下，可以通过hook某些通用方法寻找突破口，如 JSON.stringify、JSON.parse</p>
+<p>还可以hook如 cookie、header、URL、eval、Function、绕debugger等</p>
 <h3 id="app端" class="heading-element"><span>APP端</span>
   <a href="#app%e7%ab%af" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -237,55 +268,677 @@
 <p>需要先对APP进行逆向，通过脱壳反编译得到源码；</p>
 <p>然后也是jadx全局搜索关键字，类似Web思路，搜索如sign，加引号的“sign”等。</p>
 <p><strong>2、hook</strong></p>
-<p>也可以通过frida来hook一些java层的常见类/方法，如</p>
+<p>也可以通过frida来hook一些java层的常见类/方法。</p>
+<p>JAVA 层常见方法hook：</p>
 <ul>
-<li>HashMap的put方法</li>
+<li>
+<p>HashMap的put方法；</p>
+</li>
+<li>
+<p>Log日志；</p>
+</li>
+<li>
+<p>JSONObject的 Jput、JgetString方法；</p>
+</li>
 </ul>
+<p>其他，如：</p>
+<ul>
+<li>ArrayList的add、addAll、set方法等；</li>
+<li>TextUtils的isEmpty方法；</li>
+<li>Collections的sort 方法；</li>
+<li>Toast的show方法；</li>
+<li>String的getBytes、 isEmpty方法、StringBuilder, StringBuffer；</li>
+<li>常见加密库相关的hook（自吐算法）等</li>
+</ul>
+<p><strong>3、动态调试</strong>：</p>
+<p>log插桩、JEB、IDA、unidbg</p>
+<p><strong>4、H5调试</strong></p>
+<p>Android：</p>
+<ol>
+<li>安卓手机开启adb调试，</li>
+<li>电脑端 Edge浏览器访问edge://inspect，Chrome浏览器访问chrome://inspect</li>
+<li>手机访问h5页面，在浏览器点击inspect打开 devtools即可调试</li>
+</ol>
+<p>IOS：</p>
+<ol>
+<li>mac safari设置中开启网页开发者功能</li>
+<li>iphone下safari设置中开启JavaScript、网页检查器</li>
+<li>在手机Safari 浏览器打开需要调试的网站，然后在电脑上的Safari浏览器点击『开发』-&gt;『选择你的手机』-&gt;『选择需要调试的网址』即可打开手机网页的控制台</li>
+</ol>
+<p>工具：</p>
+<ul>
+<li><a href="https://github.com/google/ios-webkit-debug-proxy"target="_blank" rel="external nofollow noopener noreferrer">iOS WebKit Debug Proxy</a> ，支持Mac、Windows、Linux 调试 IOS</li>
+</ul>
+<h3 id="小程序" class="heading-element"><span>小程序</span>
+  <a href="#%e5%b0%8f%e7%a8%8b%e5%ba%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>开启小程序调试：</p>
+<ul>
+<li><a href="https://github.com/JaveleyQAQ/WeChatOpenDevTools-Python"target="_blank" rel="external nofollow noopener noreferrer">WeChatOpenDevTool</a>，微信小程序强制开启开发者工具，也适用于开启微信内置浏览器F12控制台</li>
+</ul>
+<p>然后可以像Web一样进行调试</p>
+<h3 id="公众号" class="heading-element"><span>公众号</span>
+  <a href="#%e5%85%ac%e4%bc%97%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>微信内置浏览器调试</p>
+<ol>
+<li>
+<p>手机用usb连接至电脑</p>
+</li>
+<li>
+<p>手机微信内点击<code>http://debugxweb.qq.com/?inspector=true</code>（只要跳转过微信首页就是开启了调试）</p>
+</li>
+<li>
+<p>微信内打开所需调试网址, 例如<code>weixin.qq.com</code></p>
+</li>
+<li>
+<p>chrome浏览器打开<code>chrome://inspect/#devices</code>会看到我们打开的网页<code>weixin.qq.com</code></p>
+<p>Edge浏览器 <code>edge://inspect</code></p>
+</li>
+<li>
+<p>在点击chrome里的inspect 直接调试(可以直接用鼠标进行操作)</p>
+</li>
+</ol>
+<p>其他H5调试方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="n">hashMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Java</span><span class="p">.</span><span class="na">use</span><span class="p">(</span><span class="s">&#34;java.util.HashMap&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hashMap</span><span class="p">.</span><span class="na">put</span><span class="p">.</span><span class="na">implementation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;username&#34;</span><span class="p">)){</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">showStacks</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">console</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="s">&#34;hashMap.put:&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">npm install -g spy-debugger</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
-<li>Log日志</li>
+<li><a href="https://github.com/wuchangming/spy-debugger"target="_blank" rel="external nofollow noopener noreferrer">spy-debugger</a>，微信调试，各种WebView样式调试、手机浏览器的页面真机调试。便捷的远程调试手机页面、抓包工具，支持：HTTP/HTTPS，无需USB连接设备。</li>
+<li>上面提到的 WeChatOpenDevTool 也可用。</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Java</span><span class="p">.</span><span class="na">use</span><span class="p">(</span><span class="s">&#34;android.util.Log&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">log</span><span class="p">.</span><span class="na">w</span><span class="p">.</span><span class="na">overload</span><span class="p">(</span><span class="err">&#39;</span><span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">String</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">String</span><span class="err">&#39;</span><span class="p">).</span><span class="na">implementation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">showStacks</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">console</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="s">&#34;log.w: &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">w</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>java层常见方法hook，如</p>
+<h2 id="二自动加解密思路" class="heading-element"><span>二、自动加解密思路</span>
+  <a href="#%e4%ba%8c%e8%87%aa%e5%8a%a8%e5%8a%a0%e8%a7%a3%e5%af%86%e6%80%9d%e8%b7%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>定位到关键加解密函数后，可以了解到程序的加解密流程和算法。一些常见的加解密算法可以通过 cyberchef 进行验证。</p>
+<p>在测试过程中，我们肯定无法接受每次进行手动加解密，因此我们需要一些方法完成自动化加解密，常见方法有：</p>
 <ul>
-<li>JSONObject的Jput方法</li>
+<li>浏览器控制台编写JS代码</li>
+<li>代理服务中转</li>
+<li>JSRPC调试</li>
+<li>CDP调试</li>
 </ul>
+<h2 id="三控制台模拟操作" class="heading-element"><span>三、控制台模拟操作</span>
+  <a href="#%e4%b8%89%e6%8e%a7%e5%88%b6%e5%8f%b0%e6%a8%a1%e6%8b%9f%e6%93%8d%e4%bd%9c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>平时测试的时候，可能会遇到一些接口（如登陆接口）中的某些数据是加密的。</p>
+<p>通常逻辑是通过对JS代码进行逆向分析后，了解到前端加密算法和关键函数，拿到密钥，然后编写相应脚本模拟加密过程构造想要的数据。</p>
+<p>对于一些简单的场景也可以通过JS模拟前端的操作，可以免去对加解密的调试。</p>
+<p>整理流程如下：</p>
+<ol>
+<li>定位输入框和按钮</li>
+<li>设置数据</li>
+<li>点击按钮</li>
+</ol>
+<p>分析前端代码，找到我们要的登录框输入点</p>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20220215102715401-df8f00a34fbaa7c32f642a3e19ae53b4-20250726044946028.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20220215102715401-df8f00a34fbaa7c32f642a3e19ae53b4-20250726044946028.png?size=small" data-sub-html="<h2>示例代码</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20220215102715401-df8f00a34fbaa7c32f642a3e19ae53b4-20250726044946028.png" alt="示例代码" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20220215102715401-df8f00a34fbaa7c32f642a3e19ae53b4-20250726044946028.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20220215102715401-df8f00a34fbaa7c32f642a3e19ae53b4-20250726044946028.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20220215102715401-df8f00a34fbaa7c32f642a3e19ae53b4-20250726044946028.png?size=large 2x" data-title="示例代码" style="--width: 1420px;--aspect-ratio: 1420 / 552;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p>然后定位到数据，有jquery的话会方便很多，没有就使用原生的js也不影响</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="s2">&#34;username&#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="s2">&#34;password&#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&#34;btn btn-primary btn-block&#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果不好找，可以直接编辑html，手动添加<code>id</code>属性，然后通过<code>id</code>进行定位</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;testusername&#34;</span> <span class="na">data-v-ad2189ae</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;username&#34;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;请输入手机/邮箱&#34;</span><span class="p">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;testusername&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>定位后该插入数据的就插入数据，该点击的就点击，具体看下面的实现代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 设置用户名、密码字典列表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">usernames</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="s1">&#39;13299999999&#39;</span><span class="p">,</span><span class="s1">&#39;13333333333&#39;</span><span class="p">,</span><span class="s1">&#39;18888888888&#39;</span><span class="p">,</span><span class="s1">&#39;13000000000&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">passwords</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="s1">&#39;qwe123&#39;</span><span class="p">,</span><span class="s1">&#39;root&#39;</span><span class="p">,...,</span><span class="s1">&#39;FALSE&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 遍历字典列表，插入相应数据，模拟点击操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">usernames</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;testusername&#34;</span><span class="p">).</span><span class="nx">value</span><span class="o">=</span><span class="nx">usernames</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="k">in</span> <span class="nx">passwords</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;testpassword&#34;</span><span class="p">).</span><span class="nx">value</span><span class="o">=</span><span class="nx">passwords</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&#34;btn btn-primary btn-block&#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">click</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>效果：</p>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726044206139.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726044206139.png?size=small" data-sub-html="<h2>image-20250726044206139</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726044206139.png" alt="image-20250726044206139" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726044206139.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726044206139.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726044206139.png?size=large 2x" data-title="image-20250726044206139" style="--width: 2030px;--aspect-ratio: 2030 / 620;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<h2 id="四代理服务中转" class="heading-element"><span>四、代理服务中转</span>
+  <a href="#%e5%9b%9b%e4%bb%a3%e7%90%86%e6%9c%8d%e5%8a%a1%e4%b8%ad%e8%bd%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>通过对JS代码进行逆向分析后，了解到前端加密算法和关键函数，拿到密钥后，然后编写相应脚本模拟加密过程构造想要的数据。</p>
+<p>编写通过工具或Python脚本等进行代理中转，通过脚本对数据包进行加解密处理。</p>
+<p>介绍一些相关工具</p>
+<ul>
+<li>mitmproxy</li>
+<li>Burp插件autoDecoder</li>
+<li>Yakkit 热加载</li>
+</ul>
+<h3 id="mitmproxy" class="heading-element"><span>MITMProxy</span>
+  <a href="#mitmproxy" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://mitmproxy.org"target="_blank" rel="external nofollow noopener noreferrer">mitmproxy</a> 是一款免费的开源交互式 HTTPS 代理工具。</p>
+<ul>
+<li><a href="https://github.com/mitmproxy/mitmproxy"target="_blank" rel="external nofollow noopener noreferrer">Github项目地址</a></li>
+<li><a href="https://docs.mitmproxy.org/stable/"target="_blank" rel="external nofollow noopener noreferrer">官方文档</a></li>
+<li><a href="https://github.com/mochazi/mitmproxy-doc-cn/tree/master"target="_blank" rel="external nofollow noopener noreferrer">详细版文档</a>，写脚本时推荐参考</li>
+</ul>
+<p>这里使用Burp+mitmproxy进行配合，可以配置上下游代理进行加解密</p>
+<ul>
+<li>
+<p>配置下游代理：</p>
+<p>则是接收客户端加密请求进行解密，将解密后数据包发给burp。</p>
+<p>当接收burp到明文后进行加密，将加密后数据包发给客户端。</p>
+</li>
+<li>
+<p>配置上游代理：</p>
+<p>则是接收burp明文请求后进行加密，将加密后数据包发给服务端。</p>
+<p>当接收服务端加密响应，解密，发给burp。</p>
+</li>
+</ul>
+<p>1、下游代理：请求解密，响应加密（如decrypt.py）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">mitmdump --mode upstream:http://127.0.0.1:8080 -s decrypt.py --listen-port <span class="m">9999</span> --ssl-insecure</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mitmproxy</span> <span class="kn">import</span> <span class="n">http</span><span class="p">,</span> <span class="n">ctx</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">aesCipher</span> <span class="kn">import</span> <span class="o">*</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">decryptData</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 解密请求包，发给burp</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">:</span> <span class="n">http</span><span class="o">.</span><span class="n">HTTPFlow</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">info</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="s2">&#34;www.test.com&#34;</span> <span class="ow">in</span> <span class="n">flow</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&#34;Host&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">param</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_text</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;encryptedData=(.*)&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="k">match</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="n">plainText</span> <span class="o">=</span> <span class="n">decrypt_aes_cbc</span><span class="p">(</span><span class="k">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">key</span><span class="p">,</span><span class="n">iv</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">          <span class="n">request_body</span> <span class="o">=</span> <span class="s2">&#34;encryptedData=&#34;</span> <span class="o">+</span> <span class="n">plainText</span> 
+</span></span><span class="line"><span class="cl">          <span class="n">flow</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">request_body</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="n">info</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1"># 加密响应包，发给客户端</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">:</span> <span class="n">http</span><span class="o">.</span><span class="n">HTTPFlow</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">  <span class="n">addons</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decryptData</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>2、上游代理：请求加密，响应加密（如encrypt.py）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">mitmdump -s encrypt.py --listen-port <span class="m">8990</span> --ssl-insecure</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mitmproxy</span> <span class="kn">import</span> <span class="n">http</span><span class="p">,</span> <span class="n">ctx</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">aesCipher</span> <span class="kn">import</span> <span class="o">*</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">encryptData</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 加密请求包，发给服务器</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">:</span> <span class="n">http</span><span class="o">.</span><span class="n">HTTPFlow</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">info</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="s2">&#34;www.test.com&#34;</span> <span class="ow">in</span> <span class="n">flow</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&#34;Host&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">param</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_text</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;encryptedData=(.*)&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="k">match</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="n">cipherText</span> <span class="o">=</span> <span class="n">encrypt_aes_cbc</span><span class="p">(</span><span class="k">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">key</span><span class="p">,</span><span class="n">iv</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">          <span class="n">request_body</span> <span class="o">=</span> <span class="s2">&#34;encryptedData=&#34;</span> <span class="o">+</span> <span class="n">cipherText</span> 
+</span></span><span class="line"><span class="cl">          <span class="n">flow</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">request_body</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="n">info</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># 解密响应包，发给burp</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">:</span> <span class="n">http</span><span class="o">.</span><span class="n">HTTPFlow</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">  <span class="n">addons</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">encryptData</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="autodecoder" class="heading-element"><span>autoDecoder</span>
+  <a href="#autodecoder" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>项目地址：https://github.com/f0ng/autoDecoder</p>
+<p><strong>加解密方式</strong></p>
+<ol>
+<li>自带算法进行加解密：直接通过插件自带的算法去加解密数据包(较为简单，仅支持部分AES、DES、DESede加密)</li>
+<li>自定义接口进行加解密：通过python的flask框架去编写加解密数据包的api ，可自定义加解密的内容，默认传入的参数是整个请求体（request body）与整个响应体（response body），支持复杂的加解密算法，当然，这些都需要自行去写代码解密了</li>
+</ol>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726060235149.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726060235149.png?size=small" data-sub-html="<h2>image-20250726060235149</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726060235149.png" alt="image-20250726060235149" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726060235149.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726060235149.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250726060235149.png?size=large 2x" data-title="image-20250726060235149" style="--width: 2656px;--aspect-ratio: 2656 / 1382;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p>python代码模板</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- coding:utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author:f0ngf0ng</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span><span class="n">Response</span><span class="p">,</span><span class="n">request</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pyDes</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">des_encrypt</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    DES 加密
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param s: 原始字符串
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :return: 加密后字符串，16进制
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">secret_key</span> <span class="o">=</span> <span class="s2">&#34;f0ngtest&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">iv</span> <span class="o">=</span> <span class="s2">&#34;f0ngf0ng&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">k</span> <span class="o">=</span> <span class="n">des</span><span class="p">(</span><span class="n">secret_key</span><span class="p">,</span> <span class="n">CBC</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">padmode</span><span class="o">=</span><span class="n">PAD_PKCS5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">en</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">padmode</span><span class="o">=</span><span class="n">PAD_PKCS5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">encodebytes</span><span class="p">(</span><span class="n">en</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">des_decrypt</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    DES 解密
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param s: 加密后的字符串，16进制
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :return:  解密后的字符串
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">secret_key</span> <span class="o">=</span> <span class="s2">&#34;f0ngtest&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">iv</span> <span class="o">=</span> <span class="s2">&#34;f0ngf0ng&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">k</span> <span class="o">=</span> <span class="n">des</span><span class="p">(</span><span class="n">secret_key</span><span class="p">,</span> <span class="n">CBC</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">padmode</span><span class="o">=</span><span class="n">PAD_PKCS5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">de</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">decodebytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)),</span> <span class="n">padmode</span><span class="o">=</span><span class="n">PAD_PKCS5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">de</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/encode&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;POST&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encrypt</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">param</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>  <span class="c1"># 获取  post 参数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">encry_param</span> <span class="o">=</span> <span class="n">des_encrypt</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">encry_param</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">encry_param</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/decode&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;POST&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decrypt</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">param</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>  <span class="c1"># 获取  post 参数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decrypt_param</span> <span class="o">=</span> <span class="n">des_decrypt</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">decrypt_param</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">decrypt_param</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># 设置调试模式，生产模式的时候要关掉debug</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="s2">&#34;8888&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="yakkit-热加载" class="heading-element"><span>Yakkit 热加载</span>
+  <a href="#yakkit-%e7%83%ad%e5%8a%a0%e8%bd%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://www.yaklang.com/"target="_blank" rel="external nofollow noopener noreferrer">Yakit</a> 是一个基于yak语言编写的工具，功能类似Burpsuite，主要功能有拦截http(s)数据包，漏洞检测，网站地图，自动/手动测试web应用，编码解码，请求与响应差异数据化等功能。</p>
+<h4 id="热加载" class="heading-element"><span>热加载</span>
+  <a href="#%e7%83%ad%e5%8a%a0%e8%bd%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>在聊热加载之前，我们首先需要对其进行了解：什么是热加载？</p>
+<p>广义上来说，热加载是一种允许在不停止或重启应用程序的情况下，动态加载或更新特定组件或模块的功能。这种技术常用于开发过程中，提高开发效率和用户体验。</p>
+<p>在Yakit 中，热加载是一种高级技术，让 Yak 成为 Web Fuzzer 和用户自定义代码中的桥梁，它允许我们编写一段 Yak 函数，在 Web Fuzzer 过程中使用，从而实现自定义 fuzztag 或更多功能。</p>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727063037827.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727063037827.png?size=small" data-sub-html="<h2>image-20250727063037827</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727063037827.png" alt="image-20250727063037827" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727063037827.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727063037827.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727063037827.png?size=large 2x" data-title="image-20250727063037827" style="--width: 1097px;--aspect-ratio: 1097 / 840;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p>在MITM界面点击下方 “<strong>热加载</strong>”标签页，在恰当的 Hook 点编写我们希望操作流量做的事儿，然后加载进引擎中，等待流量执行。</p>
+<p>通过一个简单的图例展示热加载代码在流量劫持中的过程：</p>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/fe76dd0e8ab749f67ee338e72ac1fac0.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/fe76dd0e8ab749f67ee338e72ac1fac0.png?size=small" data-sub-html="<h2>img</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/fe76dd0e8ab749f67ee338e72ac1fac0.png" alt="img" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/fe76dd0e8ab749f67ee338e72ac1fac0.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/fe76dd0e8ab749f67ee338e72ac1fac0.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/fe76dd0e8ab749f67ee338e72ac1fac0.png?size=large 2x" data-title="img" style="--width: 1341px;--aspect-ratio: 1341 / 739;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p>以下给出示例，具体代码需要根据具体场景编写。</p>
+<ul>
+<li>
+<p>自动放行流量：热加载hijackSaveHTTPFlow方法，</p>
+</li>
+<li>
+<p>手动劫持流量：hijackHTTPRequest+beforeRequest处理请求，hijackHTTPResponse+afterRequest处理响应</p>
+</li>
+</ul>
+<p><strong>1、自动放行流量</strong></p>
+<p>热加载hijackSaveHTTPFlow方法，可以对自动放行的请求和响应进行解密，并且不影响原请求响应</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">hijackSaveHTTPFlow</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">flow</span> <span class="cm">/* *yakit.HTTPFlow */</span><span class="p">,</span> <span class="nx">modify</span> <span class="cm">/* func(modified *yakit.HTTPFlow) */</span><span class="p">,</span> <span class="nx">drop</span><span class="cm">/* func0 */</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">key</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">iv</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">  <span class="c1">// 解密请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">request</span><span class="p">,</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">StrconvUnquote</span><span class="p">(</span><span class="nx">flow</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">reqBody</span> <span class="o">=</span> <span class="nx">string</span><span class="p">(</span><span class="nx">poc</span><span class="p">.</span><span class="nx">GetHTTPPacketBody</span><span class="p">(</span><span class="nx">request</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">regexp</span> <span class="o">=</span> <span class="sb">`encryptedData= (*)`</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherUrl</span> <span class="o">=</span> <span class="nx">re</span><span class="p">.</span><span class="nx">FindSubmatch</span><span class="p">(</span><span class="nx">reqBody</span><span class="p">,</span> <span class="nx">regexp</span><span class="cm">/*string*/</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherB64</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">DecodeUrl</span><span class="p">(</span><span class="nx">cipherUrl</span><span class="p">)</span> <span class="o">~</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherBytes</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">DecodeBase64</span><span class="p">(</span><span class="nx">cipherB64</span><span class="p">)</span> <span class="o">~</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">plainText</span> <span class="o">=</span> <span class="nx">string</span><span class="p">(</span><span class="nx">codec</span><span class="p">.</span><span class="nx">AE</span><span class="err">§</span><span class="nx">CBCDecrypt</span><span class="p">(</span><span class="nx">key</span> <span class="cm">/*type: []byte*/</span><span class="p">,</span> <span class="nx">cipherBytes</span><span class="p">,</span> <span class="nx">iv</span> <span class="cm">/*type: []byte*/</span><span class="p">)</span><span class="o">~</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">flow</span><span class="p">.</span> <span class="nx">Request</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">ReplaceAll</span> <span class="p">(</span><span class="nx">request</span><span class="p">,</span><span class="nx">cipherUrl</span><span class="p">,</span> <span class="nx">plainText</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// // 解密响应
+</span></span></span><span class="line"><span class="cl"><span class="c1">// response, _ = codec.StrconvUnquote(flow. Response) //......
+</span></span></span><span class="line"><span class="cl"><span class="c1">// flow.Response = str.ReplaceAll(response,ciphel, plain Text) 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">modify</span><span class="p">(</span><span class="nx">flow</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>2、手动劫持流量</strong></p>
+<p>2.1、热加载hijackHTTPRequest 方法，可以对手动劫持的请求进行解密，但发给服务器之前，需要配合beforeRequest 方法再进行加密</p>
+<p>处理响应: hijackHTTPResponse+afterRequest</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">hijackHTTPRequest</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">isHttps</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">forward</span> <span class="cm">/*func(modifiedRequest []byte)*/</span><span class="p">,</span> <span class="nx">drop</span> <span class="cm">/*func() */</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">key</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">iv</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">reqBody</span> <span class="o">=</span> <span class="nx">string</span><span class="p">(</span><span class="nx">poc</span><span class="p">.</span><span class="nx">GetHTTPPacketBody</span><span class="p">(</span><span class="nx">req</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">regexp</span> <span class="o">=</span> <span class="sb">`encryptedData=(.*)`</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherUrl</span> <span class="o">=</span> <span class="nx">re</span><span class="p">.</span><span class="nx">FindSubmatch</span><span class="p">(</span><span class="nx">reqBody</span><span class="p">,</span> <span class="nx">regexp</span><span class="cm">/*string*/</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherB64</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span> <span class="nx">DecodeUr</span><span class="p">(</span><span class="nx">cipherUrl</span><span class="p">)</span><span class="o">~</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherBytes</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">DecodeBase64</span><span class="p">(</span><span class="nx">cipherB64</span><span class="p">)</span><span class="o">~</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">plainText</span> <span class="o">=</span> <span class="nx">string</span><span class="p">(</span><span class="nx">codec</span><span class="p">.</span><span class="nx">AESCBCDecrypt</span><span class="p">(</span><span class="nx">key</span> <span class="cm">/*type:[]byte*/</span><span class="p">,</span> <span class="nx">cipherBytes</span><span class="p">,</span> <span class="nx">iv</span> <span class="cm">/*type:[]byte*/</span><span class="p">)</span><span class="o">~</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">modified</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">ReplaceAll</span><span class="p">(</span><span class="nx">cipherUrl</span><span class="p">,</span> <span class="nx">plainText</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">forward</span><span class="p">(</span><span class="nx">poc</span><span class="p">.</span><span class="nx">FixHTTPRequest</span><span class="p">(</span><span class="nx">modified</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>2.2、beforeRequest方法，发给服务器之前，还原加密流程进行加密</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">beforeRequest</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">ishttps</span><span class="p">,</span> <span class="nx">oreq</span><span class="cm">/*原始请求*/</span><span class="err">，</span><span class="nx">req</span><span class="cm">/*hijack修改后的请求*/</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">key</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">iv</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">reqBody</span> <span class="o">=</span> <span class="nx">string</span><span class="p">(</span><span class="nx">poc</span><span class="p">.</span><span class="nx">GetHTTPPacketBody</span><span class="p">(</span><span class="nx">req</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">regexp</span> <span class="o">=</span> <span class="sb">`encryptedData=(.*)`</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">plainText</span> <span class="o">=</span> <span class="nx">re</span><span class="p">.</span><span class="nx">FindSubmatch</span><span class="p">(</span><span class="nx">reqBody</span><span class="p">,</span> <span class="nx">regexp</span><span class="cm">/*string*/</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherBytes</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">AESCBCEndypt</span><span class="p">(</span><span class="nx">key</span> <span class="cm">/*type: []byte*/</span><span class="p">,</span> <span class="nx">plainText</span><span class="p">,</span> <span class="nx">iv</span> <span class="cm">/*type: [byte*/</span><span class="p">)</span><span class="o">~</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherB64</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">EncodeBase64</span><span class="p">(</span><span class="nx">cipherBytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherUrl</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">EscapeUrl</span><span class="p">(</span><span class="nx">cipherB64</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">req</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">ReplaceAll</span><span class="p">(</span><span class="nx">plainText</span><span class="p">,</span> <span class="nx">cipherUrl</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">[</span><span class="kr">byte</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>WebFuzzer模块，也可以使用热加载来进行批量枚举爆破</p>
+<p>编写热加载的函数，如rsa函数进行RSA加密</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">rsa</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">param</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">pemBytes</span> <span class="o">=</span> <span class="p">[]</span><span class="kr">byte</span><span class="p">(</span><span class="sb">`-----BEGIN PUBLIC KEY -----
+</span></span></span><span class="line"><span class="cl"><span class="sb">  MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDRvA7giwinEkaTYIIDYCkzujvi
+</span></span></span><span class="line"><span class="cl"><span class="sb">  NH+up0XAKXQot8RixKGpB7nr8AdidEvuo+wVCxZwDK3hlcRGrrqt0Gxqwc11btiM
+</span></span></span><span class="line"><span class="cl"><span class="sb">  DSj92Mr3xSaJcshZU8kfj325L8DRh9jpruphHBfh955ihvbednGAvOHOrz3Qy3cb
+</span></span></span><span class="line"><span class="cl"><span class="sb">  ocDbsNeCwNpRxwjldQIDAQAB
+</span></span></span><span class="line"><span class="cl"><span class="sb">  -----END PUBLIC KEY -----`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherB64</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">EncodeBase64</span><span class="p">(</span><span class="nx">codec</span><span class="p">.</span><span class="nx">RSAEncryptWithPKCS1v15</span><span class="p">(</span><span class="nx">pemBytes</span> <span class="cm">/*type:
+</span></span></span><span class="line"><span class="cl"><span class="cm">[]byte*/</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span> <span class="o">~</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherUrl</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">EscapeUrl</span><span class="p">(</span><span class="nx">cipherB64</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">cipherUrl</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在请求包中标记需要执行RSA加密的部分，调用热加载函数rsa</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="c1">// 对整体数据包进行rsa加密
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span><span class="err">{yak(rsa|{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nt">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span><span class="err">)}}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 对password字段进行枚举，再对整体数据包进行rsa加密
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span><span class="err">{yak(rsa|{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nt">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;{{payload(pass top25)}}&#34;</span><span class="p">}</span><span class="err">)}}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>官方案例：<a href="https://www.yaklang.com/products/Web%20Fuzzer/fuzz-hotpatch-example2/"target="_blank" rel="external nofollow noopener noreferrer">热加载场景案例：爆破aes cbc加密</a></p>
+<p>可以通过官方案例更深入了解 Yakit 的热加载功能及用法</p>
+<p>官方中的AES加密函数 handle</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">handle = func(p) {
+</span></span><span class="line"><span class="cl">    key = codec.DecodeHex(&#34;31323334313233343132333431323334&#34;)~
+</span></span><span class="line"><span class="cl">    iv = codec.DecodeHex(&#34;03395d68979ed8632646813f4c0bbdb3&#34;)~
+</span></span><span class="line"><span class="cl">    usernameDict = [&#34;admin&#34;]
+</span></span><span class="line"><span class="cl">    // passwordDict = x&#34;{{x(pass_top25)}}&#34; // 我们可以使用x前缀字符串来通过fuzztag语法获取pass_top25字典中的值
+</span></span><span class="line"><span class="cl">    passwordDict = [&#34;admin&#34;, &#34;123456&#34;, &#34;admin123&#34;, &#34;88888888&#34;, &#34;666666&#34;] // 也可以直接使用手写的list
+</span></span><span class="line"><span class="cl">    resultList = []
+</span></span><span class="line"><span class="cl">    for username in usernameDict {
+</span></span><span class="line"><span class="cl">        for password in passwordDict {
+</span></span><span class="line"><span class="cl">            m = {&#34;username&#34;: username, &#34;password&#34;: password}
+</span></span><span class="line"><span class="cl">            jsonInput = json.dumps(m)
+</span></span><span class="line"><span class="cl">            result = codec.AESCBCEncryptWithPKCS7Padding(key, jsonInput, iv)~
+</span></span><span class="line"><span class="cl">            base64Result = codec.EncodeBase64(result)
+</span></span><span class="line"><span class="cl">            resultList.Append(base64Result)
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    return resultList
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请求包中将data参数设置为<code>{{yak(handle)}}</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -293,21 +946,113 @@
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="n">jSONObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Java</span><span class="p">.</span><span class="na">use</span><span class="p">(</span><span class="s">&#34;org.json.JSONObject&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">jSONObject</span><span class="p">.</span><span class="na">put</span><span class="p">.</span><span class="na">overload</span><span class="p">(</span><span class="err">&#39;</span><span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">String</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">Object</span><span class="err">&#39;</span><span class="p">).</span><span class="na">implementation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">showStacks</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">//var result = Java.cast(a, Java.use(&#34;java.util.ArrayList&#34;));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">console</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="s">&#34;jSONObject.put: &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;data&#34;</span><span class="p">:</span><span class="s2">&#34;{{yak(handle)}}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;key&#34;</span><span class="p">:</span><span class="s2">&#34;31323334313233343132333431323334&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;iv&#34;</span><span class="p">:</span><span class="s2">&#34;03395d68979ed8632646813f4c0bbdb3&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>JSONObject的JgetString方法</li>
+</div><h4 id="codec模块" class="heading-element"><span>Codec模块</span>
+  <a href="#codec%e6%a8%a1%e5%9d%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>Codec功能允许安全研究人员对数据进行各种编码、解码和加密操作。通过图形化界面，用户可以轻松构建复杂的数据转换流程，而无需编写大量代码。这种可视化编排方式大大提高了测试效率，特别是面对各种自定义算法时。</p>
+<p>Yakit的v1.3.1sp1版本和Yaklang v1.3.1，我们推出了新版的 Codec 模块。替代之前比较简陋的编解码页面。</p>
+<p>新版的Codec页面在设计上借鉴了编解码工具的优秀前辈：CyberChef。采用的”序列形式“的编解码形式，支持配置一条多种编解码组合而成的序列，达成一键处理一些复杂的编解码情况。</p>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727070332647.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727070332647.png?size=small" data-sub-html="<h2>image-20250727070332647</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727070332647.png" alt="image-20250727070332647" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727070332647.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727070332647.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727070332647.png?size=large 2x" data-title="image-20250727070332647" style="--width: 1097px;--aspect-ratio: 1097 / 840;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p><strong>实际应用场景</strong></p>
+<ol>
+<li><strong>登录测试场景</strong>：当目标网站使用前端转换时，可以先通过Codec分析出算法，然后直接在WebFuzz中应用相同的转换流程进行测试。</li>
+<li><strong>API参数测试</strong>：对于使用转换参数的API接口，可以先用Codec处理样本数据，修改后再转换回传，实现中间人测试。</li>
+<li><strong>数据变形测试</strong>：通过组合多个Codec操作，可以快速生成各种变形的测试数据，用于模糊测试。</li>
+</ol>
+<p>注意codec可以直接用在热加载中，但不能在yakit runner中调用</p>
+<p>对于MITM(中间人)场景中的热加载需求，用户可以在<code>hijackHTTPResponse</code>方法中调用预定义的Codec流程。虽然具体实现代码未在原文中展示，但基于Yakit的架构设计，这通常涉及加载保存的Codec配置并应用到实时流量上。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 解密插件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">handle</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">key</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">iv</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherB64</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">DecodeUrlorigin</span><span class="p">)</span> <span class="o">~</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherBytes</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">DecodeBase64</span><span class="p">(</span><span class="nx">cipherB64</span><span class="p">)</span> <span class="o">~</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">plainText</span> <span class="o">=</span> <span class="nx">string</span><span class="p">(</span><span class="nx">codec</span><span class="p">.</span><span class="nx">AESCBCDecrypt</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">cipherBytes</span><span class="p">,</span> <span class="nx">iv</span><span class="p">)</span> <span class="o">~</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">plainText</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//加密插件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">handle</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">origin</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">key</span> <span class="o">=</span> <span class="s2">&#34;1234567890123456&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">iv</span> <span class="o">=</span> <span class="mi">1234567890123456</span><span class="err">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherBytes</span> <span class="o">=</span> <span class="nx">string</span><span class="p">(</span><span class="nx">codec</span><span class="p">.</span><span class="nx">AESCBCEncrypt</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">origin</span><span class="p">,</span> <span class="nx">iv</span><span class="p">)</span> <span class="o">~</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherB64</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span><span class="nx">EncodeBase64</span><span class="p">(</span><span class="nx">cipherBytes</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">  <span class="nx">cipherUrl</span> <span class="o">=</span> <span class="nx">codec</span><span class="p">.</span> <span class="nx">EscapeUr</span><span class="o">|</span><span class="p">(</span><span class="nx">cipherB64</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">cipherUrl</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>推荐阅读：</p>
+<ul>
+<li><a href="https://yaklang.com/articles/codec-and-yakit/"target="_blank" rel="external nofollow noopener noreferrer">Yakit技能联动：codec &amp; WebFuzzer</a></li>
+<li><a href="https://muhe-blog.github.io/2025/06/30/yakit%E7%83%AD%E5%8A%A0%E8%BD%BD%E5%B8%B8%E7%94%A8API%E5%AD%A6%E4%B9%A0/"target="_blank" rel="external nofollow noopener noreferrer">yakit热加载常用API学习</a></li>
 </ul>
+<h2 id="五jsrpc" class="heading-element"><span>五、JSRPC</span>
+  <a href="#%e4%ba%94jsrpc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>JSRPC简单来说就是远程调用JavaScript函数的方法。</p>
+<p>RPC（Remote Procedure Call，远程过程调用）是一种通过网络让程序调用另一台计算机上的服务或程序的技术。它允许程序在不同的地址空间（通常是不同的计算机）之间调用函数或方法，并且可以基于多种协议实现。</p>
+<h3 id="jsrpc原理" class="heading-element"><span>JSRPC原理</span>
+  <a href="#jsrpc%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>JSRPC的原理是在客户端（即浏览器）注入 JSRPC环境，使客户端与JSRPC服务器建立WebSocket连接，保持通信。然后在客户端注册需要用到的加解密函数的demo，这样当JSRPC服务器发送信息给客户端时，客户端接收到并执行相应的方法，然后将结果发送回服务器。服务器接收到结果并将其显示出来。</p>
+<p>JSRPC 一般都是基于 WebSocket 或者 WebSocket Secure协议实现，这里简单介绍一下这俩协议：</p>
+<ul>
+<li>WebSocket 是基于 TCP 的应用层协议，采用双向通信模式，就像一根两端开口的管道。当客户端和服务器建立连接后，双方都能随时向对方发送数据，其协议请求 url 以 ws:// 开头。这种特性使得 WebSocket 适用于需要实时交互的场景，如在线聊天、实时数据展示等。</li>
+<li>WebSocket Secure（WSS）是 WebSocket 的加密版本，也是采用双向通信模式，请求协议以 wss:// 开头。为了维持稳定的长连接，WSS 通常需要每隔一段时间发送心跳包，比如简单的 ping 消息。正因如此，WSS 常用于对数据安全性要求较高的场景，像社交聊天室、股票实时报价、直播间信息流等。</li>
+<li>WebSocket 与 WSS 的关系 和 http 与 https 的关系类似。</li>
+</ul>
+<h3 id="整体流程" class="heading-element"><span>整体流程</span>
+  <a href="#%e6%95%b4%e4%bd%93%e6%b5%81%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250428225321168.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250428225321168.png?size=small" data-sub-html="<h2>image-20250428225321168</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250428225321168.png" alt="image-20250428225321168" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250428225321168.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250428225321168.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250428225321168.png?size=large 2x" data-title="image-20250428225321168" style="--width: 876px;--aspect-ratio: 876 / 424;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<h3 id="使用方法" class="heading-element"><span>使用方法</span>
+  <a href="#%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="jsrpc项目" class="heading-element"><span>JsRPC项目</span>
+  <a href="#jsrpc%e9%a1%b9%e7%9b%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>JsRPC-hliang 是用 go 语言写的，是专门为 JS 逆向做的项目。
+Github项目地址：https://github.com/jxhczhl/jsrpc</p>
+<p>从Github下载 jsrpc服务端 环境，搭建RPC服务端</p>
+<p><strong>1、启动服务端</strong></p>
+<p>启动一个JSRPC服务，然后监听12080端口，</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -321,74 +1066,399 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="n">jSONObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Java</span><span class="p">.</span><span class="na">use</span><span class="p">(</span><span class="s">&#34;org.json.JSONObject&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">jSONObject</span><span class="p">.</span><span class="na">getString</span><span class="p">.</span><span class="na">implementation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> 
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">//showStacks;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">//var result = Java.cast(a, Java.use(*java.util.ArrayList&#34;));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">console</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="s">&#34;jSONObject.getString:&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">console</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="s">&#34;jSONObject.getString result: &#34;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ ./jsRpc
+</span></span><span class="line"><span class="cl">       __       _______..______      .______     ______
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>  <span class="p">|</span>     /       <span class="o">||</span>   _  <span class="se">\ </span>    <span class="p">|</span>   _  <span class="se">\ </span>  /      <span class="p">|</span>
+</span></span><span class="line"><span class="cl">      <span class="p">|</span>  <span class="p">|</span>    <span class="p">|</span>   <span class="o">(</span>----<span class="sb">`</span><span class="p">|</span>  <span class="p">|</span>_<span class="o">)</span>  <span class="p">|</span>    <span class="p">|</span>  <span class="p">|</span>_<span class="o">)</span>  <span class="p">|</span> <span class="p">|</span>  ,----<span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">.--.  |  |     \   \    |      /     |   ___/  |  |
+</span></span></span><span class="line"><span class="cl"><span class="s1">|  `--&#39;</span>  <span class="p">|</span> .----<span class="o">)</span>   <span class="p">|</span>   <span class="p">|</span>  <span class="p">|</span><span class="se">\ </span> <span class="se">\-</span>---.<span class="p">|</span>  <span class="p">|</span>      <span class="p">|</span>  <span class="sb">`</span>----.
+</span></span><span class="line"><span class="cl"> <span class="se">\_</span>_____/  <span class="p">|</span>_______/    <span class="p">|</span> _<span class="p">|</span> <span class="sb">`</span>._____<span class="o">||</span> _<span class="p">|</span>       <span class="se">\_</span>_____<span class="p">|</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">INFO<span class="o">[</span>2025-04-29 18:08:08<span class="o">]</span> 当前监听地址：0.0.0.0:12080 ssl启用状态：false</span></span></code></pre></td></tr></table>
 </div>
-</div><p>java层常见方法hook：</p>
-<p>其他，如 ArrayList的add、addAll、set方法等、TextUtils的isEmpty方法、Collections的sort 方法、Toast的show方法、Base64、String的getBytes、 isEmpty方法、StringBuilder, StringBuffer、常见加密库相关的hook（自吐算法）等</p>
-<p>hook代码生成方法：</p>
-<p>可以通过objection生成指定类的hook代码</p>
-<p>android hooking generate class com.XXXXXX</p>
-<p>jadx也可以生成frida代码</p>
-<p><strong>3、动态调试</strong>：</p>
-<p>log插桩、JEB. IDA, unidbg</p>
-<p><strong>4、H5调试</strong></p>
-<p>安卓手机开启adb调试，电脑edge浏览器访问edge://inspect，手机访问h5页面，浏览器点击inspect打开 devtools即可调试（chrome浏览器访问chrome://inspect）</p>
-<p>mac safari 调试 iphone 下 h5/webview</p>
-<p>windows 调试 iphone</p>
-<ul>
-<li><a href="https://github.com/google/ios-webkit-debug-proxy"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/google/ios-webkit-debug-proxy</a></li>
-</ul>
-<p>edge://inspect</p>
-<h3 id="小程序" class="heading-element"><span>小程序</span>
-  <a href="#%e5%b0%8f%e7%a8%8b%e5%ba%8f" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>开启小程序调试：</p>
-<ul>
-<li><a href="https://github.com/JaveleyQAQ/WeChatOpenDevTools-Python"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/JaveleyQAQ/WeChatOpenDevTools-Python</a></li>
-</ul>
-<h3 id="公众号" class="heading-element"><span>公众号</span>
-  <a href="#%e5%85%ac%e4%bc%97%e5%8f%b7" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>微信H5调试：手机开启adb调试，微信访问  <code>http://debugxweb.qq.com/?inspector=true</code></p>
-<p>电脑访问：edge://inspect</p>
-<p>其他H5调试方法：</p>
+</div><p><strong>2、注入环境</strong></p>
+<p>网页开启F12控制台，在客户端控制台注入JSRPC环境。</p>
+<p>打开 <a href="https://github.com/jxhczhl/JsRpc/blob/main/resouces/JsEnv_Dev.js"target="_blank" rel="external nofollow noopener noreferrer">/resouces/JsEnv_De.js</a> 复制文件中的全部代码，粘贴到浏览器控制台并执行(注意：可以在浏览器开启的时候就先注入环境，不要在调试断点时候注入)</p>
+<p><strong>3、建立通信</strong></p>
+<p>然后在控制台建立链接JSRPC服务器的通信</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">npm install -g spy-debugger</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 注入环境后连接通信
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">demo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hlclient</span><span class="p">(</span><span class="s2">&#34;ws://127.0.0.1:12080/ws?group=zzz&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 可选  
+</span></span></span><span class="line"><span class="cl"><span class="c1">//var demo = new Hlclient(&#34;ws://127.0.0.1:12080/ws?group=zzz&amp;clientId=hliang/&#34;+new Date().getTime())
+</span></span></span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><a href="https://github.com/wuchangming/spy-debugger"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/wuchangming/spy-debugger</a></li>
+</div><p>上述语句执行成功后，服务端会有如下提示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">INFO[2025-04-29 18:08:08] 当前监听地址：0.0.0.0:12080 ssl启用状态：false
+</span></span><span class="line"><span class="cl">INFO[2025-04-29 18:11:25] [新上线group:zzz,clientId:-&gt;e87f9ab1-59a2-4526-971b-5e373a4af448]</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>4、定位关键函数</strong></p>
+<p>找到加解密、签名、校验等逻辑所在的关键函数，打断点，为关键函数注册可以远程调用的方法。</p>
+<p>示例：
+在浏览器控制台中进行注册</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 注册一个方法 第一个参数hello为方法名，
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 第二个参数为函数，resolve里面的值是想要的值(发送到服务器的)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">demo</span><span class="p">.</span><span class="nx">regAction</span><span class="p">(</span><span class="s2">&#34;hello&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//这样每次调用就会返回“好困啊+随机整数”
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">Js_sjz</span> <span class="o">=</span> <span class="s2">&#34;好困啊&#34;</span><span class="o">+</span><span class="nb">parseInt</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">resolve</span><span class="p">(</span><span class="nx">Js_sjz</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>访问接口，获得js端的返回值: <code>http://127.0.0.1:12080/go?group=zzz&amp;action=hello</code></p>
+<p>最常用的是带参数取值，可以这么用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//假设有一个函数 需要传递两个参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">hlg</span><span class="p">(</span><span class="nx">User</span><span class="p">,</span><span class="nx">Status</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">User</span><span class="o">+</span><span class="s2">&#34;说：&#34;</span><span class="o">+</span><span class="nx">Status</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">demo</span><span class="p">.</span><span class="nx">regAction</span><span class="p">(</span><span class="s2">&#34;hello3&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span><span class="nx">param</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//这里还是param参数 param里面的key 是先这里写，但到时候传接口就必须对应的上
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">res</span><span class="o">=</span><span class="nx">hlg</span><span class="p">(</span><span class="nx">param</span><span class="p">[</span><span class="s2">&#34;user&#34;</span><span class="p">],</span><span class="nx">param</span><span class="p">[</span><span class="s2">&#34;status&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">resolve</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>python脚本中调用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://127.0.0.1:12080/go&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;zzz&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;action&#34;</span><span class="p">:</span> <span class="s2">&#34;hello3&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;param&#34;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&#34;user&#34;</span><span class="p">:</span><span class="s2">&#34;黑脸怪&#34;</span><span class="p">,</span><span class="s2">&#34;status&#34;</span><span class="p">:</span><span class="s2">&#34;好困啊&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&#34;param&#34;</span><span class="p">])</span> <span class="c1">#dumps后就是长这样的字符串{&#34;user&#34;: &#34;\u9ed1\u8138\u602a&#34;, &#34;status&#34;: &#34;\u597d\u56f0\u554a&#34;}</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="c1">#这里换get也是可以的</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>后续就是需要注册需要调用哪个函数的方法，JSRPC作者也是提供了demo，过一遍就行。</p>
+<p><strong>5、测试调用</strong></p>
+<p>访问对应链接，测试是否正常进行加解密</p>
+<p>这里我们只需要注册相应调用函数的方法就可以了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">js_code</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">(function(){
+</span></span></span><span class="line"><span class="cl"><span class="s2">    console.log(&#34;test&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    return &#34;执行成功&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">})()
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://localhost:12080/execjs&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;zzz&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;code&#34;</span><span class="p">:</span> <span class="n">js_code</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;http://127.0.0.1:12080/go&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;zzz&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;action&#34;</span><span class="p">:</span> <span class="s2">&#34;hello3&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;param&#34;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&#34;user&#34;</span><span class="p">:</span><span class="s2">&#34;黑脸怪&#34;</span><span class="p">,</span><span class="s2">&#34;status&#34;</span><span class="p">:</span><span class="s2">&#34;好困啊&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&#34;param&#34;</span><span class="p">])</span> <span class="c1">#dumps后就是长这样的字符串{&#34;user&#34;: &#34;\u9ed1\u8138\u602a&#34;, &#34;status&#34;: &#34;\u597d\u56f0\u554a&#34;}</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="c1">#这里换get也是可以的</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>项目上使用</strong></p>
+<p>通过调试，找到加解密位置，将加解密函数进行注册，通过<code>go?group={}&amp;action={}&amp;param={}</code>接口调用注册的函数实现加解密。</p>
+<p>逻辑调试通顺后，可以使用 mitmproxy 进行代理</p>
+<ul>
+<li><a href="https://github.com/mitmproxy/mitmproxy"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/mitmproxy/mitmproxy</a></li>
+<li><a href="https://github.com/mochazi/mitmproxy-doc-cn"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/mochazi/mitmproxy-doc-cn</a></li>
 </ul>
-<h2 id="二控制台" class="heading-element"><span>二、控制台</span>
-  <a href="#%e4%ba%8c%e6%8e%a7%e5%88%b6%e5%8f%b0" class="heading-mark">
+<p>Burp配置上游代理，设置代理条件即可进行自动化调用jsRpc进行加解密</p>
+<p>若不使用jsrpc，传统方法是先找到前端所有涉及加解密部分JS代码并替换为空，把这部分代码补充环境到可以本地运行后，再通过mitmproxy或burp插件做到拦截请求时明文，发送请求后加密，相对的响应部分同理</p>
+<p>而jsrpc的出现，可以让我们跳过扣代码补环境这一步，直接在发送请求时调用前端原本的加密函数进行加密处理</p>
+<p>案例：</p>
+<ul>
+<li><a href="https://xz.aliyun.com/news/17198"target="_blank" rel="external nofollow noopener noreferrer">JsRpc联动burp实现自动加解密（详细版）</a>：用案例讲解JsRpc，配合Burp</li>
+</ul>
+<h4 id="sekiro框架" class="heading-element"><span>Sekiro框架</span>
+  <a href="#sekiro%e6%a1%86%e6%9e%b6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h2><h2 id="三python服务中转" class="heading-element"><span>三、Python服务中转</span>
-  <a href="#%e4%b8%89python%e6%9c%8d%e5%8a%a1%e4%b8%ad%e8%bd%ac" class="heading-mark">
+</h4><p>Sekiro 是由邓维佳大佬，俗称渣总，其功能更加强大，写的一个基于长链接和代码注入的 Android Private API 暴露框架，可以用在 APP 逆向、APP 数据抓取、Android 群控等场景，同时 Sekiro 也是目前公开方案唯一稳定的 JSRPC 框架。</p>
+<p>项目地址：https://github.com/yint-tech/sekiro-open</p>
+<p>官方文档：https://sekiro.iinti.cn/sekiro-doc/</p>
+<h4 id="frida-rpc" class="heading-element"><span>frida-rpc</span>
+  <a href="#frida-rpc" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h2><h2 id="四jsrpc" class="heading-element"><span>四、JSRPC</span>
-  <a href="#%e5%9b%9bjsrpc" class="heading-mark">
+</h4><p>1、打开app，手机启用frida
+2、电脑通过frida调用内存中的签名函数，并开启本地接口传递参数值</p>
+<p>相关脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span> 
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">uvicorn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">frida</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># hook关键函数，生成签名值</span>
+</span></span><span class="line"><span class="cl"><span class="n">jsCode</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">  function getsign(data){
+</span></span></span><span class="line"><span class="cl"><span class="s2">    let result = &#34;&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Java.perform(function () {
+</span></span></span><span class="line"><span class="cl"><span class="s2">    	let XX = Java.use(&#34;java.XX.XX&#34;).$new();
+</span></span></span><span class="line"><span class="cl"><span class="s2">    	result = Java.use(&#34;com.xx.SignUtils&#34;).c(XX, XX) 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    })
+</span></span></span><span class="line"><span class="cl"><span class="s2">    return result;
+</span></span></span><span class="line"><span class="cl"><span class="s2">  } 
+</span></span></span><span class="line"><span class="cl"><span class="s2">	rpc.exports = (rpcfunc: getsign);
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">process</span> <span class="o">=</span> <span class="n">frida</span><span class="o">.</span><span class="n">get_usb</span><span class="o">.</span><span class="n">_device</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="err">（</span><span class="n">XX</span><span class="err">）</span><span class="c1">#包名注入 </span>
+</span></span><span class="line"><span class="cl"><span class="n">script</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">create_script</span><span class="p">(</span><span class="n">jsCode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">script</span><span class="o">.</span><span class="n">load</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_ts</span><span class="p">():</span> <span class="c1"># 其他戳参数生成</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ts</span> <span class="o">=</span> <span class="n">XXX</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">ts</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span> <span class="c1"># 创建 FastAPI 应用</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ParamsRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span><span class="c1"># 定义请求模型</span>
+</span></span><span class="line"><span class="cl">  <span class="n">params</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">SignResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span> <span class="c1"># 定义响应模型</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sign</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Ts</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.post</span><span class="err">（</span><span class="s2">&#34;/sign&#34;</span><span class="err">，</span> <span class="n">response_model</span><span class="o">=</span><span class="n">SignResponse</span><span class="err">）</span> <span class="c1"># 定义 sign接口 </span>
+</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">ParamsRequest</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Ts</span> <span class="o">=</span> <span class="n">get_ts</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sign</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="n">exports_sync</span><span class="o">.</span><span class="n">rpcfunc</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">+</span><span class="n">Ts</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;sign&#34;</span><span class="p">:</span><span class="n">sign</span><span class="p">,</span> <span class="s2">&#34;Ts&#34;</span><span class="p">:</span> <span class="n">Ts</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">detail</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">_name_</span> <span class="o">==</span> <span class="s2">&#34;_main_&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="err">（</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&#34;127.0.0.1&#34;</span><span class="err">，</span> <span class="n">port</span><span class="o">=</span><span class="mi">12345</span><span class="err">）</span> <span class="c1"># 启动应用</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>3、yakit通过热加载模块，调用本地接口，传递篡改请求包参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">beforeRequest</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">reqBody</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">ExtractJson</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Type</span> <span class="o">=</span> <span class="nx">poc</span><span class="p">.</span><span class="nx">GetHTTPPacketHeader</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="s2">&#34;Type&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">signOld</span> <span class="o">=</span> <span class="nx">poc</span><span class="p">.</span><span class="nx">GetHTTPPacketHeader</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="s2">&#34;Sign&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">tsOld</span> <span class="o">=</span> <span class="nx">poc</span><span class="p">.</span><span class="nx">GetHTTPPacketHeader</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="s2">&#34;Ts&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">params</span> <span class="o">=</span> <span class="nx">Type</span><span class="o">=</span><span class="sb">`+ Type + `</span><span class="o">&amp;</span><span class="nx">Data</span><span class="o">=</span><span class="sb">`+ reqBody +`</span><span class="o">&amp;</span><span class="nx">Ts</span><span class="sb">`=`</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;params&#34;</span><span class="o">:</span><span class="nx">params</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">res</span> <span class="o">=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">loads</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">Post</span><span class="p">(</span><span class="sb">`http://127.0.0.1:12345/sign`</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span><span class="o">~</span><span class="p">.</span><span class="nx">Data</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">signNew</span> <span class="o">=</span> <span class="nx">res</span><span class="p">[</span><span class="s2">&#34;sign&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">tsNew</span> <span class="o">=</span> <span class="nx">res</span><span class="p">[</span><span class="s2">&#34;Ts&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">req</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">ReplaceAll</span><span class="p">(</span><span class="nx">signOld</span><span class="p">,</span><span class="nx">signNew</span><span class="p">).</span><span class="nx">ReplaceAll</span><span class="p">(</span><span class="nx">tsOld</span><span class="p">,</span> <span class="nx">tsNew</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">[]</span><span class="kr">byte</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="六cdp" class="heading-element"><span>六、CDP</span>
+  <a href="#%e5%85%adcdp" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h2><h2 id="五cdp" class="heading-element"><span>五、CDP</span>
-  <a href="#%e4%ba%94cdp" class="heading-mark">
+</h2><p>CDP协议（Chrome DevTools Protocol）是Chrome 原生支持的调试协议，通过 WebSocket 连接控制浏览器实例。</p>
+<h3 id="cdp协议原理" class="heading-element"><span>CDP协议原理</span>
+  <a href="#cdp%e5%8d%8f%e8%ae%ae%e5%8e%9f%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h2></div><div class="post-footer" id="post-footer">
+</h3><p>支持动态监控 JS 执行、修改 DOM、调用函数等，适用于加解密逻辑的实时调试。
+通过 Chrome 浏览器的原生调试接口（CDP），可在断点处直接执行 JS 表达式，获取作用域内的变量或调用函数，深度利用浏览器调试功能。</p>
+<h3 id="整体流程-1" class="heading-element"><span>整体流程</span>
+  <a href="#%e6%95%b4%e4%bd%93%e6%b5%81%e7%a8%8b-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><strong>工作流</strong>：</p>
+<ul>
+<li>启动 Chrome 时开启调试端口（<code>--remote-debugging-port=9222</code>）。</li>
+<li>通过 CDP 客户端（如 Puppeteer）发送命令执行 JS 函数或捕获加密过程</li>
+</ul>
+<p>典型工具：Chrome DevTools、基于 CDP 的自定义脚本（如 Python 调用）</p>
+<p>练手地址：https://github.com/0ctDay/encrypt-decrypt-vuls
+原创项目：https://github.com/Nstkm001/CDP_test</p>
+<p>用于快速生成加解密接口，利用cdp协议对断点帧进行调用。</p>
+<p>1.启用node cdp.js对cdp监听。
+2.使用python去启动调试的web进行连接cdp。
+3.打开f12定好断点,运行到断点。
+4.调用加解密表达式。
+5.规划并填充至中间代理脚本。</p>
+<p>案例：<a href="https://forum.butian.net/share/4315"target="_blank" rel="external nofollow noopener noreferrer">Cdp协议深度应用Web渗透加解密</a></p>
+<h2 id="参考文献" class="heading-element"><span>参考文献</span>
+  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%8c%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href="https://blog.gm7.org/docs/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E6%80%9D%E8%B7%AF%E6%8A%80%E5%B7%A7/%E7%BD%91%E9%A1%B5%E6%8E%A5%E5%8F%A3%E5%8A%A0%E5%AF%86%E6%9A%B4%E7%A0%B4/"target="_blank" rel="external nofollow noopener noreferrer">网页接口加密暴破</a>——d4mlts</li>
+<li><a href="https://mp.weixin.qq.com/s/B-lBbVpJsPdCp1pjz2Rxdg"target="_blank" rel="external nofollow noopener noreferrer">burp自定义解密数据插件</a></li>
+<li><a href="https://www.yaklang.com/products/Web%20Fuzzer/fuzz-hotpatch/"target="_blank" rel="external nofollow noopener noreferrer">热加载</a>、<a href="https://www.yaklang.com/products/Web%20Fuzzer/fuzz-hotpatch-example2/"target="_blank" rel="external nofollow noopener noreferrer">热加载场景案例：爆破aes cbc加密</a>、<a href="https://yaklang.com/articles/codec-and-yakit/"target="_blank" rel="external nofollow noopener noreferrer">Yakit技能联动：codec &amp; WebFuzzer</a> —— YAK</li>
+<li><a href="https://muhe-blog.github.io/2025/06/30/yakit%E7%83%AD%E5%8A%A0%E8%BD%BD%E5%B8%B8%E7%94%A8API%E5%AD%A6%E4%B9%A0/"target="_blank" rel="external nofollow noopener noreferrer">yakit热加载常用API学习</a></li>
+<li><a href="https://xz.aliyun.com/news/17198"target="_blank" rel="external nofollow noopener noreferrer">JsRpc联动burp实现自动加解密（详细版）</a>：用案例讲解JsRpc，配合Burp</li>
+</ul>
+<h2 id="文件属性" class="heading-element"><span>文件属性</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>创建时间：2025-06-04   22:19</p>
+<p>修订记录：</p>
+<ul>
+<li>2025-06-04 ，此次修订内容| 新建</li>
+<li>2025-07-27 ，完成1.0版本 | 上传</li>
+</ul>
+<p>备注：
+拖延症拖太久了，这文章写的跟原本预期不太一样，很多东西没填充进去，感觉有点水了。</p>
+<p>有机会再把里面的一些方法具体拿出来说说，着急写完，不管了（狗头 &#x1f436;  ）。</p>
+</div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">
