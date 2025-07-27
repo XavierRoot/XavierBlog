@@ -297,5 +297,5 @@ Cookie: language=php://filter/read=convert.base64-encode/resource=./flag
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95/  
+> URL: https://www.bthoughts.top/posts/pts-%E8%B0%B7%E5%AE%89%E9%A2%84%E6%8A%A5%E5%90%8D%E6%B5%8B%E8%AF%95/  
 

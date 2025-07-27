@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Thoughts - 标签 - Xavier&#39;s Blog</title>
-    <link>http://localhost:1313/tags/thoughts/</link>
+    <link>https://www.bthoughts.top/tags/thoughts/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.bthoughts.top/tags/thoughts/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

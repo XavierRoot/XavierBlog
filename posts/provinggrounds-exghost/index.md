@@ -433,5 +433,5 @@ root@exghost:/tmp#
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/provinggrounds-exghost/  
+> URL: https://www.bthoughts.top/posts/provinggrounds-exghost/  
 

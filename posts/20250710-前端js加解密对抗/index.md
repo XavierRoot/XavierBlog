@@ -960,5 +960,5 @@ CDP协议（Chrome DevTools Protocol）是Chrome 原生支持的调试协议，�
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/  
+> URL: https://www.bthoughts.top/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/  
 

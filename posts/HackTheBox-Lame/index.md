@@ -626,5 +626,5 @@ expdb搜索：https://www.exploit-db.com/search?cve=2008-0166
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/hackthebox-lame/  
+> URL: https://www.bthoughts.top/posts/hackthebox-lame/  
 
