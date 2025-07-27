@@ -14,7 +14,7 @@
 零、简述 常见需要前端JS调试完成加解密对抗的情况有：">
   <meta itemprop="datePublished" content="2025-07-10T22:40:21+08:00">
   <meta itemprop="dateModified" content="2025-07-10T22:40:21+08:00">
-  <meta itemprop="wordCount" content="9454">
+  <meta itemprop="wordCount" content="9421">
   <meta itemprop="keywords" content=""><meta property="og:url" content="https://www.bthoughts.top/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/">
   <meta property="og:site_name" content="Xavier&#39;s Blog">
   <meta property="og:title" content="前端JS加解密对抗方法简述">
@@ -46,7 +46,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/www.bthoughts.top\/posts\/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97\/"
-    },"genre": "posts","keywords": "Pentest, crypto","wordcount":  9454 ,
+    },"genre": "posts","keywords": "Pentest, crypto","wordcount":  9421 ,
     "url": "https:\/\/www.bthoughts.top\/posts\/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97\/","datePublished": "2025-07-10T22:40:21+08:00","dateModified": "2025-07-10T22:40:21+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -123,7 +123,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>前端JS加解密对抗方法简述</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2025-07-10 22:40:21"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-07-10">2025-07-10</time></span>&nbsp;<span title="9454 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 9500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 19 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="前端JS加解密对抗方法简述"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/pentest/" class="post-category" title="分类 - Pentest"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pentest</a></span></div><div class="post-meta-line"><span title="发布于 2025-07-10 22:40:21"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-07-10">2025-07-10</time></span>&nbsp;<span title="9421 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 9500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 19 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="前端JS加解密对抗方法简述"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
           </span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
@@ -883,20 +883,9 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在请求包中标记需要执行RSA加密的部分，调用热加载函数rsa</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="c1">// 对整体数据包进行rsa加密
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span><span class="err">{yak(rsa|{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nt">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span><span class="err">)}}</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 对password字段进行枚举，再对整体数据包进行rsa加密
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span><span class="err">{yak(rsa|{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nt">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;{{payload(pass top25)}}&#34;</span><span class="p">}</span><span class="err">)}}</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>官方案例：<a href="https://www.yaklang.com/products/Web%20Fuzzer/fuzz-hotpatch-example2/"target="_blank" rel="external nofollow noopener noreferrer">热加载场景案例：爆破aes cbc加密</a></p>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082615882.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082615882.png?size=small" data-sub-html="<h2>image-20250727082615882</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082615882.png" alt="image-20250727082615882" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082615882.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082615882.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082615882.png?size=large 2x" data-title="image-20250727082615882" style="--width: 676px;--aspect-ratio: 676 / 108;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p><em>因为{}这部分代码在github上渲染时会报错，所以干脆换图片了。</em></p>
+<p>官方案例：<a href="https://www.yaklang.com/products/Web%20Fuzzer/fuzz-hotpatch-example2/"target="_blank" rel="external nofollow noopener noreferrer">热加载场景案例：爆破aes cbc加密</a></p>
 <p>可以通过官方案例更深入了解 Yakit 的热加载功能及用法</p>
 <p>官方中的AES加密函数 handle</p>
 <div class="highlight"><div class="chroma">
@@ -941,22 +930,8 @@
 </span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
 </div>
 </div><p>请求包中将data参数设置为<code>{{yak(handle)}}</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;data&#34;</span><span class="p">:</span><span class="s2">&#34;{{yak(handle)}}&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;key&#34;</span><span class="p">:</span><span class="s2">&#34;31323334313233343132333431323334&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;iv&#34;</span><span class="p">:</span><span class="s2">&#34;03395d68979ed8632646813f4c0bbdb3&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="codec模块" class="heading-element"><span>Codec模块</span>
+<p><a class="lightgallery" href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082853914.png?size=large" data-thumbnail="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082853914.png?size=small" data-sub-html="<h2>image-20250727082853914</h2>"><img loading="lazy" src="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082853914.png" alt="image-20250727082853914" srcset="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082853914.png?size=small, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082853914.png?size=medium 1.5x, /posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/resource/index.assets/image-20250727082853914.png?size=large 2x" data-title="image-20250727082853914" style="--width: 1043px;--aspect-ratio: 1043 / 514;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<h4 id="codec模块" class="heading-element"><span>Codec模块</span>
   <a href="#codec%e6%a8%a1%e5%9d%97" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>

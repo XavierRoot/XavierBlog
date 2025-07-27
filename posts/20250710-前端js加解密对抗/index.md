@@ -532,12 +532,9 @@ rsa = func(param) {
 
 在请求包中标记需要执行RSA加密的部分，调用热加载函数rsa
 
-```json
-// 对整体数据包进行rsa加密
-{{yak(rsa|{&#34;username&#34;: &#34;admin&#34;, &#34;password&#34;:&#34;123456&#34;})}}
-// 对password字段进行枚举，再对整体数据包进行rsa加密
-{{yak(rsa|{&#34;username&#34;: &#34;admin&#34;, &#34;password&#34;:&#34;{{payload(pass top25)}}&#34;})}}
-```
+![image-20250727082615882](resource/index.assets/image-20250727082615882.png)
+
+*因为{}这部分代码在github上渲染时会报错，所以干脆换图片了。*
 
 
 
@@ -570,13 +567,7 @@ handle = func(p) {
 
 请求包中将data参数设置为`{{yak(handle)}}`
 
-```json
-{
-  &#34;data&#34;:&#34;{{yak(handle)}}&#34;,
-  &#34;key&#34;:&#34;31323334313233343132333431323334&#34;,
-  &#34;iv&#34;:&#34;03395d68979ed8632646813f4c0bbdb3&#34;
-}
-```
+![image-20250727082853914](resource/index.assets/image-20250727082853914.png)
 
 
 
