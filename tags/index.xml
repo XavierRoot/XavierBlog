@@ -6,8 +6,29 @@
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 10 Jul 2025 22:40:21 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 10 Aug 2025 08:43:05 +0000</lastBuildDate>
     <atom:link href="https://www.bthoughts.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI</title>
+      <link>https://www.bthoughts.top/tags/ai/</link>
+      <pubDate>Sun, 10 Aug 2025 08:43:05 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/ai/</guid>
+      <description>AI</description>
+    </item>
+    <item>
+      <title>Draft</title>
+      <link>https://www.bthoughts.top/tags/draft/</link>
+      <pubDate>Sun, 10 Aug 2025 08:43:05 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/draft/</guid>
+      <description>Draft</description>
+    </item>
+    <item>
+      <title>Math</title>
+      <link>https://www.bthoughts.top/tags/math/</link>
+      <pubDate>Sun, 10 Aug 2025 08:43:05 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/math/</guid>
+      <description>Math</description>
+    </item>
     <item>
       <title>Crypto</title>
       <link>https://www.bthoughts.top/tags/crypto/</link>
@@ -56,27 +77,6 @@
       <pubDate>Wed, 12 Mar 2025 14:46:18 +0000</pubDate>
       <guid>https://www.bthoughts.top/tags/sqli/</guid>
       <description>SQLi</description>
-    </item>
-    <item>
-      <title>FileUpload</title>
-      <link>https://www.bthoughts.top/tags/fileupload/</link>
-      <pubDate>Mon, 21 Oct 2024 02:49:14 +0000</pubDate>
-      <guid>https://www.bthoughts.top/tags/fileupload/</guid>
-      <description>FileUpload</description>
-    </item>
-    <item>
-      <title>Cloud</title>
-      <link>https://www.bthoughts.top/tags/cloud/</link>
-      <pubDate>Tue, 16 Apr 2024 17:30:47 +0000</pubDate>
-      <guid>https://www.bthoughts.top/tags/cloud/</guid>
-      <description>Cloud</description>
-    </item>
-    <item>
-      <title>问题解决</title>
-      <link>https://www.bthoughts.top/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</link>
-      <pubDate>Tue, 16 Apr 2024 17:30:47 +0000</pubDate>
-      <guid>https://www.bthoughts.top/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</guid>
-      <description>问题解决</description>
     </item>
   </channel>
 </rss>

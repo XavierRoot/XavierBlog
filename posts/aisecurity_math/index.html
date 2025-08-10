@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>AI安全-数学基础 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="AI安全的一些数学基础概念和知识点"><meta name="keywords" content='draft, AI, Math'>
+  <meta itemprop="name" content="AI安全-数学基础">
+  <meta itemprop="description" content="AI安全的一些数学基础概念和知识点">
+  <meta itemprop="datePublished" content="2025-08-10T08:43:05+00:00">
+  <meta itemprop="dateModified" content="2025-08-10T08:43:05+00:00">
+  <meta itemprop="wordCount" content="4392">
+  <meta itemprop="keywords" content="Draft,AI,Math"><meta property="og:url" content="https://www.bthoughts.top/posts/aisecurity_math/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="AI安全-数学基础">
+  <meta property="og:description" content="AI安全的一些数学基础概念和知识点">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-10T08:43:05+00:00">
+    <meta property="article:modified_time" content="2025-08-10T08:43:05+00:00">
+    <meta property="article:tag" content="Draft">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Math">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AI安全-数学基础">
+  <meta name="twitter:description" content="AI安全的一些数学基础概念和知识点">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://www.bthoughts.top/posts/aisecurity_math/" title="AI安全-数学基础 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="https://www.bthoughts.top/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/" title="前端JS加解密对抗方法简述" /><link rel="alternate" type="text/markdown" href="https://www.bthoughts.top/posts/aisecurity_math/index.md" title="AI安全-数学基础 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AI安全-数学基础",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.bthoughts.top\/posts\/aisecurity_math\/"
+    },"genre": "posts","keywords": "draft, AI, Math","wordcount":  4392 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/aisecurity_math\/","datePublished": "2025-08-10T08:43:05+00:00","dateModified": "2025-08-10T08:43:05+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "AI安全的一些数学基础概念和知识点"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>AI安全-数学基础</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/draft/" class="post-category" title="分类 - Draft"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Draft</a>&ensp;<a href="/categories/ai%E5%AE%89%E5%85%A8/" class="post-category" title="分类 - AI安全"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> AI安全</a></span></div><div class="post-meta-line"><span title="发布于 2025-08-10 08:43:05"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-08-10">2025-08-10</time></span>&nbsp;<span title="4392 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 4400 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 9 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="AI安全-数学基础"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#微积分">微积分</a>
+      <ul>
+        <li><a href="#导数">导数</a></li>
+        <li><a href="#梯度下降">梯度下降</a></li>
+        <li><a href="#链式法则">链式法则</a></li>
+      </ul>
+    </li>
+    <li><a href="#代数">代数</a>
+      <ul>
+        <li><a href="#矩阵运算">矩阵运算</a></li>
+        <li><a href="#特征分解">特征分解</a></li>
+        <li><a href="#张量">张量</a></li>
+      </ul>
+    </li>
+    <li><a href="#概率论">概率论</a>
+      <ul>
+        <li><a href="#概率分布">概率分布</a></li>
+        <li><a href="#贝叶斯理论">贝叶斯理论</a></li>
+        <li><a href="#假设检验">假设检验</a></li>
+      </ul>
+    </li>
+    <li><a href="#优化理论">优化理论</a>
+      <ul>
+        <li><a href="#凸优化">凸优化</a>
+          <ul>
+            <li><a href="#凸集和凸函数">凸集和凸函数</a></li>
+            <li><a href="#凸优化问题">凸优化问题</a></li>
+          </ul>
+        </li>
+        <li><a href="#拉格朗日乘子法模型参数调优">拉格朗日乘子法（模型参数调优）</a></li>
+      </ul>
+    </li>
+    <li><a href="#因果学习">因果学习</a>
+      <ul>
+        <li><a href="#孟德尔随机化方法">孟德尔随机化方法</a></li>
+        <li><a href="#因果森林">因果森林</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文献">参考文献</a></li>
+    <li><a href="#文件属性">文件属性</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="微积分" class="heading-element"><span>微积分</span>
+  <a href="#%e5%be%ae%e7%a7%af%e5%88%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><strong>微积分</strong>：导数、梯度下降、链式法则（用于模型优化）</p>
+<h3 id="导数" class="heading-element"><span>导数</span>
+  <a href="#%e5%af%bc%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://zh.wikipedia.org/wiki/%E5%AF%BC%E6%95%B0"target="_blank" rel="external nofollow noopener noreferrer">导数</a> —— Wiki</p>
+<p>导数（英语：derivative）是微积分学中的一个概念。函数在某一点的导数是指这个函数在这一点附近的变化率（即函数在这一点的切线斜率）。导数的本质是通过极限的概念对函数进行局部的线性逼近。当函数 f 的自变量在一点  x0上产生一个增量 h 时，函数输出值的增量与自变量增量 h 的比值在 h 趋于0时的极限如果存在，即为 f 在 x0 处的导数，记作<br>
+f′(x0)、df/dx(x0) 或df/dx|x=x0。</p>
+<p>例如在运动学中，物体的位移对于时间的导数就是物体的瞬时速度</p>
+<p>导数是函数的局部性质。不是所有的函数都有导数，一个函数也不一定在所有的点上都有导数。若某函数在某一点导数存在，则称其在这一点可导(可微分)，否则称为不可导(不可微分)。如果函数的自变量和取值都是实数的话，那么函数在某一点的导数就是该函数所代表的曲线在这一点上的切线斜率。</p>
+<p>对于可导的函数 f，x↦f′(x) 也是一个函数，称作 f 的导函数。寻找已知的函数在某点的导数或其导函数的过程称为求导（英语：differentiation）。</p>
+<p>反之，已知导函数也可以倒过来求原来的函数，即不定积分。</p>
+<p>微积分基本定理说明了求原函数与积分是等价的。求导和积分是一对互逆的操作，它们都是微积分学中最为基础的概念。</p>
+<h3 id="梯度下降" class="heading-element"><span>梯度下降</span>
+  <a href="#%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>当我们处理多个变量的函数（例如 $f(x,y)$ ）时，我们希望了解函数在任意点如何变化。梯度是实现这一目标的强大工具。梯度被定义为包含函数偏导数的向量，并指向函数值增加最快的方向。</p>
+<p>简单来说，想象一下你站在一座山上，想要找到爬山最快的方向。梯度向量所指的方向就是那个方向。</p>
+<p>可能你已经在非常多地方看过这个说法了，接下来我们从几何证明的角度上一步步推这个结论！别慌，这个证明非常的直观，只需要你有一点点的极限基础！</p>
+<p><strong>证明：梯度是函数增长最快的方向</strong></p>
+<p>证明过程：略，见：<a href="https://zhuanlan.zhihu.com/p/30289841250"target="_blank" rel="external nofollow noopener noreferrer">什么是梯度？为什么梯度下降？一篇就够了（真）</a></p>
+<h3 id="链式法则" class="heading-element"><span>链式法则</span>
+  <a href="#%e9%93%be%e5%bc%8f%e6%b3%95%e5%88%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>链式法则是微积分中的求导法则，用于求一个复合函数的导数，是在微积分的求导运算中一种常用的方法。复合函数的导数将是构成复合这有限个函数在相应点的导数的乘积，就像锁链一样一环套一环，故称链式法则。</p>
+<p>其基本思想是：如果一个变量依赖于另一个变量，而这个中间变量又依赖于另一个变量，那么可以通过链式法则把这些依赖关系串联起来，从而计算最终的导数。</p>
+<p>链式法则的形式
+假设有两个函数 $f(x)$ 和 $g(x)$，并且想求复合函数 $f(g(x))$ 对 $x$ 的导数，链式法则表示为：
+$$
+\frac{d}{dx} [f(g(x))] = f&rsquo;(g(x)) \cdot g&rsquo;(x)
+$$
+用语言来描述：</p>
+<p>先对内层函数 $g(x)$ 求导，
+再对外层函数 $f(x)$ 在 $g(x)$ 的值上求导，
+最后将两个导数相乘。</p>
+<h2 id="代数" class="heading-element"><span>代数</span>
+  <a href="#%e4%bb%a3%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>矩阵运算、特征分解、张量（支撑深度学习的张量计算）</p>
+<h3 id="矩阵运算" class="heading-element"><span>矩阵运算</span>
+  <a href="#%e7%9f%a9%e9%98%b5%e8%bf%90%e7%ae%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>矩阵运算是线性代数中的重要内容，主要包括以下几种基本运算：</p>
+<ul>
+<li>加减法：只有同型矩阵才能进行加法和减法运算，运算时对应元素相加或相减。</li>
+<li>数乘：将一个数乘以矩阵中的所有元素，得到的新矩阵。</li>
+<li>乘法：矩阵乘法有特定的规则，通常涉及行与列的乘积，且<strong>不满足交换律</strong>。</li>
+<li>转置与求逆：矩阵的转置是将行和列互换，而求逆则是找到一个矩阵的逆，使得两者相乘得到单位矩阵。</li>
+<li>特殊运算：如哈达玛积等，涉及对应元素的乘积。</li>
+</ul>
+<p>这些运算是理解线性代数的基础，掌握它们有助于进一步学习更复杂的数学概念。</p>
+<h3 id="特征分解" class="heading-element"><span>特征分解</span>
+  <a href="#%e7%89%b9%e5%be%81%e5%88%86%e8%a7%a3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://zh.wikipedia.org/wiki/%E7%89%B9%E5%BE%81%E5%88%86%E8%A7%A3"target="_blank" rel="external nofollow noopener noreferrer">特征分解</a></p>
+<p>线性代数中，特征分解（Eigendecomposition），又称谱分解（Spectral decomposition）是将矩阵分解为由其特征值和特征向量表示的矩阵之积的方法。需要注意只有对可对角化矩阵才可以施以特征分解。</p>
+<p>矩阵的特征值分解是将矩阵分解为由其特征值和特征向量表示的矩阵之积的方法。</p>
+<p>从特征值分解的定义，可以了解到矩阵的特征值分解就是将矩阵的特征值和特征向量分开。</p>
+<p>从特征值和特征向量的定义：$Ax=\lambda x$，可以明确$A、\lambda 、x$ 三者之间建立了一种关系。但是仅用单独的一个 $\lambda、x$ 是无法表示矩阵 $A$ ，因为这个式子不是完备的。对于一个秩为 $m$ 的矩阵 $A$ ，应该存在 $m$ 个这样的式子，完备式子应该是:
+$$
+A\left(x_{1}, x_{2}, \ldots, x_{m}\right)=\left(\lambda_{1} x_{1}, \lambda_{2} x_{2}, \ldots, \lambda_{m} x_{m}\right)\[8mm] =\left(x_{1}, x_{2}, \ldots, x_{m}\right)\left[\begin{array}{ccc} \lambda_{1} &amp; \cdots &amp; 0 \ \vdots &amp; \ddots &amp; \vdots \ 0 &amp; \cdots &amp; \lambda_{m} \end{array}\right] \[10mm]
+$$
+上面的式子可以写作 $A X = X \Lambda$</p>
+<p>进一步的做变换 $A=X \Lambda X^{-1}$</p>
+<p>这种形式就可以看成矩阵 $A$ 被分解了。</p>
+<h3 id="张量" class="heading-element"><span>张量</span>
+  <a href="#%e5%bc%a0%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BC%B5%E9%87%8F"target="_blank" rel="external nofollow noopener noreferrer">张量</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BC%A0%E9%87%8F%E4%BB%A3%E6%95%B0"target="_blank" rel="external nofollow noopener noreferrer">张量代数</a></li>
+<li><a href="https://www.scigeek.cn/posts/22446/"target="_blank" rel="external nofollow noopener noreferrer">广义相对论的数学基础（六）：张量代数</a></li>
+</ul>
+<p>张量（英语：Tensor）在数学中是一个代数对象，描述了与矢量空间相关的代数对象集之间的多重线性映射。张量可以作为不同的对象之间的映射，例如矢量、标量，甚至其他张量。
+张量有很多种类型，包括标量和矢量、对偶矢量、矢量空间之间的多重线性映射，甚至还有一些运算，例如点积。张量的定义独立于任何基，尽管它们通常由与特定坐标系相关的基中的分量来表示；这些分量形成一个数组，可以将其视为高维矩阵。
+$n$ 维空间上的 $r$ 阶张量有 $n^r$  个分量，$r$​ 也称为该张量的秩（与矩阵的秩和阶均无关系）。</p>
+<h2 id="概率论" class="heading-element"><span>概率论</span>
+  <a href="#%e6%a6%82%e7%8e%87%e8%ae%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>概率分布、贝叶斯理论、假设检验（模型评估与泛化分析）</p>
+<h3 id="概率分布" class="heading-element"><span>概率分布</span>
+  <a href="#%e6%a6%82%e7%8e%87%e5%88%86%e5%b8%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>概率分布（probability distribution）是给出事件发生的概率的函数，它是一种通过样本空间（sample space）和事件的概率描述随机事件的方式。</p>
+<h3 id="贝叶斯理论" class="heading-element"><span>贝叶斯理论</span>
+  <a href="#%e8%b4%9d%e5%8f%b6%e6%96%af%e7%90%86%e8%ae%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>贝叶斯定理（英语：Bayes&rsquo; theorem）是概率论中的一个定理，描述在已知一些条件下，某事件的发生概率。</p>
+<p>比如，如果已知某种健康问题与寿命有关，使用贝叶斯定理则可以通过得知某人年龄，来更加准确地计算出某人有某种健康问题的概率。</p>
+<p>条件概率（Conditional Probability）
+事件 A 在事件 B 已发生的条件下的概率定义为：
+$$
+P(A∣B)=\frac{P(A∩B)}{P(B)}
+$$
+,其中 $P(B)&gt;0$</p>
+<p>全概率公式（Law of Total Probability）
+若事件 $B1,B2,…,BnB_1,B_2,…,B_n$</p>
+<p>构成一个完备事件群（互斥且并集为全集），则对任意事件 A：
+$$
+P(A)=\sum_{i=1}^{n}P(A∣B_i)P(Bi)
+$$</p>
+<p>贝叶斯公式（Bayes’ Theorem）
+基于条件概率和全概率公式，贝叶斯公式的经典形式为：
+$$
+P(B∣A)=\frac{P(A∣B)P(B)}{P(A)}
+$$</p>
+<p>进一步展开全概率公式：</p>
+<p>$$
+P(B∣A)=\frac{P(A∣B)P(B)}{\sum_{i=1}^{n}P(A∣Bi)P(Bi)}
+$$</p>
+<p>符号解释：</p>
+<ul>
+<li>P(B)：先验概率（Prior），即未观测到数据 AA 时对 BB 的初始信念。</li>
+<li>P(A∣B)：似然度（Likelihood），即在 BB 成立的条件下观测到 AA 的概率。</li>
+<li>P(B∣A)：后验概率（Posterior），即结合数据 AA 后对 BB 的修正信念。</li>
+<li>P(A)：证据因子（Evidence），即数据 AA 的边际概率，用于归一化。</li>
+</ul>
+<h3 id="假设检验" class="heading-element"><span>假设检验</span>
+  <a href="#%e5%81%87%e8%ae%be%e6%a3%80%e9%aa%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>假设检验是先对总体参数提出一个假设值，然后利用样本信息判断这一假设是否成立</p>
+<p>假设检验是统计推断中的一个基本过程，旨在通过样本数据来评估一个特定假设的可信度。</p>
+<p>其基本步骤包括：</p>
+<ul>
+<li>设定假设：通常包括原假设（H0）和备择假设（H1），原假设是统计者希望拒绝的假设，而备择假设是希望接受的假设。</li>
+<li>选择显著性水平：显著性水平（α）是指在原假设为真的情况下，错误拒绝原假设的概率。</li>
+<li>进行检验：常用的假设检验方法包括t检验、Z检验、卡方检验和F检验等。</li>
+<li>结果分析：通过计算检验统计量并与临界值比较，决定是否拒绝原假设。</li>
+</ul>
+<p>假设检验在科研、工业和日常生活中都扮演着重要角色，帮助我们在不确定性中做出判断。</p>
+<h2 id="优化理论" class="heading-element"><span>优化理论</span>
+  <a href="#%e4%bc%98%e5%8c%96%e7%90%86%e8%ae%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>凸优化、拉格朗日乘子法（模型参数调优）</p>
+<h3 id="凸优化" class="heading-element"><span>凸优化</span>
+  <a href="#%e5%87%b8%e4%bc%98%e5%8c%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/85408804"target="_blank" rel="external nofollow noopener noreferrer">机器学习必知必会：凸优化</a></li>
+<li><a href="https://blog.csdn.net/zbwgycm/article/details/104460708"target="_blank" rel="external nofollow noopener noreferrer">凸优化基础（Convex Optimization basics）</a>
+凸优化问题（OPT，convex optimization problem）指定义在凸集中的凸函数最优化的问题。尽管凸优化的条件比较苛刻，但仍然在机器学习领域有十分广泛的应用。</li>
+</ul>
+<p>凸优化问题的优势</p>
+<ol>
+<li>凸优化问题的局部最优解就是全局最优解</li>
+<li>很多非凸问题都可以被等价转化为凸优化问题或者被近似为凸优化问题（例如拉格朗日对偶问题）</li>
+<li>凸优化问题的研究较为成熟，当一个具体被归为一个凸优化问题，基本可以确定该问题是可被求解的</li>
+</ol>
+<h4 id="凸集和凸函数" class="heading-element"><span>凸集和凸函数</span>
+  <a href="#%e5%87%b8%e9%9b%86%e5%92%8c%e5%87%b8%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p><strong>凸集</strong></p>
+<p>凸集的定义
+一个集合 $c \subseteq R^n$  是凸集，如果对任意 $x,y\in C$ 都有
+$$
+tx+(1-t)y\in C,\ for\ all\ 0\leq t\leq 1
+$$
+许多常见的集合，如空集，点、线集合，仿射空间 ${x:Ax=b,\ for\ given\ A,b}$ 都属于凸集。正因如此，对于凸集中的变量做仿射变换得到的仍然是凸集。</p>
+<p><strong>凸函数</strong></p>
+<p>凸函数的定义
+如果函数 $f:\ R^n\rightarrow R$ 是凸函数，那么函数的定义域 $dom(f)\subseteq R^n$  是凸的，且对于所有$x,y\in dom(f)$，都有
+$$
+f(tx+(1-t)y)\leq tf(x)+(1-t)f(y),\ for\ 0\leq t\leq 1
+$$
+换句话说，函数永远不会高于 $f(x)$ 和 $f(y)$ 两点连线。</p>
+<h4 id="凸优化问题" class="heading-element"><span>凸优化问题</span>
+  <a href="#%e5%87%b8%e4%bc%98%e5%8c%96%e9%97%ae%e9%a2%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>一个凸优化问题具有以下基本形式：</p>
+<pre><code>                    $min_{x\in D} f(x)$
+subject to 			$g_{i}(x)\leq0,  i=1,...,m$
+					$h_{j}(x)=0,     j=1,...,r$
+</code></pre>
+<p>其中，$f$ 和 $g_i$ 都是凸函数的，且  $h_j$  是仿射变换。</p>
+<p>凸优化问题有一个良好的性质，即<strong>对于一个凸优化问题来说，任何局部最小值都是全局最小值</strong>。</p>
+<p>凸优化问题是优化问题中被研究得比较成熟的，也是非凸优化的基础，许多非凸优化问题也被局部近似为凸优化问题求解。</p>
+<h3 id="拉格朗日乘子法模型参数调优" class="heading-element"><span>拉格朗日乘子法（模型参数调优）</span>
+  <a href="#%e6%8b%89%e6%a0%bc%e6%9c%97%e6%97%a5%e4%b9%98%e5%ad%90%e6%b3%95%e6%a8%a1%e5%9e%8b%e5%8f%82%e6%95%b0%e8%b0%83%e4%bc%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/154517678"target="_blank" rel="external nofollow noopener noreferrer">优化-拉格朗日乘子法</a></li>
+<li><a href="https://blog.csdn.net/qq_36607894/article/details/89917997"target="_blank" rel="external nofollow noopener noreferrer">拉格朗日乘子法详解（Lagrange multiplier）</a></li>
+<li><a href="https://www.cnblogs.com/mo-wang/p/4775548.html"target="_blank" rel="external nofollow noopener noreferrer">【整理】深入理解拉格朗日乘子法（Lagrange Multiplier) 和KKT条件</a></li>
+</ul>
+<p>拉格朗日乘子法是一种用于求解有约束的优化问题的数学方法。它通过引入拉格朗日乘子，将含有约束条件的优化问题转化为无约束的问题。</p>
+<ul>
+<li>拉格朗日乘子法（Lagrange multipliers）是一种寻找多元函数<strong>在一组约束下</strong>的<strong>极值</strong>的方法。</li>
+<li>通过引入拉格朗日乘子，可将有 $d$ 个变量与 $k$ 个约束条件的最优化问题转化为具有 $d+k$ 个变量的无约束优化问题求解。</li>
+</ul>
+<p>具体步骤如下：</p>
+<ul>
+<li>构造拉格朗日函数：设目标函数为 $f(x)$，约束条件为 $g(x) = 0$ ，则拉格朗日函数为 $L(x, \lambda) = f(x) + \lambda g(x)$。</li>
+<li>求解方程：通过对拉格朗日函数求偏导数并设为零，得到一组方程，求解这些方程可以找到最优解。</li>
+</ul>
+<h2 id="因果学习" class="heading-element"><span>因果学习</span>
+  <a href="#%e5%9b%a0%e6%9e%9c%e5%ad%a6%e4%b9%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>孟德尔随机化方法、因果森林（解决数据偏差与归因问题）</p>
+<h3 id="孟德尔随机化方法" class="heading-element"><span>孟德尔随机化方法</span>
+  <a href="#%e5%ad%9f%e5%be%b7%e5%b0%94%e9%9a%8f%e6%9c%ba%e5%8c%96%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>孟德尔随机化（Mendelian randomization，简称MR）是一种基于遗传变异的因果推断方法，其基本原理是利用自然界中的随机分配的基因型对表型的影响来推断生物学因素对疾病的影响。</p>
+<h3 id="因果森林" class="heading-element"><span>因果森林</span>
+  <a href="#%e5%9b%a0%e6%9e%9c%e6%a3%ae%e6%9e%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>因果森林（Causal Forest）是一种用于因果推断的统计方法，主要用于估计个体处理效应（ITE）。其基本原理如下：</p>
+<p>结构：因果森林由多棵因果树构成，每棵树通过最大化异质性标准进行分裂，以便在每个叶子节点中估计样本的均值作为群体估计效应（CATE）。</p>
+<p>分裂准则：与传统回归树不同，因果树的分裂准则旨在最大化分裂后两个子集的增益差异，从而更好地区分不同用户的处理效应。</p>
+<p>假设要求：因果森林需满足观测性因果推断的两个假设，即样本在所有混淆因子上有重叠，并且实验数据天然满足条件独立性和随机性</p>
+<p>因果森林在人工智能和大数据领域的应用越来越广泛，成为连接因果科学与深度学习的重要工具</p>
+<h2 id="参考文献" class="heading-element"><span>参考文献</span>
+  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%8c%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href=""></a></li>
+</ul>
+<h2 id="文件属性" class="heading-element"><span>文件属性</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>创建时间：2025-08-10   15:57</p>
+<p>修订记录：</p>
+<ul>
+<li>2025-08-10 ，此次修订内容| 新建，未完成</li>
+</ul>
+<p>备注：
+XXXXX</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2025-08-10 08:43:05">更新于 2025-08-10&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/draft/" class="post-tag" title="标签 - Draft">Draft</a><a href="/tags/ai/" class="post-tag" title="标签 - AI">AI</a><a href="/tags/math/" class="post-tag" title="标签 - Math">Math</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/" class="post-nav-item" rel="prev" title="前端JS加解密对抗方法简述"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>前端JS加解密对抗方法简述</a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="XavierRoot/XavierBlog"
+            data-repo-id="R_kgDOHswyxg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOHswyxs4Cd2zm"
+            data-mapping="title"
+            data-strict="0"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+</script>
+
+<script src='https://cdn.jsdelivr.net/npm/mathjax@2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/lightgallery/lightgallery.min.js" defer></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light","origin":"https://giscus.app"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

@@ -1,8 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://www.bthoughts.top/tags/ai/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/categories/ai%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/posts/aisecurity_math/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.bthoughts.top/categories/</loc>
-    <lastmod>2025-07-10T22:40:21+08:00</lastmod>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/tags/draft/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/categories/draft/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/tags/math/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/posts/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/tags/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/</loc>
+    <lastmod>2025-08-10T08:43:05+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -20,24 +74,6 @@
   </url>
   <url>
     <loc>https://www.bthoughts.top/categories/pentest/</loc>
-    <lastmod>2025-07-10T22:40:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.bthoughts.top/posts/</loc>
-    <lastmod>2025-07-10T22:40:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.bthoughts.top/tags/</loc>
-    <lastmod>2025-07-10T22:40:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.bthoughts.top/</loc>
     <lastmod>2025-07-10T22:40:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -597,6 +633,16 @@
   <url>
     <loc>https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2021-03-13T13:31:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/posts/ali%E4%BA%91%E5%8A%A9%E6%89%8B%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.bthoughts.top/posts/provinggrouds_surf_writeup/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
