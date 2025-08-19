@@ -6,8 +6,29 @@
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 10 Aug 2025 08:43:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 Aug 2025 08:05:53 +0000</lastBuildDate>
     <atom:link href="https://www.bthoughts.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AMF</title>
+      <link>https://www.bthoughts.top/tags/amf/</link>
+      <pubDate>Sat, 16 Aug 2025 08:05:53 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/amf/</guid>
+      <description>AMF</description>
+    </item>
+    <item>
+      <title>Flash</title>
+      <link>https://www.bthoughts.top/tags/flash/</link>
+      <pubDate>Sat, 16 Aug 2025 08:05:53 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/flash/</guid>
+      <description>Flash</description>
+    </item>
+    <item>
+      <title>Pentest</title>
+      <link>https://www.bthoughts.top/tags/pentest/</link>
+      <pubDate>Sat, 16 Aug 2025 08:05:53 +0000</pubDate>
+      <guid>https://www.bthoughts.top/tags/pentest/</guid>
+      <description>Pentest</description>
+    </item>
     <item>
       <title>AI</title>
       <link>https://www.bthoughts.top/tags/ai/</link>
@@ -37,13 +58,6 @@
       <description>Crypto</description>
     </item>
     <item>
-      <title>Pentest</title>
-      <link>https://www.bthoughts.top/tags/pentest/</link>
-      <pubDate>Thu, 10 Jul 2025 22:40:21 +0800</pubDate>
-      <guid>https://www.bthoughts.top/tags/pentest/</guid>
-      <description>Pentest</description>
-    </item>
-    <item>
       <title>BlueTeam</title>
       <link>https://www.bthoughts.top/tags/blueteam/</link>
       <pubDate>Wed, 25 Jun 2025 00:00:00 +0000</pubDate>
@@ -63,20 +77,6 @@
       <pubDate>Sat, 15 Mar 2025 17:14:42 +0000</pubDate>
       <guid>https://www.bthoughts.top/tags/tools/</guid>
       <description>Tools</description>
-    </item>
-    <item>
-      <title>Java</title>
-      <link>https://www.bthoughts.top/tags/java/</link>
-      <pubDate>Wed, 12 Mar 2025 14:46:18 +0000</pubDate>
-      <guid>https://www.bthoughts.top/tags/java/</guid>
-      <description>Java</description>
-    </item>
-    <item>
-      <title>SQLi</title>
-      <link>https://www.bthoughts.top/tags/sqli/</link>
-      <pubDate>Wed, 12 Mar 2025 14:46:18 +0000</pubDate>
-      <guid>https://www.bthoughts.top/tags/sqli/</guid>
-      <description>SQLi</description>
     </item>
   </channel>
 </rss>

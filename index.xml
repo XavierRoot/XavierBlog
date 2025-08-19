@@ -6,8 +6,17 @@
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 10 Aug 2025 08:43:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 Aug 2025 08:05:53 +0000</lastBuildDate>
     <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>案例-记一次Flash网站渗透测试</title>
+      <link>https://www.bthoughts.top/posts/case-flash_swf_amf_test/</link>
+      <pubDate>Sat, 16 Aug 2025 08:05:53 +0000</pubDate>
+      <guid>https://www.bthoughts.top/posts/case-flash_swf_amf_test/</guid>
+      <category domain="https://www.bthoughts.top/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
+      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
+      <description>案例-记一次Flash网站渗透测试,学习了SWF/AMP的渗透测试</description>
+    </item>
     <item>
       <title>AI安全-数学基础</title>
       <link>https://www.bthoughts.top/posts/aisecurity_math/</link>
@@ -80,14 +89,6 @@
       <guid>https://www.bthoughts.top/posts/burp-cph-usage/</guid>
       <category domain="https://www.bthoughts.top/categories/tools/">Tools</category>
       <description>Burp插件 CPH（Custom Parameter Handle）使用心得</description>
-    </item>
-    <item>
-      <title>文件上传攻击面&amp;案例</title>
-      <link>https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/</link>
-      <pubDate>Mon, 21 Oct 2024 02:49:14 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/</guid>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
-      <description>简述一些文件上传场景下的攻击面，并提供一些漏洞案例。</description>
     </item>
   </channel>
 </rss>
