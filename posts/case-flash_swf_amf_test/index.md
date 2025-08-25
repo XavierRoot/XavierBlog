@@ -122,6 +122,11 @@ AMF基于HTTP协议，大致处理过程：
 - [github备份库](https://github.com/Grubsic/Adobe-Flash-Player-Debug-Downloads-Archive)
 - [Adobe Flash Player Support Center](https://web.archive.org/web/20220401020702/https://www.adobe.com/support/flashplayer/debug_downloads.html)
 
+自动审计工具：
+
+- [OWASP SWFIntruder](https://code.google.com/archive/p/swfintruder/downloads)：OWASP 推出的 SWF 安全测试工具，可分析 SWF 与服务器的通信（如 AMF 协议交互），检测参数注入、未授权访问等漏洞。 *不太会用，没用明白*
+- SWFScan：能反编译 SWF 文件，还内置了安全审计模块，可自动检测 SWF 中的常见漏洞（如 XSS 风险、本地存储滥用、不安全的 AMF 通信等）。支持直接分析 SWF 二进制文件，适合没有源代码时的黑盒审计，能识别危险函数调用和配置缺陷。*原地址失效，目前能找到的[下载地址在这](https://www.52pojie.cn//forum.php?mod=viewthread&amp;tid=127768&amp;highlight=SWFScan)*
+
 
 
 ### 测试过程
@@ -161,7 +166,25 @@ curl &lt;url&gt; --output xxx.swf
 
 **自动审计**
 
-可通过 fortify 进行代码审计
+可通过 swfscan 进行代码审计
+
+安装swfscan需要先安装 `.NET Framework 2.0`，
+
+![image-20250825230416138](resource/index.assets/image-20250825230416138.png)
+
+可以通过 【控制面板】-【程序】-【启动或关闭 Windows功能】-选择启用`.NET Framework 3.5（包括.NET 2.0和3.0）`。
+
+![image-20250825231309832](resource/index.assets/image-20250825231309832.png)
+
+SWFScan用法：
+
+1. 选择相应的swf文件本地位置或URL
+2. 点击 Get 对swf文件进行反编译
+3. 点击Analyze进行代码审计，分析可能存在的漏洞，漏洞统计数据显示在右下方，如图：
+
+![image-20250825232800408](resource/index.assets/image-20250825232800408.png)
+
+
 
 **手动审计**
 
@@ -198,8 +221,6 @@ curl &lt;url&gt; --output xxx.swf
    loadClip
    AddDLL
    ```
-
-   
 
 3. 跟着函数找调用路径
 
@@ -273,6 +294,8 @@ MFDser系列我在使用中都遇到了相同的问题，即有些数据包 反�
 
 这个漏洞很好理解，网站定义了一个接口能执行SQL语句，AMF数据解码后就可以任意修改了，没有任何限制，相当于接管了SQL执行功能。而且这个功能可以未授权访问，删除Cookie、Token等认证字段后也能获取到数据。
 
+![image-20250825234246822](resource/index.assets/image-20250825234246822.png)
+
 POC 反序列化解码后如下：
 
 ```xml
@@ -299,7 +322,7 @@ Content-Length: 842
             &lt;ASObject serialVer=&#34;1&#34; objClass=&#34;com.fsc.base.model.lookup.LookupJsonModel&#34;&gt;
               &lt;entry&gt;
                 &lt;string&gt;key&lt;/string&gt;
-                &lt;string&gt;select username from all_users&lt;/string&gt;
+                &lt;string&gt;select banner from v$version&lt;/string&gt;
               &lt;/entry&gt;
             &lt;/ASObject&gt;
           &lt;/parameters&gt;
@@ -559,7 +582,7 @@ Content-type: application/x-amf
 
 没找到很满意的敏感信息，在一个as文件中找到了几个接口
 
-```
+```xml
 	&lt;channels&gt;
 		&lt;channel id=&#34;my-http&#34; type=&#34;mx.messaging.channels.HTTPChannel&#34;&gt;
 			&lt;endpoint uri=&#34;http://{server.name}:{server.port}/AtomLocal/messagebroker/http&#34;/&gt;
@@ -663,6 +686,7 @@ Content-type: application/x-amf
 修订记录：
 - 2025-08-16 ，此次修订内容| 新建
 - 2025-08-19 ，此次修订内容| 完成1.0版
+- 2025-08-25 ，补充swfscan工具和截图| 完成2.0版
 
 备注：
 老技术，收藏夹吃灰就行
