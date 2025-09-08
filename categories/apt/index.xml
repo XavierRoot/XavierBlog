@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>APT - 分类 - Xavier&#39;s Blog</title>
+    <link>https://www.bthoughts.top/categories/apt/</link>
+    <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
+    <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Oct 2019 09:17:05 +0000</lastBuildDate>
+    <atom:link href="https://www.bthoughts.top/categories/apt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>通过区块链隐藏C2服务器地址</title>
+      <link>https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/</link>
+      <pubDate>Sun, 20 Oct 2019 09:17:05 +0000</pubDate>
+      <guid>https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/</guid>
+      <category domain="https://www.bthoughts.top/categories/apt/">APT</category>
+      <description>通过区块链隐藏C2服务器地址</description>
+    </item>
+  </channel>
+</rss>

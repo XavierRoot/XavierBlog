@@ -32,5 +32,13 @@
       <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
       <description>国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。</description>
     </item>
+    <item>
+      <title>通过区块链隐藏C2服务器地址</title>
+      <link>https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/</link>
+      <pubDate>Sun, 20 Oct 2019 09:17:05 +0000</pubDate>
+      <guid>https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/</guid>
+      <category domain="https://www.bthoughts.top/categories/apt/">APT</category>
+      <description>通过区块链隐藏C2服务器地址</description>
+    </item>
   </channel>
 </rss>

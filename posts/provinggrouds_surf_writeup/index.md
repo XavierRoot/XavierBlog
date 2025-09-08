@@ -5,5 +5,5 @@
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/provinggrouds_surf_writeup/  
+> URL: http://localhost:1313/posts/provinggrouds_surf_writeup/  
 

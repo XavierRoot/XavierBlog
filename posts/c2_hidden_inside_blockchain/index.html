@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>通过区块链隐藏C2服务器地址 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间"><meta name="keywords" content='APT, RedTeam'>
+  <meta itemprop="name" content="通过区块链隐藏C2服务器地址">
+  <meta itemprop="description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta itemprop="datePublished" content="2019-10-20T09:17:05+00:00">
+  <meta itemprop="dateModified" content="2019-10-20T09:17:05+00:00">
+  <meta itemprop="wordCount" content="1214">
+  <meta itemprop="keywords" content="APT,RedTeam"><meta property="og:url" content="https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="通过区块链隐藏C2服务器地址">
+  <meta property="og:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-10-20T09:17:05+00:00">
+    <meta property="article:modified_time" content="2019-10-20T09:17:05+00:00">
+    <meta property="article:tag" content="APT">
+    <meta property="article:tag" content="RedTeam">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="通过区块链隐藏C2服务器地址">
+  <meta name="twitter:description" content="Xavier&#39;s Blog，一个安全工作者的个人空间">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/" title="通过区块链隐藏C2服务器地址 - Xavier&#39;s Blog" /><link rel="next" type="text/html" href="https://www.bthoughts.top/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/" title="001-2021年4月13日 学习随笔" /><link rel="alternate" type="text/markdown" href="https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/index.md" title="通过区块链隐藏C2服务器地址 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "通过区块链隐藏C2服务器地址",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.bthoughts.top\/posts\/c2_hidden_inside_blockchain\/"
+    },"genre": "posts","keywords": "APT, RedTeam","wordcount":  1214 ,
+    "url": "https:\/\/www.bthoughts.top\/posts\/c2_hidden_inside_blockchain\/","datePublished": "2019-10-20T09:17:05+00:00","dateModified": "2019-10-20T09:17:05+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>通过区块链隐藏C2服务器地址</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">通过区块链隐藏C2服务器地址</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/apt/" class="post-category" title="分类 - APT"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> APT</a></span></div><div class="post-meta-line"><span title="发布于 2019-10-20 09:17:05"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2019-10-20">2019-10-20</time></span>&nbsp;<span title="1214 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="通过区块链隐藏C2服务器地址"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-攻击者如何在比特币区块链中隐藏cc服务器">2.1 攻击者如何在比特币区块链中隐藏C&amp;C服务器？</a></li>
+    <li><a href="#22-redaman-恶意软件如何识别动态隐藏的cc服务器ip">2.2 Redaman 恶意软件如何识别动态隐藏的C&amp;C服务器IP</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#hidden-cc-servers">Hidden C&amp;C servers</a></li>
+    <li><a href="#redaman-样本">Redaman 样本</a></li>
+    <li><a href="#bitcoin-wallet">Bitcoin wallet</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><blockquote>
+<p>本文由本人于2019年首发于<a href="https://www.secquan.org/Share/1070422"target="_blank" rel="external nofollow noopener noreferrer">圈子社区</a>，文章性质为翻译国外技术文章。在本人技术博客作备份，防止丢失。</p>
+</blockquote>
+<p>转载，原文链接：\<br>
+<a href="https://research.checkpoint.com/ponys-cc-servers-hidden-inside-the-bitcoin-blockchain/"target="_blank" rel="external nofollow noopener noreferrer">Pony&rsquo;s C&amp;C servers hidden inside the Bitcoin blockchain - Check Point Research</a></p>
+<h2 id="0x01-introduction" class="heading-element"><span>0x01 Introduction</span>
+  <a href="#0x01-introduction" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Redaman 是一种银行恶意软件，主要分布在各种针对俄罗斯语言使用者开展的钓鱼活动中。最早出现在2015年被称为RTM银行木马， 2017和2018年出现新版本的Redaman。在2019年9月，Check Point 的研究者们鉴别出了一种能够在比特币区块链中隐藏Pony C&amp;C服务器地址的新变种。</p>
+<p>我们已经见过利用比特币区块链来隐藏C&amp;C服务器IP地址的技术，但在本篇文章中，我们将分享对一种新技术的分析。</p>
+<p>这个恶意软件将会通过连接比特币区块链和交易链来寻找隐藏的C&amp;C地址，我们把这种新的技术称之为 Chaining。</p>
+<h2 id="0x02-infection-chain" class="heading-element"><span>0x02 Infection chain</span>
+  <a href="#0x02-infection-chain" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><a class="lightgallery" href="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/35244816812c429e9560287f7d8ad706.png?size=large" data-thumbnail="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/35244816812c429e9560287f7d8ad706.png?size=small" data-sub-html="<h2>file</h2>"><img loading="lazy" src="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/35244816812c429e9560287f7d8ad706.png" alt="file" srcset="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/35244816812c429e9560287f7d8ad706.png?size=small, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/35244816812c429e9560287f7d8ad706.png?size=medium 1.5x, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/35244816812c429e9560287f7d8ad706.png?size=large 2x" data-title="file" style="--width: 800px;--aspect-ratio: 800 / 409;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<h2 id="21-攻击者如何在比特币区块链中隐藏cc服务器" class="heading-element"><span>2.1 攻击者如何在比特币区块链中隐藏C&amp;C服务器？</span>
+  <a href="#21-%e6%94%bb%e5%87%bb%e8%80%85%e5%a6%82%e4%bd%95%e5%9c%a8%e6%af%94%e7%89%b9%e5%b8%81%e5%8c%ba%e5%9d%97%e9%93%be%e4%b8%ad%e9%9a%90%e8%97%8fcc%e6%9c%8d%e5%8a%a1%e5%99%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在这个实例中，攻击者想要隐藏的ip为 185.203.116.47</p>
+<p>为了实现这一效果，攻击张将会使用钱包 <strong>1BkeGqpo8M5KNVYXW3obmQt1R58zXAqLBQ</strong>:</p>
+<ol>
+<li>攻击者将ip地址从10进制转化为16进制: 185.203.116.47 =&gt; B9.CB.74.2F</li>
+<li>攻击者取前两个字节B9和CB，然后以相反的顺序将他们组合到一起：B9.CB =&gt; CBB9</li>
+<li>攻击者将该字符串从十六进制转化回十进制, CBB9 ==&gt; 52153.
+<ul>
+<li>0.00052153 BTC (约 4$) 这是他要通过钱包<strong>1BkeGqpo8M5KNVYXW3obmQt1R58zXAqLBQ</strong> 做的第一笔交易；</li>
+</ul>
+</li>
+<li>攻击者取IP地址的后两个字节 74 和2F，然后以相反的顺序将他们组合到一起： 74.2F =&gt; 2F74</li>
+<li>攻击者将该字符串从十六进制转化回十进制, 2F74 ==&gt; 12148.
+<ul>
+<li>0.00012148 BTC (约 1$) 这是他要通过钱包<strong>1BkeGqpo8M5KNVYXW3obmQt1R58zXAqLBQ</strong> 做的第二笔交易；<br>
+<a class="lightgallery" href="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/6e55ce5d2675c4c1c3aff801adad4519.png?size=large" data-thumbnail="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/6e55ce5d2675c4c1c3aff801adad4519.png?size=small" data-sub-html="<h2>file</h2>"><img loading="lazy" src="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/6e55ce5d2675c4c1c3aff801adad4519.png" alt="file" srcset="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/6e55ce5d2675c4c1c3aff801adad4519.png?size=small, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/6e55ce5d2675c4c1c3aff801adad4519.png?size=medium 1.5x, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/6e55ce5d2675c4c1c3aff801adad4519.png?size=large 2x" data-title="file" style="--width: 800px;--aspect-ratio: 800 / 242;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><br>
+图 1 – 0.00052153 and 0.00012148 BTC的相关交易记录</li>
+</ul>
+</li>
+</ol>
+<h2 id="22-redaman-恶意软件如何识别动态隐藏的cc服务器ip" class="heading-element"><span>2.2 Redaman 恶意软件如何识别动态隐藏的C&amp;C服务器IP</span>
+  <a href="#22-redaman-%e6%81%b6%e6%84%8f%e8%bd%af%e4%bb%b6%e5%a6%82%e4%bd%95%e8%af%86%e5%88%ab%e5%8a%a8%e6%80%81%e9%9a%90%e8%97%8f%e7%9a%84cc%e6%9c%8d%e5%8a%a1%e5%99%a8ip" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Redaman 做的操作与上述算法相反.</p>
+<ol>
+<li>Redaman 发送一个 GET 请求来获取硬编码的比特币钱包<strong>1BkeGqpo8M5KNVYXW3obmQt1R58zXAqLBQ</strong>的最近10条交易记录
+<ul>
+<li><code>https://api.blockcypher.com/v1/btc/main/addrs/1BkeGqpo8M5KNVYXW3obmQt1R58zXAqLBQ?limit=10</code></li>
+</ul>
+</li>
+<li>它从该比特币钱包中获取最新的两条支付记录的交易金额 52153 和 12148.</li>
+<li>将金额从十进制转化为16进制 52153==&gt;CBB9 和 12148==&gt;2F74.</li>
+<li>将十六进制数值拆分为高字节和低字节，然后交换两者顺序并将其重新转换成十进制。 B9==&gt;185, CB==&gt;203, 74==&gt;116, 2F==&gt;47</li>
+<li>这些值一起组成了隐藏的C&amp;C服务器IP地址 185.203.116.47.</li>
+</ol>
+<p><a class="lightgallery" href="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/d2d7147eb923f95a2b9f720e40cb7653.png?size=large" data-thumbnail="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/d2d7147eb923f95a2b9f720e40cb7653.png?size=small" data-sub-html="<h2>file</h2>"><img loading="lazy" src="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/d2d7147eb923f95a2b9f720e40cb7653.png" alt="file" srcset="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/d2d7147eb923f95a2b9f720e40cb7653.png?size=small, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/d2d7147eb923f95a2b9f720e40cb7653.png?size=medium 1.5x, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/d2d7147eb923f95a2b9f720e40cb7653.png?size=large 2x" data-title="file" style="--width: 690px;--aspect-ratio: 690 / 800;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><br>
+图 2 – 计算C&amp;C服务器Ip的实际代码， 从 “Dump 1” 中你可以看到C&amp;C服务器IP的十六进制值: B9 CB 74 2F (185.203.116.47)</p>
+<p><a class="lightgallery" href="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/eecd64181f87d6021e22edd31fecd7fe.png?size=large" data-thumbnail="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/eecd64181f87d6021e22edd31fecd7fe.png?size=small" data-sub-html="<h2>file</h2>"><img loading="lazy" src="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/eecd64181f87d6021e22edd31fecd7fe.png" alt="file" srcset="/posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/eecd64181f87d6021e22edd31fecd7fe.png?size=small, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/eecd64181f87d6021e22edd31fecd7fe.png?size=medium 1.5x, /posts/c2_hidden_inside_blockchain/resource/%E9%80%9A%E8%BF%87%E5%8C%BA%E5%9D%97%E9%93%BE%E9%9A%90%E8%97%8FC&amp;C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80.assets/eecd64181f87d6021e22edd31fecd7fe.png?size=large 2x" data-title="file" style="--width: 800px;--aspect-ratio: 800 / 615;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><br>
+图 3 – 含有隐藏C&amp;C服务器IP的Json 返回包</p>
+<h2 id="0x03-conclusion" class="heading-element"><span>0x03 Conclusion</span>
+  <a href="#0x03-conclusion" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在这篇文章中，我们介绍了Redaman 如何通过比特币区块链隐藏动态C&amp;C服务器地址变得更有效的.</p>
+<p>这不同于那些我们可以使用简单的方法来抵抗的基于静态/硬编码IP地址的简单C&amp;C设置。</p>
+<h2 id="0x04-感染指标" class="heading-element"><span>0x04 感染指标:</span>
+  <a href="#0x04-%e6%84%9f%e6%9f%93%e6%8c%87%e6%a0%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h2 id="hidden-cc-servers" class="heading-element"><span>Hidden C&amp;C servers</span>
+  <a href="#hidden-cc-servers" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>185.203.116.47 35.216.185.203 78.108.216.39 100.66.91.200 72.50.91.200</li>
+<li>117.49.185.203 170.51.35.216 91.200.78.108 69.5.100.66 185.234.72.50</li>
+<li>185.203.117.49 118.16.170.51 103.136.91.200 91.200.69.5 150.254.185.234</li>
+<li>119.169.185.203 94.156.118.16 100.174.103.136 54.151.91.200 212.73.150.254</li>
+<li>185.177.119.169 85.217.94.156 91.200.102.39 172.104.54.151 227.99.212.73</li>
+<li>185.203.185.177 35.216.85.217 91.200.103.136 69.5.172.104 195.123.227.99</li>
+<li>171.48.185.203 94.156.35.216 216.39.91.200 172.105.69.5</li>
+<li>59.149.171.48 119.18.94.156 100.134.78.108 100.134.172.105</li>
+<li>85.217.59.149 170.51.185.203 91.200.100.134 91.200.100.66</li>
+<li>119.169.85.217 85.217.170.51 100.136.91.200 195.123.91.200</li>
+<li>185.203.119.169 118.16.85.217 91.200.100.136 185.234.195.123</li>
+<li>85.217.171.48 185.203.118.16 100.134.91.200 72.50.185.234</li>
+<li>59.149.85.217 91.200.185.203 172.105.100.134 212.73.72.50</li>
+<li>185.177.59.149 100.174.91.200 54.151.172.105 100.136.212.73</li>
+<li>119.18.185.177 91.200.100.174 100.136.54.151 227.99.91.200</li>
+<li>185.203.119.18 102.39.91.200 172.104.91.200 150.254.227.99</li>
+<li>185.203.185.203 216.39.102.39 91.200.172.104 100.136.150.254</li>
+</ul>
+<h2 id="redaman-样本" class="heading-element"><span>Redaman 样本</span>
+  <a href="#redaman-%e6%a0%b7%e6%9c%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>cf9c74ed67a4fbe89ab77643f3acbd98b14d5568</li>
+<li>c098dc7c06e0da8f6e2551f262375713ba87ca05</li>
+<li>3933f8309824a9127dde97b9c0f5459b06fd6c13</li>
+<li>817bd8fff5b026ba74852955eb5f84244a92e098</li>
+<li>51c7a774a0616b4611966d6d4f783c1164c9fa50</li>
+<li>44b6627acd5b2c601443c55d2e44ae4298381720</li>
+<li>d9fb2504008345af97b0e400706cdaa406476314</li>
+<li>bbdce69acc6101c1f61748c91010c579625ef758</li>
+<li>3f2b758122c0d180ccfba03b74b593854f2b0e86</li>
+<li>9d7b264367320da38c94be1f940c663375d67a2a</li>
+</ul>
+<h2 id="bitcoin-wallet" class="heading-element"><span>Bitcoin wallet</span>
+  <a href="#bitcoin-wallet" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>1BkeGqpo8M5KNVYXW3obmQt1R58zXAqLBQ – 该钱包尚未被任何区块链数据库标记为恶意，但Check Point 已经“控告”了它.</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2019-10-20 09:17:05">更新于 2019-10-20&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/apt/" class="post-tag" title="标签 - APT">APT</a><a href="/tags/redteam/" class="post-tag" title="标签 - RedTeam">RedTeam</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/2021%E5%B9%B44%E6%9C%8813%E6%97%A5-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/" class="post-nav-item" rel="next" title="001-2021年4月13日 学习随笔">001-2021年4月13日 学习随笔<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="XavierRoot/XavierBlog"
+            data-repo-id="R_kgDOHswyxg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOHswyxs4Cd2zm"
+            data-mapping="title"
+            data-strict="0"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+</script>
+
+<script src='https://cdn.jsdelivr.net/npm/mathjax@2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/lightgallery/lightgallery.min.js" defer></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark","lightTheme":"light","origin":"https://giscus.app"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};</script><script src="/js/theme.min.js" defer></script></body>
+</html>
