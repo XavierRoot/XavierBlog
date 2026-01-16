@@ -101,5 +101,5 @@ Redaman 做的操作与上述算法相反.
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/  
+> URL: http://localhost:1313/posts/c2_hidden_inside_blockchain/  
 

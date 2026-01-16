@@ -2,42 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tools - 标签 - Xavier&#39;s Blog</title>
-    <link>https://www.bthoughts.top/tags/tools/</link>
+    <link>http://localhost:1313/tags/tools/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate>Sat, 15 Mar 2025 17:14:42 +0000</lastBuildDate>
-    <atom:link href="https://www.bthoughts.top/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ARL灯塔Docker版搭建记录</title>
-      <link>https://www.bthoughts.top/posts/arl_setup_record/</link>
+      <link>http://localhost:1313/posts/arl_setup_record/</link>
       <pubDate>Sat, 15 Mar 2025 17:14:42 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/arl_setup_record/</guid>
-      <category domain="https://www.bthoughts.top/categories/tools/">Tools</category>
+      <guid>http://localhost:1313/posts/arl_setup_record/</guid>
+      <category domain="http://localhost:1313/categories/tools/">Tools</category>
       <description>ARL灯塔Docker版搭建记录</description>
     </item>
     <item>
       <title>Burp-CPH插件心得</title>
-      <link>https://www.bthoughts.top/posts/burp-cph-usage/</link>
+      <link>http://localhost:1313/posts/burp-cph-usage/</link>
       <pubDate>Wed, 13 Nov 2024 05:47:42 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/burp-cph-usage/</guid>
-      <category domain="https://www.bthoughts.top/categories/tools/">Tools</category>
+      <guid>http://localhost:1313/posts/burp-cph-usage/</guid>
+      <category domain="http://localhost:1313/categories/tools/">Tools</category>
       <description>Burp插件 CPH（Custom Parameter Handle）使用心得</description>
     </item>
     <item>
       <title>020-RevShell：一款好用的生成反弹Shell命令的工具</title>
-      <link>https://www.bthoughts.top/posts/revshell/</link>
+      <link>http://localhost:1313/posts/revshell/</link>
       <pubDate>Mon, 14 Aug 2023 14:08:08 +0800</pubDate>
-      <guid>https://www.bthoughts.top/posts/revshell/</guid>
-      <category domain="https://www.bthoughts.top/categories/tools/">Tools</category>
+      <guid>http://localhost:1313/posts/revshell/</guid>
+      <category domain="http://localhost:1313/categories/tools/">Tools</category>
       <description>&lt;h2 id=&#34;revshell&#34; class=&#34;heading-element&#34;&gt;&lt;span&gt;RevShell&lt;/span&gt;&#xA;  &lt;a href=&#34;#revshell&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;h2 id=&#34;工具简介&#34; class=&#34;heading-element&#34;&gt;&lt;span&gt;工具简介&lt;/span&gt;&#xA;  &lt;a href=&#34;#%e5%b7%a5%e5%85%b7%e7%ae%80%e4%bb%8b&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;RevShell是一个基于Go语言的反弹Shell命令生成工具，旨在帮助安全研究人员和渗透测试人员在需要与目标主机建立反向连接时快速生成相应的Shell代码。&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Tools</title>
+      <link>http://localhost:1313/tools/</link>
+      <pubDate>Tue, 06 Jun 2023 01:03:05 +0800</pubDate>
+      <guid>http://localhost:1313/tools/</guid>
+      <category domain="http://localhost:1313/categories/tools/">Tools</category>
+      <description>&lt;h2 id=&#34;常用工具列表&#34; class=&#34;heading-element&#34;&gt;&lt;span&gt;常用工具列表：&lt;/span&gt;&#xA;  &lt;a href=&#34;#%e5%b8%b8%e7%94%a8%e5%b7%a5%e5%85%b7%e5%88%97%e8%a1%a8&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;待补充&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>002-Nmap进阶学习心得</title>
-      <link>https://www.bthoughts.top/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</link>
+      <link>http://localhost:1313/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</link>
       <pubDate>Mon, 21 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</guid>
-      <category domain="https://www.bthoughts.top/categories/tools/">Tools</category>
+      <guid>http://localhost:1313/posts/nmap%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</guid>
+      <category domain="http://localhost:1313/categories/tools/">Tools</category>
       <description>Nmap 进阶学习心得</description>
     </item>
   </channel>

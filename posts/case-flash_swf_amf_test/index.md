@@ -1,4 +1,4 @@
-# 案例-记一次Flash网站渗透测试
+# 003-渗透案例：记一次Flash网站渗透测试
 
 
 
@@ -694,5 +694,5 @@ Content-type: application/x-amf
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/case-flash_swf_amf_test/  
+> URL: http://localhost:1313/posts/case-flash_swf_amf_test/  
 

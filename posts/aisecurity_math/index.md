@@ -267,5 +267,5 @@ XXXXX
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/aisecurity_math/  
+> URL: http://localhost:1313/posts/aisecurity_math/  
 

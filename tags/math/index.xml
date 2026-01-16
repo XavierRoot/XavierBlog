@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Math - 标签 - Xavier&#39;s Blog</title>
-    <link>https://www.bthoughts.top/tags/math/</link>
+    <link>http://localhost:1313/tags/math/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate>Sun, 10 Aug 2025 08:43:05 +0000</lastBuildDate>
-    <atom:link href="https://www.bthoughts.top/tags/math/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/math/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI安全-数学基础</title>
-      <link>https://www.bthoughts.top/posts/aisecurity_math/</link>
+      <link>http://localhost:1313/posts/aisecurity_math/</link>
       <pubDate>Sun, 10 Aug 2025 08:43:05 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/aisecurity_math/</guid>
-      <category domain="https://www.bthoughts.top/categories/draft/">Draft</category>
-      <category domain="https://www.bthoughts.top/categories/ai%E5%AE%89%E5%85%A8/">AI安全</category>
+      <guid>http://localhost:1313/posts/aisecurity_math/</guid>
+      <category domain="http://localhost:1313/categories/draft/">Draft</category>
+      <category domain="http://localhost:1313/categories/ai%E5%AE%89%E5%85%A8/">AI安全</category>
       <description>AI安全的一些数学基础概念和知识点</description>
     </item>
   </channel>

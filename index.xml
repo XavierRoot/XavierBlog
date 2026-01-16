@@ -2,93 +2,94 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Xavier&#39;s Blog</title>
-    <link>https://www.bthoughts.top/</link>
+    <link>http://localhost:1313/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 16 Aug 2025 08:05:53 +0000</lastBuildDate>
-    <atom:link href="https://www.bthoughts.top/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Jan 2026 10:18:19 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>案例-记一次Flash网站渗透测试</title>
-      <link>https://www.bthoughts.top/posts/case-flash_swf_amf_test/</link>
+      <title>004-渗透案例：记一次SQL注入_参数名可控</title>
+      <link>http://localhost:1313/posts/004-case-sqli-druid_filter/</link>
+      <pubDate>Wed, 14 Jan 2026 10:18:19 +0000</pubDate>
+      <guid>http://localhost:1313/posts/004-case-sqli-druid_filter/</guid>
+      <category domain="http://localhost:1313/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
+      <description>MySQL注入druid WallFilter绕过</description>
+    </item>
+    <item>
+      <title>CVE-2025-55182_React2Shell漏洞分析</title>
+      <link>http://localhost:1313/posts/cve-2025-55182_react2shell/</link>
+      <pubDate>Fri, 05 Dec 2025 17:01:05 +0000</pubDate>
+      <guid>http://localhost:1313/posts/cve-2025-55182_react2shell/</guid>
+      <category domain="http://localhost:1313/categories/draft/">Draft</category>
+      <category domain="http://localhost:1313/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</category>
+      <description>CVE-2025-55182_React2Shell的分析记录</description>
+    </item>
+    <item>
+      <title>003-渗透案例：记一次Flash网站渗透测试</title>
+      <link>http://localhost:1313/posts/003-case-flash_swf_amf_test/</link>
       <pubDate>Sat, 16 Aug 2025 08:05:53 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/case-flash_swf_amf_test/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
+      <guid>http://localhost:1313/posts/003-case-flash_swf_amf_test/</guid>
+      <category domain="http://localhost:1313/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
       <description>案例-记一次Flash网站渗透测试,学习了SWF/AMP的渗透测试</description>
     </item>
     <item>
       <title>AI安全-数学基础</title>
-      <link>https://www.bthoughts.top/posts/aisecurity_math/</link>
+      <link>http://localhost:1313/posts/aisecurity_math/</link>
       <pubDate>Sun, 10 Aug 2025 08:43:05 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/aisecurity_math/</guid>
-      <category domain="https://www.bthoughts.top/categories/draft/">Draft</category>
-      <category domain="https://www.bthoughts.top/categories/ai%E5%AE%89%E5%85%A8/">AI安全</category>
+      <guid>http://localhost:1313/posts/aisecurity_math/</guid>
+      <category domain="http://localhost:1313/categories/draft/">Draft</category>
+      <category domain="http://localhost:1313/categories/ai%E5%AE%89%E5%85%A8/">AI安全</category>
       <description>AI安全的一些数学基础概念和知识点</description>
     </item>
     <item>
       <title>前端JS加解密对抗方法简述</title>
-      <link>https://www.bthoughts.top/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/</link>
+      <link>http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/</link>
       <pubDate>Thu, 10 Jul 2025 22:40:21 +0800</pubDate>
-      <guid>https://www.bthoughts.top/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/</guid>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
+      <guid>http://localhost:1313/posts/20250710-%E5%89%8D%E7%AB%AFjs%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%AF%B9%E6%8A%97/</guid>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
       <description>&lt;p&gt;本文主要介绍常见的应对前端JS加解密的方法&lt;/p&gt;&#xA;&lt;h2 id=&#34;零简述&#34; class=&#34;heading-element&#34;&gt;&lt;span&gt;零、简述&lt;/span&gt;&#xA;  &lt;a href=&#34;#%e9%9b%b6%e7%ae%80%e8%bf%b0&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;常见需要前端JS调试完成加解密对抗的情况有：&lt;/p&gt;</description>
     </item>
     <item>
       <title>内存马查杀笔记-入门版</title>
-      <link>https://www.bthoughts.top/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/</link>
+      <link>http://localhost:1313/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Wed, 25 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</category>
+      <guid>http://localhost:1313/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/</guid>
+      <category domain="http://localhost:1313/categories/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</category>
       <description>&lt;h2 id=&#34;简述&#34; class=&#34;heading-element&#34;&gt;&lt;span&gt;简述&lt;/span&gt;&#xA;  &lt;a href=&#34;#%e7%ae%80%e8%bf%b0&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;大型派对活动在即，可能会遇到内存马场景，本篇写给对Java不熟悉的朋友，不会涉及很多技术细节。&lt;/p&gt;</description>
     </item>
     <item>
       <title>ARL灯塔Docker版搭建记录</title>
-      <link>https://www.bthoughts.top/posts/arl_setup_record/</link>
+      <link>http://localhost:1313/posts/arl_setup_record/</link>
       <pubDate>Sat, 15 Mar 2025 17:14:42 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/arl_setup_record/</guid>
-      <category domain="https://www.bthoughts.top/categories/tools/">Tools</category>
+      <guid>http://localhost:1313/posts/arl_setup_record/</guid>
+      <category domain="http://localhost:1313/categories/tools/">Tools</category>
       <description>ARL灯塔Docker版搭建记录</description>
     </item>
     <item>
       <title>Hibernate框架HQL注入笔记</title>
-      <link>https://www.bthoughts.top/posts/hibernate_hql_injection/</link>
+      <link>http://localhost:1313/posts/hibernate_hql_injection/</link>
       <pubDate>Wed, 12 Mar 2025 14:46:18 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/hibernate_hql_injection/</guid>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
+      <guid>http://localhost:1313/posts/hibernate_hql_injection/</guid>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
       <description>Hibernate框架HQL注入笔记</description>
     </item>
     <item>
       <title>002-渗透案例：记一次简单前端加密案例</title>
-      <link>https://www.bthoughts.top/posts/002-case_simpleencryptioncase/</link>
+      <link>http://localhost:1313/posts/002-case_simpleencryptioncase/</link>
       <pubDate>Mon, 10 Mar 2025 15:33:41 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/002-case_simpleencryptioncase/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
+      <guid>http://localhost:1313/posts/002-case_simpleencryptioncase/</guid>
+      <category domain="http://localhost:1313/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
       <description>记一次渗透测试中简单的前端加密案例</description>
     </item>
     <item>
       <title>001-渗透案例：巧用JS挖掘“宝藏”</title>
-      <link>https://www.bthoughts.top/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/</link>
+      <link>http://localhost:1313/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/</link>
       <pubDate>Thu, 09 Jan 2025 16:36:22 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/</guid>
-      <category domain="https://www.bthoughts.top/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
+      <guid>http://localhost:1313/posts/001-case_%E5%B7%A7%E7%94%A8js%E6%8C%96%E6%8E%98%E5%AE%9D%E8%97%8F/</guid>
+      <category domain="http://localhost:1313/categories/%E6%A1%88%E4%BE%8B%E5%88%86%E4%BA%AB/">案例分享</category>
       <description>通过JS分析发现更多漏洞</description>
-    </item>
-    <item>
-      <title>达梦数据库DMSQL-SQL注入小记</title>
-      <link>https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/</link>
-      <pubDate>Tue, 17 Dec 2024 09:30:40 +0800</pubDate>
-      <guid>https://www.bthoughts.top/posts/%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93dmsql-sql%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%AE%B0/</guid>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;DMSQL注入小记，转手存为笔记，辅助日常工作。麻烦大家也点点原文链接，欢迎大家点赞评论。&lt;/p&gt;&#xA;&lt;p&gt;原文首发在：先知社区 &lt;a href=&#34;https://xz.aliyun.com/t/16721&#34;target=&#34;_blank&#34; rel=&#34;external nofollow noopener noreferrer&#34;&gt;https://xz.aliyun.com/t/16721&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h2 id=&#34;达梦数据库dmsql-sql注入小记&#34; class=&#34;heading-element&#34;&gt;&lt;span&gt;达梦数据库DMSQL-SQL注入小记&lt;/span&gt;&#xA;  &lt;a href=&#34;#%e8%be%be%e6%a2%a6%e6%95%b0%e6%8d%ae%e5%ba%93dmsql-sql%e6%b3%a8%e5%85%a5%e5%b0%8f%e8%ae%b0&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;目前国产化越来越普及，平时遇到的达梦数据库也越来越多，因此决定进行下总结。由于本人能力有限，如果文章中有纰漏欢迎指正，也欢迎大家进行交流。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Burp-CPH插件心得</title>
-      <link>https://www.bthoughts.top/posts/burp-cph-usage/</link>
-      <pubDate>Wed, 13 Nov 2024 05:47:42 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/burp-cph-usage/</guid>
-      <category domain="https://www.bthoughts.top/categories/tools/">Tools</category>
-      <description>Burp插件 CPH（Custom Parameter Handle）使用心得</description>
     </item>
   </channel>
 </rss>

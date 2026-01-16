@@ -2,42 +2,42 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RedTeam - 标签 - Xavier&#39;s Blog</title>
-    <link>https://www.bthoughts.top/tags/redteam/</link>
+    <link>http://localhost:1313/tags/redteam/</link>
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
     <lastBuildDate>Tue, 25 Apr 2023 16:55:27 +0800</lastBuildDate>
-    <atom:link href="https://www.bthoughts.top/tags/redteam/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/redteam/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Shell Spawning</title>
-      <link>https://www.bthoughts.top/posts/20230425-shellspawn/</link>
+      <link>http://localhost:1313/posts/20230425-shellspawn/</link>
       <pubDate>Tue, 25 Apr 2023 16:55:27 +0800</pubDate>
-      <guid>https://www.bthoughts.top/posts/20230425-shellspawn/</guid>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
+      <guid>http://localhost:1313/posts/20230425-shellspawn/</guid>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
       <description>nc得到的反弹shell是一个功能非常有限的 shell，本文记录从反弹shell到TTY Shell的一些方法</description>
     </item>
     <item>
       <title>005-内网文件传输技术 Windows篇</title>
-      <link>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</link>
+      <link>http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</link>
       <pubDate>Sat, 13 Nov 2021 17:25:01 +0800</pubDate>
-      <guid>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</guid>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
+      <guid>http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%8A%80%E6%9C%AF-windows%E7%AF%87/</guid>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
       <description>本文简述内网Windows主机文件传输技术，包括利用ftp、VBScript、powershell、certutil、bitsadmin、Xcopy，都是些老技术，整理分享。</description>
     </item>
     <item>
       <title>004-内网渗透 内网信息搜集脑图</title>
-      <link>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</link>
+      <link>http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</link>
       <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</guid>
-      <category domain="https://www.bthoughts.top/categories/pentest/">Pentest</category>
+      <guid>http://localhost:1313/posts/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E8%84%91%E5%9B%BE/</guid>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
       <description>国庆整理了一下内网的知识点，正在制作脑图，总体脑图太大了，先拆分出内网信息搜集部分脑图，后续的慢慢整理扩充。</description>
     </item>
     <item>
       <title>通过区块链隐藏C2服务器地址</title>
-      <link>https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/</link>
+      <link>http://localhost:1313/posts/c2_hidden_inside_blockchain/</link>
       <pubDate>Sun, 20 Oct 2019 09:17:05 +0000</pubDate>
-      <guid>https://www.bthoughts.top/posts/c2_hidden_inside_blockchain/</guid>
-      <category domain="https://www.bthoughts.top/categories/apt/">APT</category>
+      <guid>http://localhost:1313/posts/c2_hidden_inside_blockchain/</guid>
+      <category domain="http://localhost:1313/categories/apt/">APT</category>
       <description>通过区块链隐藏C2服务器地址</description>
     </item>
   </channel>

@@ -201,5 +201,5 @@ db.adv_mock.find({mock_script: /exec/});
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/  
+> URL: http://localhost:1313/posts/yapi-mock-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/  
 

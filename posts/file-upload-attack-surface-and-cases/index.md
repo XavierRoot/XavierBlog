@@ -629,5 +629,5 @@ Content-Disposition: form-data; name=&#34;uploadpath&#34;
 ---
 
 > 作者: Xavier  
-> URL: https://www.bthoughts.top/posts/file-upload-attack-surface-and-cases/  
+> URL: http://localhost:1313/posts/file-upload-attack-surface-and-cases/  
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript - 标签 - Xavier&#39;s Blog</title>
+    <link>http://localhost:1313/tags/javascript/</link>
+    <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
+    <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 13 Jan 2026 17:01:05 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVE-2025-55182_React2Shell漏洞分析</title>
+      <link>http://localhost:1313/posts/cve-2025-55182_react2shell/</link>
+      <pubDate>Tue, 13 Jan 2026 17:01:05 +0000</pubDate>
+      <guid>http://localhost:1313/posts/cve-2025-55182_react2shell/</guid>
+      <category domain="http://localhost:1313/categories/draft/">Draft</category>
+      <category domain="http://localhost:1313/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</category>
+      <description>CVE-2025-55182_React2Shell的分析记录</description>
+    </item>
+  </channel>
+</rss>

@@ -12,5 +12,5 @@
 ---
 
 > 作者:   
-> URL: https://www.bthoughts.top/friends/  
+> URL: http://localhost:1313/friends/  
 
