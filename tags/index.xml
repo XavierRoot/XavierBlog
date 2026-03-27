@@ -6,33 +6,40 @@
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 13 Jan 2026 17:01:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 10:18:19 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQLi</title>
+      <link>http://localhost:1313/tags/sqli/</link>
+      <pubDate>Wed, 14 Jan 2026 10:18:19 +0000</pubDate>
+      <guid>http://localhost:1313/tags/sqli/</guid>
+      <description>SQLi</description>
+    </item>
     <item>
       <title>Draft</title>
       <link>http://localhost:1313/tags/draft/</link>
-      <pubDate>Tue, 13 Jan 2026 17:01:05 +0000</pubDate>
+      <pubDate>Fri, 05 Dec 2025 17:01:05 +0000</pubDate>
       <guid>http://localhost:1313/tags/draft/</guid>
       <description>Draft</description>
     </item>
     <item>
       <title>JavaScript</title>
       <link>http://localhost:1313/tags/javascript/</link>
-      <pubDate>Tue, 13 Jan 2026 17:01:05 +0000</pubDate>
+      <pubDate>Fri, 05 Dec 2025 17:01:05 +0000</pubDate>
       <guid>http://localhost:1313/tags/javascript/</guid>
       <description>JavaScript</description>
     </item>
     <item>
       <title>React</title>
       <link>http://localhost:1313/tags/react/</link>
-      <pubDate>Tue, 13 Jan 2026 17:01:05 +0000</pubDate>
+      <pubDate>Fri, 05 Dec 2025 17:01:05 +0000</pubDate>
       <guid>http://localhost:1313/tags/react/</guid>
       <description>React</description>
     </item>
     <item>
       <title>漏洞分析</title>
       <link>http://localhost:1313/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</link>
-      <pubDate>Tue, 13 Jan 2026 17:01:05 +0000</pubDate>
+      <pubDate>Fri, 05 Dec 2025 17:01:05 +0000</pubDate>
       <guid>http://localhost:1313/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</guid>
       <description>漏洞分析</description>
     </item>
@@ -70,13 +77,6 @@
       <pubDate>Sun, 10 Aug 2025 08:43:05 +0000</pubDate>
       <guid>http://localhost:1313/tags/math/</guid>
       <description>Math</description>
-    </item>
-    <item>
-      <title>Crypto</title>
-      <link>http://localhost:1313/tags/crypto/</link>
-      <pubDate>Thu, 10 Jul 2025 22:40:21 +0800</pubDate>
-      <guid>http://localhost:1313/tags/crypto/</guid>
-      <description>Crypto</description>
     </item>
   </channel>
 </rss>
