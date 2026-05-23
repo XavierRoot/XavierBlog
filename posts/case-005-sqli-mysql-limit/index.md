@@ -84,5 +84,5 @@ Cause: java.sql.SQLException: XPATH syntax error: &#39;~5.7.33~&#39;\n; uncatego
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/case-005-sqli-mysql-limit/  
+> URL: https://www.bthoughts.top/posts/case-005-sqli-mysql-limit/  
 

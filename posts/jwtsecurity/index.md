@@ -520,5 +520,5 @@ john jwt.txt --wordlist=/usr/share/wordlists/rockyou.txt --format=HMAC-SHA256
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/jwtsecurity/  
+> URL: https://www.bthoughts.top/posts/jwtsecurity/  
 

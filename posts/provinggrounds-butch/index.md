@@ -615,5 +615,5 @@ type C:\users\butch\desktop\local.txt
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/provinggrounds-butch/  
+> URL: https://www.bthoughts.top/posts/provinggrounds-butch/  
 

@@ -330,5 +330,5 @@ burp那一块换成charles和fiddler抓包，也是可以的
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/  
+> URL: https://www.bthoughts.top/posts/mac%E4%B8%8Bandroidapp%E6%8A%93%E5%8C%85%E9%85%8D%E7%BD%AE/  
 

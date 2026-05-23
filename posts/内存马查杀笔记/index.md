@@ -413,5 +413,5 @@ if grep -q &#39;basicInfo&#39; heapdump.hprof &amp;&amp; grep -q &#39;currentPat
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/  
+> URL: https://www.bthoughts.top/posts/%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80%E7%AC%94%E8%AE%B0/  
 

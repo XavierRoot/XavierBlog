@@ -694,5 +694,5 @@ Content-type: application/x-amf
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/case-003-flash_swf_amf_test/  
+> URL: https://www.bthoughts.top/posts/case-003-flash_swf_amf_test/  
 

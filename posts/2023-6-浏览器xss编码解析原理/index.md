@@ -678,5 +678,5 @@ Example C: &lt;a href=&#34;javascript:window.open(&#39;UserInput&#39;)&#34;&gt;
 ---
 
 > 作者: Xavier  
-> URL: http://localhost:1313/posts/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86/  
+> URL: https://www.bthoughts.top/posts/2023-6-%E6%B5%8F%E8%A7%88%E5%99%A8xss%E7%BC%96%E7%A0%81%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86/  
 
