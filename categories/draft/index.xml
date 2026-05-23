@@ -6,8 +6,17 @@
     <description>Xavier&#39;s Blog，一个安全工作者的个人空间</description>
     <generator>Hugo 0.140.0 &amp; FixIt v0.3.16</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 05 Dec 2025 17:01:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 10:16:58 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/draft/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JWT安全笔记</title>
+      <link>http://localhost:1313/posts/jwtsecurity/</link>
+      <pubDate>Mon, 11 May 2026 10:16:58 +0000</pubDate>
+      <guid>http://localhost:1313/posts/jwtsecurity/</guid>
+      <category domain="http://localhost:1313/categories/draft/">Draft</category>
+      <category domain="http://localhost:1313/categories/pentest/">Pentest</category>
+      <description>对于JWT安全的总结性笔记</description>
+    </item>
     <item>
       <title>CVE-2025-55182_React2Shell漏洞分析</title>
       <link>http://localhost:1313/posts/cve-2025-55182_react2shell/</link>

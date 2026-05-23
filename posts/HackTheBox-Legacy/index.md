@@ -7,7 +7,7 @@
 
 ## Legacy
 
-![图片](/resource/HTB靶机-Legacy-WriteUp.assets/640-20230220174153127.png)
+![图片](resource/HTB靶机-Legacy-WriteUp.assets/640-20230220174153127.png)
 
 用户评分2.5分，Tags：Injection
 

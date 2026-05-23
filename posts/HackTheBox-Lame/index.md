@@ -5,7 +5,7 @@
 
 # Lame
 
-![图片](/resource/HTB靶机-Lame-WriteUp.assets/640-20230220174730154.png)
+![图片](resource/HTB靶机-Lame-WriteUp.assets/640-20230220174730154.png)
 
 简介：
 
@@ -454,7 +454,7 @@ nmap 做细分扫描，扫特定端口的服务详情，并用上NSE
  
 ```
 
-![图片](/resource/HTB靶机-Lame-WriteUp.assets/640-20230220174729769.png)
+![图片](resource/HTB靶机-Lame-WriteUp.assets/640-20230220174729769.png)
 
 成功获得了daemon 权限，接下去进行提权
 

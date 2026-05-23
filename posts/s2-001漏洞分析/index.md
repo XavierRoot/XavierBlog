@@ -54,16 +54,16 @@ tomcat 9.0.70
 
 通过Maven创建项目，`Archetype`,选择webapp。
 
-![image-20230108161641424](/resource/S2-001漏洞分析.assets/image-20230108161641424.png)
+![image-20230108161641424](resource/S2-001漏洞分析.assets/image-20230108161641424.png)
 
 高级设置下，然后`groupid`和`artifactid`都可以自定义，之后Finish。
 
-![image-20230108161818860](/resource/S2-001漏洞分析.assets/image-20230108161818860.png)
+![image-20230108161818860](resource/S2-001漏洞分析.assets/image-20230108161818860.png)
 
 然后会自动下载所需的jar包等文件进行构建，只需要静静等待几分钟就好了。
 然后此时创建好的项目如图所示。
 
-![img](/resource/S2-001漏洞分析.assets/16076166097919.jpg)
+![img](resource/S2-001漏洞分析.assets/16076166097919.jpg)
 
 接下来分别添加并配置Maven的`pom.xml`，Tomcat的`web.xml`，Struts2的`struts.xml`。
 
@@ -71,11 +71,11 @@ tomcat 9.0.70
 
 在main目录下创建一个java文件夹，里面放置我们自定义的java类文件.
 
-![16076169701640](/resource/S2-001漏洞分析.assets/16076169701640.jpg)
+![16076169701640](resource/S2-001漏洞分析.assets/16076169701640.jpg)
 
 在里面我们创建自定义的Java Package。
 
-![image-20230108162117280](/resource/S2-001漏洞分析.assets/image-20230108162117280.png)
+![image-20230108162117280](resource/S2-001漏洞分析.assets/image-20230108162117280.png)
 
 然后在其中创建一个名为LoginAction的Java类，内容为:
 
@@ -132,7 +132,7 @@ public class LoginAction extends ActionSupport{
 
 添加这个配置之后，点击界面上出现了maven更新小按钮Maven会自动将对应版本的Jar包下载导入，不需要手工配置了。
 
-![16076175738228](/resource/S2-001漏洞分析.assets/16076175738228.jpg)
+![16076175738228](resource/S2-001漏洞分析.assets/16076175738228.jpg)
 
 #### 2.1.3 web.xml
 
@@ -226,13 +226,13 @@ public class LoginAction extends ActionSupport{
 
 解决方案就是在首选项 =&gt; plugins =&gt; 搜索struts2 然后安装就好了
 
-![16076188441890](/resource/S2-001漏洞分析.assets/16076188441890.jpg)
+![16076188441890](resource/S2-001漏洞分析.assets/16076188441890.jpg)
 
-![16076188897216](/resource/S2-001漏洞分析.assets/16076188897216.jpg)
+![16076188897216](resource/S2-001漏洞分析.assets/16076188897216.jpg)
 
 此时项目目录如下：
 
-![image-20230108163306485](/resource/S2-001漏洞分析.assets/image-20230108163306485.png)
+![image-20230108163306485](resource/S2-001漏洞分析.assets/image-20230108163306485.png)
 
 ### 2.2 配置服务器
 
@@ -295,18 +295,18 @@ tomcat@9
 
 添加一个本地的Tomcat服务器。具体步骤如下图:
 
-![16076192942664](/resource/S2-001漏洞分析.assets/16076192942664.jpg)
+![16076192942664](resource/S2-001漏洞分析.assets/16076192942664.jpg)
 
 这个路径参考前面安装时提到的安装目录
 
-![image-20230108164510994](/resource/S2-001漏洞分析.assets/image-20230108164510994.png)
+![image-20230108164510994](resource/S2-001漏洞分析.assets/image-20230108164510994.png)
 
 端口根据自身环境修改.
 然后右下角的提示，可以点击fix或者点击Deployment，添加一个artifacts。
 
 然后点击左上角的绿色三角就可以运行了。
 
-![image-20230108164548198](/resource/S2-001漏洞分析.assets/image-20230108164548198.png)
+![image-20230108164548198](resource/S2-001漏洞分析.assets/image-20230108164548198.png)
 
 #### 2.2.3 一些bug
 
@@ -316,13 +316,13 @@ tomcat@9
 至少有一个JAR被扫描用于TLD但尚未包含TLD。 为此记录器启用调试日志记录，以获取已扫描但未在其中找到TLD的完整JAR列表。 在扫描期间跳过不需要的JAR可以缩短启动时间和JSP编译时间。
 ```
 
-![20200727184816955](/resource/S2-001漏洞分析.assets/20200727184816955.jpg)
+![20200727184816955](resource/S2-001漏洞分析.assets/20200727184816955.jpg)
 
 ### 2.3 测试环境
 
 在username 的输入框输入：`%{1&#43;1}`
 
-![16076203423070](/resource/S2-001漏洞分析.assets/16076203423070.jpg)
+![16076203423070](resource/S2-001漏洞分析.assets/16076203423070.jpg)
 
 如图，环境搭建成功！
 
@@ -351,7 +351,7 @@ WebWork 2.1&#43; 和 Struts 2 的“altSyntax”功能允许将 OGNL 表达式�
 
 根据Struts2的执行过程进行分析：
 
-![image-20230207155406287](/resource/S2-001漏洞分析.assets/image-20230207155406287.png)
+![image-20230207155406287](resource/S2-001漏洞分析.assets/image-20230207155406287.png)
 
 在该图中，一共给出了四种颜色的标识，其对应的意义如下。
 
@@ -380,11 +380,11 @@ WebWork 2.1&#43; 和 Struts 2 的“altSyntax”功能允许将 OGNL 表达式�
 
 在username字段输入`%{1&#43;5}`，点击Submit，FilterDispatcher下doFilter进行过滤器调度，
 
-![image-20230213161527575](/resource/S2-001漏洞分析.assets/image-20230213161527575.png)
+![image-20230213161527575](resource/S2-001漏洞分析.assets/image-20230213161527575.png)
 
 我们关注`ParametersInterceptor`拦截器，在`doIntercept`这里打了该断点，跟踪参数传递。
 
-![image-20230213161853069](/resource/S2-001漏洞分析.assets/image-20230213161853069.png)
+![image-20230213161853069](resource/S2-001漏洞分析.assets/image-20230213161853069.png)
 
 可以看到`ParametersInterceptor`141行中的`doIntercept`，在159处执行`setParameters(action, stack, parameters)`，跟踪下去，此时堆栈parameters保存我们传入的参数。
 
@@ -423,13 +423,13 @@ WebWork 2.1&#43; 和 Struts 2 的“altSyntax”功能允许将 OGNL 表达式�
     }
 ```
 
-![image-20230210135120773](/resource/S2-001漏洞分析.assets/image-20230210135120773.png)
+![image-20230210135120773](resource/S2-001漏洞分析.assets/image-20230210135120773.png)
 
-![image-20230213162539604](/resource/S2-001漏洞分析.assets/image-20230213162539604.png)
+![image-20230213162539604](resource/S2-001漏洞分析.assets/image-20230213162539604.png)
 
 doIntercept:167 `return invocation.invoke();`，接下去会经过一系列其他的拦截器
 
-![image-20230213163633080](/resource/S2-001漏洞分析.assets/image-20230213163633080.png)
+![image-20230213163633080](resource/S2-001漏洞分析.assets/image-20230213163633080.png)
 
 加载完拦截器后，会调用`invocation.invoke`(也就是DefaultActionInvocation 的invoke())
 
@@ -464,7 +464,7 @@ invokeaction通过反射方式调用用户action里的execute，回到我们自�
 
 在处理完用户逻辑后会调用`DefaultActionInvocation` 的`executeResult()`处理请求结果，跟进
 
-![image-20230213164621016](/resource/S2-001漏洞分析.assets/image-20230213164621016.png)
+![image-20230213164621016](resource/S2-001漏洞分析.assets/image-20230213164621016.png)
 
 ```java
     // com.opensymphony.xword2.DefaultActionInvocation#executeResult
@@ -538,7 +538,7 @@ executeResult会调用result实现类`StrutsResultSupport`下的execute进行处
 
 调用栈：`doExecute:139`--&gt;`forward:139`--&gt;`doForward:385`--&gt;....-&gt;`doStartTag:54`
 
-![image-20230213170625111](/resource/S2-001漏洞分析.assets/image-20230213170625111.png)
+![image-20230213170625111](resource/S2-001漏洞分析.assets/image-20230213170625111.png)
 
 随后struts会调用具体实现类ComponentTagSupport进行标签的解析 标签的开始和结束位置，会分别调用 doStartTag()及 doEndTag() 方法，而造成此次漏洞的正是doEndTag，直接跟进doEndTag。
 
@@ -641,7 +641,7 @@ doEndTag会接着调用components.UIBean的end 方法，end会调用自身evalua
 
 其中会判断altSyntax是否开启，如果开启会对参数值进行重新组合，
 
-![image-20230213174401323](/resource/S2-001漏洞分析.assets/image-20230213174401323.png)
+![image-20230213174401323](resource/S2-001漏洞分析.assets/image-20230213174401323.png)
 
 随后调用addparameter,跟进其中的findvalue
 
@@ -660,7 +660,7 @@ doEndTag会接着调用components.UIBean的end 方法，end会调用自身evalua
     }
 ```
 
-![image-20230213174613676](/resource/S2-001漏洞分析.assets/image-20230213174613676.png)
+![image-20230213174613676](resource/S2-001漏洞分析.assets/image-20230213174613676.png)
 
 其中`this.altSyntax()`会判断`altSyntax`是否开启，如果开启，则会调用`translateVariables`对参数值进行重新组合，该方法的作用是将变量转换为对象。
 
@@ -730,7 +730,7 @@ doEndTag会接着调用components.UIBean的end 方法，end会调用自身evalua
 
 ```
 
-![image-20230213175244379](/resource/S2-001漏洞分析.assets/image-20230213175244379.png)
+![image-20230213175244379](resource/S2-001漏洞分析.assets/image-20230213175244379.png)
 
 最后var=`username`传入`stack.findValue`，`OgnlUtil.getValue`执行表达式：
 
@@ -766,21 +766,21 @@ doEndTag会接着调用components.UIBean的end 方法，end会调用自身evalua
 
 在这里，就可以看到`OgnlUtil.getValue(expr, this.context, this.root, asType)`，一个标准的`OGNL`取值表达式，而此时的`expr=&#39;username&#39;`，即取出`username`对应的数据`%{1&#43;5}`，返回value=`%{1&#43;5}`：
 
-![image-20230213175444961](/resource/S2-001漏洞分析.assets/image-20230213175444961.png)
+![image-20230213175444961](resource/S2-001漏洞分析.assets/image-20230213175444961.png)
 
 继续返回`translateVariables`这个函数中的循环，`o=&#34;%{1&#43;5}&#34;`最后`expression=&#34;%{1&#43;5}&#34;`,
 
-![image-20230213175908216](/resource/S2-001漏洞分析.assets/image-20230213175908216.png)
+![image-20230213175908216](resource/S2-001漏洞分析.assets/image-20230213175908216.png)
 
 随后进入下一个while循环再次确定{}位置，再经过`expression.substring`时var的值为`1&#43;5`。
 
-![image-20230213180027867](/resource/S2-001漏洞分析.assets/image-20230213180027867.png)
+![image-20230213180027867](resource/S2-001漏洞分析.assets/image-20230213180027867.png)
 
 执行`stack.findValue(var, asType);`，执行`value=OgnlUtil.getValue(expr, context, root, asType); //expr=&#34;1&#43;5&#34;`，最后返回结果`value=&#34;6&#34;`，继续执行到`expression = left &#43; o &#43; right;`，expression=&#34;6&#34;，跳出`while(True)`循环。
 
 最后前端显示结果。
 
-![image-20230213181807602](/resource/S2-001漏洞分析.assets/image-20230213181807602.png)
+![image-20230213181807602](resource/S2-001漏洞分析.assets/image-20230213181807602.png)
 
 
 
@@ -792,7 +792,7 @@ doEndTag会接着调用components.UIBean的end 方法，end会调用自身evalua
 
 这里最终加入的循环递归深度判断，当完成解析之后就直接跳出。
 
-![img](/resource/S2-001漏洞分析.assets/image.png)
+![img](resource/S2-001漏洞分析.assets/image.png)
 
 
 
